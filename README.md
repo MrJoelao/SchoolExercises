@@ -1,4 +1,4 @@
-# mySlotMachineJavaApplicationSchoolExercise
+# mySlotMachine, School Exercise
 Simulation of a slot machine in java including GUI (school assignment)
 
 
