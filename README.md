@@ -2,8 +2,8 @@
 Simulation of a slot machine in java including GUI (school assignment)
 
 The code was an exercise assigned to me by my computer science teacher, and since I liked the end result, I decided to upload it here. 
-The code, i.e. the names of variables, objects, etc., was written in Italian, my main language, and later translated into English via gpt. chat (except for some image and folder names, I don't feel like kekw). 
-I started learning Java less than two months ago, so if there are things I could have done differently, don't beat me up :) . 
+The code, i.e. the names of variables, objects, etc., was written in Italian, my main language, and later translated into English via chat gpt (except for some image and folder names). 
+I started learning Java less than four months ago, so if there are things I could have done differently, don't beat me up :) . 
 The code was written using netbeans, so some parts were automatically generated.
 
 The code consists of a simulation of a slot machine implemented in Java, including a graphical user interface (GUI). Here is a summary of its main features and functionality:
