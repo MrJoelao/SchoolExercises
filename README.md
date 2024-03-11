@@ -1,6 +1,5 @@
-# mySlotMachine, School Exercise
+# School Exercise: MySlotMachine
 Simulation of a slot machine in java including GUI (school assignment)
-
 
 The code was an exercise assigned to me by my computer science teacher, and since I liked the end result, I decided to upload it here. 
 The code, i.e. the names of variables, objects, etc., was written in Italian, my main language, and later translated into English via chat gpt (except for some image and folder names). 
