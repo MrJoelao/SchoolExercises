@@ -5,5 +5,4 @@ The programme offers functionality to add new products, update quantities, searc
 
 Done 2 years ago for a school assignment, translated into English using chat-gpt. 
 
-
-![Screenshot](https://github.com/MrJoelao/StoreManagementSystem/assets/108810123/ead414fe-68b8-447b-b071-a9d44788542a)
+![Screenshot](https://github.com/MrJoelao/StoreManagementSystem/assets/108810123/42571ec0-9f7c-4f69-918e-34ef1f169a23)
