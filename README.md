@@ -12,7 +12,7 @@ SlotMachineGUI: This class handles the GUI of the slot machine using Java Swing.
 
 SlotMachine: This class represents the game logic of the slot machine. It handles the random selection of numbers for the reels, determines whether winning combinations such as the jackpot, two sevens or a normal combination have been hit, and updates the player's balance and jackpot accordingly.
 
-Resources: A number of resources are used, such as images for the slot machine icons and sound files for the game sounds. Assets: [Icons](https://www.flaticon.com), [Music](https://www.youtube.com/watch?v=8nz_BWvCF_4).
+Resources: A number of resources are used, such as images for the slot machine [icons](https://www.flaticon.com), sound and [Music](https://www.youtube.com/watch?v=8nz_BWvCF_4) files for the game sounds.
 
 ![Screenshot](https://github.com/MrJoelao/mySlotMachineJavaApplicationSchoolExercise/assets/108810123/85fe5004-63d3-4b0c-970c-c965755baaae)
 
