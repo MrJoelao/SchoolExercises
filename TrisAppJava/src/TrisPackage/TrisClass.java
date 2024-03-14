@@ -12,31 +12,31 @@ import javax.swing.JButton;
  * @author joels,ricpi,NicMuso,AlePini
  */
 public class TrisClass {
-    private char[][] board;
-    private char currentPlayer;
-     public TrisClass() {
-        board = new char[3][3];
-        currentPlayer = 'X'; // Inizia sempre con 'X'
-        initializeBoard();
+    private char[][] tabella;
+    private char giocatore_corrente;
+    public TrisClass() {
+        tabella = new char[3][3];
+        giocatore_corrente = 'X'; 
+        inizializza();
     }
-     private void initializeBoard() {
+    private void inizializza() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                board[i][j] = '-';
+                tabella[i][j] = '-';
             }
         }
     }
-    private void changePlayer() {
-        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+    private void Switch_giocatore() {
+        giocatore_corrente = (giocatore_corrente == 'X') ? 'O' : 'X';
     }
-    public void makeMove(int row, int col) {
-        if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
-            board[row][col] = currentPlayer;
-            changePlayer();
+    public void Muovi(int row, int col) {
+        if (row >= 0 && row < 3 && col >= 0 && col < 3 && tabella[row][col] == '-') {
+            tabella[row][col] = giocatore_corrente;
+            Switch_giocatore();
         }
     }
-    public char getCurrentPlayer() {
-        return currentPlayer;
+    public char getGiocatore_corrente() {
+        return giocatore_corrente;
     }
     
     
