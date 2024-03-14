@@ -30,6 +30,15 @@ public class TrisGui extends javax.swing.JFrame {
         welcomeBackground = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         gamePage = new javax.swing.JPanel();
+        buttonBox9 = new javax.swing.JButton();
+        buttonBox8 = new javax.swing.JButton();
+        buttonBox7 = new javax.swing.JButton();
+        buttonBox6 = new javax.swing.JButton();
+        buttonBox5 = new javax.swing.JButton();
+        buttonBox4 = new javax.swing.JButton();
+        buttonBox3 = new javax.swing.JButton();
+        buttonBox2 = new javax.swing.JButton();
+        buttonBox1 = new javax.swing.JButton();
         gameBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -47,7 +56,9 @@ public class TrisGui extends javax.swing.JFrame {
         );
         welcomePageLayout.setVerticalGroup(
             welcomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(welcomeBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(welcomePageLayout.createSequentialGroup()
+                .addComponent(welcomeBackground)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         getContentPane().add(welcomePage);
@@ -67,18 +78,74 @@ public class TrisGui extends javax.swing.JFrame {
         getContentPane().add(jPanel2);
         jPanel2.setBounds(0, 0, 450, 800);
 
-        gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gameBackground.png"))); // NOI18N
+        gamePage.setLayout(null);
 
-        javax.swing.GroupLayout gamePageLayout = new javax.swing.GroupLayout(gamePage);
-        gamePage.setLayout(gamePageLayout);
-        gamePageLayout.setHorizontalGroup(
-            gamePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(gameBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        gamePageLayout.setVerticalGroup(
-            gamePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(gameBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        buttonBox9.setContentAreaFilled(false);
+        buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox9.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox9.setPreferredSize(new java.awt.Dimension(112, 112));
+        gamePage.add(buttonBox9);
+        buttonBox9.setBounds(298, 460, 112, 112);
+
+        buttonBox8.setContentAreaFilled(false);
+        buttonBox8.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox8.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox8.setPreferredSize(new java.awt.Dimension(112, 112));
+        gamePage.add(buttonBox8);
+        buttonBox8.setBounds(170, 460, 112, 112);
+
+        buttonBox7.setContentAreaFilled(false);
+        buttonBox7.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox7.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox7.setPreferredSize(new java.awt.Dimension(112, 112));
+        gamePage.add(buttonBox7);
+        buttonBox7.setBounds(42, 460, 112, 112);
+
+        buttonBox6.setContentAreaFilled(false);
+        buttonBox6.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox6.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox6.setPreferredSize(new java.awt.Dimension(112, 112));
+        gamePage.add(buttonBox6);
+        buttonBox6.setBounds(298, 340, 112, 112);
+
+        buttonBox5.setContentAreaFilled(false);
+        buttonBox5.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox5.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox5.setPreferredSize(new java.awt.Dimension(112, 112));
+        gamePage.add(buttonBox5);
+        buttonBox5.setBounds(170, 340, 112, 112);
+
+        buttonBox4.setContentAreaFilled(false);
+        buttonBox4.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox4.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox4.setPreferredSize(new java.awt.Dimension(112, 112));
+        gamePage.add(buttonBox4);
+        buttonBox4.setBounds(42, 340, 112, 112);
+
+        buttonBox3.setContentAreaFilled(false);
+        buttonBox3.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox3.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox3.setPreferredSize(new java.awt.Dimension(112, 112));
+        gamePage.add(buttonBox3);
+        buttonBox3.setBounds(298, 220, 112, 112);
+
+        buttonBox2.setContentAreaFilled(false);
+        buttonBox2.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox2.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox2.setPreferredSize(new java.awt.Dimension(112, 112));
+        gamePage.add(buttonBox2);
+        buttonBox2.setBounds(170, 220, 112, 112);
+
+        buttonBox1.setContentAreaFilled(false);
+        buttonBox1.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox1.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox1.setPreferredSize(new java.awt.Dimension(112, 112));
+        gamePage.add(buttonBox1);
+        buttonBox1.setBounds(42, 220, 112, 112);
+
+        gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gameBackground.png"))); // NOI18N
+        gamePage.add(gameBackground);
+        gameBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(gamePage);
         gamePage.setBounds(0, 0, 450, 800);
@@ -122,6 +189,15 @@ public class TrisGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonBox1;
+    private javax.swing.JButton buttonBox2;
+    private javax.swing.JButton buttonBox3;
+    private javax.swing.JButton buttonBox4;
+    private javax.swing.JButton buttonBox5;
+    private javax.swing.JButton buttonBox6;
+    private javax.swing.JButton buttonBox7;
+    private javax.swing.JButton buttonBox8;
+    private javax.swing.JButton buttonBox9;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
     private javax.swing.JPanel jPanel2;
