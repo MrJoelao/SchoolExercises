@@ -29,10 +29,13 @@ public class TrisClass {
     private void Switch_giocatore() {
         giocatore_corrente = (giocatore_corrente == 'X') ? 'O' : 'X';
     }
-    public void Muovi(int row, int col) {
+    public boolean Muovi(int row, int col) {
         if (row >= 0 && row < 3 && col >= 0 && col < 3 && tabella[row][col] == '-') {
             tabella[row][col] = giocatore_corrente;
             Switch_giocatore();
+            return true;
+        }else{
+            return false;
         }
     }
     public char getGiocatore_corrente() {
@@ -63,16 +66,7 @@ public class TrisClass {
 
         return false;
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public char[][] getTabella() {
+        return tabella;
+    }
 }
