@@ -38,7 +38,32 @@ public class TrisClass {
     public char getGiocatore_corrente() {
         return giocatore_corrente;
     }
-    
+    public boolean checkWinner() {
+        // Controllo righe
+        for (int i = 0; i < 3; i++) {
+            if (tabella[i][0] != '-' && tabella[i][0] == tabella[i][1] && tabella[i][1] == tabella[i][2]) {
+                return true;
+            }
+        }
+
+        // Controllo colonne
+        for (int i = 0; i < 3; i++) {
+            if (tabella[0][i] != '-' && tabella[0][i] == tabella[1][i] && tabella[1][i] == tabella[2][i]) {
+                return true;
+            }
+        }
+
+        // Controllo diagonali
+        if (tabella[0][0] != '-' && tabella[0][0] == tabella[1][1] && tabella[1][1] == tabella[2][2]) {
+            return true;
+        }
+        if (tabella[0][2] != '-' && tabella[0][2] == tabella[1][1] && tabella[1][1] == tabella[2][0]) {
+            return true;
+        }
+
+        return false;
+    }
+
     
     
     
