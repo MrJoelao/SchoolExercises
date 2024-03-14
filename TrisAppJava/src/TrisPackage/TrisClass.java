@@ -9,10 +9,9 @@ import javax.swing.JButton;
 
 /**
  *
- * @author joels
+ * @author joels,ricpi,NicMuso,AlePini
  */
 public class TrisClass {
-    //prova di push, prova numero due, numero tre, quatro
     private char[][] board;
     private char currentPlayer;
      public TrisClass() {
@@ -29,6 +28,15 @@ public class TrisClass {
     }
     private void changePlayer() {
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+    }
+    public void makeMove(int row, int col) {
+        if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
+            board[row][col] = currentPlayer;
+            changePlayer();
+        }
+    }
+    public char getCurrentPlayer() {
+        return currentPlayer;
     }
     
     
