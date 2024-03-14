@@ -29,7 +29,8 @@ public class TrisGui extends javax.swing.JFrame {
         welcomePage = new javax.swing.JPanel();
         welcomeBackground = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        gamePage = new javax.swing.JPanel();
+        gameBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
@@ -66,19 +67,21 @@ public class TrisGui extends javax.swing.JFrame {
         getContentPane().add(jPanel2);
         jPanel2.setBounds(0, 0, 450, 800);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+        gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gameBackground.png"))); // NOI18N
+
+        javax.swing.GroupLayout gamePageLayout = new javax.swing.GroupLayout(gamePage);
+        gamePage.setLayout(gamePageLayout);
+        gamePageLayout.setHorizontalGroup(
+            gamePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(gameBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+        gamePageLayout.setVerticalGroup(
+            gamePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(gameBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 450, 800);
+        getContentPane().add(gamePage);
+        gamePage.setBounds(0, 0, 450, 800);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -119,7 +122,8 @@ public class TrisGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel gameBackground;
+    private javax.swing.JPanel gamePage;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;

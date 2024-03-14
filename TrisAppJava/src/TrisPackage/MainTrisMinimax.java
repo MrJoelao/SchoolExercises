@@ -8,7 +8,7 @@ package TrisPackage;
  *
  * @author ricpi
  */
-
+/*
 public class MainTrisMinimax {
     public static void main(String[] args) {
         TrisMinimax trisGame = new TrisMinimax();
@@ -16,5 +16,5 @@ public class MainTrisMinimax {
         // Simulazione di un gioco del Tris contro l'intelligenza artificiale Minimax
         trisGame.main(args);
     }
-}
+}*/
 
