@@ -28,6 +28,8 @@ public class TrisGui extends javax.swing.JFrame {
     private void initComponents() {
 
         welcomePage = new javax.swing.JPanel();
+        continueButton = new javax.swing.JButton();
+        settingsButton = new javax.swing.JButton();
         welcomeBackground = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         gamePage = new javax.swing.JPanel();
@@ -47,20 +49,21 @@ public class TrisGui extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(450, 800));
         getContentPane().setLayout(null);
 
-        welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomeBackground.png"))); // NOI18N
+        welcomePage.setLayout(null);
 
-        javax.swing.GroupLayout welcomePageLayout = new javax.swing.GroupLayout(welcomePage);
-        welcomePage.setLayout(welcomePageLayout);
-        welcomePageLayout.setHorizontalGroup(
-            welcomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(welcomeBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        welcomePageLayout.setVerticalGroup(
-            welcomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(welcomePageLayout.createSequentialGroup()
-                .addComponent(welcomeBackground)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        continueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continueButtonActionPerformed(evt);
+            }
+        });
+        welcomePage.add(continueButton);
+        continueButton.setBounds(162, 580, 90, 30);
+        welcomePage.add(settingsButton);
+        settingsButton.setBounds(200, 630, 20, 20);
+
+        welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomeBackground.png"))); // NOI18N
+        welcomePage.add(welcomeBackground);
+        welcomeBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(welcomePage);
         welcomePage.setBounds(0, 0, 450, 800);
@@ -253,6 +256,10 @@ public class TrisGui extends javax.swing.JFrame {
         trisPvP.checkWinner();
     }//GEN-LAST:event_buttonBox9ActionPerformed
 
+    private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_continueButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -298,9 +305,11 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton buttonBox7;
     private javax.swing.JButton buttonBox8;
     private javax.swing.JButton buttonBox9;
+    private javax.swing.JButton continueButton;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton settingsButton;
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;
     // End of variables declaration//GEN-END:variables
