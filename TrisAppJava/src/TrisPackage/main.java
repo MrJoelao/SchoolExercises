@@ -6,7 +6,7 @@ package TrisPackage;
 
 /**
  *
- * @author ricpi
+ * @author joels,ricpi,NicMuso,AlePini
  */
 import java.util.Scanner;
 
