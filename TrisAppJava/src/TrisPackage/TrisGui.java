@@ -45,7 +45,11 @@ public class TrisGui extends javax.swing.JFrame {
         continueButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         welcomeBackground = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        modePage = new javax.swing.JPanel();
+        chooseMode = new javax.swing.JLabel();
+        AIButton = new javax.swing.JButton();
+        friendButton = new javax.swing.JButton();
+        modeBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
@@ -200,19 +204,38 @@ public class TrisGui extends javax.swing.JFrame {
         getContentPane().add(welcomePage);
         welcomePage.setBounds(0, 0, 450, 800);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
+        modePage.setLayout(null);
 
-        getContentPane().add(jPanel2);
-        jPanel2.setBounds(0, 0, 450, 800);
+        chooseMode.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        chooseMode.setForeground(new java.awt.Color(255, 255, 255));
+        chooseMode.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chooseMode.setText("Choose your play mode:");
+        modePage.add(chooseMode);
+        chooseMode.setBounds(110, 480, 240, 30);
+
+        AIButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AIButtonActionPerformed(evt);
+            }
+        });
+        modePage.add(AIButton);
+        AIButton.setBounds(190, 540, 72, 20);
+
+        friendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                friendButtonActionPerformed(evt);
+            }
+        });
+        modePage.add(friendButton);
+        friendButton.setBounds(190, 590, 72, 20);
+
+        modeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modeBackground.png"))); // NOI18N
+        modeBackground.setPreferredSize(new java.awt.Dimension(450, 800));
+        modePage.add(modeBackground);
+        modeBackground.setBounds(0, 0, 450, 800);
+
+        getContentPane().add(modePage);
+        modePage.setBounds(0, 0, 450, 800);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -292,6 +315,14 @@ public class TrisGui extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_settingsButtonActionPerformed
 
+    private void AIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AIButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AIButtonActionPerformed
+
+    private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_friendButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -328,6 +359,7 @@ public class TrisGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AIButton;
     private javax.swing.JButton buttonBox1;
     private javax.swing.JButton buttonBox2;
     private javax.swing.JButton buttonBox3;
@@ -337,10 +369,13 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton buttonBox7;
     private javax.swing.JButton buttonBox8;
     private javax.swing.JButton buttonBox9;
+    private javax.swing.JLabel chooseMode;
     private javax.swing.JButton continueButton;
+    private javax.swing.JButton friendButton;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel modeBackground;
+    private javax.swing.JPanel modePage;
     private javax.swing.JButton settingsButton;
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;
