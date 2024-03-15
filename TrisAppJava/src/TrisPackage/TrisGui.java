@@ -51,6 +51,9 @@ public class TrisGui extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(450, 800));
         getContentPane().setLayout(null);
 
+        gamePage.setMaximumSize(new java.awt.Dimension(450, 800));
+        gamePage.setMinimumSize(new java.awt.Dimension(450, 800));
+        gamePage.setPreferredSize(new java.awt.Dimension(450, 800));
         gamePage.setLayout(null);
 
         buttonBox9.setContentAreaFilled(false);
@@ -166,8 +169,11 @@ public class TrisGui extends javax.swing.JFrame {
         gameBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(gamePage);
-        gamePage.setBounds(0, 0, 0, 0);
+        gamePage.setBounds(0, 0, 450, 800);
 
+        welcomePage.setMaximumSize(new java.awt.Dimension(450, 800));
+        welcomePage.setMinimumSize(new java.awt.Dimension(450, 800));
+        welcomePage.setPreferredSize(new java.awt.Dimension(450, 800));
         welcomePage.setLayout(null);
 
         continueButton.addActionListener(new java.awt.event.ActionListener() {
@@ -185,7 +191,7 @@ public class TrisGui extends javax.swing.JFrame {
         welcomeBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(welcomePage);
-        welcomePage.setBounds(0, 0, 0, 0);
+        welcomePage.setBounds(0, 0, 450, 800);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
