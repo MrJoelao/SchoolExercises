@@ -184,8 +184,14 @@ public class TrisGui extends javax.swing.JFrame {
         });
         welcomePage.add(continueButton);
         continueButton.setBounds(162, 580, 90, 30);
+
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonActionPerformed(evt);
+            }
+        });
         welcomePage.add(settingsButton);
-        settingsButton.setBounds(200, 630, 20, 20);
+        settingsButton.setBounds(190, 630, 20, 20);
 
         welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomeBackground.png"))); // NOI18N
         welcomePage.add(welcomeBackground);
@@ -281,6 +287,10 @@ public class TrisGui extends javax.swing.JFrame {
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_continueButtonActionPerformed
+
+    private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settingsButtonActionPerformed
 
     /**
      * @param args the command line arguments
