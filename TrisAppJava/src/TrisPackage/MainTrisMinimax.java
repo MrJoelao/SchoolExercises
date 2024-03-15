@@ -6,7 +6,7 @@ package TrisPackage;
 
 /**
  *
- * @author ricpi
+ * @author joels,ricpi,NicMuso,AlePini
  */
 /*
 public class MainTrisMinimax {
