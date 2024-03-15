@@ -26,7 +26,7 @@ public class main {
             int colonna = scanner.nextInt();
 
             // Esegui il movimento
-            if (trisGame.Muovi(riga, colonna)) {
+            if (trisGame.Muovi(riga, colonna)>=0) {
                 System.out.println("Mossa valida.");
             } else {
                 System.out.println("Mossa non valida, riprova.");

@@ -4,6 +4,8 @@
  */
 package TrisPackage;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joels
@@ -27,11 +29,6 @@ public class TrisGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        welcomePage = new javax.swing.JPanel();
-        continueButton = new javax.swing.JButton();
-        settingsButton = new javax.swing.JButton();
-        welcomeBackground = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         gamePage = new javax.swing.JPanel();
         buttonBox9 = new javax.swing.JButton();
         buttonBox8 = new javax.swing.JButton();
@@ -43,44 +40,16 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox2 = new javax.swing.JButton();
         buttonBox1 = new javax.swing.JButton();
         gameBackground = new javax.swing.JLabel();
+        welcomePage = new javax.swing.JPanel();
+        continueButton = new javax.swing.JButton();
+        settingsButton = new javax.swing.JButton();
+        welcomeBackground = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
         setMinimumSize(new java.awt.Dimension(450, 800));
         getContentPane().setLayout(null);
-
-        welcomePage.setLayout(null);
-
-        continueButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                continueButtonActionPerformed(evt);
-            }
-        });
-        welcomePage.add(continueButton);
-        continueButton.setBounds(162, 580, 90, 30);
-        welcomePage.add(settingsButton);
-        settingsButton.setBounds(200, 630, 20, 20);
-
-        welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomeBackground.png"))); // NOI18N
-        welcomePage.add(welcomeBackground);
-        welcomeBackground.setBounds(0, 0, 450, 800);
-
-        getContentPane().add(welcomePage);
-        welcomePage.setBounds(0, 0, 450, 800);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel2);
-        jPanel2.setBounds(0, 0, 450, 800);
 
         gamePage.setLayout(null);
 
@@ -199,13 +168,49 @@ public class TrisGui extends javax.swing.JFrame {
         getContentPane().add(gamePage);
         gamePage.setBounds(0, 0, 0, 0);
 
+        welcomePage.setLayout(null);
+
+        continueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continueButtonActionPerformed(evt);
+            }
+        });
+        welcomePage.add(continueButton);
+        continueButton.setBounds(162, 580, 90, 30);
+        welcomePage.add(settingsButton);
+        settingsButton.setBounds(200, 630, 20, 20);
+
+        welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomeBackground.png"))); // NOI18N
+        welcomePage.add(welcomeBackground);
+        welcomeBackground.setBounds(0, 0, 450, 800);
+
+        getContentPane().add(welcomePage);
+        welcomePage.setBounds(0, 0, 0, 0);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 450, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(0, 0, 450, 800);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox1ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(0, 0);
-        trisPvP.checkWinner();
+        if (trisPvP.Muovi(0, 0)>=0) {
+            
+            trisPvP.checkWinner();
+            } else {
+                 JOptionPane.showMessageDialog(this, "Mossa non valida!", "Avviso", JOptionPane.WARNING_MESSAGE);
+            }
     }//GEN-LAST:event_buttonBox1ActionPerformed
 
     private void buttonBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox2ActionPerformed
