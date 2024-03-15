@@ -12,6 +12,11 @@ import javax.swing.JOptionPane;
  * @author joels
  */
 public class TrisGui extends javax.swing.JFrame {
+    private static final int WELCOME_PAGE = 0;
+    private static final int MODE_PAGE = 1;
+    private static final int GAME_PAGE = 2;
+    private static final int SETTINGS_PAGE = 3;
+    
     private TrisClass trisPvP;
     /**
      * Creates new form TrisGui
@@ -19,6 +24,9 @@ public class TrisGui extends javax.swing.JFrame {
     public TrisGui() {
         initComponents();
         trisPvP=new TrisClass();
+        
+        //metto il pannello principale di welcome
+        selectPannel(WELCOME_PAGE);
     }
 
     /**
@@ -255,60 +263,76 @@ public class TrisGui extends javax.swing.JFrame {
                  JOptionPane.showMessageDialog(this, "Mossa non valida!", "Avviso", JOptionPane.WARNING_MESSAGE);
         }
     }
+    
+    // Metodo per selezionare il pannello da visualizzare
+    /*Le costanti sono in alto ma: WELCOME_PAGE è la schermata principale, GAME_PAGE è quella con la griglia del gioco e 
+    altre che non ho ancora messo*/
+    
+    public void selectPannel(int choice) {
+        System.out.println("[TG] Pannello caricato: " + choice);
+
+        // Imposta tutti i pannelli su false
+        gamePage.setVisible(false);
+        welcomePage.setVisible(false);
+        
+        // Attiva il pannello scelto
+        switch (choice) {
+            case WELCOME_PAGE:
+                welcomePage.setVisible(true);
+                break;
+            case MODE_PAGE:
+                break;
+            case GAME_PAGE:
+                gamePage.setVisible(true);
+                break;
+            case SETTINGS_PAGE:
+                break;
+                        
+            default:
+                welcomePage.setVisible(true); //gestisco l'eccezione riportando l'utente alla schermata principale
+                System.err.println("[TG] Errore: scelta del pannello non valida"); //in caso 
+                break;
+        }
+    }
+    
     private void buttonBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox1ActionPerformed
         verifica(0,0, buttonBox1);
     }//GEN-LAST:event_buttonBox1ActionPerformed
 
     private void buttonBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox2ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(0, 1);
-        trisPvP.checkWinner();
+        verifica(0,1, buttonBox2);
     }//GEN-LAST:event_buttonBox2ActionPerformed
 
     private void buttonBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox3ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(0, 2);
-        trisPvP.checkWinner();
+        verifica(0,2, buttonBox3);
     }//GEN-LAST:event_buttonBox3ActionPerformed
 
     private void buttonBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox4ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(1, 0);
-        trisPvP.checkWinner();
+        verifica(1,0, buttonBox4);
     }//GEN-LAST:event_buttonBox4ActionPerformed
 
     private void buttonBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox5ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(1, 1);
-        trisPvP.checkWinner();
+        verifica(1,1, buttonBox5);
     }//GEN-LAST:event_buttonBox5ActionPerformed
 
     private void buttonBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox6ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(1, 2);
-        trisPvP.checkWinner();
+        verifica(1,2, buttonBox6);
     }//GEN-LAST:event_buttonBox6ActionPerformed
 
     private void buttonBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox7ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(2, 0);
-        trisPvP.checkWinner();
+        verifica(2,0, buttonBox7);
     }//GEN-LAST:event_buttonBox7ActionPerformed
 
     private void buttonBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox8ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(2, 1);
-        trisPvP.checkWinner();
+        verifica(2,1, buttonBox8);
     }//GEN-LAST:event_buttonBox8ActionPerformed
 
     private void buttonBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox9ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(2, 2);
-        trisPvP.checkWinner();
+        verifica(2,2, buttonBox9);
     }//GEN-LAST:event_buttonBox9ActionPerformed
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
-        // TODO add your handling code here:
+        selectPannel(GAME_PAGE);
     }//GEN-LAST:event_continueButtonActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
