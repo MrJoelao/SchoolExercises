@@ -221,24 +221,31 @@ public class TrisGui extends javax.swing.JFrame {
         modePage.add(chooseMode);
         chooseMode.setBounds(110, 480, 240, 30);
 
+        AIButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButton.png"))); // NOI18N
+        AIButton.setContentAreaFilled(false);
+        AIButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        AIButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButtonP.png"))); // NOI18N
+        AIButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButtonR.png"))); // NOI18N
+        AIButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButtonRP.png"))); // NOI18N
         AIButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AIButtonActionPerformed(evt);
             }
         });
         modePage.add(AIButton);
-        AIButton.setBounds(190, 540, 72, 20);
+        AIButton.setBounds(160, 520, 130, 60);
 
+        friendButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButton.png"))); // NOI18N
+        friendButton.setContentAreaFilled(false);
         friendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 friendButtonActionPerformed(evt);
             }
         });
         modePage.add(friendButton);
-        friendButton.setBounds(190, 590, 72, 20);
+        friendButton.setBounds(160, 580, 130, 60);
 
         modeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modeBackground.png"))); // NOI18N
-        modeBackground.setPreferredSize(new java.awt.Dimension(450, 800));
         modePage.add(modeBackground);
         modeBackground.setBounds(0, 0, 450, 800);
 
