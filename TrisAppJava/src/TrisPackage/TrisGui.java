@@ -4,6 +4,7 @@
  */
 package TrisPackage;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
@@ -209,14 +210,24 @@ public class TrisGui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void buttonBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox1ActionPerformed
-        if (trisPvP.Muovi(0, 0)>=0) {
+    public void verifica(int row,int col, JButton button){
+        int result = trisPvP.Muovi(row, col);
+        String type;
+        if (result >= 0) {
+            if(result > 0){
+                type = "O";
+            } else {
+                type = "X";
+            }
             
+            button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + type)));
             trisPvP.checkWinner();
             } else {
                  JOptionPane.showMessageDialog(this, "Mossa non valida!", "Avviso", JOptionPane.WARNING_MESSAGE);
-            }
+        }
+    }
+    private void buttonBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox1ActionPerformed
+        verifica(0,0, buttonBox1);
     }//GEN-LAST:event_buttonBox1ActionPerformed
 
     private void buttonBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox2ActionPerformed
