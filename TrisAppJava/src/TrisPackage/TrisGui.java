@@ -225,51 +225,35 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonBox1ActionPerformed
 
     private void buttonBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox2ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(0, 1);
-        trisPvP.checkWinner();
+        verifica(0,1, buttonBox2);
     }//GEN-LAST:event_buttonBox2ActionPerformed
 
     private void buttonBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox3ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(0, 2);
-        trisPvP.checkWinner();
+        verifica(0,2, buttonBox3);
     }//GEN-LAST:event_buttonBox3ActionPerformed
 
     private void buttonBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox4ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(1, 0);
-        trisPvP.checkWinner();
+        verifica(1,0, buttonBox4);
     }//GEN-LAST:event_buttonBox4ActionPerformed
 
     private void buttonBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox5ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(1, 1);
-        trisPvP.checkWinner();
+        verifica(1,1, buttonBox5);
     }//GEN-LAST:event_buttonBox5ActionPerformed
 
     private void buttonBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox6ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(1, 2);
-        trisPvP.checkWinner();
+        verifica(1,2, buttonBox6);
     }//GEN-LAST:event_buttonBox6ActionPerformed
 
     private void buttonBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox7ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(2, 0);
-        trisPvP.checkWinner();
+        verifica(2,0, buttonBox7);
     }//GEN-LAST:event_buttonBox7ActionPerformed
 
     private void buttonBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox8ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(2, 1);
-        trisPvP.checkWinner();
+        verifica(2,1, buttonBox8);
     }//GEN-LAST:event_buttonBox8ActionPerformed
 
     private void buttonBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox9ActionPerformed
-        // TODO add your handling code here:
-        trisPvP.Muovi(2, 2);
-        trisPvP.checkWinner();
+        verifica(2,2, buttonBox9);
     }//GEN-LAST:event_buttonBox9ActionPerformed
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
