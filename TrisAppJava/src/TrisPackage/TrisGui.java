@@ -9,12 +9,13 @@ package TrisPackage;
  * @author joels
  */
 public class TrisGui extends javax.swing.JFrame {
-
+    private TrisClass trisPvP;
     /**
      * Creates new form TrisGui
      */
     public TrisGui() {
         initComponents();
+        trisPvP=new TrisClass();
     }
 
     /**
@@ -84,6 +85,11 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
         buttonBox9.setMinimumSize(new java.awt.Dimension(112, 112));
         buttonBox9.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox9ActionPerformed(evt);
+            }
+        });
         gamePage.add(buttonBox9);
         buttonBox9.setBounds(298, 460, 112, 112);
 
@@ -91,6 +97,11 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox8.setMaximumSize(new java.awt.Dimension(112, 112));
         buttonBox8.setMinimumSize(new java.awt.Dimension(112, 112));
         buttonBox8.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox8ActionPerformed(evt);
+            }
+        });
         gamePage.add(buttonBox8);
         buttonBox8.setBounds(170, 460, 112, 112);
 
@@ -98,6 +109,11 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox7.setMaximumSize(new java.awt.Dimension(112, 112));
         buttonBox7.setMinimumSize(new java.awt.Dimension(112, 112));
         buttonBox7.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox7ActionPerformed(evt);
+            }
+        });
         gamePage.add(buttonBox7);
         buttonBox7.setBounds(42, 460, 112, 112);
 
@@ -105,6 +121,11 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox6.setMaximumSize(new java.awt.Dimension(112, 112));
         buttonBox6.setMinimumSize(new java.awt.Dimension(112, 112));
         buttonBox6.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox6ActionPerformed(evt);
+            }
+        });
         gamePage.add(buttonBox6);
         buttonBox6.setBounds(298, 340, 112, 112);
 
@@ -112,6 +133,11 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox5.setMaximumSize(new java.awt.Dimension(112, 112));
         buttonBox5.setMinimumSize(new java.awt.Dimension(112, 112));
         buttonBox5.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox5ActionPerformed(evt);
+            }
+        });
         gamePage.add(buttonBox5);
         buttonBox5.setBounds(170, 340, 112, 112);
 
@@ -119,6 +145,11 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox4.setMaximumSize(new java.awt.Dimension(112, 112));
         buttonBox4.setMinimumSize(new java.awt.Dimension(112, 112));
         buttonBox4.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox4ActionPerformed(evt);
+            }
+        });
         gamePage.add(buttonBox4);
         buttonBox4.setBounds(42, 340, 112, 112);
 
@@ -126,6 +157,11 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox3.setMaximumSize(new java.awt.Dimension(112, 112));
         buttonBox3.setMinimumSize(new java.awt.Dimension(112, 112));
         buttonBox3.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox3ActionPerformed(evt);
+            }
+        });
         gamePage.add(buttonBox3);
         buttonBox3.setBounds(298, 220, 112, 112);
 
@@ -133,6 +169,11 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox2.setMaximumSize(new java.awt.Dimension(112, 112));
         buttonBox2.setMinimumSize(new java.awt.Dimension(112, 112));
         buttonBox2.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox2ActionPerformed(evt);
+            }
+        });
         gamePage.add(buttonBox2);
         buttonBox2.setBounds(170, 220, 112, 112);
 
@@ -140,6 +181,11 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox1.setMaximumSize(new java.awt.Dimension(112, 112));
         buttonBox1.setMinimumSize(new java.awt.Dimension(112, 112));
         buttonBox1.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox1ActionPerformed(evt);
+            }
+        });
         gamePage.add(buttonBox1);
         buttonBox1.setBounds(42, 220, 112, 112);
 
@@ -152,6 +198,60 @@ public class TrisGui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox1ActionPerformed
+        // TODO add your handling code here:
+        trisPvP.Muovi(0, 0);
+        trisPvP.checkWinner();
+    }//GEN-LAST:event_buttonBox1ActionPerformed
+
+    private void buttonBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox2ActionPerformed
+        // TODO add your handling code here:
+        trisPvP.Muovi(0, 1);
+        trisPvP.checkWinner();
+    }//GEN-LAST:event_buttonBox2ActionPerformed
+
+    private void buttonBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox3ActionPerformed
+        // TODO add your handling code here:
+        trisPvP.Muovi(0, 2);
+        trisPvP.checkWinner();
+    }//GEN-LAST:event_buttonBox3ActionPerformed
+
+    private void buttonBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox4ActionPerformed
+        // TODO add your handling code here:
+        trisPvP.Muovi(1, 0);
+        trisPvP.checkWinner();
+    }//GEN-LAST:event_buttonBox4ActionPerformed
+
+    private void buttonBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox5ActionPerformed
+        // TODO add your handling code here:
+        trisPvP.Muovi(1, 1);
+        trisPvP.checkWinner();
+    }//GEN-LAST:event_buttonBox5ActionPerformed
+
+    private void buttonBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox6ActionPerformed
+        // TODO add your handling code here:
+        trisPvP.Muovi(1, 2);
+        trisPvP.checkWinner();
+    }//GEN-LAST:event_buttonBox6ActionPerformed
+
+    private void buttonBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox7ActionPerformed
+        // TODO add your handling code here:
+        trisPvP.Muovi(2, 0);
+        trisPvP.checkWinner();
+    }//GEN-LAST:event_buttonBox7ActionPerformed
+
+    private void buttonBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox8ActionPerformed
+        // TODO add your handling code here:
+        trisPvP.Muovi(2, 1);
+        trisPvP.checkWinner();
+    }//GEN-LAST:event_buttonBox8ActionPerformed
+
+    private void buttonBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox9ActionPerformed
+        // TODO add your handling code here:
+        trisPvP.Muovi(2, 2);
+        trisPvP.checkWinner();
+    }//GEN-LAST:event_buttonBox9ActionPerformed
 
     /**
      * @param args the command line arguments
