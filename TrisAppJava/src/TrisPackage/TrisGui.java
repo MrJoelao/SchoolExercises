@@ -148,7 +148,7 @@ public class TrisGui extends javax.swing.JFrame {
         gameBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(gamePage);
-        gamePage.setBounds(0, 0, 450, 800);
+        gamePage.setBounds(0, 0, 0, 0);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
