@@ -79,7 +79,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox9);
-        buttonBox9.setBounds(298, 460, 112, 112);
+        buttonBox9.setBounds(300, 470, 112, 112);
 
         buttonBox8.setContentAreaFilled(false);
         buttonBox8.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -91,7 +91,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox8);
-        buttonBox8.setBounds(170, 460, 112, 112);
+        buttonBox8.setBounds(170, 470, 112, 112);
 
         buttonBox7.setContentAreaFilled(false);
         buttonBox7.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -103,7 +103,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox7);
-        buttonBox7.setBounds(42, 460, 112, 112);
+        buttonBox7.setBounds(40, 470, 112, 112);
 
         buttonBox6.setContentAreaFilled(false);
         buttonBox6.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -115,7 +115,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox6);
-        buttonBox6.setBounds(298, 340, 112, 112);
+        buttonBox6.setBounds(300, 350, 112, 112);
 
         buttonBox5.setContentAreaFilled(false);
         buttonBox5.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -127,7 +127,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox5);
-        buttonBox5.setBounds(170, 340, 112, 112);
+        buttonBox5.setBounds(170, 350, 112, 112);
 
         buttonBox4.setContentAreaFilled(false);
         buttonBox4.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -139,7 +139,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox4);
-        buttonBox4.setBounds(42, 340, 112, 112);
+        buttonBox4.setBounds(40, 350, 112, 112);
 
         buttonBox3.setContentAreaFilled(false);
         buttonBox3.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -151,7 +151,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox3);
-        buttonBox3.setBounds(298, 220, 112, 112);
+        buttonBox3.setBounds(300, 230, 112, 112);
 
         buttonBox2.setContentAreaFilled(false);
         buttonBox2.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -163,7 +163,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox2);
-        buttonBox2.setBounds(170, 220, 112, 112);
+        buttonBox2.setBounds(170, 230, 112, 112);
 
         buttonBox1.setContentAreaFilled(false);
         buttonBox1.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -175,7 +175,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox1);
-        buttonBox1.setBounds(42, 220, 112, 112);
+        buttonBox1.setBounds(40, 230, 112, 112);
 
         gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gameBackground.png"))); // NOI18N
         gamePage.add(gameBackground);
@@ -274,11 +274,24 @@ public class TrisGui extends javax.swing.JFrame {
                 type = "X";
             }
             
-            button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + type)));
+            button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + type + ".png")));
             trisPvP.checkWinner();
             } else {
                  JOptionPane.showMessageDialog(this, "Mossa non valida!", "Avviso", JOptionPane.WARNING_MESSAGE);
         }
+    }
+    
+    //reset pulsanti
+    public void resetButtos(){
+        buttonBox1.setIcon(null);
+        buttonBox2.setIcon(null);
+        buttonBox3.setIcon(null);
+        buttonBox4.setIcon(null);
+        buttonBox5.setIcon(null);
+        buttonBox6.setIcon(null);
+        buttonBox7.setIcon(null);
+        buttonBox8.setIcon(null);
+        buttonBox9.setIcon(null);
     }
     
     // Metodo per selezionare il pannello da visualizzare
@@ -291,6 +304,7 @@ public class TrisGui extends javax.swing.JFrame {
         // Imposta tutti i pannelli su false
         gamePage.setVisible(false);
         welcomePage.setVisible(false);
+        modePage.setVisible(false);
         
         // Attiva il pannello scelto
         switch (choice) {
@@ -298,6 +312,7 @@ public class TrisGui extends javax.swing.JFrame {
                 welcomePage.setVisible(true);
                 break;
             case MODE_PAGE:
+                modePage.setVisible(true);
                 break;
             case GAME_PAGE:
                 gamePage.setVisible(true);
