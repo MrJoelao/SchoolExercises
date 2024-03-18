@@ -304,6 +304,7 @@ public class TrisGui extends javax.swing.JFrame {
         // Imposta tutti i pannelli su false
         gamePage.setVisible(false);
         welcomePage.setVisible(false);
+        modePage.setVisible(false);
         
         // Attiva il pannello scelto
         switch (choice) {
@@ -311,6 +312,7 @@ public class TrisGui extends javax.swing.JFrame {
                 welcomePage.setVisible(true);
                 break;
             case MODE_PAGE:
+                modePage.setVisible(true);
                 break;
             case GAME_PAGE:
                 gamePage.setVisible(true);
