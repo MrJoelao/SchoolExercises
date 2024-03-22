@@ -54,6 +54,11 @@ public class TrisGui extends javax.swing.JFrame {
         settingsButton = new javax.swing.JButton();
         welcomeBackground = new javax.swing.JLabel();
         modePage = new javax.swing.JPanel();
+        AIPage = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        AIbackground = new javax.swing.JLabel();
         chooseMode = new javax.swing.JLabel();
         AIButton = new javax.swing.JButton();
         friendButton = new javax.swing.JButton();
@@ -224,6 +229,46 @@ public class TrisGui extends javax.swing.JFrame {
 
         modePage.setLayout(null);
 
+        AIPage.setOpaque(false);
+        AIPage.setLayout(null);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButton.png"))); // NOI18N
+        jButton2.setContentAreaFilled(false);
+        jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
+        jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonR.png"))); // NOI18N
+        jButton2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonRP.png"))); // NOI18N
+        AIPage.add(jButton2);
+        jButton2.setBounds(130, 280, 200, 60);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
+        jButton1.setContentAreaFilled(false);
+        jButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
+        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonR.png"))); // NOI18N
+        jButton1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonRP.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        AIPage.add(jButton1);
+        jButton1.setBounds(130, 160, 200, 60);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("OR");
+        AIPage.add(jLabel1);
+        jLabel1.setBounds(210, 240, 37, 16);
+
+        AIbackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AIbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modeAIPanel.png"))); // NOI18N
+        AIbackground.setPreferredSize(new java.awt.Dimension(0, 0));
+        AIPage.add(AIbackground);
+        AIbackground.setBounds(0, 0, 450, 430);
+
+        modePage.add(AIPage);
+        AIPage.setBounds(0, 30, 450, 430);
+
         chooseMode.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         chooseMode.setForeground(new java.awt.Color(255, 255, 255));
         chooseMode.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -247,6 +292,9 @@ public class TrisGui extends javax.swing.JFrame {
 
         friendButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButton.png"))); // NOI18N
         friendButton.setContentAreaFilled(false);
+        friendButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButtonP.png"))); // NOI18N
+        friendButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButtonR.png"))); // NOI18N
+        friendButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButtonRP.png"))); // NOI18N
         friendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 friendButtonActionPerformed(evt);
@@ -364,7 +412,7 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonBox9ActionPerformed
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
-        selectPannel(GAME_PAGE);
+        selectPannel(MODE_PAGE);
     }//GEN-LAST:event_continueButtonActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
@@ -378,6 +426,10 @@ public class TrisGui extends javax.swing.JFrame {
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_friendButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -416,6 +468,8 @@ public class TrisGui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AIButton;
+    private javax.swing.JPanel AIPage;
+    private javax.swing.JLabel AIbackground;
     private javax.swing.JButton buttonBox1;
     private javax.swing.JButton buttonBox2;
     private javax.swing.JButton buttonBox3;
@@ -430,6 +484,9 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton friendButton;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel modeBackground;
     private javax.swing.JPanel modePage;
     private javax.swing.JButton settingsButton;
