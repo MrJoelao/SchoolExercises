@@ -16,7 +16,7 @@ public class TrisGui extends javax.swing.JFrame {
     private static final int MODE_PAGE = 1;
     private static final int GAME_PAGE = 2;
     private static final int SETTINGS_PAGE = 3;
-    
+    private char vincitore;
     private TrisClass trisPvP;
     /**
      * Creates new form TrisGui
@@ -27,6 +27,7 @@ public class TrisGui extends javax.swing.JFrame {
         
         //metto il pannello principale di welcome
         selectPannel(WELCOME_PAGE);
+        
     }
 
     /**
@@ -323,7 +324,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
             
             button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + type + ".png")));
-            trisPvP.checkWinner();
+            
             } else {
                  JOptionPane.showMessageDialog(this, "Mossa non valida!", "Avviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -377,38 +378,65 @@ public class TrisGui extends javax.swing.JFrame {
     
     private void buttonBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox1ActionPerformed
         verifica(0,0, buttonBox1);
+        if(trisPvP.checkWinner()){
+            vincitore=trisPvP.getGiocatore_corrente();
+        }
     }//GEN-LAST:event_buttonBox1ActionPerformed
 
     private void buttonBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox2ActionPerformed
         verifica(0,1, buttonBox2);
+        if(trisPvP.checkWinner()){
+            vincitore=trisPvP.getGiocatore_corrente();
+        }
     }//GEN-LAST:event_buttonBox2ActionPerformed
 
     private void buttonBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox3ActionPerformed
         verifica(0,2, buttonBox3);
+        if(trisPvP.checkWinner()){
+            vincitore=trisPvP.getGiocatore_corrente();
+        }
     }//GEN-LAST:event_buttonBox3ActionPerformed
 
     private void buttonBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox4ActionPerformed
         verifica(1,0, buttonBox4);
+        if(trisPvP.checkWinner()){
+            vincitore=trisPvP.getGiocatore_corrente();
+        }
     }//GEN-LAST:event_buttonBox4ActionPerformed
 
     private void buttonBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox5ActionPerformed
         verifica(1,1, buttonBox5);
+        if(trisPvP.checkWinner()){
+            vincitore=trisPvP.getGiocatore_corrente();
+        }
     }//GEN-LAST:event_buttonBox5ActionPerformed
 
     private void buttonBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox6ActionPerformed
         verifica(1,2, buttonBox6);
+        if(trisPvP.checkWinner()){
+            vincitore=trisPvP.getGiocatore_corrente();
+        }
     }//GEN-LAST:event_buttonBox6ActionPerformed
 
     private void buttonBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox7ActionPerformed
         verifica(2,0, buttonBox7);
+        if(trisPvP.checkWinner()){
+            vincitore=trisPvP.getGiocatore_corrente();
+        }
     }//GEN-LAST:event_buttonBox7ActionPerformed
 
     private void buttonBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox8ActionPerformed
         verifica(2,1, buttonBox8);
+        if(trisPvP.checkWinner()){
+            vincitore=trisPvP.getGiocatore_corrente();
+        }
     }//GEN-LAST:event_buttonBox8ActionPerformed
 
     private void buttonBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox9ActionPerformed
         verifica(2,2, buttonBox9);
+        if(trisPvP.checkWinner()){
+            vincitore=trisPvP.getGiocatore_corrente();
+        }
     }//GEN-LAST:event_buttonBox9ActionPerformed
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
@@ -424,7 +452,7 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_AIButtonActionPerformed
 
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendButtonActionPerformed
-        // TODO add your handling code here:
+        selectPannel(GAME_PAGE);
     }//GEN-LAST:event_friendButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
