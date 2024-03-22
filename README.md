@@ -1,6 +1,6 @@
 # FlightCompany
 School Exercise: Simulation of a java app for controlling flights, tickets and equipped with a login manager. <br>
-Resources: A number of resources are used for the tris, such as images, [icons](https://www.flaticon.com), sounds for the app.
+Resources: A number of resources are used for the tris, such as images, [icons](https://www.flaticon.com), sounds for the app. <br>
 Mockup: To make the application design, I used [figma](https://www.figma.com/file/9oJWv6QqZxwpa8mGM1PKss/Airline-progetto?type=design&node-id=0%3A1&mode=design&t=SdhaPb2vjNPtnWZw-1)
 ![Screenshot1](https://github.com/MrJoelao/FlightCompany/assets/108810123/d79bf278-1101-4af4-a3ba-bf7646b5d356)
 ![Screenshot2](https://github.com/MrJoelao/FlightCompany/assets/108810123/848138ab-2817-4e18-9a4e-e017e88f6f23)
