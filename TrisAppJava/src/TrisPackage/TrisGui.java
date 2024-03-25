@@ -236,6 +236,11 @@ public class TrisGui extends javax.swing.JFrame {
         jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
         jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonR.png"))); // NOI18N
         jButton2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonRP.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         AIPage.add(jButton2);
         jButton2.setBounds(132, 470, 190, 60);
 
@@ -450,13 +455,16 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_AIButtonActionPerformed
 
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendButtonActionPerformed
-        AIPage.setVisible(false);
-        //selectPannel(GAME_PAGE);
+        selectPannel(GAME_PAGE);
     }//GEN-LAST:event_friendButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        selectPannel(GAME_PAGE);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        selectPannel(GAME_PAGE);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
