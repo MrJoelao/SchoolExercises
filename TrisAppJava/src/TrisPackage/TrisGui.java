@@ -68,7 +68,7 @@ public class TrisGui extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
         setMinimumSize(new java.awt.Dimension(450, 800));
-        getContentPane().setLayout(null);
+        getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
         gamePage.setMaximumSize(new java.awt.Dimension(450, 800));
         gamePage.setMinimumSize(new java.awt.Dimension(450, 800));
@@ -188,7 +188,6 @@ public class TrisGui extends javax.swing.JFrame {
         gameBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(gamePage);
-        gamePage.setBounds(0, 0, 450, 800);
 
         welcomePage.setMaximumSize(new java.awt.Dimension(450, 800));
         welcomePage.setMinimumSize(new java.awt.Dimension(450, 800));
@@ -206,7 +205,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         welcomePage.add(continueButton);
-        continueButton.setBounds(150, 540, 130, 60);
+        continueButton.setBounds(150, 610, 130, 60);
 
         settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButton.png"))); // NOI18N
         settingsButton.setContentAreaFilled(false);
@@ -219,14 +218,13 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         welcomePage.add(settingsButton);
-        settingsButton.setBounds(200, 610, 40, 40);
+        settingsButton.setBounds(200, 680, 40, 40);
 
         welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomeBackground.png"))); // NOI18N
         welcomePage.add(welcomeBackground);
         welcomeBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(welcomePage);
-        welcomePage.setBounds(0, 0, 450, 800);
 
         modePage.setLayout(null);
 
@@ -239,7 +237,7 @@ public class TrisGui extends javax.swing.JFrame {
         jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonR.png"))); // NOI18N
         jButton2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonRP.png"))); // NOI18N
         AIPage.add(jButton2);
-        jButton2.setBounds(130, 280, 200, 60);
+        jButton2.setBounds(132, 470, 190, 60);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
         jButton1.setContentAreaFilled(false);
@@ -252,23 +250,23 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         AIPage.add(jButton1);
-        jButton1.setBounds(130, 160, 200, 60);
+        jButton1.setBounds(132, 330, 190, 60);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("OR");
         AIPage.add(jLabel1);
-        jLabel1.setBounds(210, 240, 37, 16);
+        jLabel1.setBounds(52, 376, 347, 100);
 
         AIbackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         AIbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modeAIPanel.png"))); // NOI18N
         AIbackground.setPreferredSize(new java.awt.Dimension(0, 0));
         AIPage.add(AIbackground);
-        AIbackground.setBounds(0, 0, 450, 430);
+        AIbackground.setBounds(0, 0, 450, 800);
 
         modePage.add(AIPage);
-        AIPage.setBounds(0, 30, 450, 430);
+        AIPage.setBounds(0, 0, 450, 800);
 
         chooseMode.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         chooseMode.setForeground(new java.awt.Color(255, 255, 255));
@@ -309,7 +307,6 @@ public class TrisGui extends javax.swing.JFrame {
         modeBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(modePage);
-        modePage.setBounds(0, 0, 450, 800);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -362,6 +359,7 @@ public class TrisGui extends javax.swing.JFrame {
                 break;
             case MODE_PAGE:
                 modePage.setVisible(true);
+                AIPage.setVisible(false);
                 break;
             case GAME_PAGE:
                 gamePage.setVisible(true);
@@ -448,11 +446,12 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     private void AIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AIButtonActionPerformed
-        // TODO add your handling code here:
+        AIPage.setVisible(true);
     }//GEN-LAST:event_AIButtonActionPerformed
 
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendButtonActionPerformed
-        selectPannel(GAME_PAGE);
+        AIPage.setVisible(false);
+        //selectPannel(GAME_PAGE);
     }//GEN-LAST:event_friendButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
