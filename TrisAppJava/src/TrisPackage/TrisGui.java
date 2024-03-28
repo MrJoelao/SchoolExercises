@@ -332,10 +332,12 @@ public class TrisGui extends javax.swing.JFrame {
         }
         
         if(trisPvP.checkWinner()){
-            vincitore=trisPvP.getGiocatore_corrente();
-            
-            //temporaneo
-            JOptionPane.showMessageDialog(this, "vittoria", "Avviso", JOptionPane.WARNING_MESSAGE); 
+            if(trisPvP.getGiocatore_corrente()=='O'){
+                vincitore='X';
+            }else{
+                vincitore='O';
+            }
+            JOptionPane.showMessageDialog(this, "Vittoria  per il giocatore: "+vincitore, "Avviso", JOptionPane.WARNING_MESSAGE); 
             
             //winPanel();
         }
