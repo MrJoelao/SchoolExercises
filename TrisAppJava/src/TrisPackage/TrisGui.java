@@ -40,8 +40,6 @@ public class TrisGui extends javax.swing.JFrame {
     private void initComponents() {
 
         gamePage = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        winRedBackground = new javax.swing.JLabel();
         buttonBox9 = new javax.swing.JButton();
         buttonBox8 = new javax.swing.JButton();
         buttonBox7 = new javax.swing.JButton();
@@ -76,13 +74,6 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.setMinimumSize(new java.awt.Dimension(450, 800));
         gamePage.setPreferredSize(new java.awt.Dimension(450, 800));
         gamePage.setLayout(null);
-
-        jPanel1.setLayout(null);
-        jPanel1.add(winRedBackground);
-        winRedBackground.setBounds(0, 0, 450, 390);
-
-        gamePage.add(jPanel1);
-        jPanel1.setBounds(0, 0, 450, 390);
 
         buttonBox9.setContentAreaFilled(false);
         buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -515,12 +506,10 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel modeBackground;
     private javax.swing.JPanel modePage;
     private javax.swing.JButton settingsButton;
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;
-    private javax.swing.JLabel winRedBackground;
     // End of variables declaration//GEN-END:variables
 }
