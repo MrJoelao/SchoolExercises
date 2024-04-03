@@ -40,6 +40,9 @@ public class TrisGui extends javax.swing.JFrame {
     private void initComponents() {
 
         gamePage = new javax.swing.JPanel();
+        errorPanel = new javax.swing.JPanel();
+        blueWinPanel = new javax.swing.JPanel();
+        redWinBlue = new javax.swing.JPanel();
         buttonBox9 = new javax.swing.JButton();
         buttonBox8 = new javax.swing.JButton();
         buttonBox7 = new javax.swing.JButton();
@@ -54,12 +57,16 @@ public class TrisGui extends javax.swing.JFrame {
         continueButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         welcomeBackground = new javax.swing.JLabel();
-        modePage = new javax.swing.JPanel();
+        loginPage = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        loginBackground = new javax.swing.JLabel();
         chooseTeamPage = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         teamBlueButton = new javax.swing.JButton();
         teamRedButton = new javax.swing.JButton();
         orText = new javax.swing.JLabel();
         chooseTeamBackground = new javax.swing.JLabel();
+        modePage = new javax.swing.JPanel();
         chooseMode = new javax.swing.JLabel();
         AIButton = new javax.swing.JButton();
         friendButton = new javax.swing.JButton();
@@ -74,6 +81,18 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.setMinimumSize(new java.awt.Dimension(450, 800));
         gamePage.setPreferredSize(new java.awt.Dimension(450, 800));
         gamePage.setLayout(null);
+
+        errorPanel.setLayout(null);
+        gamePage.add(errorPanel);
+        errorPanel.setBounds(200, 210, 100, 100);
+
+        blueWinPanel.setLayout(null);
+        gamePage.add(blueWinPanel);
+        blueWinPanel.setBounds(170, 270, 100, 100);
+
+        redWinBlue.setLayout(null);
+        gamePage.add(redWinBlue);
+        redWinBlue.setBounds(260, 260, 100, 100);
 
         buttonBox9.setContentAreaFilled(false);
         buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -226,10 +245,30 @@ public class TrisGui extends javax.swing.JFrame {
 
         getContentPane().add(welcomePage);
 
-        modePage.setLayout(null);
+        loginPage.setLayout(null);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Login");
+        loginPage.add(jLabel2);
+        jLabel2.setBounds(50, 280, 350, 32);
+
+        loginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/loginBackground.png"))); // NOI18N
+        loginPage.add(loginBackground);
+        loginBackground.setBounds(0, 0, 450, 800);
+
+        getContentPane().add(loginPage);
 
         chooseTeamPage.setOpaque(false);
         chooseTeamPage.setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Choose your team!");
+        chooseTeamPage.add(jLabel1);
+        jLabel1.setBounds(60, 290, 340, 21);
 
         teamBlueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButton.png"))); // NOI18N
         teamBlueButton.setContentAreaFilled(false);
@@ -242,7 +281,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         chooseTeamPage.add(teamBlueButton);
-        teamBlueButton.setBounds(132, 470, 190, 60);
+        teamBlueButton.setBounds(60, 450, 340, 60);
 
         teamRedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
         teamRedButton.setContentAreaFilled(false);
@@ -255,30 +294,31 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         chooseTeamPage.add(teamRedButton);
-        teamRedButton.setBounds(132, 330, 190, 60);
+        teamRedButton.setBounds(60, 350, 340, 60);
 
         orText.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         orText.setForeground(new java.awt.Color(255, 255, 255));
         orText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         orText.setText("OR");
         chooseTeamPage.add(orText);
-        orText.setBounds(52, 376, 347, 100);
+        orText.setBounds(59, 376, 340, 100);
 
         chooseTeamBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        chooseTeamBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modeAIPanel.png"))); // NOI18N
+        chooseTeamBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/chooseTeamBackground.png"))); // NOI18N
         chooseTeamBackground.setPreferredSize(new java.awt.Dimension(0, 0));
         chooseTeamPage.add(chooseTeamBackground);
         chooseTeamBackground.setBounds(0, 0, 450, 800);
 
-        modePage.add(chooseTeamPage);
-        chooseTeamPage.setBounds(0, 0, 450, 800);
+        getContentPane().add(chooseTeamPage);
+
+        modePage.setLayout(null);
 
         chooseMode.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         chooseMode.setForeground(new java.awt.Color(255, 255, 255));
         chooseMode.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         chooseMode.setText("Choose your play mode:");
         modePage.add(chooseMode);
-        chooseMode.setBounds(110, 480, 240, 30);
+        chooseMode.setBounds(110, 510, 240, 30);
 
         AIButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButton.png"))); // NOI18N
         AIButton.setContentAreaFilled(false);
@@ -292,7 +332,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         modePage.add(AIButton);
-        AIButton.setBounds(160, 520, 130, 60);
+        AIButton.setBounds(160, 560, 130, 60);
 
         friendButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButton.png"))); // NOI18N
         friendButton.setContentAreaFilled(false);
@@ -305,7 +345,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         modePage.add(friendButton);
-        friendButton.setBounds(160, 580, 130, 60);
+        friendButton.setBounds(160, 620, 130, 60);
 
         modeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modeBackground.png"))); // NOI18N
         modePage.add(modeBackground);
@@ -487,6 +527,7 @@ public class TrisGui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AIButton;
+    private javax.swing.JPanel blueWinPanel;
     private javax.swing.JButton buttonBox1;
     private javax.swing.JButton buttonBox2;
     private javax.swing.JButton buttonBox3;
@@ -500,12 +541,18 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel chooseTeamBackground;
     private javax.swing.JPanel chooseTeamPage;
     private javax.swing.JButton continueButton;
+    private javax.swing.JPanel errorPanel;
     private javax.swing.JButton friendButton;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel loginBackground;
+    private javax.swing.JPanel loginPage;
     private javax.swing.JLabel modeBackground;
     private javax.swing.JPanel modePage;
     private javax.swing.JLabel orText;
+    private javax.swing.JPanel redWinBlue;
     private javax.swing.JButton settingsButton;
     private javax.swing.JButton teamBlueButton;
     private javax.swing.JButton teamRedButton;
