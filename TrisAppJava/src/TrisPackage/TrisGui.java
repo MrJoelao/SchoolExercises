@@ -39,6 +39,15 @@ public class TrisGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        welcomePage = new javax.swing.JPanel();
+        continueButton = new javax.swing.JButton();
+        settingsButton = new javax.swing.JButton();
+        welcomeBackground = new javax.swing.JLabel();
+        modePage = new javax.swing.JPanel();
+        chooseMode = new javax.swing.JLabel();
+        AIButton = new javax.swing.JButton();
+        friendButton = new javax.swing.JButton();
+        modeBackground = new javax.swing.JLabel();
         gamePage = new javax.swing.JPanel();
         errorPanel = new javax.swing.JPanel();
         blueWinPanel = new javax.swing.JPanel();
@@ -53,29 +62,99 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox2 = new javax.swing.JButton();
         buttonBox1 = new javax.swing.JButton();
         gameBackground = new javax.swing.JLabel();
-        welcomePage = new javax.swing.JPanel();
-        continueButton = new javax.swing.JButton();
-        settingsButton = new javax.swing.JButton();
-        welcomeBackground = new javax.swing.JLabel();
         loginPage = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         loginBackground = new javax.swing.JLabel();
         chooseTeamPage = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        teamBlueButton = new javax.swing.JButton();
-        teamRedButton = new javax.swing.JButton();
-        orText = new javax.swing.JLabel();
-        chooseTeamBackground = new javax.swing.JLabel();
-        modePage = new javax.swing.JPanel();
-        chooseMode = new javax.swing.JLabel();
-        AIButton = new javax.swing.JButton();
-        friendButton = new javax.swing.JButton();
-        modeBackground = new javax.swing.JLabel();
+        teamBlueButton1 = new javax.swing.JButton();
+        teamRedButton1 = new javax.swing.JButton();
+        orText1 = new javax.swing.JLabel();
+        chooseTeamBackground1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
         setMinimumSize(new java.awt.Dimension(450, 800));
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
+
+        welcomePage.setMaximumSize(new java.awt.Dimension(450, 800));
+        welcomePage.setMinimumSize(new java.awt.Dimension(450, 800));
+        welcomePage.setPreferredSize(new java.awt.Dimension(450, 800));
+        welcomePage.setLayout(null);
+
+        continueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
+        continueButton.setContentAreaFilled(false);
+        continueButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonP.png"))); // NOI18N
+        continueButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonR.png"))); // NOI18N
+        continueButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonRP.png"))); // NOI18N
+        continueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continueButtonActionPerformed(evt);
+            }
+        });
+        welcomePage.add(continueButton);
+        continueButton.setBounds(150, 610, 130, 60);
+
+        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButton.png"))); // NOI18N
+        settingsButton.setContentAreaFilled(false);
+        settingsButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonR.png"))); // NOI18N
+        settingsButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonRP.png"))); // NOI18N
+        settingsButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonP.png"))); // NOI18N
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonActionPerformed(evt);
+            }
+        });
+        welcomePage.add(settingsButton);
+        settingsButton.setBounds(200, 680, 40, 40);
+
+        welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomeBackground.png"))); // NOI18N
+        welcomePage.add(welcomeBackground);
+        welcomeBackground.setBounds(0, 0, 450, 800);
+
+        getContentPane().add(welcomePage);
+
+        modePage.setLayout(null);
+
+        chooseMode.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        chooseMode.setForeground(new java.awt.Color(255, 255, 255));
+        chooseMode.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chooseMode.setText("Choose your play mode:");
+        modePage.add(chooseMode);
+        chooseMode.setBounds(110, 510, 240, 30);
+
+        AIButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButton.png"))); // NOI18N
+        AIButton.setContentAreaFilled(false);
+        AIButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        AIButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButtonP.png"))); // NOI18N
+        AIButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButtonR.png"))); // NOI18N
+        AIButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButtonRP.png"))); // NOI18N
+        AIButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AIButtonActionPerformed(evt);
+            }
+        });
+        modePage.add(AIButton);
+        AIButton.setBounds(160, 560, 130, 60);
+
+        friendButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButton.png"))); // NOI18N
+        friendButton.setContentAreaFilled(false);
+        friendButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButtonP.png"))); // NOI18N
+        friendButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButtonR.png"))); // NOI18N
+        friendButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButtonRP.png"))); // NOI18N
+        friendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                friendButtonActionPerformed(evt);
+            }
+        });
+        modePage.add(friendButton);
+        friendButton.setBounds(160, 620, 130, 60);
+
+        modeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modeBackground.png"))); // NOI18N
+        modePage.add(modeBackground);
+        modeBackground.setBounds(0, 0, 450, 800);
+
+        getContentPane().add(modePage);
 
         gamePage.setMaximumSize(new java.awt.Dimension(450, 800));
         gamePage.setMinimumSize(new java.awt.Dimension(450, 800));
@@ -84,15 +163,15 @@ public class TrisGui extends javax.swing.JFrame {
 
         errorPanel.setLayout(null);
         gamePage.add(errorPanel);
-        errorPanel.setBounds(200, 210, 100, 100);
+        errorPanel.setBounds(200, 210, 0, 0);
 
         blueWinPanel.setLayout(null);
         gamePage.add(blueWinPanel);
-        blueWinPanel.setBounds(170, 270, 100, 100);
+        blueWinPanel.setBounds(170, 270, 0, 0);
 
         redWinBlue.setLayout(null);
         gamePage.add(redWinBlue);
-        redWinBlue.setBounds(260, 260, 100, 100);
+        redWinBlue.setBounds(260, 260, 0, 0);
 
         buttonBox9.setContentAreaFilled(false);
         buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -208,43 +287,6 @@ public class TrisGui extends javax.swing.JFrame {
 
         getContentPane().add(gamePage);
 
-        welcomePage.setMaximumSize(new java.awt.Dimension(450, 800));
-        welcomePage.setMinimumSize(new java.awt.Dimension(450, 800));
-        welcomePage.setPreferredSize(new java.awt.Dimension(450, 800));
-        welcomePage.setLayout(null);
-
-        continueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
-        continueButton.setContentAreaFilled(false);
-        continueButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonP.png"))); // NOI18N
-        continueButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonR.png"))); // NOI18N
-        continueButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonRP.png"))); // NOI18N
-        continueButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                continueButtonActionPerformed(evt);
-            }
-        });
-        welcomePage.add(continueButton);
-        continueButton.setBounds(150, 610, 130, 60);
-
-        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButton.png"))); // NOI18N
-        settingsButton.setContentAreaFilled(false);
-        settingsButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonR.png"))); // NOI18N
-        settingsButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonRP.png"))); // NOI18N
-        settingsButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonP.png"))); // NOI18N
-        settingsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                settingsButtonActionPerformed(evt);
-            }
-        });
-        welcomePage.add(settingsButton);
-        settingsButton.setBounds(200, 680, 40, 40);
-
-        welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomeBackground.png"))); // NOI18N
-        welcomePage.add(welcomeBackground);
-        welcomeBackground.setBounds(0, 0, 450, 800);
-
-        getContentPane().add(welcomePage);
-
         loginPage.setLayout(null);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -270,88 +312,46 @@ public class TrisGui extends javax.swing.JFrame {
         chooseTeamPage.add(jLabel1);
         jLabel1.setBounds(60, 290, 340, 21);
 
-        teamBlueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButton.png"))); // NOI18N
-        teamBlueButton.setContentAreaFilled(false);
-        teamBlueButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
-        teamBlueButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonR.png"))); // NOI18N
-        teamBlueButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonRP.png"))); // NOI18N
-        teamBlueButton.addActionListener(new java.awt.event.ActionListener() {
+        teamBlueButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButton.png"))); // NOI18N
+        teamBlueButton1.setContentAreaFilled(false);
+        teamBlueButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
+        teamBlueButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonR.png"))); // NOI18N
+        teamBlueButton1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonRP.png"))); // NOI18N
+        teamBlueButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 teamBlueButtonActionPerformed(evt);
             }
         });
-        chooseTeamPage.add(teamBlueButton);
-        teamBlueButton.setBounds(60, 450, 340, 60);
+        chooseTeamPage.add(teamBlueButton1);
+        teamBlueButton1.setBounds(60, 450, 340, 60);
 
-        teamRedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
-        teamRedButton.setContentAreaFilled(false);
-        teamRedButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
-        teamRedButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonR.png"))); // NOI18N
-        teamRedButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonRP.png"))); // NOI18N
-        teamRedButton.addActionListener(new java.awt.event.ActionListener() {
+        teamRedButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
+        teamRedButton1.setContentAreaFilled(false);
+        teamRedButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
+        teamRedButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonR.png"))); // NOI18N
+        teamRedButton1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonRP.png"))); // NOI18N
+        teamRedButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 teamRedButtonActionPerformed(evt);
             }
         });
-        chooseTeamPage.add(teamRedButton);
-        teamRedButton.setBounds(60, 350, 340, 60);
+        chooseTeamPage.add(teamRedButton1);
+        teamRedButton1.setBounds(60, 350, 340, 60);
 
-        orText.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        orText.setForeground(new java.awt.Color(255, 255, 255));
-        orText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        orText.setText("OR");
-        chooseTeamPage.add(orText);
-        orText.setBounds(59, 376, 340, 100);
+        orText1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        orText1.setForeground(new java.awt.Color(255, 255, 255));
+        orText1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        orText1.setText("OR");
+        chooseTeamPage.add(orText1);
+        orText1.setBounds(59, 376, 340, 100);
 
-        chooseTeamBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        chooseTeamBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/chooseTeamBackground.png"))); // NOI18N
-        chooseTeamBackground.setPreferredSize(new java.awt.Dimension(0, 0));
-        chooseTeamPage.add(chooseTeamBackground);
-        chooseTeamBackground.setBounds(0, 0, 450, 800);
+        chooseTeamBackground1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chooseTeamBackground1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/chooseTeamBackground.png"))); // NOI18N
+        chooseTeamBackground1.setPreferredSize(new java.awt.Dimension(0, 0));
+        chooseTeamPage.add(chooseTeamBackground1);
+        chooseTeamBackground1.setBounds(0, 0, 450, 800);
 
         getContentPane().add(chooseTeamPage);
-
-        modePage.setLayout(null);
-
-        chooseMode.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        chooseMode.setForeground(new java.awt.Color(255, 255, 255));
-        chooseMode.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        chooseMode.setText("Choose your play mode:");
-        modePage.add(chooseMode);
-        chooseMode.setBounds(110, 510, 240, 30);
-
-        AIButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButton.png"))); // NOI18N
-        AIButton.setContentAreaFilled(false);
-        AIButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        AIButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButtonP.png"))); // NOI18N
-        AIButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButtonR.png"))); // NOI18N
-        AIButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AIButtonRP.png"))); // NOI18N
-        AIButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AIButtonActionPerformed(evt);
-            }
-        });
-        modePage.add(AIButton);
-        AIButton.setBounds(160, 560, 130, 60);
-
-        friendButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButton.png"))); // NOI18N
-        friendButton.setContentAreaFilled(false);
-        friendButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButtonP.png"))); // NOI18N
-        friendButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButtonR.png"))); // NOI18N
-        friendButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/friendButtonRP.png"))); // NOI18N
-        friendButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                friendButtonActionPerformed(evt);
-            }
-        });
-        modePage.add(friendButton);
-        friendButton.setBounds(160, 620, 130, 60);
-
-        modeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modeBackground.png"))); // NOI18N
-        modePage.add(modeBackground);
-        modeBackground.setBounds(0, 0, 450, 800);
-
-        getContentPane().add(modePage);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -538,7 +538,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton buttonBox8;
     private javax.swing.JButton buttonBox9;
     private javax.swing.JLabel chooseMode;
-    private javax.swing.JLabel chooseTeamBackground;
+    private javax.swing.JLabel chooseTeamBackground1;
     private javax.swing.JPanel chooseTeamPage;
     private javax.swing.JButton continueButton;
     private javax.swing.JPanel errorPanel;
@@ -551,11 +551,11 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JPanel loginPage;
     private javax.swing.JLabel modeBackground;
     private javax.swing.JPanel modePage;
-    private javax.swing.JLabel orText;
+    private javax.swing.JLabel orText1;
     private javax.swing.JPanel redWinBlue;
     private javax.swing.JButton settingsButton;
-    private javax.swing.JButton teamBlueButton;
-    private javax.swing.JButton teamRedButton;
+    private javax.swing.JButton teamBlueButton1;
+    private javax.swing.JButton teamRedButton1;
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;
     // End of variables declaration//GEN-END:variables
