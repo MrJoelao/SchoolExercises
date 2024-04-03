@@ -46,7 +46,12 @@ public class TrisGui extends javax.swing.JFrame {
         settingsButton = new javax.swing.JButton();
         welcomeBackground = new javax.swing.JLabel();
         loginPage = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        continueButton2 = new javax.swing.JButton();
+        orText1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         loginBackground = new javax.swing.JLabel();
         modePage = new javax.swing.JPanel();
         chooseMode = new javax.swing.JLabel();
@@ -119,9 +124,50 @@ public class TrisGui extends javax.swing.JFrame {
 
         loginPage.setLayout(null);
 
-        jTextField2.setText("jTextField2");
-        loginPage.add(jTextField2);
-        jTextField2.setBounds(150, 340, 210, 30);
+        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField1.setText("Username");
+        jTextField1.setBorder(null);
+        loginPage.add(jTextField1);
+        jTextField1.setBounds(160, 339, 190, 30);
+
+        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
+        jPasswordField1.setText("Password");
+        jPasswordField1.setBorder(null);
+        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField1ActionPerformed(evt);
+            }
+        });
+        loginPage.add(jPasswordField1);
+        jPasswordField1.setBounds(160, 414, 190, 30);
+
+        continueButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
+        continueButton2.setContentAreaFilled(false);
+        continueButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonP.png"))); // NOI18N
+        continueButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonR.png"))); // NOI18N
+        continueButton2.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonRP.png"))); // NOI18N
+        continueButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continueButton2ActionPerformed(evt);
+            }
+        });
+        loginPage.add(continueButton2);
+        continueButton2.setBounds(170, 650, 100, 50);
+
+        orText1.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
+        orText1.setForeground(new java.awt.Color(255, 255, 255));
+        orText1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        orText1.setText("Login");
+        loginPage.add(orText1);
+        orText1.setBounds(50, 270, 348, 50);
+
+        jButton1.setText("jButton1");
+        loginPage.add(jButton1);
+        jButton1.setBounds(100, 480, 75, 23);
+
+        jButton2.setText("jButton2");
+        loginPage.add(jButton2);
+        jButton2.setBounds(260, 480, 75, 23);
 
         loginBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/loginBackground.png"))); // NOI18N
@@ -515,6 +561,14 @@ public class TrisGui extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_continueButton1ActionPerformed
 
+    private void continueButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_continueButton2ActionPerformed
+
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -567,16 +621,21 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JPanel chooseTeamPage;
     private javax.swing.JButton continueButton;
     private javax.swing.JButton continueButton1;
+    private javax.swing.JButton continueButton2;
     private javax.swing.JPanel errorPanel;
     private javax.swing.JButton friendButton;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel loginBackground;
     private javax.swing.JPanel loginPage;
     private javax.swing.JLabel modeBackground;
     private javax.swing.JPanel modePage;
     private javax.swing.JLabel orText;
+    private javax.swing.JLabel orText1;
     private javax.swing.JPanel redWinBlue;
     private javax.swing.JButton returnButton;
     private javax.swing.JButton settingsButton;
