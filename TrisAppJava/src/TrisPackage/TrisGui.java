@@ -66,8 +66,18 @@ public class TrisGui extends javax.swing.JFrame {
         chooseTeamBackground = new javax.swing.JLabel();
         gamePage = new javax.swing.JPanel();
         errorPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        cancelButton1 = new javax.swing.JButton();
+        errorMessageBackground = new javax.swing.JLabel();
         blueWinPanel = new javax.swing.JPanel();
-        redWinBlue = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        cancelButton = new javax.swing.JButton();
+        blueWinBackground = new javax.swing.JLabel();
+        redWinPanel = new javax.swing.JPanel();
+        cancelButton2 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        redWinBackground = new javax.swing.JLabel();
         buttonBox9 = new javax.swing.JButton();
         buttonBox8 = new javax.swing.JButton();
         buttonBox7 = new javax.swing.JButton();
@@ -280,17 +290,89 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.setPreferredSize(new java.awt.Dimension(450, 800));
         gamePage.setLayout(null);
 
+        errorPanel.setOpaque(false);
         errorPanel.setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Invalid move");
+        errorPanel.add(jLabel1);
+        jLabel1.setBounds(50, 370, 350, 31);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Error: move chosen invalid, try again by choosing another box.");
+        errorPanel.add(jLabel2);
+        jLabel2.setBounds(70, 420, 310, 30);
+
+        cancelButton1.setContentAreaFilled(false);
+        cancelButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButton1ActionPerformed(evt);
+            }
+        });
+        errorPanel.add(cancelButton1);
+        cancelButton1.setBounds(354, 340, 30, 30);
+
+        errorMessageBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/errorMessage.png"))); // NOI18N
+        errorPanel.add(errorMessageBackground);
+        errorMessageBackground.setBounds(0, 0, 450, 800);
+
         gamePage.add(errorPanel);
-        errorPanel.setBounds(200, 210, 0, 0);
+        errorPanel.setBounds(0, 0, 450, 800);
 
+        blueWinPanel.setOpaque(false);
         blueWinPanel.setLayout(null);
-        gamePage.add(blueWinPanel);
-        blueWinPanel.setBounds(170, 270, 0, 0);
 
-        redWinBlue.setLayout(null);
-        gamePage.add(redWinBlue);
-        redWinBlue.setBounds(260, 260, 0, 0);
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Team Blue win!");
+        blueWinPanel.add(jLabel5);
+        jLabel5.setBounds(70, 330, 310, 25);
+
+        cancelButton.setContentAreaFilled(false);
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+        blueWinPanel.add(cancelButton);
+        cancelButton.setBounds(368, 281, 30, 30);
+
+        blueWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/blueWin.png"))); // NOI18N
+        blueWinPanel.add(blueWinBackground);
+        blueWinBackground.setBounds(0, 0, 450, 800);
+
+        gamePage.add(blueWinPanel);
+        blueWinPanel.setBounds(0, 220, 450, 220);
+
+        redWinPanel.setOpaque(false);
+        redWinPanel.setLayout(null);
+
+        cancelButton2.setContentAreaFilled(false);
+        cancelButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButton2ActionPerformed(evt);
+            }
+        });
+        redWinPanel.add(cancelButton2);
+        cancelButton2.setBounds(368, 281, 30, 30);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Team Red Win!");
+        redWinPanel.add(jLabel4);
+        jLabel4.setBounds(70, 330, 310, 25);
+
+        redWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/redWin.png"))); // NOI18N
+        redWinPanel.add(redWinBackground);
+        redWinBackground.setBounds(0, 0, 450, 800);
+
+        gamePage.add(redWinPanel);
+        redWinPanel.setBounds(260, 260, 0, 0);
 
         buttonBox9.setContentAreaFilled(false);
         buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -561,6 +643,17 @@ public class TrisGui extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_continueButton1ActionPerformed
 
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void cancelButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelButton1ActionPerformed
+
+    private void cancelButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelButton2ActionPerformed
     private void continueButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_continueButton2ActionPerformed
@@ -606,6 +699,7 @@ public class TrisGui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AIButton;
+    private javax.swing.JLabel blueWinBackground;
     private javax.swing.JPanel blueWinPanel;
     private javax.swing.JButton buttonBox1;
     private javax.swing.JButton buttonBox2;
@@ -616,18 +710,26 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton buttonBox7;
     private javax.swing.JButton buttonBox8;
     private javax.swing.JButton buttonBox9;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton cancelButton1;
+    private javax.swing.JButton cancelButton2;
     private javax.swing.JLabel chooseMode;
     private javax.swing.JLabel chooseTeamBackground;
     private javax.swing.JPanel chooseTeamPage;
     private javax.swing.JButton continueButton;
     private javax.swing.JButton continueButton1;
     private javax.swing.JButton continueButton2;
+    private javax.swing.JLabel errorMessageBackground;
     private javax.swing.JPanel errorPanel;
     private javax.swing.JButton friendButton;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel loginBackground;
@@ -636,7 +738,8 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JPanel modePage;
     private javax.swing.JLabel orText;
     private javax.swing.JLabel orText1;
-    private javax.swing.JPanel redWinBlue;
+    private javax.swing.JLabel redWinBackground;
+    private javax.swing.JPanel redWinPanel;
     private javax.swing.JButton returnButton;
     private javax.swing.JButton settingsButton;
     private javax.swing.JButton teamBlueButton;
