@@ -71,8 +71,8 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox3 = new javax.swing.JButton();
         buttonBox2 = new javax.swing.JButton();
         buttonBox1 = new javax.swing.JButton();
+        returnButton = new javax.swing.JButton();
         gameBackground = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
@@ -340,13 +340,17 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(buttonBox1);
         buttonBox1.setBounds(40, 230, 112, 112);
 
+        returnButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverse.png"))); // NOI18N
+        returnButton.setContentAreaFilled(false);
+        returnButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseP.png"))); // NOI18N
+        returnButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseR.png"))); // NOI18N
+        returnButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseRP.png"))); // NOI18N
+        gamePage.add(returnButton);
+        returnButton.setBounds(180, 660, 100, 60);
+
         gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gameBackground.png"))); // NOI18N
         gamePage.add(gameBackground);
         gameBackground.setBounds(0, 0, 450, 800);
-
-        jButton1.setText("jButton1");
-        gamePage.add(jButton1);
-        jButton1.setBounds(190, 670, 75, 30);
 
         getContentPane().add(gamePage);
 
@@ -548,7 +552,6 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton friendButton;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
-    private javax.swing.JButton jButton1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel loginBackground;
     private javax.swing.JPanel loginPage;
@@ -556,6 +559,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JPanel modePage;
     private javax.swing.JLabel orText;
     private javax.swing.JPanel redWinBlue;
+    private javax.swing.JButton returnButton;
     private javax.swing.JButton settingsButton;
     private javax.swing.JButton teamBlueButton;
     private javax.swing.JButton teamRedButton;
