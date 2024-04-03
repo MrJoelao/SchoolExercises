@@ -15,7 +15,7 @@ public class TrisGui extends javax.swing.JFrame {
     private static final int WELCOME_PAGE = 0;
     private static final int LOGIN_PAGE = 1;
     private static final int MODE_PAGE = 2;
-    private static final int CHOOSETEAMPAGE = 3;
+    private static final int CHOOSE_TEAM_PAGE = 3;
     private static final int GAME_PAGE = 4;
     private static final int SETTINGS_PAGE = 5;
     
@@ -165,13 +165,11 @@ public class TrisGui extends javax.swing.JFrame {
 
         loginPage.setLayout(null);
 
-        usernameTextField.setBackground(new java.awt.Color(255, 255, 255));
         usernameTextField.setText("Username");
         usernameTextField.setBorder(null);
         loginPage.add(usernameTextField);
         usernameTextField.setBounds(160, 339, 190, 30);
 
-        passwordField.setBackground(new java.awt.Color(255, 255, 255));
         passwordField.setText("Password");
         passwordField.setBorder(null);
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -543,6 +541,11 @@ public class TrisGui extends javax.swing.JFrame {
         returnButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseP.png"))); // NOI18N
         returnButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseR.png"))); // NOI18N
         returnButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseRP.png"))); // NOI18N
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnButtonActionPerformed(evt);
+            }
+        });
         gamePage.add(returnButton);
         returnButton.setBounds(180, 660, 100, 60);
 
@@ -567,16 +570,15 @@ public class TrisGui extends javax.swing.JFrame {
             button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + type + ".png")));
             
             } else {
-                 JOptionPane.showMessageDialog(this, "Mossa non valida!", "Avviso", JOptionPane.WARNING_MESSAGE);
+                 errorPanel.setVisible(true);
         }
         
         if(trisPvP.checkWinner()){
             if(trisPvP.getGiocatore_corrente()=='O'){
-                vincitore='X';
+                redWinPanel.setVisible(true);
             }else{
-                vincitore='O';
-            }
-            JOptionPane.showMessageDialog(this, "Vittoria  per il giocatore: "+vincitore, "Avviso", JOptionPane.WARNING_MESSAGE); 
+                blueWinPanel.setVisible(true);
+            } 
             
             //winPanel();
         }
@@ -619,7 +621,7 @@ public class TrisGui extends javax.swing.JFrame {
             case MODE_PAGE:
                 modePage.setVisible(true);
                 break;
-            case CHOOSETEAMPAGE:
+            case CHOOSE_TEAM_PAGE:
                 chooseTeamPage.setVisible(true);
                 break;
             case GAME_PAGE:
@@ -683,11 +685,11 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     private void AIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AIButtonActionPerformed
-        selectPanel(CHOOSETEAMPAGE);
+        selectPanel(CHOOSE_TEAM_PAGE);
     }//GEN-LAST:event_AIButtonActionPerformed
 
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendButtonActionPerformed
-        selectPanel(CHOOSETEAMPAGE);
+        selectPanel(CHOOSE_TEAM_PAGE);
     }//GEN-LAST:event_friendButtonActionPerformed
 
     private void teamRedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamRedButtonActionPerformed
@@ -704,14 +706,17 @@ public class TrisGui extends javax.swing.JFrame {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
+        blueWinPanel.setVisible(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void cancelButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton1ActionPerformed
         // TODO add your handling code here:
+        errorPanel.setVisible(false);
     }//GEN-LAST:event_cancelButton1ActionPerformed
 
     private void cancelButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton2ActionPerformed
         // TODO add your handling code here:
+        redWinPanel.setVisible(false);
     }//GEN-LAST:event_cancelButton2ActionPerformed
     private void continueButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton2ActionPerformed
         // TODO add your handling code here:
@@ -746,6 +751,11 @@ public class TrisGui extends javax.swing.JFrame {
             //messagePopUp(popUp_pannel, TIMER_MESSAGE, false, MESSAGE_PASSWORD_SECURE, false);
         }    
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
+        // TODO add your handling code here:
+        selectPanel(CHOOSE_TEAM_PAGE);
+    }//GEN-LAST:event_returnButtonActionPerformed
 
     // Metodo per visualizzare il messaggio di errore della password
     public String displayPasswordErrorMessage(int errorCode) {
