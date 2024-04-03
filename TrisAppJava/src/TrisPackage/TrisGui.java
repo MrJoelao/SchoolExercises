@@ -18,14 +18,44 @@ public class TrisGui extends javax.swing.JFrame {
     private static final int CHOOSETEAMPAGE = 3;
     private static final int GAME_PAGE = 4;
     private static final int SETTINGS_PAGE = 5;
+    
+    private static final String FILENAME_LM = "credentials.dat";
+    private static final String DEFAULT_USERNAME = "admin";
+    private static final String DEFAULT_PASSWORD = "admin";
+    private static final boolean DEFAULT_TYPE = false;
+    
+    // Costanti per i codici d'errore della password
+    private static final int PASSWORD_SECURE = 0;
+    private static final int PASSWORD_TOO_SHORT = 1;
+    private static final int MISSING_UPPERCASE = 2;
+    private static final int MISSING_LOWERCASE = 3;
+    private static final int MISSING_NUMBER = 4;
+    private static final int MISSING_SPECIAL_CHARACTER = 5;
+    private static final int USERNAME_USED = 6;
+    
+    // Costanti per i messaggi d'errore
+    public static final String ERROR_MESSAGE = "Errore";
+    public static final String ERROR_PASSWORD_TOO_SHORT = "<html><p align=\"center\">La password deve contenere almeno <b>8 caratteri</b>.</p></html>";
+    public static final String ERROR_MISSING_UPPERCASE = "<html><p align=\"center\">La password deve contenere almeno una <b>lettera maiuscola</b>.</p></html>";
+    public static final String ERROR_MISSING_LOWERCASE = "<html><p align=\"center\">La password deve contenere almeno una <b>lettera minuscola</b>.</p></html>";
+    public static final String ERROR_MISSING_NUMBER = "<html><p align=\"center\">La password deve contenere <br>almeno un <b>numero</b>.</p></html>";
+    public static final String ERROR_MISSING_SPECIAL_CHARACTER = "<html><p align=\"center\">La password deve contenere almeno un <b>carattere speciale</b>.</p></html>";
+    public static final String ERROR_UNKNOWN = "<html><p align=\"center\"><b>Errore sconosciuto</b> nella validazione della password.</p></html>";
+    public static final String ERROR_USERNAME_USED = "<html><p align=\"center\"><Username<b> già in uso.</b></p></html>";
+    private static final String ERROR_WRONG_CREDENTIALS = "<html>Username o Password <b>sbagliati</b>.</html>";
+    
     private char vincitore;
+    
     private TrisClass trisPvP;
+    private LoginManager loginManager;
     /**
      * Creates new form TrisGui
      */
     public TrisGui() {
         initComponents();
         trisPvP=new TrisClass();
+        loginManager = new LoginManager(FILENAME_LM, DEFAULT_USERNAME, DEFAULT_PASSWORD, DEFAULT_TYPE);
+        
         
         //metto il pannello principale di welcome
         selectPanel(WELCOME_PAGE);
@@ -46,8 +76,8 @@ public class TrisGui extends javax.swing.JFrame {
         settingsButton = new javax.swing.JButton();
         welcomeBackground = new javax.swing.JLabel();
         loginPage = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        usernameTextField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
         continueButton2 = new javax.swing.JButton();
         orText1 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
@@ -135,20 +165,20 @@ public class TrisGui extends javax.swing.JFrame {
 
         loginPage.setLayout(null);
 
-        jTextField1.setText("Username");
-        jTextField1.setBorder(null);
-        loginPage.add(jTextField1);
-        jTextField1.setBounds(160, 339, 190, 30);
+        usernameTextField.setText("Username");
+        usernameTextField.setBorder(null);
+        loginPage.add(usernameTextField);
+        usernameTextField.setBounds(160, 339, 190, 30);
 
-        jPasswordField1.setText("Password");
-        jPasswordField1.setBorder(null);
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        passwordField.setText("Password");
+        passwordField.setBorder(null);
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                passwordFieldActionPerformed(evt);
             }
         });
-        loginPage.add(jPasswordField1);
-        jPasswordField1.setBounds(160, 414, 190, 30);
+        loginPage.add(passwordField);
+        passwordField.setBounds(160, 414, 190, 30);
 
         continueButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
         continueButton2.setContentAreaFilled(false);
@@ -176,6 +206,11 @@ public class TrisGui extends javax.swing.JFrame {
         addButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addR.png"))); // NOI18N
         addButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addRP.png"))); // NOI18N
         addButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
         loginPage.add(addButton);
         addButton.setBounds(250, 470, 85, 40);
 
@@ -679,10 +714,66 @@ public class TrisGui extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_continueButton2ActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        // Ottiene l'username inserito dall'utente
+        String enteredUsername = usernameTextField.getText();
+        // Ottiene la password inserita dall'utente
+        String enteredPassword = passwordField.getText();
+
+        // Verifica la sicurezza della password
+        int passwordSecure = loginManager.isPasswordSecure(enteredPassword);
+        // Ottiene il messaggio di errore relativo alla sicurezza della password
+        String errorMessage = displayPasswordErrorMessage(passwordSecure);
+
+        // Verifica se la password non è sicura o se l'username esiste già nel sistema
+        if (passwordSecure != PASSWORD_SECURE || loginManager.isUsernameExists(enteredUsername)) {
+            // Visualizza il messaggio di errore relativo alla password
+            displayPasswordErrorMessage(passwordSecure);
+            // Visualizza una finestra pop-up con il messaggio di errore
+            //messagePopUp(popUp_pannel, TIMER_MESSAGE, false, errorMessage, true);
+        } else {
+            // Aggiunge le credenziali all'utente nel sistema
+            loginManager.addCredentials(enteredUsername, enteredPassword, false);
+            // Visualizza un messaggio di conferma
+            //messagePopUp(popUp_pannel, TIMER_MESSAGE, false, MESSAGE_PASSWORD_SECURE, false);
+        }    
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    // Metodo per visualizzare il messaggio di errore della password
+    public String displayPasswordErrorMessage(int errorCode) {
+        String errorMessage;
+        switch (errorCode) {
+            case PASSWORD_TOO_SHORT:
+                errorMessage = ERROR_PASSWORD_TOO_SHORT;
+                break;
+            case MISSING_UPPERCASE:
+                errorMessage = ERROR_MISSING_UPPERCASE;
+                break;
+            case MISSING_LOWERCASE:
+                errorMessage = ERROR_MISSING_LOWERCASE;
+                break;
+            case MISSING_NUMBER:
+                errorMessage = ERROR_MISSING_NUMBER;
+                break;
+            case MISSING_SPECIAL_CHARACTER:
+                errorMessage = ERROR_MISSING_SPECIAL_CHARACTER;
+                break;
+            case USERNAME_USED:
+                errorMessage = ERROR_USERNAME_USED;
+                break;     
+            default:
+                errorMessage = ERROR_UNKNOWN;
+                System.err.println("[CA] Codice errore sconosciuto: " + errorCode);
+                break;
+        }
+        return errorMessage;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -752,20 +843,20 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel loginBackground;
     private javax.swing.JPanel loginPage;
     private javax.swing.JLabel modeBackground;
     private javax.swing.JPanel modePage;
     private javax.swing.JLabel orText;
     private javax.swing.JLabel orText1;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel redWinBackground;
     private javax.swing.JPanel redWinPanel;
     private javax.swing.JButton returnButton;
     private javax.swing.JButton settingsButton;
     private javax.swing.JButton teamBlueButton;
     private javax.swing.JButton teamRedButton;
+    private javax.swing.JTextField usernameTextField;
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;
     // End of variables declaration//GEN-END:variables
