@@ -62,6 +62,7 @@ public class TrisGui extends javax.swing.JFrame {
         teamBlueButton = new javax.swing.JButton();
         teamRedButton = new javax.swing.JButton();
         orText = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         continueButton1 = new javax.swing.JButton();
         chooseTeamBackground = new javax.swing.JLabel();
         gamePage = new javax.swing.JPanel();
@@ -251,7 +252,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         chooseTeamPage.add(teamBlueButton);
-        teamBlueButton.setBounds(150, 449, 160, 60);
+        teamBlueButton.setBounds(150, 440, 160, 60);
 
         teamRedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
         teamRedButton.setContentAreaFilled(false);
@@ -265,14 +266,21 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         chooseTeamPage.add(teamRedButton);
-        teamRedButton.setBounds(150, 362, 160, 60);
+        teamRedButton.setBounds(150, 350, 160, 60);
 
         orText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         orText.setForeground(new java.awt.Color(255, 255, 255));
         orText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         orText.setText("OR");
         chooseTeamPage.add(orText);
-        orText.setBounds(51, 382, 348, 100);
+        orText.setBounds(50, 370, 348, 100);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Choose your team!");
+        chooseTeamPage.add(jLabel3);
+        jLabel3.setBounds(60, 280, 340, 34);
 
         continueButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
         continueButton1.setContentAreaFilled(false);
@@ -741,6 +749,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JPanel gamePage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPasswordField jPasswordField1;
