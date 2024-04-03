@@ -57,6 +57,7 @@ public class TrisGui extends javax.swing.JFrame {
         teamBlueButton = new javax.swing.JButton();
         teamRedButton = new javax.swing.JButton();
         orText = new javax.swing.JLabel();
+        continueButton1 = new javax.swing.JButton();
         chooseTeamBackground = new javax.swing.JLabel();
         gamePage = new javax.swing.JPanel();
         errorPanel = new javax.swing.JPanel();
@@ -185,7 +186,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         chooseTeamPage.add(teamBlueButton);
-        teamBlueButton.setBounds(132, 470, 190, 60);
+        teamBlueButton.setBounds(150, 449, 160, 60);
 
         teamRedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
         teamRedButton.setContentAreaFilled(false);
@@ -198,17 +199,30 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         chooseTeamPage.add(teamRedButton);
-        teamRedButton.setBounds(132, 330, 190, 60);
+        teamRedButton.setBounds(150, 362, 160, 60);
 
-        orText.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        orText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         orText.setForeground(new java.awt.Color(255, 255, 255));
         orText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         orText.setText("OR");
         chooseTeamPage.add(orText);
-        orText.setBounds(52, 376, 347, 100);
+        orText.setBounds(51, 382, 348, 100);
+
+        continueButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
+        continueButton1.setContentAreaFilled(false);
+        continueButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonP.png"))); // NOI18N
+        continueButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonR.png"))); // NOI18N
+        continueButton1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonRP.png"))); // NOI18N
+        continueButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continueButton1ActionPerformed(evt);
+            }
+        });
+        chooseTeamPage.add(continueButton1);
+        continueButton1.setBounds(180, 605, 100, 50);
 
         chooseTeamBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        chooseTeamBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modeAIPanel.png"))); // NOI18N
+        chooseTeamBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/chooseTeamBackground.png"))); // NOI18N
         chooseTeamBackground.setPreferredSize(new java.awt.Dimension(0, 0));
         chooseTeamPage.add(chooseTeamBackground);
         chooseTeamBackground.setBounds(0, 0, 450, 800);
@@ -493,6 +507,10 @@ public class TrisGui extends javax.swing.JFrame {
         selectPanel(GAME_PAGE);
     }//GEN-LAST:event_teamBlueButtonActionPerformed
 
+    private void continueButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_continueButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -544,6 +562,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel chooseTeamBackground;
     private javax.swing.JPanel chooseTeamPage;
     private javax.swing.JButton continueButton;
+    private javax.swing.JButton continueButton1;
     private javax.swing.JPanel errorPanel;
     private javax.swing.JButton friendButton;
     private javax.swing.JLabel gameBackground;
