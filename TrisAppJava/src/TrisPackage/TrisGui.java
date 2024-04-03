@@ -4,8 +4,16 @@
  */
 package TrisPackage;
 
+import java.net.URL;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.JLabel;
 
 /**
  *
@@ -33,6 +41,11 @@ public class TrisGui extends javax.swing.JFrame {
     private static final int MISSING_SPECIAL_CHARACTER = 5;
     private static final int USERNAME_USED = 6;
     
+    // Costanti per i messaggi di successo
+    public static final String MESSAGE_PASSWORD_SECURE = "<html>Password <b>inserita</b> con successo.</html>";
+    public static final String MESSAGE_RIGHT_CREDENTIALS = "<html>Combinazione <b>trovata</b>.</html>";
+    public static final String SUCCESS_MESSAGE = "Successo";
+    
     // Costanti per i messaggi d'errore
     public static final String ERROR_MESSAGE = "Errore";
     public static final String ERROR_PASSWORD_TOO_SHORT = "<html><p align=\"center\">La password deve contenere almeno <b>8 caratteri</b>.</p></html>";
@@ -40,9 +53,23 @@ public class TrisGui extends javax.swing.JFrame {
     public static final String ERROR_MISSING_LOWERCASE = "<html><p align=\"center\">La password deve contenere almeno una <b>lettera minuscola</b>.</p></html>";
     public static final String ERROR_MISSING_NUMBER = "<html><p align=\"center\">La password deve contenere <br>almeno un <b>numero</b>.</p></html>";
     public static final String ERROR_MISSING_SPECIAL_CHARACTER = "<html><p align=\"center\">La password deve contenere almeno un <b>carattere speciale</b>.</p></html>";
-    public static final String ERROR_UNKNOWN = "<html><p align=\"center\"><b>Errore sconosciuto</b> nella validazione della password.</p></html>";
+    public static final String ERROR_UNKNOWN = "<html><p align=\"center\"><b>Password già presente</b> usane una diversa.</p></html>";
     public static final String ERROR_USERNAME_USED = "<html><p align=\"center\"><Username<b> già in uso.</b></p></html>";
     private static final String ERROR_WRONG_CREDENTIALS = "<html>Username o Password <b>sbagliati</b>.</html>";
+    
+    // Costanti per il timer
+    public static final int TIMER_MESSAGE = 1600;
+    
+    //Costanti immagini
+    public static final String ERROR_IMAGE = "errorPopUp.png";
+    public static final String SUCCESS_IMAGE = "successPopUp.png";
+    
+    // Costanti per gli effetti sonori
+    public static final String ERROR_SOUND = "error.wav";
+    public static final String SUCCESS_SOUND = "success.wav";
+    
+    //Variabile flag per determinare se inizia 'X' oppure 'O'
+    private char flagTeam = 'x'; 
     
     private char vincitore;
     private String username;
@@ -59,7 +86,7 @@ public class TrisGui extends javax.swing.JFrame {
         
         
         //metto il pannello principale di welcome
-        selectPanel(WELCOME_PAGE);
+        selectPanel(WELCOME_PAGE,0);
         
     }
 
@@ -72,17 +99,22 @@ public class TrisGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        teamButtons = new javax.swing.ButtonGroup();
         welcomePage = new javax.swing.JPanel();
         continueButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         welcomeBackground = new javax.swing.JLabel();
         loginPage = new javax.swing.JPanel();
+        popUpPanel = new javax.swing.JPanel();
+        popUpCancelButton = new javax.swing.JButton();
+        popUpMessage = new javax.swing.JLabel();
+        popUpTitle = new javax.swing.JLabel();
+        popUpBackground = new javax.swing.JLabel();
         usernameTextField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
         continueButton2 = new javax.swing.JButton();
         orText1 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
-        confirmButton = new javax.swing.JButton();
         loginBackground = new javax.swing.JLabel();
         modePage = new javax.swing.JPanel();
         chooseMode = new javax.swing.JLabel();
@@ -90,8 +122,8 @@ public class TrisGui extends javax.swing.JFrame {
         friendButton = new javax.swing.JButton();
         modeBackground = new javax.swing.JLabel();
         chooseTeamPage = new javax.swing.JPanel();
-        teamBlueButton = new javax.swing.JButton();
-        teamRedButton = new javax.swing.JButton();
+        teamRedButton = new javax.swing.JRadioButton();
+        teamBlueButton = new javax.swing.JRadioButton();
         orText = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         continueButton1 = new javax.swing.JButton();
@@ -101,15 +133,15 @@ public class TrisGui extends javax.swing.JFrame {
         cancelButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         redWinBackground = new javax.swing.JLabel();
-        blueWinPanel = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        cancelButton = new javax.swing.JButton();
-        blueWinBackground = new javax.swing.JLabel();
         errorPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cancelButton1 = new javax.swing.JButton();
         errorMessageBackground = new javax.swing.JLabel();
+        blueWinPanel = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        cancelButton = new javax.swing.JButton();
+        blueWinBackground = new javax.swing.JLabel();
         buttonBox9 = new javax.swing.JButton();
         buttonBox8 = new javax.swing.JButton();
         buttonBox7 = new javax.swing.JButton();
@@ -120,7 +152,12 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox2 = new javax.swing.JButton();
         buttonBox1 = new javax.swing.JButton();
         returnButton = new javax.swing.JButton();
+        bluePointTextField = new javax.swing.JLabel();
+        redPointTextField = new javax.swing.JLabel();
         gameBackground = new javax.swing.JLabel();
+        tiePanel = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        tieBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
@@ -165,6 +202,40 @@ public class TrisGui extends javax.swing.JFrame {
         getContentPane().add(welcomePage);
 
         loginPage.setLayout(null);
+
+        popUpPanel.setOpaque(false);
+        popUpPanel.setLayout(null);
+
+        popUpCancelButton.setContentAreaFilled(false);
+        popUpCancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popUpCancelButtonActionPerformed(evt);
+            }
+        });
+        popUpPanel.add(popUpCancelButton);
+        popUpCancelButton.setBounds(358, 280, 30, 30);
+
+        popUpMessage.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        popUpMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        popUpMessage.setText("***********");
+        popUpMessage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        popUpPanel.add(popUpMessage);
+        popUpMessage.setBounds(50, 360, 350, 120);
+
+        popUpTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        popUpTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        popUpTitle.setText("*");
+        popUpTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        popUpPanel.add(popUpTitle);
+        popUpTitle.setBounds(52, 290, 346, 60);
+
+        popUpBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        popUpBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/errorPopUp.png"))); // NOI18N
+        popUpPanel.add(popUpBackground);
+        popUpBackground.setBounds(0, 0, 450, 800);
+
+        loginPage.add(popUpPanel);
+        popUpPanel.setBounds(0, 0, 450, 800);
 
         usernameTextField.setBackground(new java.awt.Color(255, 255, 255));
         usernameTextField.setText("Username");
@@ -215,22 +286,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         loginPage.add(addButton);
-        addButton.setBounds(250, 470, 85, 40);
-
-        confirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/confirm.png"))); // NOI18N
-        confirmButton.setContentAreaFilled(false);
-        confirmButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/confirmP.png"))); // NOI18N
-        confirmButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/confirmR.png"))); // NOI18N
-        confirmButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/confirmRP.png"))); // NOI18N
-        confirmButton.setVerifyInputWhenFocusTarget(false);
-        confirmButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        confirmButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmButtonActionPerformed(evt);
-            }
-        });
-        loginPage.add(confirmButton);
-        confirmButton.setBounds(120, 470, 85, 40);
+        addButton.setBounds(180, 470, 85, 40);
 
         loginBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/loginBackground.png"))); // NOI18N
@@ -284,22 +340,8 @@ public class TrisGui extends javax.swing.JFrame {
         chooseTeamPage.setOpaque(false);
         chooseTeamPage.setLayout(null);
 
-        teamBlueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButton.png"))); // NOI18N
-        teamBlueButton.setContentAreaFilled(false);
-        teamBlueButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
-        teamBlueButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonR.png"))); // NOI18N
-        teamBlueButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonRP.png"))); // NOI18N
-        teamBlueButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
-        teamBlueButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                teamBlueButtonActionPerformed(evt);
-            }
-        });
-        chooseTeamPage.add(teamBlueButton);
-        teamBlueButton.setBounds(150, 440, 160, 60);
-
+        teamButtons.add(teamRedButton);
         teamRedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
-        teamRedButton.setContentAreaFilled(false);
         teamRedButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
         teamRedButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonR.png"))); // NOI18N
         teamRedButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonRP.png"))); // NOI18N
@@ -310,14 +352,28 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         chooseTeamPage.add(teamRedButton);
-        teamRedButton.setBounds(150, 350, 160, 60);
+        teamRedButton.setBounds(150, 350, 170, 60);
+
+        teamButtons.add(teamBlueButton);
+        teamBlueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButton.png"))); // NOI18N
+        teamBlueButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
+        teamBlueButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonR.png"))); // NOI18N
+        teamBlueButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonRP.png"))); // NOI18N
+        teamBlueButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
+        teamBlueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teamBlueButtonActionPerformed(evt);
+            }
+        });
+        chooseTeamPage.add(teamBlueButton);
+        teamBlueButton.setBounds(150, 438, 160, 60);
 
         orText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         orText.setForeground(new java.awt.Color(255, 255, 255));
         orText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         orText.setText("OR");
         chooseTeamPage.add(orText);
-        orText.setBounds(50, 370, 348, 100);
+        orText.setBounds(60, 370, 340, 100);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -378,32 +434,6 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(redWinPanel);
         redWinPanel.setBounds(0, 0, 450, 800);
 
-        blueWinPanel.setOpaque(false);
-        blueWinPanel.setLayout(null);
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Team Blue win!");
-        blueWinPanel.add(jLabel5);
-        jLabel5.setBounds(70, 330, 310, 25);
-
-        cancelButton.setContentAreaFilled(false);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
-        blueWinPanel.add(cancelButton);
-        cancelButton.setBounds(368, 281, 30, 30);
-
-        blueWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/blueWin.png"))); // NOI18N
-        blueWinPanel.add(blueWinBackground);
-        blueWinBackground.setBounds(0, 0, 450, 800);
-
-        gamePage.add(blueWinPanel);
-        blueWinPanel.setBounds(0, 0, 450, 800);
-
         errorPanel.setOpaque(false);
         errorPanel.setLayout(null);
 
@@ -436,6 +466,32 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(errorPanel);
         errorPanel.setBounds(0, 0, 450, 800);
 
+        blueWinPanel.setOpaque(false);
+        blueWinPanel.setLayout(null);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Team Blue win!");
+        blueWinPanel.add(jLabel5);
+        jLabel5.setBounds(70, 330, 310, 25);
+
+        cancelButton.setContentAreaFilled(false);
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+        blueWinPanel.add(cancelButton);
+        cancelButton.setBounds(368, 281, 30, 30);
+
+        blueWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/blueWin.png"))); // NOI18N
+        blueWinPanel.add(blueWinBackground);
+        blueWinBackground.setBounds(0, 0, 450, 800);
+
+        gamePage.add(blueWinPanel);
+        blueWinPanel.setBounds(0, 0, 450, 800);
+
         buttonBox9.setContentAreaFilled(false);
         buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
         buttonBox9.setMinimumSize(new java.awt.Dimension(112, 112));
@@ -446,7 +502,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox9);
-        buttonBox9.setBounds(300, 470, 112, 112);
+        buttonBox9.setBounds(300, 460, 112, 112);
 
         buttonBox8.setContentAreaFilled(false);
         buttonBox8.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -458,7 +514,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox8);
-        buttonBox8.setBounds(170, 470, 112, 112);
+        buttonBox8.setBounds(170, 460, 112, 112);
 
         buttonBox7.setContentAreaFilled(false);
         buttonBox7.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -470,7 +526,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox7);
-        buttonBox7.setBounds(40, 470, 112, 112);
+        buttonBox7.setBounds(40, 460, 112, 112);
 
         buttonBox6.setContentAreaFilled(false);
         buttonBox6.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -482,7 +538,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox6);
-        buttonBox6.setBounds(300, 350, 112, 112);
+        buttonBox6.setBounds(300, 340, 112, 112);
 
         buttonBox5.setContentAreaFilled(false);
         buttonBox5.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -494,7 +550,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox5);
-        buttonBox5.setBounds(170, 350, 112, 112);
+        buttonBox5.setBounds(170, 340, 112, 112);
 
         buttonBox4.setContentAreaFilled(false);
         buttonBox4.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -506,7 +562,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox4);
-        buttonBox4.setBounds(40, 350, 112, 112);
+        buttonBox4.setBounds(40, 340, 112, 112);
 
         buttonBox3.setContentAreaFilled(false);
         buttonBox3.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -518,7 +574,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox3);
-        buttonBox3.setBounds(300, 230, 112, 112);
+        buttonBox3.setBounds(300, 220, 112, 112);
 
         buttonBox2.setContentAreaFilled(false);
         buttonBox2.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -530,7 +586,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox2);
-        buttonBox2.setBounds(170, 230, 112, 112);
+        buttonBox2.setBounds(170, 220, 112, 112);
 
         buttonBox1.setContentAreaFilled(false);
         buttonBox1.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -542,7 +598,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         gamePage.add(buttonBox1);
-        buttonBox1.setBounds(40, 230, 112, 112);
+        buttonBox1.setBounds(40, 220, 112, 112);
 
         returnButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverse.png"))); // NOI18N
         returnButton.setContentAreaFilled(false);
@@ -557,9 +613,40 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(returnButton);
         returnButton.setBounds(180, 660, 100, 60);
 
+        bluePointTextField.setFont(new java.awt.Font("Segoe UI", 1, 35)); // NOI18N
+        bluePointTextField.setForeground(new java.awt.Color(255, 255, 255));
+        bluePointTextField.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bluePointTextField.setText("0");
+        gamePage.add(bluePointTextField);
+        bluePointTextField.setBounds(176, 116, 30, 40);
+
+        redPointTextField.setFont(new java.awt.Font("Segoe UI", 1, 35)); // NOI18N
+        redPointTextField.setForeground(new java.awt.Color(255, 255, 255));
+        redPointTextField.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        redPointTextField.setText("0");
+        gamePage.add(redPointTextField);
+        redPointTextField.setBounds(243, 116, 30, 40);
+
         gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gameBackground.png"))); // NOI18N
         gamePage.add(gameBackground);
         gameBackground.setBounds(0, 0, 450, 800);
+
+        tiePanel.setOpaque(false);
+        tiePanel.setLayout(null);
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("TIE!");
+        tiePanel.add(jLabel6);
+        jLabel6.setBounds(70, 330, 310, 31);
+
+        tieBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/tiePage.png"))); // NOI18N
+        tiePanel.add(tieBackground);
+        tieBackground.setBounds(0, 0, 450, 800);
+
+        gamePage.add(tiePanel);
+        tiePanel.setBounds(0, 0, 450, 800);
 
         getContentPane().add(gamePage);
 
@@ -568,6 +655,8 @@ public class TrisGui extends javax.swing.JFrame {
     public void playerMove(int row,int col, JButton button){
         int result = trisPvP.move(row, col);
         String type;
+        
+        
         if (result >= 0) {
             if(result > 0){
                 type = "O";
@@ -590,6 +679,78 @@ public class TrisGui extends javax.swing.JFrame {
         }
     }
     
+    // Metodo per riprodurre un suono
+    /*in path si inserisce il nome del file wav, bisogna metterlo nella cartella "fsx_effect", e il flag loop è se vogliamo che il suono si ripeta all'infinito,
+      utile per musiche di sottofondo*/
+    public static void play(String path, boolean loop) { //usate il tipo WAV, metodo non mio tengo a precisare. (convertitore: https://convertio.co/it/mp3-wav/ )
+        try {
+            URL url = TrisGui.class.getResource("/fsx/" + path);
+            if (url != null) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(url);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInput);
+                clip.start();
+                if (loop) {
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                }
+            } else {
+                System.err.println("[TG] Errore: file audio non esistente");
+            }
+        } catch (Exception e) {
+            System.err.println("[TG] Errore nella riproduzione audio");
+        }
+    }
+    
+    // Metodo per visualizzare il messaggio di errore della password
+    public String displayPasswordErrorMessage(int errorCode) {
+        String errorMessage;
+        switch (errorCode) {
+            case PASSWORD_TOO_SHORT:
+                errorMessage = ERROR_PASSWORD_TOO_SHORT;
+                break;
+            case MISSING_UPPERCASE:
+                errorMessage = ERROR_MISSING_UPPERCASE;
+                break;
+            case MISSING_LOWERCASE:
+                errorMessage = ERROR_MISSING_LOWERCASE;
+                break;
+            case MISSING_NUMBER:
+                errorMessage = ERROR_MISSING_NUMBER;
+                break;
+            case MISSING_SPECIAL_CHARACTER:
+                errorMessage = ERROR_MISSING_SPECIAL_CHARACTER;
+                break;
+            case USERNAME_USED:
+                errorMessage = ERROR_USERNAME_USED;
+                break;     
+            default:
+                errorMessage = ERROR_UNKNOWN;
+                System.err.println("[TG] Codice errore sconosciuto: " + errorCode);
+                break;
+        }
+        return errorMessage;
+    }
+    
+    // Metodo per mostrare un messaggio personalizzato:
+    /*Il background è il nome della foto per lo sfondo, message è il messaggio stampato sulla GUI, il textcolor è il colore del titolo, 
+      sound è il nome del suono da trasmettere e flagLoop è un flag che serve se si vuole che il suono venga ripetuto all'infinito*/
+    public void personalizedMessage(JPanel panel, JLabel titleLabel, JLabel messageLabel, JLabel backgroundLabel, String background, String title, String message, String sound) {
+        backgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/"+ background)));
+        titleLabel.setText(title);
+        messageLabel.setText(message);
+        play(sound, false);
+    }
+    
+    public void messagePopUp(JPanel panel, JLabel titleLabel, JLabel messageLabel, JLabel backgroundLabel, boolean flagError, String message){
+        panel.setVisible(true);
+        
+        if (flagError) {
+            personalizedMessage(panel, titleLabel, messageLabel, backgroundLabel, ERROR_IMAGE, ERROR_MESSAGE, message, ERROR_SOUND);
+        } else {
+            personalizedMessage(panel, titleLabel, messageLabel, backgroundLabel,SUCCESS_IMAGE, SUCCESS_MESSAGE, message, SUCCESS_SOUND);
+        }
+    }
+    
     //reset pulsanti
     public void resetButtos(){
         buttonBox1.setIcon(null);
@@ -606,48 +767,57 @@ public class TrisGui extends javax.swing.JFrame {
     // Metodo per selezionare il pannello da visualizzare
     /*Le costanti sono in alto ma: WELCOME_PAGE è la schermata principale, GAME_PAGE è quella con la griglia del gioco e 
     altre che non ho ancora messo*/
-    
-    public void selectPanel(int choice) {
-        System.out.println("[TG] Pannello caricato: " + choice);
+    public void selectPanel(int choice, int delayInMs) {
+        System.out.println("[TG] Pannello in caricamento");
+        // Attiva il pannello scelto dopo un ritardo
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("[TG] Pannello caricato: " + choice);
 
-        // Imposta tutti i pannelli su false
-        welcomePage.setVisible(false);
-        loginPage.setVisible(false);
-        modePage.setVisible(false);
-        chooseTeamPage.setVisible(false);
-        gamePage.setVisible(false);
-        
-        // Attiva il pannello scelto
-        switch (choice) {
-            case WELCOME_PAGE:
-                welcomePage.setVisible(true);
-                break;
-            case LOGIN_PAGE:
-                break;
-            case MODE_PAGE:
-                modePage.setVisible(true);
-                break;
-            case CHOOSE_TEAM_PAGE:
-                chooseTeamPage.setVisible(true);
-                break;
-            case GAME_PAGE:
-                trisPvP = new TrisClass('O');
-                resetButtos();
+                // Imposta tutti i pannelli su false
+                welcomePage.setVisible(false);
+                loginPage.setVisible(false);
+                modePage.setVisible(false);
+                chooseTeamPage.setVisible(false);
+                gamePage.setVisible(false);
                 
-                errorPanel.setVisible(false);
-                redWinPanel.setVisible(false);
-                blueWinPanel.setVisible(false);
-                gamePage.setVisible(true);
-                break; 
-            case SETTINGS_PAGE:
-                break;
-                        
-            default:
-                welcomePage.setVisible(true); //gestisco l'eccezione riportando l'utente alla schermata principale
-                System.err.println("[TG] Errore: scelta del pannello non valida"); //in caso 
-                break;
-        }
+                switch (choice) {
+                    case WELCOME_PAGE:
+                        welcomePage.setVisible(true);
+                        break;
+                    case LOGIN_PAGE:
+                        loginPage.setVisible(true);
+                        popUpPanel.setVisible(false);
+                        break;
+                    case MODE_PAGE:
+                        modePage.setVisible(true);
+                        break;
+                    case CHOOSE_TEAM_PAGE:
+                        chooseTeamPage.setVisible(true);
+                        break;
+                    case GAME_PAGE:
+                        trisPvP = new TrisClass(flagTeam);
+                        resetButtos();
+
+                        errorPanel.setVisible(false);
+                        redWinPanel.setVisible(false);
+                        blueWinPanel.setVisible(false);
+                        gamePage.setVisible(true);
+                        break; 
+                    case SETTINGS_PAGE:
+                        break;
+
+                    default:
+                        welcomePage.setVisible(true); //gestisco l'eccezione riportando l'utente alla schermata principale
+                        System.err.println("[TG] Errore: scelta del pannello non valida"); //in caso 
+                        break;
+                }
+            }
+        }, delayInMs);
     }
+
     
     private void buttonBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox1ActionPerformed
         playerMove(0,0, buttonBox1);
@@ -686,7 +856,7 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonBox9ActionPerformed
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
-        selectPanel(MODE_PAGE);
+        selectPanel(LOGIN_PAGE,0);
     }//GEN-LAST:event_continueButtonActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
@@ -694,23 +864,15 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     private void AIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AIButtonActionPerformed
-        selectPanel(CHOOSE_TEAM_PAGE);
+        selectPanel(CHOOSE_TEAM_PAGE,0);
     }//GEN-LAST:event_AIButtonActionPerformed
 
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendButtonActionPerformed
-        selectPanel(CHOOSE_TEAM_PAGE);
+        selectPanel(CHOOSE_TEAM_PAGE,0);
     }//GEN-LAST:event_friendButtonActionPerformed
 
-    private void teamRedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamRedButtonActionPerformed
-        selectPanel(GAME_PAGE);
-    }//GEN-LAST:event_teamRedButtonActionPerformed
-
-    private void teamBlueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamBlueButtonActionPerformed
-        selectPanel(GAME_PAGE);
-    }//GEN-LAST:event_teamBlueButtonActionPerformed
-
     private void continueButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton1ActionPerformed
-        selectPanel(GAME_PAGE);
+        selectPanel(GAME_PAGE,0);
     }//GEN-LAST:event_continueButton1ActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -728,46 +890,7 @@ public class TrisGui extends javax.swing.JFrame {
         redWinPanel.setVisible(false);
     }//GEN-LAST:event_cancelButton2ActionPerformed
     private void continueButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_continueButton2ActionPerformed
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
-        // Ottiene l'username inserito dall'utente
-        String enteredUsername = usernameTextField.getText();
-        // Ottiene la password inserita dall'utente
-        String enteredPassword = passwordField.getText();
-
-        // Verifica la sicurezza della password
-        int passwordSecure = loginManager.isPasswordSecure(enteredPassword);
-        // Ottiene il messaggio di errore relativo alla sicurezza della password
-        String errorMessage = displayPasswordErrorMessage(passwordSecure);
-
-        // Verifica se la password non è sicura o se l'username esiste già nel sistema
-        if (passwordSecure != PASSWORD_SECURE || loginManager.isUsernameExists(enteredUsername)) {
-            // Visualizza il messaggio di errore relativo alla password
-            displayPasswordErrorMessage(passwordSecure);
-            // Visualizza una finestra pop-up con il messaggio di errore
-            //messagePopUp(popUp_pannel, TIMER_MESSAGE, false, errorMessage, true);
-        } else {
-            // Aggiunge le credenziali all'utente nel sistema
-            loginManager.addCredentials(enteredUsername, enteredPassword, false);
-            // Visualizza un messaggio di conferma
-            //messagePopUp(popUp_pannel, TIMER_MESSAGE, false, MESSAGE_PASSWORD_SECURE, false);
-        }    
-    }//GEN-LAST:event_addButtonActionPerformed
-
-    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
-        // TODO add your handling code here:
-        selectPanel(CHOOSE_TEAM_PAGE);
-    }//GEN-LAST:event_returnButtonActionPerformed
-
-    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-    /*    // Ottieni l'username e la password inseriti dall'utente
+        // Ottieni l'username e la password inseriti dall'utente
         String enteredUsername = usernameTextField.getText();
         String enteredPassword = passwordField.getText();
 
@@ -777,49 +900,72 @@ public class TrisGui extends javax.swing.JFrame {
         // Se le credenziali sono valide
         if (credentialsValid) {
             // Visualizza una notifica di credenziali corrette
-            messagePopUp();
+            messagePopUp(popUpPanel, popUpTitle, popUpMessage, popUpBackground, false, MESSAGE_RIGHT_CREDENTIALS);
+
+            // Passo alla scheda successiva
+            selectPanel(MODE_PAGE,TIMER_MESSAGE);
 
             // Memorizza l'username dell'utente corrente
             username = enteredUsername;
 
         } else {
             // Se le credenziali non sono valide, visualizza un messaggio di errore
-            messagePopUp();
-
-            // Imposta il flag di login su false
-            login_flag = false;
-        }*/
-    }//GEN-LAST:event_confirmButtonActionPerformed
-
-    // Metodo per visualizzare il messaggio di errore della password
-    public String displayPasswordErrorMessage(int errorCode) {
-        String errorMessage;
-        switch (errorCode) {
-            case PASSWORD_TOO_SHORT:
-                errorMessage = ERROR_PASSWORD_TOO_SHORT;
-                break;
-            case MISSING_UPPERCASE:
-                errorMessage = ERROR_MISSING_UPPERCASE;
-                break;
-            case MISSING_LOWERCASE:
-                errorMessage = ERROR_MISSING_LOWERCASE;
-                break;
-            case MISSING_NUMBER:
-                errorMessage = ERROR_MISSING_NUMBER;
-                break;
-            case MISSING_SPECIAL_CHARACTER:
-                errorMessage = ERROR_MISSING_SPECIAL_CHARACTER;
-                break;
-            case USERNAME_USED:
-                errorMessage = ERROR_USERNAME_USED;
-                break;     
-            default:
-                errorMessage = ERROR_UNKNOWN;
-                System.err.println("[CA] Codice errore sconosciuto: " + errorCode);
-                break;
+            messagePopUp(popUpPanel, popUpTitle, popUpMessage, popUpBackground, true, ERROR_WRONG_CREDENTIALS);
         }
-        return errorMessage;
-    }
+    }//GEN-LAST:event_continueButton2ActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // Ottieni l'username e la password inseriti dall'utente
+        String enteredUsername = usernameTextField.getText();
+        String enteredPassword = passwordField.getText();
+
+        // Verifica la sicurezza della password
+        int passwordSecure = loginManager.isPasswordSecure(enteredPassword);
+        // Ottiene il messaggio di errore relativo alla sicurezza della password
+        String errorMessage = displayPasswordErrorMessage(passwordSecure);
+
+        // Verifica se la password non è sicura o se l'username esiste già nel sistema
+        if (passwordSecure != PASSWORD_SECURE || loginManager.isUsernameExists(enteredUsername)) {
+            
+            // Visualizza il messaggio di errore relativo alla password
+            displayPasswordErrorMessage(passwordSecure);
+            // Visualizza una finestra pop-up con il messaggio di errore
+            messagePopUp(popUpPanel, popUpTitle, popUpMessage, popUpBackground, true, errorMessage);
+            
+        } else {
+            // Aggiunge le credenziali all'utente nel sistema
+            loginManager.addCredentials(enteredUsername, enteredPassword, false);
+            // Visualizza un messaggio di conferma
+            messagePopUp(popUpPanel, popUpTitle, popUpMessage, popUpBackground, false, MESSAGE_PASSWORD_SECURE);
+            
+            // Passo alla scheda successiva
+            selectPanel(MODE_PAGE,TIMER_MESSAGE);
+        }    
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
+        // TODO add your handling code here:
+        selectPanel(CHOOSE_TEAM_PAGE,0);
+    }//GEN-LAST:event_returnButtonActionPerformed
+
+    private void teamRedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamRedButtonActionPerformed
+        // TODO add your handling code here:
+        flagTeam = 'X';
+    }//GEN-LAST:event_teamRedButtonActionPerformed
+
+    private void teamBlueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamBlueButtonActionPerformed
+        // TODO add your handling code here:
+        flagTeam = 'O';
+    }//GEN-LAST:event_teamBlueButtonActionPerformed
+
+    private void popUpCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpCancelButtonActionPerformed
+        popUpPanel.setVisible(false);
+    }//GEN-LAST:event_popUpCancelButtonActionPerformed
+
     
     /**
      * @param args the command line arguments
@@ -859,6 +1005,7 @@ public class TrisGui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AIButton;
     private javax.swing.JButton addButton;
+    private javax.swing.JLabel bluePointTextField;
     private javax.swing.JLabel blueWinBackground;
     private javax.swing.JPanel blueWinPanel;
     private javax.swing.JButton buttonBox1;
@@ -876,7 +1023,6 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel chooseMode;
     private javax.swing.JLabel chooseTeamBackground;
     private javax.swing.JPanel chooseTeamPage;
-    private javax.swing.JButton confirmButton;
     private javax.swing.JButton continueButton;
     private javax.swing.JButton continueButton1;
     private javax.swing.JButton continueButton2;
@@ -890,6 +1036,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel loginBackground;
     private javax.swing.JPanel loginPage;
     private javax.swing.JLabel modeBackground;
@@ -897,12 +1044,21 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel orText;
     private javax.swing.JLabel orText1;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JLabel popUpBackground;
+    private javax.swing.JButton popUpCancelButton;
+    private javax.swing.JLabel popUpMessage;
+    private javax.swing.JPanel popUpPanel;
+    private javax.swing.JLabel popUpTitle;
+    private javax.swing.JLabel redPointTextField;
     private javax.swing.JLabel redWinBackground;
     private javax.swing.JPanel redWinPanel;
     private javax.swing.JButton returnButton;
     private javax.swing.JButton settingsButton;
-    private javax.swing.JButton teamBlueButton;
-    private javax.swing.JButton teamRedButton;
+    private javax.swing.JRadioButton teamBlueButton;
+    private javax.swing.ButtonGroup teamButtons;
+    private javax.swing.JRadioButton teamRedButton;
+    private javax.swing.JLabel tieBackground;
+    private javax.swing.JPanel tiePanel;
     private javax.swing.JTextField usernameTextField;
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;
