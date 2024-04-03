@@ -65,19 +65,19 @@ public class TrisGui extends javax.swing.JFrame {
         continueButton1 = new javax.swing.JButton();
         chooseTeamBackground = new javax.swing.JLabel();
         gamePage = new javax.swing.JPanel();
+        redWinPanel = new javax.swing.JPanel();
+        cancelButton2 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        redWinBackground = new javax.swing.JLabel();
+        blueWinPanel = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        cancelButton = new javax.swing.JButton();
+        blueWinBackground = new javax.swing.JLabel();
         errorPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cancelButton1 = new javax.swing.JButton();
         errorMessageBackground = new javax.swing.JLabel();
-        blueWinPanel = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        cancelButton = new javax.swing.JButton();
-        blueWinBackground = new javax.swing.JLabel();
-        redWinPanel = new javax.swing.JPanel();
-        cancelButton2 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        redWinBackground = new javax.swing.JLabel();
         buttonBox9 = new javax.swing.JButton();
         buttonBox8 = new javax.swing.JButton();
         buttonBox7 = new javax.swing.JButton();
@@ -249,6 +249,7 @@ public class TrisGui extends javax.swing.JFrame {
         teamRedButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
         teamRedButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonR.png"))); // NOI18N
         teamRedButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonRP.png"))); // NOI18N
+        teamRedButton.setSelected(true);
         teamRedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 teamRedButtonActionPerformed(evt);
@@ -290,6 +291,58 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.setPreferredSize(new java.awt.Dimension(450, 800));
         gamePage.setLayout(null);
 
+        redWinPanel.setOpaque(false);
+        redWinPanel.setLayout(null);
+
+        cancelButton2.setContentAreaFilled(false);
+        cancelButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButton2ActionPerformed(evt);
+            }
+        });
+        redWinPanel.add(cancelButton2);
+        cancelButton2.setBounds(368, 281, 30, 30);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Team Red Win!");
+        redWinPanel.add(jLabel4);
+        jLabel4.setBounds(70, 330, 310, 25);
+
+        redWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/redWin.png"))); // NOI18N
+        redWinPanel.add(redWinBackground);
+        redWinBackground.setBounds(0, 0, 450, 800);
+
+        gamePage.add(redWinPanel);
+        redWinPanel.setBounds(0, 0, 450, 800);
+
+        blueWinPanel.setOpaque(false);
+        blueWinPanel.setLayout(null);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Team Blue win!");
+        blueWinPanel.add(jLabel5);
+        jLabel5.setBounds(70, 330, 310, 25);
+
+        cancelButton.setContentAreaFilled(false);
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+        blueWinPanel.add(cancelButton);
+        cancelButton.setBounds(368, 281, 30, 30);
+
+        blueWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/blueWin.png"))); // NOI18N
+        blueWinPanel.add(blueWinBackground);
+        blueWinBackground.setBounds(0, 0, 450, 800);
+
+        gamePage.add(blueWinPanel);
+        blueWinPanel.setBounds(0, 0, 450, 800);
+
         errorPanel.setOpaque(false);
         errorPanel.setLayout(null);
 
@@ -321,58 +374,6 @@ public class TrisGui extends javax.swing.JFrame {
 
         gamePage.add(errorPanel);
         errorPanel.setBounds(0, 0, 450, 800);
-
-        blueWinPanel.setOpaque(false);
-        blueWinPanel.setLayout(null);
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Team Blue win!");
-        blueWinPanel.add(jLabel5);
-        jLabel5.setBounds(70, 330, 310, 25);
-
-        cancelButton.setContentAreaFilled(false);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
-        blueWinPanel.add(cancelButton);
-        cancelButton.setBounds(368, 281, 30, 30);
-
-        blueWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/blueWin.png"))); // NOI18N
-        blueWinPanel.add(blueWinBackground);
-        blueWinBackground.setBounds(0, 0, 450, 800);
-
-        gamePage.add(blueWinPanel);
-        blueWinPanel.setBounds(0, 220, 450, 220);
-
-        redWinPanel.setOpaque(false);
-        redWinPanel.setLayout(null);
-
-        cancelButton2.setContentAreaFilled(false);
-        cancelButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButton2ActionPerformed(evt);
-            }
-        });
-        redWinPanel.add(cancelButton2);
-        cancelButton2.setBounds(368, 281, 30, 30);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Team Red Win!");
-        redWinPanel.add(jLabel4);
-        jLabel4.setBounds(70, 330, 310, 25);
-
-        redWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/redWin.png"))); // NOI18N
-        redWinPanel.add(redWinBackground);
-        redWinBackground.setBounds(0, 0, 450, 800);
-
-        gamePage.add(redWinPanel);
-        redWinPanel.setBounds(260, 260, 0, 0);
 
         buttonBox9.setContentAreaFilled(false);
         buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -567,6 +568,9 @@ public class TrisGui extends javax.swing.JFrame {
                 chooseTeamPage.setVisible(true);
                 break;
             case GAME_PAGE:
+                errorPanel.setVisible(false);
+                redWinPanel.setVisible(false);
+                blueWinPanel.setVisible(false);
                 gamePage.setVisible(true);
                 break; 
             case SETTINGS_PAGE:
@@ -640,7 +644,7 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_teamBlueButtonActionPerformed
 
     private void continueButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton1ActionPerformed
-        // TODO add your handling code here:
+        selectPanel(GAME_PAGE);
     }//GEN-LAST:event_continueButton1ActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
