@@ -53,7 +53,7 @@ public class TrisGui extends javax.swing.JFrame {
      */
     public TrisGui() {
         initComponents();
-        trisPvP=new TrisClass();
+        
         loginManager = new LoginManager(FILENAME_LM, DEFAULT_USERNAME, DEFAULT_PASSWORD, DEFAULT_TYPE);
         
         
@@ -558,7 +558,7 @@ public class TrisGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     public void playerMove(int row,int col, JButton button){
-        int result = trisPvP.Muovi(row, col);
+        int result = trisPvP.move(row, col);
         String type;
         if (result >= 0) {
             if(result > 0){
@@ -574,13 +574,11 @@ public class TrisGui extends javax.swing.JFrame {
         }
         
         if(trisPvP.checkWinner()){
-            if(trisPvP.getGiocatore_corrente()=='O'){
+            if(trisPvP.getCurrentPlayer()=='O'){
                 redWinPanel.setVisible(true);
             }else{
                 blueWinPanel.setVisible(true);
             } 
-            
-            //winPanel();
         }
     }
     
@@ -625,6 +623,9 @@ public class TrisGui extends javax.swing.JFrame {
                 chooseTeamPage.setVisible(true);
                 break;
             case GAME_PAGE:
+                trisPvP = new TrisClass('O');
+                resetButtos();
+                
                 errorPanel.setVisible(false);
                 redWinPanel.setVisible(false);
                 blueWinPanel.setVisible(false);
