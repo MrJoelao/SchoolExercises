@@ -44,7 +44,8 @@ public class TrisGui extends javax.swing.JFrame {
     public static final String ERROR_USERNAME_USED = "<html><p align=\"center\"><Username<b> già in uso.</b></p></html>";
     private static final String ERROR_WRONG_CREDENTIALS = "<html>Username o Password <b>sbagliati</b>.</html>";
     
-    private char flagTeam = 'x';
+    //Variabile flag per determinare se inizia 'X' oppure 'O'
+    private char flagTeam = 'x'; 
     
     private char vincitore;
     
@@ -92,24 +93,13 @@ public class TrisGui extends javax.swing.JFrame {
         friendButton = new javax.swing.JButton();
         modeBackground = new javax.swing.JLabel();
         chooseTeamPage = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        teamRedButton = new javax.swing.JRadioButton();
+        teamBlueButton = new javax.swing.JRadioButton();
         orText = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         continueButton1 = new javax.swing.JButton();
         chooseTeamBackground = new javax.swing.JLabel();
         gamePage = new javax.swing.JPanel();
-        buttonBox9 = new javax.swing.JButton();
-        buttonBox8 = new javax.swing.JButton();
-        buttonBox7 = new javax.swing.JButton();
-        buttonBox6 = new javax.swing.JButton();
-        buttonBox5 = new javax.swing.JButton();
-        buttonBox4 = new javax.swing.JButton();
-        buttonBox3 = new javax.swing.JButton();
-        buttonBox2 = new javax.swing.JButton();
-        buttonBox1 = new javax.swing.JButton();
-        returnButton = new javax.swing.JButton();
-        gameBackground = new javax.swing.JLabel();
         redWinPanel = new javax.swing.JPanel();
         cancelButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -123,6 +113,17 @@ public class TrisGui extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cancelButton1 = new javax.swing.JButton();
         errorMessageBackground = new javax.swing.JLabel();
+        buttonBox9 = new javax.swing.JButton();
+        buttonBox8 = new javax.swing.JButton();
+        buttonBox7 = new javax.swing.JButton();
+        buttonBox6 = new javax.swing.JButton();
+        buttonBox5 = new javax.swing.JButton();
+        buttonBox4 = new javax.swing.JButton();
+        buttonBox3 = new javax.swing.JButton();
+        buttonBox2 = new javax.swing.JButton();
+        buttonBox1 = new javax.swing.JButton();
+        returnButton = new javax.swing.JButton();
+        gameBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
@@ -279,20 +280,33 @@ public class TrisGui extends javax.swing.JFrame {
         chooseTeamPage.setOpaque(false);
         chooseTeamPage.setLayout(null);
 
-        teamButtons.add(jRadioButton1);
-        jRadioButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        teamButtons.add(teamRedButton);
+        teamRedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
+        teamRedButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
+        teamRedButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonR.png"))); // NOI18N
+        teamRedButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonRP.png"))); // NOI18N
+        teamRedButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
+        teamRedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                teamRedButtonActionPerformed(evt);
             }
         });
-        chooseTeamPage.add(jRadioButton1);
-        jRadioButton1.setBounds(150, 350, 170, 60);
+        chooseTeamPage.add(teamRedButton);
+        teamRedButton.setBounds(150, 350, 170, 60);
 
-        teamButtons.add(jRadioButton2);
-        jRadioButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButton.png"))); // NOI18N
-        chooseTeamPage.add(jRadioButton2);
-        jRadioButton2.setBounds(150, 438, 160, 60);
+        teamButtons.add(teamBlueButton);
+        teamBlueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButton.png"))); // NOI18N
+        teamBlueButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
+        teamBlueButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonR.png"))); // NOI18N
+        teamBlueButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonRP.png"))); // NOI18N
+        teamBlueButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
+        teamBlueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teamBlueButtonActionPerformed(evt);
+            }
+        });
+        chooseTeamPage.add(teamBlueButton);
+        teamBlueButton.setBounds(150, 438, 160, 60);
 
         orText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         orText.setForeground(new java.awt.Color(255, 255, 255));
@@ -333,6 +347,90 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.setMinimumSize(new java.awt.Dimension(450, 800));
         gamePage.setPreferredSize(new java.awt.Dimension(450, 800));
         gamePage.setLayout(null);
+
+        redWinPanel.setOpaque(false);
+        redWinPanel.setLayout(null);
+
+        cancelButton2.setContentAreaFilled(false);
+        cancelButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButton2ActionPerformed(evt);
+            }
+        });
+        redWinPanel.add(cancelButton2);
+        cancelButton2.setBounds(368, 281, 30, 30);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Team Red Win!");
+        redWinPanel.add(jLabel4);
+        jLabel4.setBounds(70, 330, 310, 25);
+
+        redWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/redWin.png"))); // NOI18N
+        redWinPanel.add(redWinBackground);
+        redWinBackground.setBounds(0, 0, 450, 800);
+
+        gamePage.add(redWinPanel);
+        redWinPanel.setBounds(0, 0, 450, 800);
+
+        blueWinPanel.setOpaque(false);
+        blueWinPanel.setLayout(null);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Team Blue win!");
+        blueWinPanel.add(jLabel5);
+        jLabel5.setBounds(70, 330, 310, 25);
+
+        cancelButton.setContentAreaFilled(false);
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+        blueWinPanel.add(cancelButton);
+        cancelButton.setBounds(368, 281, 30, 30);
+
+        blueWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/blueWin.png"))); // NOI18N
+        blueWinPanel.add(blueWinBackground);
+        blueWinBackground.setBounds(0, 0, 450, 800);
+
+        gamePage.add(blueWinPanel);
+        blueWinPanel.setBounds(0, 0, 450, 800);
+
+        errorPanel.setOpaque(false);
+        errorPanel.setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Invalid move");
+        errorPanel.add(jLabel1);
+        jLabel1.setBounds(50, 370, 350, 31);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Error: move chosen invalid, try again by choosing another box.");
+        errorPanel.add(jLabel2);
+        jLabel2.setBounds(70, 420, 310, 30);
+
+        cancelButton1.setContentAreaFilled(false);
+        cancelButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButton1ActionPerformed(evt);
+            }
+        });
+        errorPanel.add(cancelButton1);
+        cancelButton1.setBounds(354, 340, 30, 30);
+
+        errorMessageBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/errorMessage.png"))); // NOI18N
+        errorPanel.add(errorMessageBackground);
+        errorMessageBackground.setBounds(0, 0, 450, 800);
+
+        gamePage.add(errorPanel);
+        errorPanel.setBounds(0, 0, 450, 800);
 
         buttonBox9.setContentAreaFilled(false);
         buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -459,90 +557,6 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(gameBackground);
         gameBackground.setBounds(0, 0, 450, 800);
 
-        redWinPanel.setOpaque(false);
-        redWinPanel.setLayout(null);
-
-        cancelButton2.setContentAreaFilled(false);
-        cancelButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButton2ActionPerformed(evt);
-            }
-        });
-        redWinPanel.add(cancelButton2);
-        cancelButton2.setBounds(368, 281, 30, 30);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Team Red Win!");
-        redWinPanel.add(jLabel4);
-        jLabel4.setBounds(70, 330, 310, 25);
-
-        redWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/redWin.png"))); // NOI18N
-        redWinPanel.add(redWinBackground);
-        redWinBackground.setBounds(0, 0, 450, 800);
-
-        gamePage.add(redWinPanel);
-        redWinPanel.setBounds(0, 0, 450, 800);
-
-        blueWinPanel.setOpaque(false);
-        blueWinPanel.setLayout(null);
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Team Blue win!");
-        blueWinPanel.add(jLabel5);
-        jLabel5.setBounds(70, 330, 310, 25);
-
-        cancelButton.setContentAreaFilled(false);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
-        blueWinPanel.add(cancelButton);
-        cancelButton.setBounds(368, 281, 30, 30);
-
-        blueWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/blueWin.png"))); // NOI18N
-        blueWinPanel.add(blueWinBackground);
-        blueWinBackground.setBounds(0, 0, 450, 800);
-
-        gamePage.add(blueWinPanel);
-        blueWinPanel.setBounds(0, 0, 450, 800);
-
-        errorPanel.setOpaque(false);
-        errorPanel.setLayout(null);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Invalid move");
-        errorPanel.add(jLabel1);
-        jLabel1.setBounds(50, 370, 350, 31);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Error: move chosen invalid, try again by choosing another box.");
-        errorPanel.add(jLabel2);
-        jLabel2.setBounds(70, 420, 310, 30);
-
-        cancelButton1.setContentAreaFilled(false);
-        cancelButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButton1ActionPerformed(evt);
-            }
-        });
-        errorPanel.add(cancelButton1);
-        cancelButton1.setBounds(354, 340, 30, 30);
-
-        errorMessageBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/errorMessage.png"))); // NOI18N
-        errorPanel.add(errorMessageBackground);
-        errorMessageBackground.setBounds(0, 0, 450, 800);
-
-        gamePage.add(errorPanel);
-        errorPanel.setBounds(0, 0, 450, 800);
-
         getContentPane().add(gamePage);
 
         pack();
@@ -550,6 +564,8 @@ public class TrisGui extends javax.swing.JFrame {
     public void playerMove(int row,int col, JButton button){
         int result = trisPvP.move(row, col);
         String type;
+        
+        
         if (result >= 0) {
             if(result > 0){
                 type = "O";
@@ -613,7 +629,7 @@ public class TrisGui extends javax.swing.JFrame {
                 chooseTeamPage.setVisible(true);
                 break;
             case GAME_PAGE:
-                trisPvP = new TrisClass('O');
+                trisPvP = new TrisClass(flagTeam);
                 resetButtos();
                 
                 errorPanel.setVisible(false);
@@ -740,9 +756,15 @@ public class TrisGui extends javax.swing.JFrame {
         selectPanel(CHOOSE_TEAM_PAGE);
     }//GEN-LAST:event_returnButtonActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void teamRedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamRedButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+        flagTeam = 'X';
+    }//GEN-LAST:event_teamRedButtonActionPerformed
+
+    private void teamBlueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamBlueButtonActionPerformed
+        // TODO add your handling code here:
+        flagTeam = 'O';
+    }//GEN-LAST:event_teamBlueButtonActionPerformed
 
     // Metodo per visualizzare il messaggio di errore della password
     public String displayPasswordErrorMessage(int errorCode) {
@@ -843,8 +865,6 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JLabel loginBackground;
     private javax.swing.JPanel loginPage;
     private javax.swing.JLabel modeBackground;
@@ -856,7 +876,9 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JPanel redWinPanel;
     private javax.swing.JButton returnButton;
     private javax.swing.JButton settingsButton;
+    private javax.swing.JRadioButton teamBlueButton;
     private javax.swing.ButtonGroup teamButtons;
+    private javax.swing.JRadioButton teamRedButton;
     private javax.swing.JTextField usernameTextField;
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;
