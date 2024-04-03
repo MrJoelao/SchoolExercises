@@ -13,9 +13,11 @@ import javax.swing.JOptionPane;
  */
 public class TrisGui extends javax.swing.JFrame {
     private static final int WELCOME_PAGE = 0;
-    private static final int MODE_PAGE = 1;
-    private static final int GAME_PAGE = 2;
-    private static final int SETTINGS_PAGE = 3;
+    private static final int LOGIN_PAGE = 1;
+    private static final int MODE_PAGE = 2;
+    private static final int CHOOSETEAMPAGE = 3;
+    private static final int GAME_PAGE = 4;
+    private static final int SETTINGS_PAGE = 5;
     private char vincitore;
     private TrisClass trisPvP;
     /**
@@ -43,6 +45,9 @@ public class TrisGui extends javax.swing.JFrame {
         continueButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         welcomeBackground = new javax.swing.JLabel();
+        loginPage = new javax.swing.JPanel();
+        jTextField2 = new javax.swing.JTextField();
+        loginBackground = new javax.swing.JLabel();
         modePage = new javax.swing.JPanel();
         chooseMode = new javax.swing.JLabel();
         AIButton = new javax.swing.JButton();
@@ -67,6 +72,7 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox2 = new javax.swing.JButton();
         buttonBox1 = new javax.swing.JButton();
         gameBackground = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
@@ -89,7 +95,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         welcomePage.add(continueButton);
-        continueButton.setBounds(150, 610, 130, 60);
+        continueButton.setBounds(170, 650, 100, 50);
 
         settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButton.png"))); // NOI18N
         settingsButton.setContentAreaFilled(false);
@@ -102,13 +108,26 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         welcomePage.add(settingsButton);
-        settingsButton.setBounds(200, 680, 40, 40);
+        settingsButton.setBounds(205, 730, 40, 40);
 
         welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomeBackground.png"))); // NOI18N
         welcomePage.add(welcomeBackground);
         welcomeBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(welcomePage);
+
+        loginPage.setLayout(null);
+
+        jTextField2.setText("jTextField2");
+        loginPage.add(jTextField2);
+        jTextField2.setBounds(150, 340, 210, 30);
+
+        loginBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        loginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/loginBackground.png"))); // NOI18N
+        loginPage.add(loginBackground);
+        loginBackground.setBounds(0, 0, 450, 800);
+
+        getContentPane().add(loginPage);
 
         modePage.setLayout(null);
 
@@ -325,6 +344,10 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(gameBackground);
         gameBackground.setBounds(0, 0, 450, 800);
 
+        jButton1.setText("jButton1");
+        gamePage.add(jButton1);
+        jButton1.setBounds(190, 670, 75, 30);
+
         getContentPane().add(gamePage);
 
         pack();
@@ -378,22 +401,28 @@ public class TrisGui extends javax.swing.JFrame {
         System.out.println("[TG] Pannello caricato: " + choice);
 
         // Imposta tutti i pannelli su false
-        gamePage.setVisible(false);
         welcomePage.setVisible(false);
+        loginPage.setVisible(false);
         modePage.setVisible(false);
+        chooseTeamPage.setVisible(false);
+        gamePage.setVisible(false);
         
         // Attiva il pannello scelto
         switch (choice) {
             case WELCOME_PAGE:
                 welcomePage.setVisible(true);
                 break;
+            case LOGIN_PAGE:
+                break;
             case MODE_PAGE:
                 modePage.setVisible(true);
-                chooseTeamPage.setVisible(false);
+                break;
+            case CHOOSETEAMPAGE:
+                chooseTeamPage.setVisible(true);
                 break;
             case GAME_PAGE:
                 gamePage.setVisible(true);
-                break;
+                break; 
             case SETTINGS_PAGE:
                 break;
                         
@@ -449,11 +478,11 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     private void AIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AIButtonActionPerformed
-        chooseTeamPage.setVisible(true);
+        selectPanel(CHOOSETEAMPAGE);
     }//GEN-LAST:event_AIButtonActionPerformed
 
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendButtonActionPerformed
-        selectPanel(GAME_PAGE);
+        selectPanel(CHOOSETEAMPAGE);
     }//GEN-LAST:event_friendButtonActionPerformed
 
     private void teamRedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamRedButtonActionPerformed
@@ -519,6 +548,10 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton friendButton;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel loginBackground;
+    private javax.swing.JPanel loginPage;
     private javax.swing.JLabel modeBackground;
     private javax.swing.JPanel modePage;
     private javax.swing.JLabel orText;
