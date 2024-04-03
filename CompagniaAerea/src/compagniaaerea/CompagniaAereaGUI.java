@@ -295,6 +295,18 @@ public class CompagniaAereaGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        login_pannel = new JPanel();
+        arrow_button_login = new JToggleButton();
+        register_button = new JButton();
+        popUp_pannel = new JPanel();
+        popUp_message = new JLabel();
+        popUp_title = new JLabel();
+        popUp_background = new JLabel();
+        companyName_label = new JLabel();
+        login_label = new JLabel();
+        username_textfield = new JTextField();
+        password_textfield = new JPasswordField();
+        login_photo = new JLabel();
         main_pannel = new JPanel();
         welcome_label = new JLabel();
         arrow_button_main = new JToggleButton();
@@ -314,24 +326,111 @@ public class CompagniaAereaGUI extends javax.swing.JFrame {
         TC_label2 = new JLabel();
         dashboard_label = new JLabel();
         menu_photo = new JLabel();
-        login_pannel = new JPanel();
-        arrow_button_login = new JToggleButton();
-        register_button = new JButton();
-        popUp_pannel = new JPanel();
-        popUp_message = new JLabel();
-        popUp_title = new JLabel();
-        popUp_background = new JLabel();
-        companyName_label = new JLabel();
-        login_label = new JLabel();
-        username_textfield = new JTextField();
-        password_textfield = new JPasswordField();
-        login_photo = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Joel AirLine");
         setIconImages(null);
         setMinimumSize(new Dimension(420, 753));
         setResizable(false);
+
+        login_pannel.setMaximumSize(new Dimension(420, 753));
+        login_pannel.setMinimumSize(new Dimension(420, 753));
+        login_pannel.setName(""); // NOI18N
+        login_pannel.setRequestFocusEnabled(false);
+        login_pannel.setLayout(null);
+
+        arrow_button_login.setForeground(new Color(255, 255, 255));
+        arrow_button_login.setIcon(new ImageIcon(getClass().getResource("/photo/arrow.png"))); // NOI18N
+        arrow_button_login.setAutoscrolls(true);
+        arrow_button_login.setContentAreaFilled(false);
+        arrow_button_login.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        arrow_button_login.setHorizontalTextPosition(SwingConstants.CENTER);
+        arrow_button_login.setPressedIcon(new ImageIcon(getClass().getResource("/photo/arrow_p.png"))); // NOI18N
+        arrow_button_login.setRolloverIcon(new ImageIcon(getClass().getResource("/photo/arrow_r.png"))); // NOI18N
+        arrow_button_login.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/photo/arrow_pr.png"))); // NOI18N
+        arrow_button_login.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                arrow_button_loginActionPerformed(evt);
+            }
+        });
+        login_pannel.add(arrow_button_login);
+        arrow_button_login.setBounds(70, 600, 170, 80);
+
+        register_button.setIcon(new ImageIcon(getClass().getResource("/photo/signup_button.png"))); // NOI18N
+        register_button.setContentAreaFilled(false);
+        register_button.setHorizontalTextPosition(SwingConstants.CENTER);
+        register_button.setPressedIcon(new ImageIcon(getClass().getResource("/photo/signup_button_p.png"))); // NOI18N
+        register_button.setSelectedIcon(new ImageIcon(getClass().getResource("/photo/signup_button_r.png"))); // NOI18N
+        register_button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                register_buttonActionPerformed(evt);
+            }
+        });
+        login_pannel.add(register_button);
+        register_button.setBounds(250, 600, 98, 80);
+
+        popUp_pannel.setOpaque(false);
+        popUp_pannel.setLayout(new AbsoluteLayout());
+
+        popUp_message.setFont(new Font("Courier New", 0, 18)); // NOI18N
+        popUp_message.setHorizontalAlignment(SwingConstants.CENTER);
+        popUp_message.setText("*messaggio d'errore*");
+        popUp_pannel.add(popUp_message, new AbsoluteConstraints(15, 124, 361, -1));
+
+        popUp_title.setFont(new Font("Courier New", 1, 30)); // NOI18N
+        popUp_title.setForeground(new Color(255, 0, 0));
+        popUp_title.setHorizontalAlignment(SwingConstants.CENTER);
+        popUp_title.setText("Errore");
+        popUp_pannel.add(popUp_title, new AbsoluteConstraints(15, 95, 361, -1));
+
+        popUp_background.setHorizontalAlignment(SwingConstants.CENTER);
+        popUp_background.setIcon(new ImageIcon(getClass().getResource("/photo/error_message.png"))); // NOI18N
+        popUp_pannel.add(popUp_background, new AbsoluteConstraints(0, 0, -1, 240));
+
+        login_pannel.add(popUp_pannel);
+        popUp_pannel.setBounds(14, 285, 391, 240);
+
+        companyName_label.setFont(new Font("Courier New", 1, 36)); // NOI18N
+        companyName_label.setHorizontalAlignment(SwingConstants.CENTER);
+        companyName_label.setText("Royal Airlines");
+        login_pannel.add(companyName_label);
+        companyName_label.setBounds(60, 210, 340, 60);
+
+        login_label.setFont(new Font("Courier New", 0, 36)); // NOI18N
+        login_label.setHorizontalAlignment(SwingConstants.CENTER);
+        login_label.setText("Login");
+        login_pannel.add(login_label);
+        login_label.setBounds(20, 280, 380, 60);
+
+        username_textfield.setBackground(new Color(232, 231, 231));
+        username_textfield.setFont(new Font("Courier New", 0, 14)); // NOI18N
+        username_textfield.setHorizontalAlignment(JTextField.LEFT);
+        username_textfield.setText("Username");
+        username_textfield.setBorder(null);
+        username_textfield.setSelectedTextColor(new Color(0, 0, 0));
+        username_textfield.setSelectionColor(new Color(0, 153, 102));
+        username_textfield.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                username_textfieldActionPerformed(evt);
+            }
+        });
+        login_pannel.add(username_textfield);
+        username_textfield.setBounds(120, 370, 250, 30);
+
+        password_textfield.setBackground(new Color(232, 231, 231));
+        password_textfield.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        password_textfield.setText("Password");
+        password_textfield.setBorder(null);
+        password_textfield.setEchoChar('\u25cf');
+        password_textfield.setName(""); // NOI18N
+        password_textfield.setSelectionColor(new Color(0, 102, 102));
+        login_pannel.add(password_textfield);
+        password_textfield.setBounds(120, 437, 250, 30);
+
+        login_photo.setHorizontalAlignment(SwingConstants.CENTER);
+        login_photo.setIcon(new ImageIcon(getClass().getResource("/photo/login_page.png"))); // NOI18N
+        login_pannel.add(login_photo);
+        login_photo.setBounds(0, 0, 420, 753);
 
         main_pannel.setMaximumSize(new Dimension(420, 753));
         main_pannel.setMinimumSize(new Dimension(420, 753));
@@ -497,105 +596,6 @@ public class CompagniaAereaGUI extends javax.swing.JFrame {
         menu_photo.setIcon(new ImageIcon(getClass().getResource("/photo/menu.png"))); // NOI18N
         menu_pannel.add(menu_photo);
         menu_photo.setBounds(0, 0, 420, 753);
-
-        login_pannel.setMaximumSize(new Dimension(420, 753));
-        login_pannel.setMinimumSize(new Dimension(420, 753));
-        login_pannel.setName(""); // NOI18N
-        login_pannel.setRequestFocusEnabled(false);
-        login_pannel.setLayout(null);
-
-        arrow_button_login.setForeground(new Color(255, 255, 255));
-        arrow_button_login.setIcon(new ImageIcon(getClass().getResource("/photo/arrow.png"))); // NOI18N
-        arrow_button_login.setAutoscrolls(true);
-        arrow_button_login.setContentAreaFilled(false);
-        arrow_button_login.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        arrow_button_login.setHorizontalTextPosition(SwingConstants.CENTER);
-        arrow_button_login.setPressedIcon(new ImageIcon(getClass().getResource("/photo/arrow_p.png"))); // NOI18N
-        arrow_button_login.setRolloverIcon(new ImageIcon(getClass().getResource("/photo/arrow_r.png"))); // NOI18N
-        arrow_button_login.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/photo/arrow_pr.png"))); // NOI18N
-        arrow_button_login.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                arrow_button_loginActionPerformed(evt);
-            }
-        });
-        login_pannel.add(arrow_button_login);
-        arrow_button_login.setBounds(70, 600, 170, 80);
-
-        register_button.setIcon(new ImageIcon(getClass().getResource("/photo/signup_button.png"))); // NOI18N
-        register_button.setContentAreaFilled(false);
-        register_button.setHorizontalTextPosition(SwingConstants.CENTER);
-        register_button.setPressedIcon(new ImageIcon(getClass().getResource("/photo/signup_button_p.png"))); // NOI18N
-        register_button.setSelectedIcon(new ImageIcon(getClass().getResource("/photo/signup_button_r.png"))); // NOI18N
-        register_button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                register_buttonActionPerformed(evt);
-            }
-        });
-        login_pannel.add(register_button);
-        register_button.setBounds(250, 600, 98, 80);
-
-        popUp_pannel.setOpaque(false);
-        popUp_pannel.setLayout(new AbsoluteLayout());
-
-        popUp_message.setFont(new Font("Courier New", 0, 18)); // NOI18N
-        popUp_message.setHorizontalAlignment(SwingConstants.CENTER);
-        popUp_message.setText("*messaggio d'errore*");
-        popUp_pannel.add(popUp_message, new AbsoluteConstraints(15, 124, 361, -1));
-
-        popUp_title.setFont(new Font("Courier New", 1, 30)); // NOI18N
-        popUp_title.setForeground(new Color(255, 0, 0));
-        popUp_title.setHorizontalAlignment(SwingConstants.CENTER);
-        popUp_title.setText("Errore");
-        popUp_pannel.add(popUp_title, new AbsoluteConstraints(15, 95, 361, -1));
-
-        popUp_background.setHorizontalAlignment(SwingConstants.CENTER);
-        popUp_background.setIcon(new ImageIcon(getClass().getResource("/photo/error_message.png"))); // NOI18N
-        popUp_pannel.add(popUp_background, new AbsoluteConstraints(0, 0, -1, 240));
-
-        login_pannel.add(popUp_pannel);
-        popUp_pannel.setBounds(14, 285, 391, 240);
-
-        companyName_label.setFont(new Font("Courier New", 1, 36)); // NOI18N
-        companyName_label.setHorizontalAlignment(SwingConstants.CENTER);
-        companyName_label.setText("Royal Airlines");
-        login_pannel.add(companyName_label);
-        companyName_label.setBounds(60, 210, 340, 60);
-
-        login_label.setFont(new Font("Courier New", 0, 36)); // NOI18N
-        login_label.setHorizontalAlignment(SwingConstants.CENTER);
-        login_label.setText("Login");
-        login_pannel.add(login_label);
-        login_label.setBounds(20, 280, 380, 60);
-
-        username_textfield.setBackground(new Color(232, 231, 231));
-        username_textfield.setFont(new Font("Courier New", 0, 14)); // NOI18N
-        username_textfield.setHorizontalAlignment(JTextField.LEFT);
-        username_textfield.setText("Username");
-        username_textfield.setBorder(null);
-        username_textfield.setSelectedTextColor(new Color(0, 0, 0));
-        username_textfield.setSelectionColor(new Color(0, 153, 102));
-        username_textfield.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                username_textfieldActionPerformed(evt);
-            }
-        });
-        login_pannel.add(username_textfield);
-        username_textfield.setBounds(120, 370, 250, 30);
-
-        password_textfield.setBackground(new Color(232, 231, 231));
-        password_textfield.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
-        password_textfield.setText("Password");
-        password_textfield.setBorder(null);
-        password_textfield.setEchoChar('\u25cf');
-        password_textfield.setName(""); // NOI18N
-        password_textfield.setSelectionColor(new Color(0, 102, 102));
-        login_pannel.add(password_textfield);
-        password_textfield.setBounds(120, 437, 250, 30);
-
-        login_photo.setHorizontalAlignment(SwingConstants.CENTER);
-        login_photo.setIcon(new ImageIcon(getClass().getResource("/photo/login_page.png"))); // NOI18N
-        login_pannel.add(login_photo);
-        login_photo.setBounds(0, 0, 420, 753);
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
