@@ -45,6 +45,7 @@ public class TrisGui extends javax.swing.JFrame {
     private static final String ERROR_WRONG_CREDENTIALS = "<html>Username o Password <b>sbagliati</b>.</html>";
     
     private char vincitore;
+    private String username;
     
     private TrisClass trisPvP;
     private LoginManager loginManager;
@@ -165,11 +166,13 @@ public class TrisGui extends javax.swing.JFrame {
 
         loginPage.setLayout(null);
 
+        usernameTextField.setBackground(new java.awt.Color(255, 255, 255));
         usernameTextField.setText("Username");
         usernameTextField.setBorder(null);
         loginPage.add(usernameTextField);
         usernameTextField.setBounds(160, 339, 190, 30);
 
+        passwordField.setBackground(new java.awt.Color(255, 255, 255));
         passwordField.setText("Password");
         passwordField.setBorder(null);
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -221,6 +224,11 @@ public class TrisGui extends javax.swing.JFrame {
         confirmButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/confirmRP.png"))); // NOI18N
         confirmButton.setVerifyInputWhenFocusTarget(false);
         confirmButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        confirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmButtonActionPerformed(evt);
+            }
+        });
         loginPage.add(confirmButton);
         confirmButton.setBounds(120, 470, 85, 40);
 
@@ -574,7 +582,7 @@ public class TrisGui extends javax.swing.JFrame {
         }
         
         if(trisPvP.checkWinner()){
-            if(trisPvP.getCurrentPlayer()=='O'){
+            if(trisPvP.getCurrentPlayer()=='O'){    
                 redWinPanel.setVisible(true);
             }else{
                 blueWinPanel.setVisible(true);
@@ -757,6 +765,31 @@ public class TrisGui extends javax.swing.JFrame {
         // TODO add your handling code here:
         selectPanel(CHOOSE_TEAM_PAGE);
     }//GEN-LAST:event_returnButtonActionPerformed
+
+    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+    /*    // Ottieni l'username e la password inseriti dall'utente
+        String enteredUsername = usernameTextField.getText();
+        String enteredPassword = passwordField.getText();
+
+        // Verifica se le credenziali sono valide utilizzando il gestore del login
+        boolean credentialsValid = loginManager.checkCredentials(enteredUsername, enteredPassword);
+
+        // Se le credenziali sono valide
+        if (credentialsValid) {
+            // Visualizza una notifica di credenziali corrette
+            messagePopUp();
+
+            // Memorizza l'username dell'utente corrente
+            username = enteredUsername;
+
+        } else {
+            // Se le credenziali non sono valide, visualizza un messaggio di errore
+            messagePopUp();
+
+            // Imposta il flag di login su false
+            login_flag = false;
+        }*/
+    }//GEN-LAST:event_confirmButtonActionPerformed
 
     // Metodo per visualizzare il messaggio di errore della password
     public String displayPasswordErrorMessage(int errorCode) {
