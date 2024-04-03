@@ -44,6 +44,8 @@ public class TrisGui extends javax.swing.JFrame {
     public static final String ERROR_USERNAME_USED = "<html><p align=\"center\"><Username<b> già in uso.</b></p></html>";
     private static final String ERROR_WRONG_CREDENTIALS = "<html>Username o Password <b>sbagliati</b>.</html>";
     
+    private char flagTeam = 'x';
+    
     private char vincitore;
     
     private TrisClass trisPvP;
@@ -71,6 +73,7 @@ public class TrisGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        teamButtons = new javax.swing.ButtonGroup();
         welcomePage = new javax.swing.JPanel();
         continueButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
@@ -89,13 +92,24 @@ public class TrisGui extends javax.swing.JFrame {
         friendButton = new javax.swing.JButton();
         modeBackground = new javax.swing.JLabel();
         chooseTeamPage = new javax.swing.JPanel();
-        teamBlueButton = new javax.swing.JButton();
-        teamRedButton = new javax.swing.JButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
         orText = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         continueButton1 = new javax.swing.JButton();
         chooseTeamBackground = new javax.swing.JLabel();
         gamePage = new javax.swing.JPanel();
+        buttonBox9 = new javax.swing.JButton();
+        buttonBox8 = new javax.swing.JButton();
+        buttonBox7 = new javax.swing.JButton();
+        buttonBox6 = new javax.swing.JButton();
+        buttonBox5 = new javax.swing.JButton();
+        buttonBox4 = new javax.swing.JButton();
+        buttonBox3 = new javax.swing.JButton();
+        buttonBox2 = new javax.swing.JButton();
+        buttonBox1 = new javax.swing.JButton();
+        returnButton = new javax.swing.JButton();
+        gameBackground = new javax.swing.JLabel();
         redWinPanel = new javax.swing.JPanel();
         cancelButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -109,17 +123,6 @@ public class TrisGui extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cancelButton1 = new javax.swing.JButton();
         errorMessageBackground = new javax.swing.JLabel();
-        buttonBox9 = new javax.swing.JButton();
-        buttonBox8 = new javax.swing.JButton();
-        buttonBox7 = new javax.swing.JButton();
-        buttonBox6 = new javax.swing.JButton();
-        buttonBox5 = new javax.swing.JButton();
-        buttonBox4 = new javax.swing.JButton();
-        buttonBox3 = new javax.swing.JButton();
-        buttonBox2 = new javax.swing.JButton();
-        buttonBox1 = new javax.swing.JButton();
-        returnButton = new javax.swing.JButton();
-        gameBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
@@ -276,40 +279,27 @@ public class TrisGui extends javax.swing.JFrame {
         chooseTeamPage.setOpaque(false);
         chooseTeamPage.setLayout(null);
 
-        teamBlueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButton.png"))); // NOI18N
-        teamBlueButton.setContentAreaFilled(false);
-        teamBlueButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
-        teamBlueButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonR.png"))); // NOI18N
-        teamBlueButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonRP.png"))); // NOI18N
-        teamBlueButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
-        teamBlueButton.addActionListener(new java.awt.event.ActionListener() {
+        teamButtons.add(jRadioButton1);
+        jRadioButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                teamBlueButtonActionPerformed(evt);
+                jRadioButton1ActionPerformed(evt);
             }
         });
-        chooseTeamPage.add(teamBlueButton);
-        teamBlueButton.setBounds(150, 440, 160, 60);
+        chooseTeamPage.add(jRadioButton1);
+        jRadioButton1.setBounds(150, 350, 170, 60);
 
-        teamRedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButton.png"))); // NOI18N
-        teamRedButton.setContentAreaFilled(false);
-        teamRedButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
-        teamRedButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonR.png"))); // NOI18N
-        teamRedButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonRP.png"))); // NOI18N
-        teamRedButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
-        teamRedButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                teamRedButtonActionPerformed(evt);
-            }
-        });
-        chooseTeamPage.add(teamRedButton);
-        teamRedButton.setBounds(150, 350, 160, 60);
+        teamButtons.add(jRadioButton2);
+        jRadioButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButton.png"))); // NOI18N
+        chooseTeamPage.add(jRadioButton2);
+        jRadioButton2.setBounds(150, 438, 160, 60);
 
         orText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         orText.setForeground(new java.awt.Color(255, 255, 255));
         orText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         orText.setText("OR");
         chooseTeamPage.add(orText);
-        orText.setBounds(50, 370, 348, 100);
+        orText.setBounds(60, 370, 340, 100);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -343,6 +333,131 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.setMinimumSize(new java.awt.Dimension(450, 800));
         gamePage.setPreferredSize(new java.awt.Dimension(450, 800));
         gamePage.setLayout(null);
+
+        buttonBox9.setContentAreaFilled(false);
+        buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox9.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox9.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox9ActionPerformed(evt);
+            }
+        });
+        gamePage.add(buttonBox9);
+        buttonBox9.setBounds(300, 460, 112, 112);
+
+        buttonBox8.setContentAreaFilled(false);
+        buttonBox8.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox8.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox8.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox8ActionPerformed(evt);
+            }
+        });
+        gamePage.add(buttonBox8);
+        buttonBox8.setBounds(170, 460, 112, 112);
+
+        buttonBox7.setContentAreaFilled(false);
+        buttonBox7.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox7.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox7.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox7ActionPerformed(evt);
+            }
+        });
+        gamePage.add(buttonBox7);
+        buttonBox7.setBounds(40, 460, 112, 112);
+
+        buttonBox6.setContentAreaFilled(false);
+        buttonBox6.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox6.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox6.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox6ActionPerformed(evt);
+            }
+        });
+        gamePage.add(buttonBox6);
+        buttonBox6.setBounds(300, 340, 112, 112);
+
+        buttonBox5.setContentAreaFilled(false);
+        buttonBox5.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox5.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox5.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox5ActionPerformed(evt);
+            }
+        });
+        gamePage.add(buttonBox5);
+        buttonBox5.setBounds(170, 340, 112, 112);
+
+        buttonBox4.setContentAreaFilled(false);
+        buttonBox4.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox4.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox4.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox4ActionPerformed(evt);
+            }
+        });
+        gamePage.add(buttonBox4);
+        buttonBox4.setBounds(40, 340, 112, 112);
+
+        buttonBox3.setContentAreaFilled(false);
+        buttonBox3.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox3.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox3.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox3ActionPerformed(evt);
+            }
+        });
+        gamePage.add(buttonBox3);
+        buttonBox3.setBounds(300, 220, 112, 112);
+
+        buttonBox2.setContentAreaFilled(false);
+        buttonBox2.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox2.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox2.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox2ActionPerformed(evt);
+            }
+        });
+        gamePage.add(buttonBox2);
+        buttonBox2.setBounds(170, 220, 112, 112);
+
+        buttonBox1.setContentAreaFilled(false);
+        buttonBox1.setMaximumSize(new java.awt.Dimension(112, 112));
+        buttonBox1.setMinimumSize(new java.awt.Dimension(112, 112));
+        buttonBox1.setPreferredSize(new java.awt.Dimension(112, 112));
+        buttonBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBox1ActionPerformed(evt);
+            }
+        });
+        gamePage.add(buttonBox1);
+        buttonBox1.setBounds(40, 220, 112, 112);
+
+        returnButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverse.png"))); // NOI18N
+        returnButton.setContentAreaFilled(false);
+        returnButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseP.png"))); // NOI18N
+        returnButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseR.png"))); // NOI18N
+        returnButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseRP.png"))); // NOI18N
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnButtonActionPerformed(evt);
+            }
+        });
+        gamePage.add(returnButton);
+        returnButton.setBounds(180, 660, 100, 60);
+
+        gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gameBackground.png"))); // NOI18N
+        gamePage.add(gameBackground);
+        gameBackground.setBounds(0, 0, 450, 800);
 
         redWinPanel.setOpaque(false);
         redWinPanel.setLayout(null);
@@ -427,131 +542,6 @@ public class TrisGui extends javax.swing.JFrame {
 
         gamePage.add(errorPanel);
         errorPanel.setBounds(0, 0, 450, 800);
-
-        buttonBox9.setContentAreaFilled(false);
-        buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
-        buttonBox9.setMinimumSize(new java.awt.Dimension(112, 112));
-        buttonBox9.setPreferredSize(new java.awt.Dimension(112, 112));
-        buttonBox9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBox9ActionPerformed(evt);
-            }
-        });
-        gamePage.add(buttonBox9);
-        buttonBox9.setBounds(300, 470, 112, 112);
-
-        buttonBox8.setContentAreaFilled(false);
-        buttonBox8.setMaximumSize(new java.awt.Dimension(112, 112));
-        buttonBox8.setMinimumSize(new java.awt.Dimension(112, 112));
-        buttonBox8.setPreferredSize(new java.awt.Dimension(112, 112));
-        buttonBox8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBox8ActionPerformed(evt);
-            }
-        });
-        gamePage.add(buttonBox8);
-        buttonBox8.setBounds(170, 470, 112, 112);
-
-        buttonBox7.setContentAreaFilled(false);
-        buttonBox7.setMaximumSize(new java.awt.Dimension(112, 112));
-        buttonBox7.setMinimumSize(new java.awt.Dimension(112, 112));
-        buttonBox7.setPreferredSize(new java.awt.Dimension(112, 112));
-        buttonBox7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBox7ActionPerformed(evt);
-            }
-        });
-        gamePage.add(buttonBox7);
-        buttonBox7.setBounds(40, 470, 112, 112);
-
-        buttonBox6.setContentAreaFilled(false);
-        buttonBox6.setMaximumSize(new java.awt.Dimension(112, 112));
-        buttonBox6.setMinimumSize(new java.awt.Dimension(112, 112));
-        buttonBox6.setPreferredSize(new java.awt.Dimension(112, 112));
-        buttonBox6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBox6ActionPerformed(evt);
-            }
-        });
-        gamePage.add(buttonBox6);
-        buttonBox6.setBounds(300, 350, 112, 112);
-
-        buttonBox5.setContentAreaFilled(false);
-        buttonBox5.setMaximumSize(new java.awt.Dimension(112, 112));
-        buttonBox5.setMinimumSize(new java.awt.Dimension(112, 112));
-        buttonBox5.setPreferredSize(new java.awt.Dimension(112, 112));
-        buttonBox5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBox5ActionPerformed(evt);
-            }
-        });
-        gamePage.add(buttonBox5);
-        buttonBox5.setBounds(170, 350, 112, 112);
-
-        buttonBox4.setContentAreaFilled(false);
-        buttonBox4.setMaximumSize(new java.awt.Dimension(112, 112));
-        buttonBox4.setMinimumSize(new java.awt.Dimension(112, 112));
-        buttonBox4.setPreferredSize(new java.awt.Dimension(112, 112));
-        buttonBox4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBox4ActionPerformed(evt);
-            }
-        });
-        gamePage.add(buttonBox4);
-        buttonBox4.setBounds(40, 350, 112, 112);
-
-        buttonBox3.setContentAreaFilled(false);
-        buttonBox3.setMaximumSize(new java.awt.Dimension(112, 112));
-        buttonBox3.setMinimumSize(new java.awt.Dimension(112, 112));
-        buttonBox3.setPreferredSize(new java.awt.Dimension(112, 112));
-        buttonBox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBox3ActionPerformed(evt);
-            }
-        });
-        gamePage.add(buttonBox3);
-        buttonBox3.setBounds(300, 230, 112, 112);
-
-        buttonBox2.setContentAreaFilled(false);
-        buttonBox2.setMaximumSize(new java.awt.Dimension(112, 112));
-        buttonBox2.setMinimumSize(new java.awt.Dimension(112, 112));
-        buttonBox2.setPreferredSize(new java.awt.Dimension(112, 112));
-        buttonBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBox2ActionPerformed(evt);
-            }
-        });
-        gamePage.add(buttonBox2);
-        buttonBox2.setBounds(170, 230, 112, 112);
-
-        buttonBox1.setContentAreaFilled(false);
-        buttonBox1.setMaximumSize(new java.awt.Dimension(112, 112));
-        buttonBox1.setMinimumSize(new java.awt.Dimension(112, 112));
-        buttonBox1.setPreferredSize(new java.awt.Dimension(112, 112));
-        buttonBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBox1ActionPerformed(evt);
-            }
-        });
-        gamePage.add(buttonBox1);
-        buttonBox1.setBounds(40, 230, 112, 112);
-
-        returnButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverse.png"))); // NOI18N
-        returnButton.setContentAreaFilled(false);
-        returnButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseP.png"))); // NOI18N
-        returnButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseR.png"))); // NOI18N
-        returnButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseRP.png"))); // NOI18N
-        returnButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                returnButtonActionPerformed(evt);
-            }
-        });
-        gamePage.add(returnButton);
-        returnButton.setBounds(180, 660, 100, 60);
-
-        gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gameBackground.png"))); // NOI18N
-        gamePage.add(gameBackground);
-        gameBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(gamePage);
 
@@ -692,14 +682,6 @@ public class TrisGui extends javax.swing.JFrame {
         selectPanel(CHOOSE_TEAM_PAGE);
     }//GEN-LAST:event_friendButtonActionPerformed
 
-    private void teamRedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamRedButtonActionPerformed
-        selectPanel(GAME_PAGE);
-    }//GEN-LAST:event_teamRedButtonActionPerformed
-
-    private void teamBlueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamBlueButtonActionPerformed
-        selectPanel(GAME_PAGE);
-    }//GEN-LAST:event_teamBlueButtonActionPerformed
-
     private void continueButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton1ActionPerformed
         selectPanel(GAME_PAGE);
     }//GEN-LAST:event_continueButton1ActionPerformed
@@ -756,6 +738,10 @@ public class TrisGui extends javax.swing.JFrame {
         // TODO add your handling code here:
         selectPanel(CHOOSE_TEAM_PAGE);
     }//GEN-LAST:event_returnButtonActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     // Metodo per visualizzare il messaggio di errore della password
     public String displayPasswordErrorMessage(int errorCode) {
@@ -856,6 +842,8 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JLabel loginBackground;
     private javax.swing.JPanel loginPage;
     private javax.swing.JLabel modeBackground;
@@ -867,8 +855,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JPanel redWinPanel;
     private javax.swing.JButton returnButton;
     private javax.swing.JButton settingsButton;
-    private javax.swing.JButton teamBlueButton;
-    private javax.swing.JButton teamRedButton;
+    private javax.swing.ButtonGroup teamButtons;
     private javax.swing.JTextField usernameTextField;
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;
