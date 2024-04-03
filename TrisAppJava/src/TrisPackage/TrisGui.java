@@ -50,8 +50,8 @@ public class TrisGui extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         continueButton2 = new javax.swing.JButton();
         orText1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
+        confirmButton = new javax.swing.JButton();
         loginBackground = new javax.swing.JLabel();
         modePage = new javax.swing.JPanel();
         chooseMode = new javax.swing.JLabel();
@@ -134,13 +134,11 @@ public class TrisGui extends javax.swing.JFrame {
 
         loginPage.setLayout(null);
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("Username");
         jTextField1.setBorder(null);
         loginPage.add(jTextField1);
         jTextField1.setBounds(160, 339, 190, 30);
 
-        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
         jPasswordField1.setText("Password");
         jPasswordField1.setBorder(null);
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
@@ -171,13 +169,24 @@ public class TrisGui extends javax.swing.JFrame {
         loginPage.add(orText1);
         orText1.setBounds(50, 270, 348, 50);
 
-        jButton1.setText("jButton1");
-        loginPage.add(jButton1);
-        jButton1.setBounds(100, 480, 75, 23);
+        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/add.png"))); // NOI18N
+        addButton.setContentAreaFilled(false);
+        addButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addP.png"))); // NOI18N
+        addButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addR.png"))); // NOI18N
+        addButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addRP.png"))); // NOI18N
+        addButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        loginPage.add(addButton);
+        addButton.setBounds(250, 470, 85, 40);
 
-        jButton2.setText("jButton2");
-        loginPage.add(jButton2);
-        jButton2.setBounds(260, 480, 75, 23);
+        confirmButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/confirm.png"))); // NOI18N
+        confirmButton.setContentAreaFilled(false);
+        confirmButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/confirmP.png"))); // NOI18N
+        confirmButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/confirmR.png"))); // NOI18N
+        confirmButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/confirmRP.png"))); // NOI18N
+        confirmButton.setVerifyInputWhenFocusTarget(false);
+        confirmButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        loginPage.add(confirmButton);
+        confirmButton.setBounds(120, 470, 85, 40);
 
         loginBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/loginBackground.png"))); // NOI18N
@@ -699,6 +708,7 @@ public class TrisGui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AIButton;
+    private javax.swing.JButton addButton;
     private javax.swing.JLabel blueWinBackground;
     private javax.swing.JPanel blueWinPanel;
     private javax.swing.JButton buttonBox1;
@@ -716,6 +726,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel chooseMode;
     private javax.swing.JLabel chooseTeamBackground;
     private javax.swing.JPanel chooseTeamPage;
+    private javax.swing.JButton confirmButton;
     private javax.swing.JButton continueButton;
     private javax.swing.JButton continueButton1;
     private javax.swing.JButton continueButton2;
@@ -724,8 +735,6 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton friendButton;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
