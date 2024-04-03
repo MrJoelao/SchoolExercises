@@ -134,11 +134,13 @@ public class TrisGui extends javax.swing.JFrame {
 
         loginPage.setLayout(null);
 
+        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("Username");
         jTextField1.setBorder(null);
         loginPage.add(jTextField1);
         jTextField1.setBounds(160, 339, 190, 30);
 
+        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
         jPasswordField1.setText("Password");
         jPasswordField1.setBorder(null);
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
@@ -245,6 +247,7 @@ public class TrisGui extends javax.swing.JFrame {
         teamBlueButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
         teamBlueButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonR.png"))); // NOI18N
         teamBlueButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonRP.png"))); // NOI18N
+        teamBlueButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamBlueButtonP.png"))); // NOI18N
         teamBlueButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 teamBlueButtonActionPerformed(evt);
@@ -258,7 +261,7 @@ public class TrisGui extends javax.swing.JFrame {
         teamRedButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
         teamRedButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonR.png"))); // NOI18N
         teamRedButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonRP.png"))); // NOI18N
-        teamRedButton.setSelected(true);
+        teamRedButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/teamRedButtonP.png"))); // NOI18N
         teamRedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 teamRedButtonActionPerformed(evt);

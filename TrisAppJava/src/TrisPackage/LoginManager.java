@@ -1,4 +1,4 @@
-package TrisPackage;
+    package TrisPackage;
 
 import java.io.*;
 import java.util.ArrayList;
