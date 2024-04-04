@@ -152,6 +152,8 @@ public class TrisGui extends javax.swing.JFrame {
 
         teamButtons = new javax.swing.ButtonGroup();
         welcomePage = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        backgroundMenu = new javax.swing.JLabel();
         continueButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         welcomeBackground = new javax.swing.JLabel();
@@ -219,6 +221,17 @@ public class TrisGui extends javax.swing.JFrame {
         welcomePage.setMinimumSize(new java.awt.Dimension(450, 800));
         welcomePage.setPreferredSize(new java.awt.Dimension(450, 800));
         welcomePage.setLayout(null);
+
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(null);
+
+        backgroundMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsBackground.png"))); // NOI18N
+        backgroundMenu.setText("jLabel7");
+        jPanel1.add(backgroundMenu);
+        backgroundMenu.setBounds(0, 0, 450, 800);
+
+        welcomePage.add(jPanel1);
+        jPanel1.setBounds(0, 0, 450, 800);
 
         continueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
         continueButton.setContentAreaFilled(false);
@@ -1076,6 +1089,7 @@ public class TrisGui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AIButton;
     private javax.swing.JButton addButton;
+    private javax.swing.JLabel backgroundMenu;
     private javax.swing.JLabel bluePointTextField;
     private javax.swing.JLabel blueWinBackground;
     private javax.swing.JPanel blueWinPanel;
@@ -1109,6 +1123,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel loginBackground;
     private javax.swing.JPanel loginPage;
     private javax.swing.JLabel modeBackground;
