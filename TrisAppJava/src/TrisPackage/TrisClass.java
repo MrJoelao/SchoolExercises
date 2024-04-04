@@ -109,7 +109,7 @@ public class TrisClass {
             return -1; // Pareggio
         }
 
-        return -2; // Nessun vincitore né pareggio
+        return 3; // Nessun vincitore né pareggio
     }
 
 

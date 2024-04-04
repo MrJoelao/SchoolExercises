@@ -718,14 +718,12 @@ public class TrisGui extends javax.swing.JFrame {
                  errorPanel.setVisible(true);
         }
         
-        if(trisPvP.checkWinner()>=0){
-            if(trisPvP.getCurrentPlayer()=='O'){    
-                redWinPanel.setVisible(true);
-            }else{
-                blueWinPanel.setVisible(true);
+        switch(trisPvP.checkWinner()){
+            case 1 -> redWinPanel.setVisible(true);
+            case 0 -> blueWinPanel.setVisible(true);
+            case -1 -> tiePanel.setVisible(true);
+            default -> {
             }
-        }else{
-            tiePanel.setVisible(true);
         }
     }
     
