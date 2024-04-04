@@ -3,13 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package TrisPackage;
-
+/*
 import java.util.Scanner;
-
+*/
 /**
  *
  * @author ricpi
  */
+/*
 public class Main {
     public static void main(String[] args) {
         TrisMinimax trisGame = new TrisMinimax();
@@ -67,4 +68,4 @@ public class Main {
         }
     }
 }
-
+*/

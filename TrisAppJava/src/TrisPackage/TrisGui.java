@@ -210,7 +210,6 @@ public class TrisGui extends javax.swing.JFrame {
         gameBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(450, 800));
         setMinimumSize(new java.awt.Dimension(450, 800));
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
@@ -245,7 +244,7 @@ public class TrisGui extends javax.swing.JFrame {
         welcomePage.add(settingsButton);
         settingsButton.setBounds(205, 730, 40, 40);
 
-        welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomeBackground.png"))); // NOI18N
+        welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomePage0.png"))); // NOI18N
         welcomePage.add(welcomeBackground);
         welcomeBackground.setBounds(0, 0, 450, 800);
 
@@ -337,7 +336,7 @@ public class TrisGui extends javax.swing.JFrame {
         addButton.setBounds(180, 470, 85, 40);
 
         loginBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        loginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/loginBackground.png"))); // NOI18N
+        loginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/loginPage0.png"))); // NOI18N
         loginPage.add(loginBackground);
         loginBackground.setBounds(0, 0, 450, 800);
 
@@ -379,7 +378,7 @@ public class TrisGui extends javax.swing.JFrame {
         modePage.add(friendButton);
         friendButton.setBounds(160, 620, 130, 60);
 
-        modeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modeBackground.png"))); // NOI18N
+        modeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/playModePage0.png"))); // NOI18N
         modePage.add(modeBackground);
         modeBackground.setBounds(0, 0, 450, 800);
 
@@ -444,8 +443,7 @@ public class TrisGui extends javax.swing.JFrame {
         continueButton1.setBounds(180, 605, 100, 50);
 
         chooseTeamBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        chooseTeamBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/chooseTeamBackground.png"))); // NOI18N
-        chooseTeamBackground.setPreferredSize(new java.awt.Dimension(0, 0));
+        chooseTeamBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/chooseTeamPage0.png"))); // NOI18N
         chooseTeamPage.add(chooseTeamBackground);
         chooseTeamBackground.setBounds(0, 0, 450, 800);
 
@@ -692,7 +690,7 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(redPointTextField);
         redPointTextField.setBounds(243, 116, 30, 40);
 
-        gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gameBackground.png"))); // NOI18N
+        gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gamePage0.png"))); // NOI18N
         gamePage.add(gameBackground);
         gameBackground.setBounds(0, 0, 450, 800);
 
