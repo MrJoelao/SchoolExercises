@@ -867,6 +867,13 @@ public class TrisGui extends javax.swing.JFrame {
         }, delayInMs);
     }
 
+    public void cambiaTema(int numTheme){
+        welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomePage" + numTheme + ".png")));
+        loginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/loginPage" + numTheme + ".png")));
+        modeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/playModePage" + numTheme + ".png")));
+        chooseTeamBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/chooseTeamPage" + numTheme + ".png")));
+        gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gamePage" + numTheme + ".png")));
+    }
     
     private void buttonBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox1ActionPerformed
         playerMove(0,0, buttonBox1);
