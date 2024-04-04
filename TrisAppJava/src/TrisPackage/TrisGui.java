@@ -20,6 +20,7 @@ import javax.swing.JLabel;
  * @author joels
  */
 public class TrisGui extends javax.swing.JFrame {
+    //<editor-fold defaultstate="collapsed" desc=" Costanti ">
     private static final int WELCOME_PAGE = 0;
     private static final int LOGIN_PAGE = 1;
     private static final int MODE_PAGE = 2;
@@ -67,8 +68,56 @@ public class TrisGui extends javax.swing.JFrame {
     // Costanti per gli effetti sonori
     public static final String ERROR_SOUND = "error.wav";
     public static final String SUCCESS_SOUND = "success.wav";
+    //</editor-fold>
     
-    //Variabile flag per determinare se inizia 'X' oppure 'O'
+    //<editor-fold defaultstate="collapsed" desc=" To-Do List">
+    /**To-Do:
+     * Bug grafico: Immagine della freccia premuta ha un'ombra diversa risultando uno spostamento quando viene premuta.
+     * Bug grafico: Immagine della "X" nel pannello di gioco ha un effettto di sfocatura dietro di se che però risulta tagliato.
+     * Bug logico: non è gestito il caso del pareggio dalla classe 1v1 del tris, non avendo modo di saperlo se si verifica si rimane bloccati.
+     * bug logico: quando si verica un messaggio di vincita o d'errore è comunque possibile premere i tasti dietro, creando così 
+     *             un susseguirsi d'errori. importante perchè così si permette di vincere più volte andando a sporcare il punteggio.
+     * Mancata implementazione grafica: sfocatura dietro al pulsante della freccia mancante per problemi ad implmentarla, da 
+     *                                  implementare singolarmente.
+     * Mancata implementazione grafica: nessuna possibilità per la scelta dei temi.
+     * Mancata implementazione: il punteggio non è stato ancora implementato e associato all'username. (punteggio, salvataggio su file e 
+     *                          associazione del punteggio con l'username).
+     * Mancata implementazione: sezione classifica non disponibile.
+     * Mancata implementazione: sezione di diverse difficoltà user vs AI non disponibile.
+     * Mancata implementazione grafica: sezione di scelta grafica di diverse difficoltà user vs AI non disponibile.
+     * Mancata implementazione: sezione delle impostazioni non disponibile.
+     * Mancata implementazione: sezione d'aiuto per l'utente tramie tasto "i" di informazioni non disonibile.
+     * Mancata implementazione: manca completamente l'implementazione con il gioco tramite user vs AI. classi minmax non implementabile.
+     * 
+     * Completati:
+     * Redesign grafico: cambiata l'icona per passare ad altre pagine con una freccia, la scritta precedemte era poco leggibile. ✅
+     * Redesign grafico: intero design rivisto, sistemate imperfezioni grafiche. ✅
+     * Redesign grafico: messaggi di vincita completamente ridisegnati. ✅
+     * Redesign grafico: messaggio d'errore ridisegnato. ✅
+     * Redesign grafico: sfondi cambiati garantendo continuità con il colore tra le pagine. ✅
+     * Redesign grafico: "X" e "O" leggeremente riviste aggiungendo delle migliorie grafice. effetto di sfocatura aggiunto. ✅
+     * Implementazione grafica: aggiunti effetti di sfocatura e ombre quando compare un messaggio. ✅
+     * Mancata implementazione: scelta del team non funzionante: costruttore della classe tris 1v1 modificata leggermente per permetterlo, 
+     *                          modifica dei pulsanti in radio buttons, aggiunta di un gruppo di bottoni e di una variabile flag per la 
+     *                          scelta del team. ✅
+     * Mancata implementazione: . ✅
+     * Mancata implementazione grafica: implementato il messaggio grafico di parità, manca l'associazione con il codice. ✅
+     * Mancata implementazione: Implementato il comparto audio per errori/sucesso. ✅
+     * Mancata implementazione: Implementato il comparto grafico pergli avvisi per il login. ✅
+     * Mancata implementazione: classe login non viene usata dalla classe. ✅
+     * Implementazione codice: aggiunto un timer nella funzione selectPanel() permettendo così di far vedere eventuali messaggi 
+     *                         prima di cambiare pannello, inserire il tempo d'attesa in ms.
+     * Bug logico: 1v1 non funzionante graficamente, crea un eccezzione nel prendere l'immagini di "X" e "O". ✅
+     * Bug logico: errore nella funzione personalizedMessage dove creava un'eccezione quando prendeva le immagini per i messaggi 
+     *             personalizate per il tipo d'erroe. ✅
+     * Bug logico: login non funzionante creando un'eccezione quando si prova a registarsi, questo per un'implementazione non corretta della
+     *             classe login manager. ✅
+     * Bug grafico: Il messaggio d'errore nell'aggiunta della password non ha la grandezza del fon giusta ✅
+     * 
+     * */
+    //</editor-fold>
+    
+    //Variabile flag per la scelta del team da parte dell'utente.
     private char flagTeam = 'x'; 
     
     private char vincitore;
@@ -82,6 +131,7 @@ public class TrisGui extends javax.swing.JFrame {
     public TrisGui() {
         initComponents();
         
+        //istanzio login manager con le impostazioni predefinite
         loginManager = new LoginManager(FILENAME_LM, DEFAULT_USERNAME, DEFAULT_PASSWORD, DEFAULT_TYPE);
         
         
@@ -954,11 +1004,13 @@ public class TrisGui extends javax.swing.JFrame {
 
     private void teamRedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamRedButtonActionPerformed
         // TODO add your handling code here:
+        System.out.println("[TG] Team scelto: " + flagTeam);
         flagTeam = 'X';
     }//GEN-LAST:event_teamRedButtonActionPerformed
 
     private void teamBlueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamBlueButtonActionPerformed
         // TODO add your handling code here:
+        System.out.println("[TG] Team scelto: " + flagTeam);
         flagTeam = 'O';
     }//GEN-LAST:event_teamBlueButtonActionPerformed
 
@@ -966,7 +1018,6 @@ public class TrisGui extends javax.swing.JFrame {
         popUpPanel.setVisible(false);
     }//GEN-LAST:event_popUpCancelButtonActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */
@@ -1001,7 +1052,8 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    //<editor-fold defaultstate="collapsed" desc=" Variabili autogenerate ">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AIButton;
     private javax.swing.JButton addButton;
@@ -1063,4 +1115,5 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;
     // End of variables declaration//GEN-END:variables
+    //</editor-fold>
 }
