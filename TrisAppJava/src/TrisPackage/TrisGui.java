@@ -237,13 +237,11 @@ public class TrisGui extends javax.swing.JFrame {
         loginPage.add(popUpPanel);
         popUpPanel.setBounds(0, 0, 450, 800);
 
-        usernameTextField.setBackground(new java.awt.Color(255, 255, 255));
         usernameTextField.setText("Username");
         usernameTextField.setBorder(null);
         loginPage.add(usernameTextField);
         usernameTextField.setBounds(160, 339, 190, 30);
 
-        passwordField.setBackground(new java.awt.Color(255, 255, 255));
         passwordField.setText("Password");
         passwordField.setBorder(null);
         passwordField.addActionListener(new java.awt.event.ActionListener() {
