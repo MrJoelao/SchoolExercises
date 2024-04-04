@@ -71,7 +71,7 @@ public class TrisGui extends javax.swing.JFrame {
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc=" To-Do List">
-    /**To-Do:
+    /*To-Do:
      * Bug grafico: Immagine della freccia premuta ha un'ombra diversa risultando uno spostamento quando viene premuta.
      * Bug grafico: Immagine della "X" nel pannello di gioco ha un effettto di sfocatura dietro di se che però risulta tagliato.
      * Bug logico: non è gestito il caso del pareggio dalla classe 1v1 del tris, non avendo modo di saperlo se si verifica si rimane bloccati.
@@ -88,6 +88,7 @@ public class TrisGui extends javax.swing.JFrame {
      * Mancata implementazione: sezione delle impostazioni non disponibile.
      * Mancata implementazione: sezione d'aiuto per l'utente tramie tasto "i" di informazioni non disonibile.
      * Mancata implementazione: manca completamente l'implementazione con il gioco tramite user vs AI. classi minmax non implementabile.
+     * Mancata implementazione grafica: manca un bottone nella chooseTeamPage per tornare indietro, e uno simile o per mettere in pausa nella gamePage.
      * 
      * Completati:
      * Redesign grafico: cambiata l'icona per passare ad altre pagine con una freccia, la scritta precedemte era poco leggibile. ✅
@@ -189,6 +190,7 @@ public class TrisGui extends javax.swing.JFrame {
         cancelButton1 = new javax.swing.JButton();
         errorMessageBackground = new javax.swing.JLabel();
         tiePanel = new javax.swing.JPanel();
+        cancelButton3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         tieBackground = new javax.swing.JLabel();
         blueWinPanel = new javax.swing.JPanel();
@@ -514,6 +516,15 @@ public class TrisGui extends javax.swing.JFrame {
 
         tiePanel.setOpaque(false);
         tiePanel.setLayout(null);
+
+        cancelButton3.setContentAreaFilled(false);
+        cancelButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButton3ActionPerformed(evt);
+            }
+        });
+        tiePanel.add(cancelButton3);
+        cancelButton3.setBounds(368, 282, 30, 30);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -1022,6 +1033,10 @@ public class TrisGui extends javax.swing.JFrame {
         popUpPanel.setVisible(false);
     }//GEN-LAST:event_popUpCancelButtonActionPerformed
 
+    private void cancelButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1076,6 +1091,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton cancelButton1;
     private javax.swing.JButton cancelButton2;
+    private javax.swing.JButton cancelButton3;
     private javax.swing.JLabel chooseMode;
     private javax.swing.JLabel chooseTeamBackground;
     private javax.swing.JPanel chooseTeamPage;
