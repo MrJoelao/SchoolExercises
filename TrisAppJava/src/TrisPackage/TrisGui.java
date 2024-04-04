@@ -73,7 +73,6 @@ public class TrisGui extends javax.swing.JFrame {
     //<editor-fold defaultstate="collapsed" desc=" To-Do List">
     /*To-Do:
      * Bug grafico: Immagine della freccia premuta ha un'ombra diversa risultando uno spostamento quando viene premuta.
-     * Bug grafico: Immagine della "X" nel pannello di gioco ha un effettto di sfocatura dietro di se che però risulta tagliato.
      * Bug logico: non è gestito il caso del pareggio dalla classe 1v1 del tris, non avendo modo di saperlo se si verifica si rimane bloccati.
      * bug logico: quando si verica un messaggio di vincita o d'errore è comunque possibile premere i tasti dietro, creando così 
      *             un susseguirsi d'errori. importante perchè così si permette di vincere più volte andando a sporcare il punteggio.
@@ -113,7 +112,8 @@ public class TrisGui extends javax.swing.JFrame {
      *             personalizate per il tipo d'erroe. ✅
      * Bug logico: login non funzionante creando un'eccezione quando si prova a registarsi, questo per un'implementazione non corretta della
      *             classe login manager. ✅
-     * Bug grafico: Il messaggio d'errore nell'aggiunta della password non ha la grandezza del fon giusta ✅
+     * Bug grafico: Il messaggio d'errore nell'aggiunta della password non ha la grandezza del fon giusta. ✅
+     * Bug grafico: Immagine della "X" nel pannello di gioco ha un effettto di sfocatura dietro di se che però risulta tagliato. ✅
      * 
      * */
     //</editor-fold>
