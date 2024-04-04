@@ -53,31 +53,65 @@ public class TrisClass {
     }
 
     // Controlla se c'è un vincitore sulla scacchiera
-    public boolean checkWinner() {
+    public int checkWinner() {
         // Controllo righe
         for (int i = 0; i < 3; i++) {
             if (board[i][0] != '-' && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
-                return true;
+                if (board[i][0] == 'X') {
+                    return 1; // Vittoria di 'X'
+                } else {
+                    return 0; // Vittoria di 'O'
+                }
             }
         }
 
         // Controllo colonne
         for (int i = 0; i < 3; i++) {
             if (board[0][i] != '-' && board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
-                return true;
+                if (board[0][i] == 'X') {
+                    return 1; // Vittoria di 'X'
+                } else {
+                    return 0; // Vittoria di 'O'
+                }
             }
         }
 
         // Controllo diagonali
         if (board[0][0] != '-' && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
-            return true;
+            if (board[0][0] == 'X') {
+                return 1; // Vittoria di 'X'
+            } else {
+                return 0; // Vittoria di 'O'
+            }
         }
         if (board[0][2] != '-' && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
-            return true;
+            if (board[0][2] == 'X') {
+                return 1; // Vittoria di 'X'
+            } else {
+                return 0; // Vittoria di 'O'
+            }
         }
 
-        return false;
+        // Controllo pareggio
+        boolean tie = true;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == '-') {
+                    tie = false;
+                    break;
+                }
+            }
+            if (!tie) {
+                break;
+            }
+        }
+        if (tie) {
+            return -1; // Pareggio
+        }
+
+        return -2; // Nessun vincitore né pareggio
     }
+
 
     // Restituisce la scacchiera
     public char[][] getBoard() {

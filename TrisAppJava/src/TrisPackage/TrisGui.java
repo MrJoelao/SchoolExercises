@@ -188,6 +188,9 @@ public class TrisGui extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cancelButton1 = new javax.swing.JButton();
         errorMessageBackground = new javax.swing.JLabel();
+        tiePanel = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        tieBackground = new javax.swing.JLabel();
         blueWinPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
@@ -205,9 +208,6 @@ public class TrisGui extends javax.swing.JFrame {
         bluePointTextField = new javax.swing.JLabel();
         redPointTextField = new javax.swing.JLabel();
         gameBackground = new javax.swing.JLabel();
-        tiePanel = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        tieBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 800));
@@ -287,13 +287,11 @@ public class TrisGui extends javax.swing.JFrame {
         loginPage.add(popUpPanel);
         popUpPanel.setBounds(0, 0, 450, 800);
 
-        usernameTextField.setBackground(new java.awt.Color(255, 255, 255));
         usernameTextField.setText("Username");
         usernameTextField.setBorder(null);
         loginPage.add(usernameTextField);
         usernameTextField.setBounds(160, 339, 190, 30);
 
-        passwordField.setBackground(new java.awt.Color(255, 255, 255));
         passwordField.setText("Password");
         passwordField.setBorder(null);
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -516,6 +514,23 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(errorPanel);
         errorPanel.setBounds(0, 0, 450, 800);
 
+        tiePanel.setOpaque(false);
+        tiePanel.setLayout(null);
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("TIE!");
+        tiePanel.add(jLabel6);
+        jLabel6.setBounds(70, 330, 310, 31);
+
+        tieBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/tiePage.png"))); // NOI18N
+        tiePanel.add(tieBackground);
+        tieBackground.setBounds(0, 0, 450, 800);
+
+        gamePage.add(tiePanel);
+        tiePanel.setBounds(0, 0, 450, 800);
+
         blueWinPanel.setOpaque(false);
         blueWinPanel.setLayout(null);
 
@@ -681,23 +696,6 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(gameBackground);
         gameBackground.setBounds(0, 0, 450, 800);
 
-        tiePanel.setOpaque(false);
-        tiePanel.setLayout(null);
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("TIE!");
-        tiePanel.add(jLabel6);
-        jLabel6.setBounds(70, 330, 310, 31);
-
-        tieBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/tiePage.png"))); // NOI18N
-        tiePanel.add(tieBackground);
-        tieBackground.setBounds(0, 0, 450, 800);
-
-        gamePage.add(tiePanel);
-        tiePanel.setBounds(0, 0, 450, 800);
-
         getContentPane().add(gamePage);
 
         pack();
@@ -720,12 +718,14 @@ public class TrisGui extends javax.swing.JFrame {
                  errorPanel.setVisible(true);
         }
         
-        if(trisPvP.checkWinner()){
+        if(trisPvP.checkWinner()>=0){
             if(trisPvP.getCurrentPlayer()=='O'){    
                 redWinPanel.setVisible(true);
             }else{
                 blueWinPanel.setVisible(true);
-            } 
+            }
+        }else{
+            tiePanel.setVisible(true);
         }
     }
     
@@ -832,6 +832,7 @@ public class TrisGui extends javax.swing.JFrame {
                 modePage.setVisible(false);
                 chooseTeamPage.setVisible(false);
                 gamePage.setVisible(false);
+                tiePanel.setVisible(false);
                 
                 switch (choice) {
                     case WELCOME_PAGE:
