@@ -96,6 +96,7 @@ public class TrisGui extends javax.swing.JFrame {
      * Mancata implementazione: sezione d'aiuto per l'utente tramie tasto "i" di informazioni non disonibile.
      * Mancata implementazione: manca completamente l'implementazione con il gioco tramite user vs AI. classi minmax non implementabile.
      * Mancata implementazione grafica: manca un bottone nella chooseTeamPage per tornare indietro, e uno simile o per mettere in pausa nella gamePage.
+     * Mancata implementazione grafica: pulsante per la chiusura dei popUp non interactable.
      * 
      * Completati:
      * Redesign grafico: cambiata l'icona per passare ad altre pagine con una freccia, la scritta precedemte era poco leggibile. ✅
@@ -223,7 +224,7 @@ public class TrisGui extends javax.swing.JFrame {
         buttonBox3 = new javax.swing.JButton();
         buttonBox2 = new javax.swing.JButton();
         buttonBox1 = new javax.swing.JButton();
-        returnButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         bluePointTextField = new javax.swing.JLabel();
         redPointTextField = new javax.swing.JLabel();
         gameBackground = new javax.swing.JLabel();
@@ -317,21 +318,21 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         welcomePage.add(continueButton);
-        continueButton.setBounds(170, 650, 100, 50);
+        continueButton.setBounds(180, 650, 100, 50);
 
         settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButton.png"))); // NOI18N
         settingsButton.setContentAreaFilled(false);
         settingsButton.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButton.png"))); // NOI18N
+        settingsButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonP.png"))); // NOI18N
         settingsButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonR.png"))); // NOI18N
         settingsButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonRP.png"))); // NOI18N
-        settingsButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonP.png"))); // NOI18N
         settingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 settingsButtonActionPerformed(evt);
             }
         });
         welcomePage.add(settingsButton);
-        settingsButton.setBounds(205, 730, 40, 40);
+        settingsButton.setBounds(210, 730, 40, 40);
 
         welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomePage0.png"))); // NOI18N
         welcomePage.add(welcomeBackground);
@@ -351,7 +352,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         popUpPanel.add(popUpCancelButton);
-        popUpCancelButton.setBounds(358, 280, 30, 30);
+        popUpCancelButton.setBounds(358, 279, 30, 30);
 
         popUpMessage.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         popUpMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -401,7 +402,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         loginPage.add(continueButton2);
-        continueButton2.setBounds(170, 650, 100, 50);
+        continueButton2.setBounds(180, 650, 100, 50);
 
         orText1.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
         orText1.setForeground(new java.awt.Color(255, 255, 255));
@@ -410,11 +411,11 @@ public class TrisGui extends javax.swing.JFrame {
         loginPage.add(orText1);
         orText1.setBounds(50, 270, 348, 50);
 
-        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/add.png"))); // NOI18N
+        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addButton.png"))); // NOI18N
         addButton.setContentAreaFilled(false);
-        addButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addP.png"))); // NOI18N
-        addButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addR.png"))); // NOI18N
-        addButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addRP.png"))); // NOI18N
+        addButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addButtonP.png"))); // NOI18N
+        addButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addButtonR.png"))); // NOI18N
+        addButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/addButtonRP.png"))); // NOI18N
         addButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -761,18 +762,18 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(buttonBox1);
         buttonBox1.setBounds(40, 220, 112, 112);
 
-        returnButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverse.png"))); // NOI18N
-        returnButton.setContentAreaFilled(false);
-        returnButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseP.png"))); // NOI18N
-        returnButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseR.png"))); // NOI18N
-        returnButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonReverseRP.png"))); // NOI18N
-        returnButton.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/backButton.png"))); // NOI18N
+        backButton.setContentAreaFilled(false);
+        backButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/backButtonP.png"))); // NOI18N
+        backButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/backButtonR.png"))); // NOI18N
+        backButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/backButtonRP.png"))); // NOI18N
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                returnButtonActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
-        gamePage.add(returnButton);
-        returnButton.setBounds(180, 660, 100, 60);
+        gamePage.add(backButton);
+        backButton.setBounds(180, 660, 100, 60);
 
         bluePointTextField.setFont(new java.awt.Font("Segoe UI", 1, 35)); // NOI18N
         bluePointTextField.setForeground(new java.awt.Color(255, 255, 255));
@@ -1108,10 +1109,10 @@ public class TrisGui extends javax.swing.JFrame {
         }    
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
         selectPanel(CHOOSE_TEAM_PAGE,0);
-    }//GEN-LAST:event_returnButtonActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
     private void teamRedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamRedButtonActionPerformed
         // TODO add your handling code here:
@@ -1126,7 +1127,7 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_teamBlueButtonActionPerformed
 
     private void popUpCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpCancelButtonActionPerformed
-        popUpPanel.setVisible(true);
+        popUpPanel.setVisible(false);
     }//GEN-LAST:event_popUpCancelButtonActionPerformed
 
     private void cancelButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton3ActionPerformed
@@ -1196,6 +1197,7 @@ public class TrisGui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AIButton;
     private javax.swing.JButton addButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JLabel backgroundMenu;
     private javax.swing.JLabel bluePointTextField;
     private javax.swing.JLabel blueWinBackground;
@@ -1246,7 +1248,6 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel redPointTextField;
     private javax.swing.JLabel redWinBackground;
     private javax.swing.JPanel redWinPopUp;
-    private javax.swing.JButton returnButton;
     private javax.swing.JButton settingsButton;
     private javax.swing.JPanel settingsPage;
     private javax.swing.JRadioButton teamBlueButton;
