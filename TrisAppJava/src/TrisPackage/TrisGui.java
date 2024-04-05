@@ -128,13 +128,15 @@ public class TrisGui extends javax.swing.JFrame {
      * */
     //</editor-fold>
     
-    //Variabile flag per la scelta del team da parte dell'utente.
-    private char flagTeam = 'x'; 
+    //Variabili flag
+    private char flagTeam = 'x'; //scelta del team
+    private boolean flagAI = false; //1 vs 1 / 1 vs AI
     
     private char vincitore;
     private String username;
     
     private TrisClass trisPvP;
+    private TrisMinimax trisAI;
     private LoginManager loginManager;
     /**
      * Creates new form TrisGui
@@ -798,28 +800,32 @@ public class TrisGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     public void playerMove(int row,int col, JButton button){
-        int result = trisPvP.move(row, col);
-        String type;
+        if(flagAI){
         
-        
-        if (result >= 0) {
-            if(result > 0){
-                type = "O";
-            } else {
-                type = "X";
+        } else {
+            int result = trisPvP.move(row, col);
+            String type;
+
+
+            if (result >= 0) {
+                if(result > 0){
+                    type = "O";
+                } else {
+                    type = "X";
+                }
+
+                button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + type + ".png")));
+
+                } else {
+                     errorPopUp.setVisible(true);
             }
-            
-            button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + type + ".png")));
-            
-            } else {
-                 errorPopUp.setVisible(true);
-        }
-        
-        switch(trisPvP.checkWinner()){
-            case 1 -> redWinPopUp.setVisible(true);
-            case 0 -> blueWinPanel.setVisible(true);
-            case -1 -> tiePopUp.setVisible(true);
-            default -> {
+
+            switch(trisPvP.checkWinner()){
+                case 1 -> redWinPopUp.setVisible(true);
+                case 0 -> blueWinPanel.setVisible(true);
+                case -1 -> tiePopUp.setVisible(true);
+                default -> {
+                }
             }
         }
     }
@@ -948,7 +954,13 @@ public class TrisGui extends javax.swing.JFrame {
                         chooseTeamPage.setVisible(true);
                         break;
                     case GAME_PAGE:
-                        trisPvP = new TrisClass(flagTeam);
+                        if(flagAI){
+                            trisAI = new TrisMinimax(3);
+                        }else{
+                            trisPvP = new TrisClass(flagTeam);                            
+                        }
+                        
+                        
                         resetButtos();
 
                         errorPopUp.setVisible(false);
@@ -1027,10 +1039,12 @@ public class TrisGui extends javax.swing.JFrame {
 
     private void AIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AIButtonActionPerformed
         selectPanel(CHOOSE_TEAM_PAGE,0);
+        flagAI = true;
     }//GEN-LAST:event_AIButtonActionPerformed
 
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendButtonActionPerformed
         selectPanel(CHOOSE_TEAM_PAGE,0);
+        flagAI = false;
     }//GEN-LAST:event_friendButtonActionPerformed
 
     private void continueButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton1ActionPerformed
