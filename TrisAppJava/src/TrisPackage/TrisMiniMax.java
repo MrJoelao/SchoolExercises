@@ -1,34 +1,23 @@
-import java.util.Scanner;
+package TrisPackage;
+
+import java.util.Random;
 
 public class TrisMinimax {
-    private static final char EMPTY = '-';
-    private static final char PLAYER_X = 'X';
-    private static final char PLAYER_O = 'O';
+    static final char EMPTY = '-';
+    static final char PLAYER_X = 'X';
+    static final char PLAYER_O = 'O';
     private static final int BOARD_SIZE = 3;
 
-    private static char[][] board = new char[BOARD_SIZE][BOARD_SIZE];
-    private static Scanner scanner = new Scanner(System.in);
+    private char[][] board = new char[BOARD_SIZE][BOARD_SIZE];
+    private Random random = new Random();
+    private int difficulty;
 
-    public static void main(String[] args) {
-        inizializzaTabellone();
-        stampaTabellone();
-
-        while (!giocoFinito()) {
-            mossaGiocatore();
-            if (giocoFinito()) break;
-            mossaComputer();
-            stampaTabellone();
-        }
-
-        char vincitore = determinaVincitore();
-        if (vincitore != EMPTY) {
-            System.out.println("Il vincitore è: " + vincitore);
-        } else {
-            System.out.println("La partita è finita in pareggio.");
-        }
+    public TrisMinimax(int difficulty) {
+        this.difficulty = difficulty;
+        initializeBoard();
     }
 
-    private static void inizializzaTabellone() {
+    public void initializeBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 board[i][j] = EMPTY;
@@ -36,7 +25,7 @@ public class TrisMinimax {
         }
     }
 
-    private static void stampaTabellone() {
+    public void printBoard() {
         System.out.println("-------------");
         for (int i = 0; i < BOARD_SIZE; i++) {
             System.out.print("| ");
@@ -48,118 +37,142 @@ public class TrisMinimax {
         }
     }
 
-    private static boolean giocoFinito() {
-        return determinaVincitore() != EMPTY || tabellonePieno();
-    }
-
-    private static boolean tabellonePieno() {
+    public char checkWinner() {
         for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                if (board[i][j] == EMPTY) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private static char determinaVincitore() {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            // Controlla le righe
+            // Check rows
             if (board[i][0] != EMPTY && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
                 return board[i][0];
             }
-            // Controlla le colonne
+            // Check columns
             if (board[0][i] != EMPTY && board[0][i] == board[1][i] && board[0][i] == board[2][i]) {
                 return board[0][i];
             }
         }
-        // Controlla le diagonali
+        // Check diagonals
         if (board[0][0] != EMPTY && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
             return board[0][0];
         }
         if (board[0][2] != EMPTY && board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
             return board[0][2];
         }
+        // Check for draw
+        boolean boardFull = true;
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                if (board[i][j] == EMPTY) {
+                    boardFull = false;
+                    break;
+                }
+            }
+        }
+        if (boardFull) {
+            return 'D'; // Draw
+        }
         return EMPTY;
     }
 
-    private static void mossaGiocatore() {
-        int riga, colonna;
+    public boolean playerMove(int row, int column) {
+        if (!isValidMove(row, column)) {
+            return false;
+        }
+        board[row][column] = PLAYER_X;
+        return true;
+    }
+
+    public int[] computerMove() {
+        int[] move;
+        switch (difficulty) {
+            case 1:
+                move = getRandomMove();
+                break;
+            case 2:
+                if (random.nextInt(100) < 40) {
+                    move = getBestMove();
+                } else {
+                    move = getRandomMove();
+                }
+                break;
+            case 3:
+                move = getBestMove();
+                break;
+            default:
+                move = getRandomMove();
+        }
+        board[move[0]][move[1]] = PLAYER_O;
+        return move;
+    }
+
+    private int[] getRandomMove() {
+        int row, column;
         do {
-            System.out.print("Inserisci la riga (0-2): ");
-            riga = scanner.nextInt();
-            System.out.print("Inserisci la colonna (0-2): ");
-            colonna = scanner.nextInt();
-        } while (!mossaValida(riga, colonna));
-
-        board[riga][colonna] = PLAYER_X;
-        stampaTabellone();
+            row = random.nextInt(BOARD_SIZE);
+            column = random.nextInt(BOARD_SIZE);
+        } while (!isValidMove(row, column));
+        return new int[]{row, column};
     }
 
-    private static boolean mossaValida(int riga, int colonna) {
-        return riga >= 0 && riga < BOARD_SIZE && colonna >= 0 && colonna < BOARD_SIZE && board[riga][colonna] == EMPTY;
-    }
-
-    private static void mossaComputer() {
-        int[] mossa = ottieniMossaMinimax();
-        board[mossa[0]][mossa[1]] = PLAYER_O;
-        System.out.println("Il computer ha giocato in riga: " + mossa[0] + ", colonna: " + mossa[1]);
-    }
-
-    private static int[] ottieniMossaMinimax() {
-        int[] mossa = { -1, -1 };
-        int migliorValore = Integer.MIN_VALUE;
+    private int[] getBestMove() {
+        int[] move = {-1, -1};
+        int bestScore = Integer.MIN_VALUE;
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 if (board[i][j] == EMPTY) {
                     board[i][j] = PLAYER_O;
-                    int valoreMossa = minimax(false);
+                    int score = minimax(board, 0, false);
                     board[i][j] = EMPTY;
-                    if (valoreMossa > migliorValore) {
-                        migliorValore = valoreMossa;
-                        mossa[0] = i;
-                        mossa[1] = j;
+                    if (score > bestScore) {
+                        bestScore = score;
+                        move[0] = i;
+                        move[1] = j;
                     }
                 }
             }
         }
-        return mossa;
+        return move;
     }
 
-    private static int minimax(boolean isMaximizing) {
-        char vincitore = determinaVincitore();
-        if (vincitore != EMPTY) {
-            return vincitore == PLAYER_O ? 1 : -1;
-        }
-        if (tabellonePieno()) {
-            return 0;
+    private int minimax(char[][] board, int depth, boolean isMaximizing) {
+        char result = checkWinner();
+        if (result != EMPTY) {
+            if (result == PLAYER_O) {
+                return 1;
+            } else if (result == PLAYER_X) {
+                return -1;
+            } else {
+                return 0; // Draw
+            }
         }
 
         if (isMaximizing) {
-            int migliorValore = Integer.MIN_VALUE;
+            int bestScore = Integer.MIN_VALUE;
             for (int i = 0; i < BOARD_SIZE; i++) {
                 for (int j = 0; j < BOARD_SIZE; j++) {
                     if (board[i][j] == EMPTY) {
                         board[i][j] = PLAYER_O;
-                        migliorValore = Math.max(migliorValore, minimax(false));
+                        int score = minimax(board, depth + 1, false);
                         board[i][j] = EMPTY;
+                        bestScore = Math.max(score, bestScore);
                     }
                 }
             }
-            return migliorValore;
+            return bestScore;
         } else {
-            int migliorValore = Integer.MAX_VALUE;
+            int bestScore = Integer.MAX_VALUE;
             for (int i = 0; i < BOARD_SIZE; i++) {
                 for (int j = 0; j < BOARD_SIZE; j++) {
                     if (board[i][j] == EMPTY) {
                         board[i][j] = PLAYER_X;
-                        migliorValore = Math.min(migliorValore, minimax(true));
+                        int score = minimax(board, depth + 1, true);
                         board[i][j] = EMPTY;
+                        bestScore = Math.min(score, bestScore);
                     }
                 }
             }
-            return migliorValore;
+            return bestScore;
         }
+    }
+
+    private boolean isValidMove(int row, int column) {
+        return row >= 0 && row < BOARD_SIZE && column >= 0 && column < BOARD_SIZE && board[row][column] == EMPTY;
     }
 }
