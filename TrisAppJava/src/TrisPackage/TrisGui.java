@@ -68,6 +68,14 @@ public class TrisGui extends javax.swing.JFrame {
     // Costanti per gli effetti sonori
     public static final String ERROR_SOUND = "error.wav";
     public static final String SUCCESS_SOUND = "success.wav";
+    
+    // Costanti per i codici dei temi
+    private static final int THEME_0 = 0;
+    private static final int THEME_1 = 1;
+    private static final int THEME_2 = 2;
+    private static final int THEME_3 = 3;
+
+    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc=" To-Do List">
@@ -78,7 +86,7 @@ public class TrisGui extends javax.swing.JFrame {
      *             un susseguirsi d'errori. importante perchè così si permette di vincere più volte andando a sporcare il punteggio.
      * Mancata implementazione grafica: sfocatura dietro al pulsante della freccia mancante per problemi ad implmentarla, da 
      *                                  implementare singolarmente.
-     * Mancata implementazione grafica: nessuna possibilità per la scelta dei temi.
+     * Mancata implementazione grafica: nessuna possibilità per la scelta dei temi. WORKING IN PROGRESS... 
      * Mancata implementazione: il punteggio non è stato ancora implementato e associato all'username. (punteggio, salvataggio su file e 
      *                          associazione del punteggio con l'username).
      * Mancata implementazione: sezione classifica non disponibile.
@@ -110,6 +118,7 @@ public class TrisGui extends javax.swing.JFrame {
      * Bug logico: 1v1 non funzionante graficamente, crea un eccezzione nel prendere l'immagini di "X" e "O". ✅
      * Bug logico: errore nella funzione personalizedMessage dove creava un'eccezione quando prendeva le immagini per i messaggi 
      *             personalizate per il tipo d'erroe. ✅
+     * Bug logico: tasto di chiusra della x del pop up della parità non funzionante. ✅
      * Bug logico: login non funzionante creando un'eccezione quando si prova a registarsi, questo per un'implementazione non corretta della
      *             classe login manager. ✅
      * Bug grafico: Il messaggio d'errore nell'aggiunta della password non ha la grandezza del fon giusta. ✅
@@ -151,6 +160,14 @@ public class TrisGui extends javax.swing.JFrame {
     private void initComponents() {
 
         teamButtons = new javax.swing.ButtonGroup();
+        themeButtons = new javax.swing.ButtonGroup();
+        settingsPage = new javax.swing.JPanel();
+        theme0Buttton = new javax.swing.JRadioButton();
+        theme1Buttton = new javax.swing.JRadioButton();
+        theme2Buttton = new javax.swing.JRadioButton();
+        theme3Buttton = new javax.swing.JRadioButton();
+        cancelSettingsButton = new javax.swing.JButton();
+        backgroundMenu = new javax.swing.JLabel();
         welcomePage = new javax.swing.JPanel();
         continueButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
@@ -180,16 +197,16 @@ public class TrisGui extends javax.swing.JFrame {
         continueButton1 = new javax.swing.JButton();
         chooseTeamBackground = new javax.swing.JLabel();
         gamePage = new javax.swing.JPanel();
-        redWinPanel = new javax.swing.JPanel();
+        redWinPopUp = new javax.swing.JPanel();
         cancelButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         redWinBackground = new javax.swing.JLabel();
-        errorPanel = new javax.swing.JPanel();
+        errorPopUp = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cancelButton1 = new javax.swing.JButton();
         errorMessageBackground = new javax.swing.JLabel();
-        tiePanel = new javax.swing.JPanel();
+        tiePopUp = new javax.swing.JPanel();
         cancelButton3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         tieBackground = new javax.swing.JLabel();
@@ -215,6 +232,69 @@ public class TrisGui extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(450, 800));
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
+        settingsPage.setOpaque(false);
+        settingsPage.setLayout(null);
+
+        themeButtons.add(theme0Buttton);
+        theme0Buttton.setContentAreaFilled(false);
+        theme0Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme0Button.png"))); // NOI18N
+        theme0Buttton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                theme0ButttonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(theme0Buttton);
+        theme0Buttton.setBounds(22, 129, 80, 80);
+
+        themeButtons.add(theme1Buttton);
+        theme1Buttton.setContentAreaFilled(false);
+        theme1Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme1Button.png"))); // NOI18N
+        theme1Buttton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                theme1ButttonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(theme1Buttton);
+        theme1Buttton.setBounds(111, 129, 80, 80);
+
+        themeButtons.add(theme2Buttton);
+        theme2Buttton.setContentAreaFilled(false);
+        theme2Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme2Button.png"))); // NOI18N
+        theme2Buttton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                theme2ButttonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(theme2Buttton);
+        theme2Buttton.setBounds(200, 129, 80, 80);
+
+        themeButtons.add(theme3Buttton);
+        theme3Buttton.setContentAreaFilled(false);
+        theme3Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme3Button.png"))); // NOI18N
+        theme3Buttton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                theme3ButttonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(theme3Buttton);
+        theme3Buttton.setBounds(289, 129, 80, 80);
+
+        cancelSettingsButton.setContentAreaFilled(false);
+        cancelSettingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelSettingsButtonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(cancelSettingsButton);
+        cancelSettingsButton.setBounds(342, 13, 30, 30);
+
+        backgroundMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsBackground.png"))); // NOI18N
+        backgroundMenu.setText("jLabel7");
+        settingsPage.add(backgroundMenu);
+        backgroundMenu.setBounds(0, 0, 450, 800);
+
+        getContentPane().add(settingsPage);
+
         welcomePage.setMaximumSize(new java.awt.Dimension(450, 800));
         welcomePage.setMinimumSize(new java.awt.Dimension(450, 800));
         welcomePage.setPreferredSize(new java.awt.Dimension(450, 800));
@@ -222,9 +302,15 @@ public class TrisGui extends javax.swing.JFrame {
 
         continueButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
         continueButton.setContentAreaFilled(false);
+        continueButton.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
         continueButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonP.png"))); // NOI18N
         continueButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonR.png"))); // NOI18N
         continueButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonRP.png"))); // NOI18N
+        continueButton.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                settingsHandler(evt);
+            }
+        });
         continueButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 continueButtonActionPerformed(evt);
@@ -235,6 +321,7 @@ public class TrisGui extends javax.swing.JFrame {
 
         settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButton.png"))); // NOI18N
         settingsButton.setContentAreaFilled(false);
+        settingsButton.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButton.png"))); // NOI18N
         settingsButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonR.png"))); // NOI18N
         settingsButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonRP.png"))); // NOI18N
         settingsButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsButtonP.png"))); // NOI18N
@@ -456,8 +543,8 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.setPreferredSize(new java.awt.Dimension(450, 800));
         gamePage.setLayout(null);
 
-        redWinPanel.setOpaque(false);
-        redWinPanel.setLayout(null);
+        redWinPopUp.setOpaque(false);
+        redWinPopUp.setLayout(null);
 
         cancelButton2.setContentAreaFilled(false);
         cancelButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -465,37 +552,37 @@ public class TrisGui extends javax.swing.JFrame {
                 cancelButton2ActionPerformed(evt);
             }
         });
-        redWinPanel.add(cancelButton2);
+        redWinPopUp.add(cancelButton2);
         cancelButton2.setBounds(368, 281, 30, 30);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Team Red Win!");
-        redWinPanel.add(jLabel4);
+        redWinPopUp.add(jLabel4);
         jLabel4.setBounds(70, 330, 310, 25);
 
         redWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/redWin.png"))); // NOI18N
-        redWinPanel.add(redWinBackground);
+        redWinPopUp.add(redWinBackground);
         redWinBackground.setBounds(0, 0, 450, 800);
 
-        gamePage.add(redWinPanel);
-        redWinPanel.setBounds(0, 0, 450, 800);
+        gamePage.add(redWinPopUp);
+        redWinPopUp.setBounds(0, 0, 450, 800);
 
-        errorPanel.setOpaque(false);
-        errorPanel.setLayout(null);
+        errorPopUp.setOpaque(false);
+        errorPopUp.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Invalid move");
-        errorPanel.add(jLabel1);
+        errorPopUp.add(jLabel1);
         jLabel1.setBounds(50, 370, 350, 31);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Error: move chosen invalid, try again by choosing another box.");
-        errorPanel.add(jLabel2);
+        errorPopUp.add(jLabel2);
         jLabel2.setBounds(70, 420, 310, 30);
 
         cancelButton1.setContentAreaFilled(false);
@@ -504,18 +591,18 @@ public class TrisGui extends javax.swing.JFrame {
                 cancelButton1ActionPerformed(evt);
             }
         });
-        errorPanel.add(cancelButton1);
+        errorPopUp.add(cancelButton1);
         cancelButton1.setBounds(354, 340, 30, 30);
 
         errorMessageBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/errorMessage.png"))); // NOI18N
-        errorPanel.add(errorMessageBackground);
+        errorPopUp.add(errorMessageBackground);
         errorMessageBackground.setBounds(0, 0, 450, 800);
 
-        gamePage.add(errorPanel);
-        errorPanel.setBounds(0, 0, 450, 800);
+        gamePage.add(errorPopUp);
+        errorPopUp.setBounds(0, 0, 450, 800);
 
-        tiePanel.setOpaque(false);
-        tiePanel.setLayout(null);
+        tiePopUp.setOpaque(false);
+        tiePopUp.setLayout(null);
 
         cancelButton3.setContentAreaFilled(false);
         cancelButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -523,22 +610,22 @@ public class TrisGui extends javax.swing.JFrame {
                 cancelButton3ActionPerformed(evt);
             }
         });
-        tiePanel.add(cancelButton3);
+        tiePopUp.add(cancelButton3);
         cancelButton3.setBounds(368, 282, 30, 30);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("TIE!");
-        tiePanel.add(jLabel6);
+        tiePopUp.add(jLabel6);
         jLabel6.setBounds(70, 330, 310, 31);
 
         tieBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/tiePage.png"))); // NOI18N
-        tiePanel.add(tieBackground);
+        tiePopUp.add(tieBackground);
         tieBackground.setBounds(0, 0, 450, 800);
 
-        gamePage.add(tiePanel);
-        tiePanel.setBounds(0, 0, 450, 800);
+        gamePage.add(tiePopUp);
+        tiePopUp.setBounds(0, 0, 450, 800);
 
         blueWinPanel.setOpaque(false);
         blueWinPanel.setLayout(null);
@@ -724,13 +811,13 @@ public class TrisGui extends javax.swing.JFrame {
             button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + type + ".png")));
             
             } else {
-                 errorPanel.setVisible(true);
+                 errorPopUp.setVisible(true);
         }
         
         switch(trisPvP.checkWinner()){
-            case 1 -> redWinPanel.setVisible(true);
+            case 1 -> redWinPopUp.setVisible(true);
             case 0 -> blueWinPanel.setVisible(true);
-            case -1 -> tiePanel.setVisible(true);
+            case -1 -> tiePopUp.setVisible(true);
             default -> {
             }
         }
@@ -839,11 +926,15 @@ public class TrisGui extends javax.swing.JFrame {
                 modePage.setVisible(false);
                 chooseTeamPage.setVisible(false);
                 gamePage.setVisible(false);
-                tiePanel.setVisible(false);
+                tiePopUp.setVisible(false);
+                settingsPage.setVisible(false);
                 
                 switch (choice) {
                     case WELCOME_PAGE:
+                        welcomePage.setEnabled(false);
                         welcomePage.setVisible(true);
+                        continueButton.setEnabled(true);
+                        settingsButton.setEnabled(true);
                         break;
                     case LOGIN_PAGE:
                         loginPage.setVisible(true);
@@ -859,12 +950,16 @@ public class TrisGui extends javax.swing.JFrame {
                         trisPvP = new TrisClass(flagTeam);
                         resetButtos();
 
-                        errorPanel.setVisible(false);
-                        redWinPanel.setVisible(false);
+                        errorPopUp.setVisible(false);
+                        redWinPopUp.setVisible(false);
                         blueWinPanel.setVisible(false);
                         gamePage.setVisible(true);
                         break; 
                     case SETTINGS_PAGE:
+                        settingsPage.setVisible(true);
+                        welcomePage.setVisible(true);
+                        continueButton.setEnabled(false);
+                        settingsButton.setEnabled(false);
                         break;
 
                     default:
@@ -876,12 +971,13 @@ public class TrisGui extends javax.swing.JFrame {
         }, delayInMs);
     }
 
-    public void cambiaTema(int numTheme){
+    public void chageTheme(int numTheme){
         welcomeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/welcomePage" + numTheme + ".png")));
         loginBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/loginPage" + numTheme + ".png")));
         modeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/playModePage" + numTheme + ".png")));
         chooseTeamBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/chooseTeamPage" + numTheme + ".png")));
         gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gamePage" + numTheme + ".png")));
+        selectPanel(SETTINGS_PAGE, 0);
     }
     
     private void buttonBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox1ActionPerformed
@@ -925,7 +1021,7 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_continueButtonActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
-        // TODO add your handling code here:
+        selectPanel(SETTINGS_PAGE,0);
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     private void AIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AIButtonActionPerformed
@@ -947,12 +1043,12 @@ public class TrisGui extends javax.swing.JFrame {
 
     private void cancelButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton1ActionPerformed
         // TODO add your handling code here:
-        errorPanel.setVisible(false);
+        errorPopUp.setVisible(false);
     }//GEN-LAST:event_cancelButton1ActionPerformed
 
     private void cancelButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton2ActionPerformed
         // TODO add your handling code here:
-        redWinPanel.setVisible(false);
+        redWinPopUp.setVisible(false);
     }//GEN-LAST:event_cancelButton2ActionPerformed
     private void continueButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton2ActionPerformed
         // Ottieni l'username e la password inseriti dall'utente
@@ -1030,12 +1126,36 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_teamBlueButtonActionPerformed
 
     private void popUpCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpCancelButtonActionPerformed
-        popUpPanel.setVisible(false);
+        popUpPanel.setVisible(true);
     }//GEN-LAST:event_popUpCancelButtonActionPerformed
 
     private void cancelButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton3ActionPerformed
-        // TODO add your handling code here:
+        tiePopUp.setVisible(false);
     }//GEN-LAST:event_cancelButton3ActionPerformed
+
+    private void cancelSettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelSettingsButtonActionPerformed
+        selectPanel(WELCOME_PAGE, 0);
+    }//GEN-LAST:event_cancelSettingsButtonActionPerformed
+
+    private void settingsHandler(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_settingsHandler
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settingsHandler
+
+    private void theme0ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme0ButttonActionPerformed
+        chageTheme(THEME_0);
+    }//GEN-LAST:event_theme0ButttonActionPerformed
+
+    private void theme1ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme1ButttonActionPerformed
+        chageTheme(THEME_1);
+    }//GEN-LAST:event_theme1ButttonActionPerformed
+
+    private void theme2ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme2ButttonActionPerformed
+        chageTheme(THEME_2);
+    }//GEN-LAST:event_theme2ButttonActionPerformed
+
+    private void theme3ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme3ButttonActionPerformed
+        chageTheme(THEME_3);
+    }//GEN-LAST:event_theme3ButttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1076,6 +1196,7 @@ public class TrisGui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AIButton;
     private javax.swing.JButton addButton;
+    private javax.swing.JLabel backgroundMenu;
     private javax.swing.JLabel bluePointTextField;
     private javax.swing.JLabel blueWinBackground;
     private javax.swing.JPanel blueWinPanel;
@@ -1092,6 +1213,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton cancelButton1;
     private javax.swing.JButton cancelButton2;
     private javax.swing.JButton cancelButton3;
+    private javax.swing.JButton cancelSettingsButton;
     private javax.swing.JLabel chooseMode;
     private javax.swing.JLabel chooseTeamBackground;
     private javax.swing.JPanel chooseTeamPage;
@@ -1099,7 +1221,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton continueButton1;
     private javax.swing.JButton continueButton2;
     private javax.swing.JLabel errorMessageBackground;
-    private javax.swing.JPanel errorPanel;
+    private javax.swing.JPanel errorPopUp;
     private javax.swing.JButton friendButton;
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
@@ -1123,14 +1245,20 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel popUpTitle;
     private javax.swing.JLabel redPointTextField;
     private javax.swing.JLabel redWinBackground;
-    private javax.swing.JPanel redWinPanel;
+    private javax.swing.JPanel redWinPopUp;
     private javax.swing.JButton returnButton;
     private javax.swing.JButton settingsButton;
+    private javax.swing.JPanel settingsPage;
     private javax.swing.JRadioButton teamBlueButton;
     private javax.swing.ButtonGroup teamButtons;
     private javax.swing.JRadioButton teamRedButton;
+    private javax.swing.JRadioButton theme0Buttton;
+    private javax.swing.JRadioButton theme1Buttton;
+    private javax.swing.JRadioButton theme2Buttton;
+    private javax.swing.JRadioButton theme3Buttton;
+    private javax.swing.ButtonGroup themeButtons;
     private javax.swing.JLabel tieBackground;
-    private javax.swing.JPanel tiePanel;
+    private javax.swing.JPanel tiePopUp;
     private javax.swing.JTextField usernameTextField;
     private javax.swing.JLabel welcomeBackground;
     private javax.swing.JPanel welcomePage;
