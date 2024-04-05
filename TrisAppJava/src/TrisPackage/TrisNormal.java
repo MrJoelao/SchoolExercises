@@ -1,18 +1,15 @@
 package TrisPackage;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
 /**
  *
  * @author joels,ricpi,NicMuso,AlePini
  */
-public class TrisClass {
+public class TrisNormal {
     private char[][] board;
     private char current_player;
 
     // Costruttore che accetta un parametro per il giocatore iniziale
-    public TrisClass(char initialPlayer) {
+    public TrisNormal(char initialPlayer) {
         board = new char[3][3];
         current_player = initialPlayer; // Imposta il giocatore iniziale
         inizializza();

@@ -8,7 +8,6 @@ import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.util.Timer;
@@ -135,8 +134,8 @@ public class TrisGui extends javax.swing.JFrame {
     private char vincitore;
     private String username;
     
-    private TrisClass trisPvP;
-    private TrisMinimax trisAI;
+    private TrisNormal trisPvP;
+    private TrisAI trisAI;
     private LoginManager loginManager;
     /**
      * Creates new form TrisGui
@@ -955,9 +954,9 @@ public class TrisGui extends javax.swing.JFrame {
                         break;
                     case GAME_PAGE:
                         if(flagAI){
-                            trisAI = new TrisMinimax(3);
+                            trisAI = new TrisAI(3);
                         }else{
-                            trisPvP = new TrisClass(flagTeam);                            
+                            trisPvP = new TrisNormal(flagTeam);                            
                         }
                         
                         

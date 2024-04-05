@@ -2,7 +2,7 @@ package TrisPackage;
 
 import java.util.Random;
 
-public class TrisMinimax {
+public class TrisAI {
     static final char EMPTY = '-';
     static final char PLAYER_X = 'X';
     static final char PLAYER_O = 'O';
@@ -12,7 +12,7 @@ public class TrisMinimax {
     private Random random = new Random();
     private int difficulty;
 
-    public TrisMinimax(int difficulty) {
+    public TrisAI(int difficulty) {
         this.difficulty = difficulty;
         initializeBoard();
     }
