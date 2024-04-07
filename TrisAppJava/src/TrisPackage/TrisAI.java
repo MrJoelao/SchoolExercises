@@ -12,6 +12,7 @@ public class TrisAI {
     private Random random = new Random();
     private char playerSymbol; // Aggiunto per tenere traccia del simbolo del giocatore
     private int difficulty;
+    
     public TrisAI(char playerSymbol, int difficulty) {
         this.playerSymbol = playerSymbol;
         this.difficulty=difficulty;
@@ -39,23 +40,39 @@ public class TrisAI {
         }
     }
 
-    public char checkWinner() {
+    public int checkWinner() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             // Check rows
             if (board[i][0] != EMPTY && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
-                return board[i][0];
+                if (board[i][0] == PLAYER_X) {
+                    return 1; // Vince il giocatore X
+                } else {
+                    return -1; // Vince il giocatore O
+                }
             }
             // Check columns
             if (board[0][i] != EMPTY && board[0][i] == board[1][i] && board[0][i] == board[2][i]) {
-                return board[0][i];
+                if (board[0][i] == PLAYER_X) {
+                    return 1; // Vince il giocatore X
+                } else {
+                    return -1; // Vince il giocatore O
+                }
             }
         }
         // Check diagonals
         if (board[0][0] != EMPTY && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
-            return board[0][0];
+            if (board[0][0] == PLAYER_X) {
+                return 1; // Vince il giocatore X
+            } else {
+                return -1; // Vince il giocatore O
+            }
         }
         if (board[0][2] != EMPTY && board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
-            return board[0][2];
+            if (board[0][2] == PLAYER_X) {
+                return 1; // Vince il giocatore X
+            } else {
+                return -1; // Vince il giocatore O
+            }
         }
         // Check for draw
         boolean boardFull = true;
@@ -68,10 +85,11 @@ public class TrisAI {
             }
         }
         if (boardFull) {
-            return 'D'; // Draw
+            return 0; // Pareggio
         }
         return EMPTY;
     }
+
 
     public boolean playerMove(int row, int column) {
         if (!isValidMove(row, column)) {
@@ -134,15 +152,9 @@ public class TrisAI {
     }
 
     private int minimax(char[][] board, int depth, boolean isMaximizing) {
-        char result = checkWinner();
+        int result = checkWinner();
         if (result != EMPTY) {
-            if (result == PLAYER_O) {
-                return 1;
-            } else if (result == PLAYER_X) {
-                return -1;
-            } else {
-                return 0; // Draw
-            }
+            return result; // Restituisce il risultato della partita: 1 per vittoria X, 0 per parità, -1 per vittoria O
         }
 
         if (isMaximizing) {
@@ -173,6 +185,7 @@ public class TrisAI {
             return bestScore;
         }
     }
+
 
     private boolean isValidMove(int row, int column) {
         return row >= 0 && row < BOARD_SIZE && column >= 0 && column < BOARD_SIZE && board[row][column] == EMPTY;

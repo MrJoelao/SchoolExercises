@@ -1043,7 +1043,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="blueWinPanel">
+        <Container class="javax.swing.JPanel" name="blueWinPopUp">
           <Properties>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
