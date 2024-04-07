@@ -73,6 +73,10 @@ public class TrisGui extends javax.swing.JFrame {
     private static final int THEME_1 = 1;
     private static final int THEME_2 = 2;
     private static final int THEME_3 = 3;
+    private static final int THEME_4 = 4;
+    private static final int THEME_5 = 5;
+    private static final int THEME_6 = 6;
+    private static final int THEME_7 = 7;
 
     
     //</editor-fold>
@@ -167,6 +171,11 @@ public class TrisGui extends javax.swing.JFrame {
         theme1Buttton = new javax.swing.JRadioButton();
         theme2Buttton = new javax.swing.JRadioButton();
         theme3Buttton = new javax.swing.JRadioButton();
+        theme4Buttton = new javax.swing.JRadioButton();
+        theme5Buttton = new javax.swing.JRadioButton();
+        theme6Buttton = new javax.swing.JRadioButton();
+        theme7Buttton = new javax.swing.JRadioButton();
+        deleteButton = new javax.swing.JButton();
         cancelSettingsButton = new javax.swing.JButton();
         backgroundMenu = new javax.swing.JLabel();
         welcomePage = new javax.swing.JPanel();
@@ -246,7 +255,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme0Buttton);
-        theme0Buttton.setBounds(22, 129, 80, 80);
+        theme0Buttton.setBounds(50, 236, 80, 80);
 
         themeButtons.add(theme1Buttton);
         theme1Buttton.setContentAreaFilled(false);
@@ -257,7 +266,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme1Buttton);
-        theme1Buttton.setBounds(111, 129, 80, 80);
+        theme1Buttton.setBounds(140, 236, 80, 80);
 
         themeButtons.add(theme2Buttton);
         theme2Buttton.setContentAreaFilled(false);
@@ -268,7 +277,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme2Buttton);
-        theme2Buttton.setBounds(200, 129, 80, 80);
+        theme2Buttton.setBounds(230, 236, 80, 80);
 
         themeButtons.add(theme3Buttton);
         theme3Buttton.setContentAreaFilled(false);
@@ -279,7 +288,61 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme3Buttton);
-        theme3Buttton.setBounds(289, 129, 80, 80);
+        theme3Buttton.setBounds(320, 236, 80, 80);
+
+        themeButtons.add(theme4Buttton);
+        theme4Buttton.setContentAreaFilled(false);
+        theme4Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme5Button.png"))); // NOI18N
+        theme4Buttton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                theme4ButttonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(theme4Buttton);
+        theme4Buttton.setBounds(140, 322, 80, 80);
+
+        themeButtons.add(theme5Buttton);
+        theme5Buttton.setContentAreaFilled(false);
+        theme5Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme6Button.png"))); // NOI18N
+        theme5Buttton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                theme5ButttonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(theme5Buttton);
+        theme5Buttton.setBounds(230, 322, 80, 80);
+
+        themeButtons.add(theme6Buttton);
+        theme6Buttton.setContentAreaFilled(false);
+        theme6Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme7Button.png"))); // NOI18N
+        theme6Buttton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                theme6ButttonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(theme6Buttton);
+        theme6Buttton.setBounds(320, 322, 80, 80);
+
+        themeButtons.add(theme7Buttton);
+        theme7Buttton.setContentAreaFilled(false);
+        theme7Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme4Button.png"))); // NOI18N
+        theme7Buttton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                theme7ButttonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(theme7Buttton);
+        theme7Buttton.setBounds(50, 322, 80, 80);
+
+        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/deleteButton.png"))); // NOI18N
+        deleteButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(deleteButton);
+        deleteButton.setBounds(120, 530, 30, 30);
 
         cancelSettingsButton.setContentAreaFilled(false);
         cancelSettingsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -290,7 +353,7 @@ public class TrisGui extends javax.swing.JFrame {
         settingsPage.add(cancelSettingsButton);
         cancelSettingsButton.setBounds(342, 13, 30, 30);
 
-        backgroundMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsBackground.png"))); // NOI18N
+        backgroundMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsPage.png"))); // NOI18N
         backgroundMenu.setText("jLabel7");
         settingsPage.add(backgroundMenu);
         backgroundMenu.setBounds(0, 0, 450, 800);
@@ -1172,6 +1235,26 @@ public class TrisGui extends javax.swing.JFrame {
         chageTheme(THEME_3);
     }//GEN-LAST:event_theme3ButttonActionPerformed
 
+    private void theme4ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme4ButttonActionPerformed
+        chageTheme(THEME_4);
+    }//GEN-LAST:event_theme4ButttonActionPerformed
+
+    private void theme5ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme5ButttonActionPerformed
+        chageTheme(THEME_5);
+    }//GEN-LAST:event_theme5ButttonActionPerformed
+
+    private void theme6ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme6ButttonActionPerformed
+        chageTheme(THEME_6);
+    }//GEN-LAST:event_theme6ButttonActionPerformed
+
+    private void theme7ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme7ButttonActionPerformed
+        chageTheme(THEME_7);
+    }//GEN-LAST:event_theme7ButttonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1236,6 +1319,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton continueButton;
     private javax.swing.JButton continueButton1;
     private javax.swing.JButton continueButton2;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JPanel difficultyPage;
     private javax.swing.JLabel errorMessageBackground;
     private javax.swing.JPanel errorPopUp;
@@ -1272,6 +1356,10 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JRadioButton theme1Buttton;
     private javax.swing.JRadioButton theme2Buttton;
     private javax.swing.JRadioButton theme3Buttton;
+    private javax.swing.JRadioButton theme4Buttton;
+    private javax.swing.JRadioButton theme5Buttton;
+    private javax.swing.JRadioButton theme6Buttton;
+    private javax.swing.JRadioButton theme7Buttton;
     private javax.swing.ButtonGroup themeButtons;
     private javax.swing.JLabel tieBackground;
     private javax.swing.JPanel tiePopUp;
