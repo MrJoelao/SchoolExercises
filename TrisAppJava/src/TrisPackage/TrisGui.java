@@ -132,9 +132,10 @@ public class TrisGui extends javax.swing.JFrame {
     
     //Variabili flag
     private char flagTeam = 'x'; //scelta del team
-    private boolean flagAI = false; //1 vs 1 / 1 vs AI
-    private int difficulty = 3;
     char playerSymbol = 'X';
+    private boolean flagAI = false; //1 vs 1 / 1 vs AI
+    private int difficulty = 1;
+
     
     private char vincitore;
     private String username;
@@ -871,8 +872,7 @@ public class TrisGui extends javax.swing.JFrame {
         int result;
         
         if(flagAI){
-            
-            
+           
             if(!trisAI.playerMove(row, col)){
                 errorPopUp.setVisible(true); //messaggio d'errore se percaso la mossa non risulta valida
             } else {
