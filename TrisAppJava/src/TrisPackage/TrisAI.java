@@ -3,19 +3,21 @@ package TrisPackage;
 import java.util.Random;
 
 public class TrisAI {
-    static final char EMPTY = '-';
+     static final char EMPTY = '-';
     static final char PLAYER_X = 'X';
     static final char PLAYER_O = 'O';
     private static final int BOARD_SIZE = 3;
 
     private char[][] board = new char[BOARD_SIZE][BOARD_SIZE];
     private Random random = new Random();
+    private char playerSymbol; // Aggiunto per tenere traccia del simbolo del giocatore
     private int difficulty;
-
-    public TrisAI(int difficulty) {
-        this.difficulty = difficulty;
+    public TrisAI(char playerSymbol, int difficulty) {
+        this.playerSymbol = playerSymbol;
+        this.difficulty=difficulty;
         initializeBoard();
     }
+
 
     public void initializeBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -75,7 +77,7 @@ public class TrisAI {
         if (!isValidMove(row, column)) {
             return false;
         }
-        board[row][column] = PLAYER_X;
+        board[row][column] = playerSymbol; // Utilizza il simbolo del giocatore
         return true;
     }
 
