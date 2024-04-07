@@ -83,22 +83,16 @@ public class TrisGui extends javax.swing.JFrame {
     
     //<editor-fold defaultstate="collapsed" desc=" To-Do List">
     /*To-Do:
-     * Bug logico: non è gestito il caso del pareggio dalla classe 1v1 del tris, non avendo modo di saperlo se si verifica si rimane bloccati.
      * bug logico: quando si verica un messaggio di vincita o d'errore è comunque possibile premere i tasti dietro, creando così 
      *             un susseguirsi d'errori. importante perchè così si permette di vincere più volte andando a sporcare il punteggio.
-     * Mancata implementazione grafica: sfocatura dietro al pulsante della freccia mancante per problemi ad implmentarla, da 
-     *                                  implementare singolarmente.
-     * Mancata implementazione grafica: nessuna possibilità per la scelta dei temi. WORKING IN PROGRESS... 
      * Mancata implementazione: il punteggio non è stato ancora implementato e associato all'username. (punteggio, salvataggio su file e 
      *                          associazione del punteggio con l'username).
      * Mancata implementazione: sezione classifica non disponibile.
      * Mancata implementazione: sezione di diverse difficoltà user vs AI non disponibile.
      * Mancata implementazione grafica: sezione di scelta grafica di diverse difficoltà user vs AI non disponibile.
-     * Mancata implementazione: sezione delle impostazioni non disponibile.
      * Mancata implementazione: sezione d'aiuto per l'utente tramie tasto "i" di informazioni non disonibile.
-     * Mancata implementazione: manca completamente l'implementazione con il gioco tramite user vs AI. classi minmax non implementabile.
      * Mancata implementazione grafica: manca un bottone nella chooseTeamPage per tornare indietro, e uno simile o per mettere in pausa nella gamePage.
-     * Mancata implementazione grafica: pulsante per la chiusura dei popUp non interactable.
+     * 
      * 
      * Completati:
      * Redesign grafico: cambiata l'icona per passare ad altre pagine con una freccia, la scritta precedemte era poco leggibile. ✅
@@ -108,16 +102,20 @@ public class TrisGui extends javax.swing.JFrame {
      * Redesign grafico: sfondi cambiati garantendo continuità con il colore tra le pagine. ✅
      * Redesign grafico: "X" e "O" leggeremente riviste aggiungendo delle migliorie grafice. effetto di sfocatura aggiunto. ✅
      * Implementazione grafica: aggiunti effetti di sfocatura e ombre quando compare un messaggio. ✅
+     * Mancata implementazione grafica: nessuna possibilità per la scelta dei temi. WORKING IN PROGRESS... 
      * Mancata implementazione: scelta del team non funzionante: costruttore della classe tris 1v1 modificata leggermente per permetterlo, 
      *                          modifica dei pulsanti in radio buttons, aggiunta di un gruppo di bottoni e di una variabile flag per la 
      *                          scelta del team. ✅
-     * Mancata implementazione: . ✅
      * Mancata implementazione grafica: implementato il messaggio grafico di parità, manca l'associazione con il codice. ✅
      * Mancata implementazione: Implementato il comparto audio per errori/sucesso. ✅
      * Mancata implementazione: Implementato il comparto grafico pergli avvisi per il login. ✅
      * Mancata implementazione: classe login non viene usata dalla classe. ✅
+     * Mancata implementazione: sezione delle impostazioni non disponibile. ✅
+     * Mancata implementazione grafica: manca completamente l'implementazione grafica con il gioco tramite user vs AI. ✅
+     * Mancata implementazione grafica: pulsante per la chiusura dei popUp non interactable. ✅
      * Implementazione codice: aggiunto un timer nella funzione selectPanel() permettendo così di far vedere eventuali messaggi 
-     *                         prima di cambiare pannello, inserire il tempo d'attesa in ms.
+     *                         prima di cambiare pannello, inserire il tempo d'attesa in ms. ✅
+     * Bug logico: non è gestito il caso del pareggio dalla classe 1v1 del tris, non avendo modo di saperlo se si verifica si rimane bloccati. ✅
      * Bug logico: 1v1 non funzionante graficamente, crea un eccezzione nel prendere l'immagini di "X" e "O". ✅
      * Bug logico: errore nella funzione personalizedMessage dove creava un'eccezione quando prendeva le immagini per i messaggi 
      *             personalizate per il tipo d'erroe. ✅
@@ -259,6 +257,7 @@ public class TrisGui extends javax.swing.JFrame {
 
         themeButtons.add(theme0Buttton);
         theme0Buttton.setContentAreaFilled(false);
+        theme0Buttton.setHideActionText(true);
         theme0Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme0Button.png"))); // NOI18N
         theme0Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
