@@ -134,7 +134,7 @@ public class TrisGui extends javax.swing.JFrame {
     private char flagTeam = 'x'; //scelta del team
     char playerSymbol = 'X';
     private boolean flagAI = false; //1 vs 1 / 1 vs AI
-    private int difficulty = 1;
+    private int difficulty = 3;
 
     
     private char vincitore;
