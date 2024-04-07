@@ -79,7 +79,6 @@ public class TrisGui extends javax.swing.JFrame {
     
     //<editor-fold defaultstate="collapsed" desc=" To-Do List">
     /*To-Do:
-     * Bug grafico: Immagine della freccia premuta ha un'ombra diversa risultando uno spostamento quando viene premuta.
      * Bug logico: non è gestito il caso del pareggio dalla classe 1v1 del tris, non avendo modo di saperlo se si verifica si rimane bloccati.
      * bug logico: quando si verica un messaggio di vincita o d'errore è comunque possibile premere i tasti dietro, creando così 
      *             un susseguirsi d'errori. importante perchè così si permette di vincere più volte andando a sporcare il punteggio.
@@ -123,7 +122,7 @@ public class TrisGui extends javax.swing.JFrame {
      *             classe login manager. ✅
      * Bug grafico: Il messaggio d'errore nell'aggiunta della password non ha la grandezza del fon giusta. ✅
      * Bug grafico: Immagine della "X" nel pannello di gioco ha un effettto di sfocatura dietro di se che però risulta tagliato. ✅
-     * 
+     * Bug grafico: Immagine della freccia premuta ha un'ombra diversa risultando uno spostamento quando viene premuta. ✅
      * */
     //</editor-fold>
     
@@ -174,6 +173,7 @@ public class TrisGui extends javax.swing.JFrame {
         continueButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         welcomeBackground = new javax.swing.JLabel();
+        difficultyPage = new javax.swing.JPanel();
         loginPage = new javax.swing.JPanel();
         popUpPanel = new javax.swing.JPanel();
         popUpCancelButton = new javax.swing.JButton();
@@ -340,6 +340,7 @@ public class TrisGui extends javax.swing.JFrame {
         welcomeBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(welcomePage);
+        getContentPane().add(difficultyPage);
 
         loginPage.setLayout(null);
 
@@ -1235,6 +1236,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton continueButton;
     private javax.swing.JButton continueButton1;
     private javax.swing.JButton continueButton2;
+    private javax.swing.JPanel difficultyPage;
     private javax.swing.JLabel errorMessageBackground;
     private javax.swing.JPanel errorPopUp;
     private javax.swing.JButton friendButton;
