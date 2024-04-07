@@ -259,90 +259,106 @@ public class TrisGui extends javax.swing.JFrame {
         themeButtons.add(theme0Buttton);
         theme0Buttton.setContentAreaFilled(false);
         theme0Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme0Button.png"))); // NOI18N
+        theme0Buttton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme0ButtonRP.png"))); // NOI18N
+        theme0Buttton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme0ButtonRP.png"))); // NOI18N
         theme0Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme0ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme0Buttton);
-        theme0Buttton.setBounds(50, 236, 80, 80);
+        theme0Buttton.setBounds(49, 236, 85, 80);
 
         themeButtons.add(theme1Buttton);
         theme1Buttton.setContentAreaFilled(false);
         theme1Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme1Button.png"))); // NOI18N
+        theme1Buttton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme1ButtonRP.png"))); // NOI18N
+        theme1Buttton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme1ButtonRP.png"))); // NOI18N
         theme1Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme1ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme1Buttton);
-        theme1Buttton.setBounds(140, 236, 80, 80);
+        theme1Buttton.setBounds(139, 236, 85, 80);
 
         themeButtons.add(theme2Buttton);
         theme2Buttton.setContentAreaFilled(false);
         theme2Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme2Button.png"))); // NOI18N
+        theme2Buttton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme2ButtonRP.png"))); // NOI18N
+        theme2Buttton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme2ButtonRP.png"))); // NOI18N
         theme2Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme2ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme2Buttton);
-        theme2Buttton.setBounds(230, 236, 80, 80);
+        theme2Buttton.setBounds(229, 236, 85, 80);
 
         themeButtons.add(theme3Buttton);
         theme3Buttton.setContentAreaFilled(false);
         theme3Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme3Button.png"))); // NOI18N
+        theme3Buttton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme3ButtonRP.png"))); // NOI18N
+        theme3Buttton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme3ButtonRP.png"))); // NOI18N
         theme3Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme3ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme3Buttton);
-        theme3Buttton.setBounds(320, 236, 80, 80);
+        theme3Buttton.setBounds(319, 236, 85, 80);
 
         themeButtons.add(theme4Buttton);
         theme4Buttton.setContentAreaFilled(false);
         theme4Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme4Button.png"))); // NOI18N
+        theme4Buttton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme4ButtonRP.png"))); // NOI18N
+        theme4Buttton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme4ButtonRP.png"))); // NOI18N
         theme4Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme4ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme4Buttton);
-        theme4Buttton.setBounds(50, 322, 80, 80);
+        theme4Buttton.setBounds(49, 322, 85, 80);
 
         themeButtons.add(theme5Buttton);
         theme5Buttton.setContentAreaFilled(false);
         theme5Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme5Button.png"))); // NOI18N
+        theme5Buttton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme5ButtonRP.png"))); // NOI18N
+        theme5Buttton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme5ButtonRP.png"))); // NOI18N
         theme5Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme5ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme5Buttton);
-        theme5Buttton.setBounds(140, 322, 80, 80);
+        theme5Buttton.setBounds(139, 322, 85, 80);
 
         themeButtons.add(theme6Buttton);
         theme6Buttton.setContentAreaFilled(false);
         theme6Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme6Button.png"))); // NOI18N
+        theme6Buttton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme6ButtonRP.png"))); // NOI18N
+        theme6Buttton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme6ButtonRP.png"))); // NOI18N
         theme6Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme6ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme6Buttton);
-        theme6Buttton.setBounds(230, 322, 80, 80);
+        theme6Buttton.setBounds(229, 322, 85, 80);
 
         themeButtons.add(theme7Buttton);
         theme7Buttton.setContentAreaFilled(false);
         theme7Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme7Button.png"))); // NOI18N
+        theme7Buttton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme7ButtonRP.png"))); // NOI18N
+        theme7Buttton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme7ButtonRP.png"))); // NOI18N
         theme7Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme7ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme7Buttton);
-        theme7Buttton.setBounds(320, 322, 80, 80);
+        theme7Buttton.setBounds(319, 322, 85, 80);
 
         deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/deleteButton.png"))); // NOI18N
         deleteButton.setContentAreaFilled(false);
@@ -354,7 +370,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(deleteButton);
-        deleteButton.setBounds(120, 516, 36, 36);
+        deleteButton.setBounds(120, 516, 36, 40);
 
         cancelSettingsButton.setContentAreaFilled(false);
         cancelSettingsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -377,7 +393,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(modButton);
-        modButton.setBounds(196, 516, 57, 59);
+        modButton.setBounds(196, 516, 57, 63);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
