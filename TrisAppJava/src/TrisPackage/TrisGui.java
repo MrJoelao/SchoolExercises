@@ -133,10 +133,15 @@ public class TrisGui extends javax.swing.JFrame {
     //Variabili flag
     private char flagTeam = 'x'; //scelta del team
     private boolean flagAI = false; //1 vs 1 / 1 vs AI
+    private int difficulty = 3;
+    char playerSymbol = 'X';
     
     private char vincitore;
     private String username;
+    private String username2;
+   
     
+    //istanze
     private TrisNormal trisPvP;
     private TrisAI trisAI;
     private LoginManager loginManager;
@@ -221,7 +226,7 @@ public class TrisGui extends javax.swing.JFrame {
         cancelButton3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         tieBackground = new javax.swing.JLabel();
-        blueWinPanel = new javax.swing.JPanel();
+        blueWinPopUp = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
         blueWinBackground = new javax.swing.JLabel();
@@ -693,14 +698,14 @@ public class TrisGui extends javax.swing.JFrame {
         gamePage.add(tiePopUp);
         tiePopUp.setBounds(0, 0, 450, 800);
 
-        blueWinPanel.setOpaque(false);
-        blueWinPanel.setLayout(null);
+        blueWinPopUp.setOpaque(false);
+        blueWinPopUp.setLayout(null);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Team Blue win!");
-        blueWinPanel.add(jLabel5);
+        blueWinPopUp.add(jLabel5);
         jLabel5.setBounds(70, 330, 310, 25);
 
         cancelButton.setContentAreaFilled(false);
@@ -709,15 +714,15 @@ public class TrisGui extends javax.swing.JFrame {
                 cancelButtonActionPerformed(evt);
             }
         });
-        blueWinPanel.add(cancelButton);
+        blueWinPopUp.add(cancelButton);
         cancelButton.setBounds(368, 281, 30, 30);
 
         blueWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/blueWin.png"))); // NOI18N
-        blueWinPanel.add(blueWinBackground);
+        blueWinPopUp.add(blueWinBackground);
         blueWinBackground.setBounds(0, 0, 450, 800);
 
-        gamePage.add(blueWinPanel);
-        blueWinPanel.setBounds(0, 0, 450, 800);
+        gamePage.add(blueWinPopUp);
+        blueWinPopUp.setBounds(0, 0, 450, 800);
 
         buttonBox9.setContentAreaFilled(false);
         buttonBox9.setMaximumSize(new java.awt.Dimension(112, 112));
@@ -862,11 +867,31 @@ public class TrisGui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void playerMove(int row,int col, JButton button){
-        if(flagAI){
+    public boolean move(int row,int col, JButton button){
+        int result;
         
+        if(flagAI){
+            
+            
+            if(!trisAI.playerMove(row, col)){
+                errorPopUp.setVisible(true); //messaggio d'errore se percaso la mossa non risulta valida
+            } else {
+                button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + playerSymbol + ".png")));
+            }
+            
+            trisAI.printBoard();
+            
+            if(winPopUp(trisAI.checkWinner())){ return true;}
+            
+            int[] computerMove = trisAI.computerMove();
+            setIconAtPosition(computerMove[0], computerMove[1]); 
+            
+            trisAI.printBoard();
+            
+            if(winPopUp(trisAI.checkWinner())){ return true;}
+            
         } else {
-            int result = trisPvP.move(row, col);
+            result = trisPvP.move(row, col);
             String type;
 
 
@@ -876,22 +901,88 @@ public class TrisGui extends javax.swing.JFrame {
                 } else {
                     type = "X";
                 }
-
-                button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + type + ".png")));
-
-                } else {
-                     errorPopUp.setVisible(true);
+                
+                 button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icon" + type + ".png")));
+                
+            } else {
+                errorPopUp.setVisible(true);
             }
-
-            switch(trisPvP.checkWinner()){
-                case 1 -> redWinPopUp.setVisible(true);
-                case 0 -> blueWinPanel.setVisible(true);
-                case -1 -> tiePopUp.setVisible(true);
-                default -> {
+            if(winPopUp(trisPvP.checkWinner())){ return true;}
+        }
+        return false;
+    }
+    
+    public boolean winPopUp(int result){
+        boolean flag = true;
+        switch(result){
+            case 1 -> redWinPopUp.setVisible(true);
+            case 0 -> blueWinPopUp.setVisible(true);
+            case -1 -> tiePopUp.setVisible(true);
+            default -> {
+                flag = false;
                 }
             }
+        return flag;
+    }
+    
+    public void setIconAtPosition(int row, int col) {
+        char computerSymbol = (playerSymbol == 'X') ? 'O' : 'X'; // Determina il simbolo del computer  
+        
+        String iconPath = "/Icons/icon" + computerSymbol + ".png";
+        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource(iconPath));
+
+        switch (row) {
+            case 0:
+                switch (col) {
+                    case 0:
+                        buttonBox1.setIcon(icon);
+                        break;
+                    case 1:
+                        buttonBox2.setIcon(icon);
+                        break;
+                    case 2:
+                        buttonBox3.setIcon(icon);
+                        break;
+                    default:
+                        System.err.println("[TG] Colonna non valida.");
+                }
+                break;
+            case 1:
+                switch (col) {
+                    case 0:
+                        buttonBox4.setIcon(icon);
+                        break;
+                    case 1:
+                        buttonBox5.setIcon(icon);
+                        break;
+                    case 2:
+                        buttonBox6.setIcon(icon);
+                        break;
+                    default:
+                        System.err.println("[TG] Colonna non valida.");
+                }
+                break;
+            case 2:
+                switch (col) {
+                    case 0:
+                        buttonBox7.setIcon(icon);
+                        break;
+                    case 1:
+                        buttonBox8.setIcon(icon);
+                        break;
+                    case 2:
+                        buttonBox9.setIcon(icon);
+                        break;
+                    default:
+                        System.err.println("[TG] Colonna non valida.");
+                }
+                break;
+            default:
+                System.err.println("[TG] Riga non valida.");
         }
     }
+
+
     
     // Metodo per riprodurre un suono
     /*in path si inserisce il nome del file wav, bisogna metterlo nella cartella "fsx_effect", e il flag loop è se vogliamo che il suono si ripeta all'infinito,
@@ -998,6 +1089,7 @@ public class TrisGui extends javax.swing.JFrame {
                 gamePage.setVisible(false);
                 tiePopUp.setVisible(false);
                 settingsPage.setVisible(false);
+                difficultyPage.setVisible(false);
                 
                 switch (choice) {
                     case WELCOME_PAGE:
@@ -1018,7 +1110,7 @@ public class TrisGui extends javax.swing.JFrame {
                         break;
                     case GAME_PAGE:
                         if(flagAI){
-                            trisAI = new TrisAI(3);
+                            trisAI = new TrisAI(playerSymbol, difficulty);
                         }else{
                             trisPvP = new TrisNormal(flagTeam);                            
                         }
@@ -1028,7 +1120,7 @@ public class TrisGui extends javax.swing.JFrame {
 
                         errorPopUp.setVisible(false);
                         redWinPopUp.setVisible(false);
-                        blueWinPanel.setVisible(false);
+                        blueWinPopUp.setVisible(false);
                         gamePage.setVisible(true);
                         break; 
                     case SETTINGS_PAGE:
@@ -1057,39 +1149,39 @@ public class TrisGui extends javax.swing.JFrame {
     }
     
     private void buttonBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox1ActionPerformed
-        playerMove(0,0, buttonBox1);
+        move(0,0, buttonBox1);
     }//GEN-LAST:event_buttonBox1ActionPerformed
 
     private void buttonBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox2ActionPerformed
-        playerMove(0,1, buttonBox2);
+        move(0,1, buttonBox2);
     }//GEN-LAST:event_buttonBox2ActionPerformed
 
     private void buttonBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox3ActionPerformed
-        playerMove(0,2, buttonBox3);
+        move(0,2, buttonBox3);
     }//GEN-LAST:event_buttonBox3ActionPerformed
 
     private void buttonBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox4ActionPerformed
-        playerMove(1,0, buttonBox4);
+        move(1,0, buttonBox4);
     }//GEN-LAST:event_buttonBox4ActionPerformed
 
     private void buttonBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox5ActionPerformed
-        playerMove(1,1, buttonBox5);
+        move(1,1, buttonBox5);
     }//GEN-LAST:event_buttonBox5ActionPerformed
 
     private void buttonBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox6ActionPerformed
-        playerMove(1,2, buttonBox6);
+        move(1,2, buttonBox6);
     }//GEN-LAST:event_buttonBox6ActionPerformed
 
     private void buttonBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox7ActionPerformed
-        playerMove(2,0, buttonBox7);
+        move(2,0, buttonBox7);
     }//GEN-LAST:event_buttonBox7ActionPerformed
 
     private void buttonBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox8ActionPerformed
-        playerMove(2,1, buttonBox8);
+        move(2,1, buttonBox8);
     }//GEN-LAST:event_buttonBox8ActionPerformed
 
     private void buttonBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBox9ActionPerformed
-        playerMove(2,2, buttonBox9);
+        move(2,2, buttonBox9);
     }//GEN-LAST:event_buttonBox9ActionPerformed
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
@@ -1116,7 +1208,7 @@ public class TrisGui extends javax.swing.JFrame {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
-        blueWinPanel.setVisible(false);
+        blueWinPopUp.setVisible(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void cancelButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton1ActionPerformed
@@ -1298,7 +1390,7 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel backgroundMenu;
     private javax.swing.JLabel bluePointTextField;
     private javax.swing.JLabel blueWinBackground;
-    private javax.swing.JPanel blueWinPanel;
+    private javax.swing.JPanel blueWinPopUp;
     private javax.swing.JButton buttonBox1;
     private javax.swing.JButton buttonBox2;
     private javax.swing.JButton buttonBox3;
