@@ -177,6 +177,11 @@ public class TrisGui extends javax.swing.JFrame {
         theme7Buttton = new javax.swing.JRadioButton();
         deleteButton = new javax.swing.JButton();
         cancelSettingsButton = new javax.swing.JButton();
+        modButton = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         backgroundMenu = new javax.swing.JLabel();
         welcomePage = new javax.swing.JPanel();
         continueButton = new javax.swing.JButton();
@@ -292,49 +297,51 @@ public class TrisGui extends javax.swing.JFrame {
 
         themeButtons.add(theme4Buttton);
         theme4Buttton.setContentAreaFilled(false);
-        theme4Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme5Button.png"))); // NOI18N
+        theme4Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme4Button.png"))); // NOI18N
         theme4Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme4ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme4Buttton);
-        theme4Buttton.setBounds(140, 322, 80, 80);
+        theme4Buttton.setBounds(50, 322, 80, 80);
 
         themeButtons.add(theme5Buttton);
         theme5Buttton.setContentAreaFilled(false);
-        theme5Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme6Button.png"))); // NOI18N
+        theme5Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme5Button.png"))); // NOI18N
         theme5Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme5ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme5Buttton);
-        theme5Buttton.setBounds(230, 322, 80, 80);
+        theme5Buttton.setBounds(140, 322, 80, 80);
 
         themeButtons.add(theme6Buttton);
         theme6Buttton.setContentAreaFilled(false);
-        theme6Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme7Button.png"))); // NOI18N
+        theme6Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme6Button.png"))); // NOI18N
         theme6Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme6ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme6Buttton);
-        theme6Buttton.setBounds(320, 322, 80, 80);
+        theme6Buttton.setBounds(230, 322, 80, 80);
 
         themeButtons.add(theme7Buttton);
         theme7Buttton.setContentAreaFilled(false);
-        theme7Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme4Button.png"))); // NOI18N
+        theme7Buttton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/theme7Button.png"))); // NOI18N
         theme7Buttton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 theme7ButttonActionPerformed(evt);
             }
         });
         settingsPage.add(theme7Buttton);
-        theme7Buttton.setBounds(50, 322, 80, 80);
+        theme7Buttton.setBounds(320, 322, 80, 80);
 
         deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/deleteButton.png"))); // NOI18N
+        deleteButton.setContentAreaFilled(false);
+        deleteButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/deleteButtonP.png"))); // NOI18N
         deleteButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -342,7 +349,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(deleteButton);
-        deleteButton.setBounds(120, 530, 30, 30);
+        deleteButton.setBounds(120, 516, 36, 36);
 
         cancelSettingsButton.setContentAreaFilled(false);
         cancelSettingsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -351,7 +358,47 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(cancelSettingsButton);
-        cancelSettingsButton.setBounds(342, 13, 30, 30);
+        cancelSettingsButton.setBounds(392, 177, 30, 30);
+
+        modButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modButton.png"))); // NOI18N
+        modButton.setContentAreaFilled(false);
+        modButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modButtonP.png"))); // NOI18N
+        modButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modButtonR.png"))); // NOI18N
+        modButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modButtonRP.png"))); // NOI18N
+        modButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        modButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modButtonActionPerformed(evt);
+            }
+        });
+        settingsPage.add(modButton);
+        modButton.setBounds(196, 516, 57, 59);
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Themes");
+        settingsPage.add(jLabel7);
+        jLabel7.setBounds(18, 184, 416, 29);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Settings");
+        settingsPage.add(jLabel8);
+        jLabel8.setBounds(18, 432, 416, 29);
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Old Password");
+        jLabel9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        settingsPage.add(jLabel9);
+        jLabel9.setBounds(256, 489, 139, 29);
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("New Password");
+        jLabel10.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        settingsPage.add(jLabel10);
+        jLabel10.setBounds(256, 547, 139, 29);
 
         backgroundMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsPage.png"))); // NOI18N
         backgroundMenu.setText("jLabel7");
@@ -1235,10 +1282,6 @@ public class TrisGui extends javax.swing.JFrame {
         chageTheme(THEME_3);
     }//GEN-LAST:event_theme3ButttonActionPerformed
 
-    private void theme4ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme4ButttonActionPerformed
-        chageTheme(THEME_4);
-    }//GEN-LAST:event_theme4ButttonActionPerformed
-
     private void theme5ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme5ButttonActionPerformed
         chageTheme(THEME_5);
     }//GEN-LAST:event_theme5ButttonActionPerformed
@@ -1251,9 +1294,17 @@ public class TrisGui extends javax.swing.JFrame {
         chageTheme(THEME_7);
     }//GEN-LAST:event_theme7ButttonActionPerformed
 
+    private void theme4ButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theme4ButttonActionPerformed
+        chageTheme(THEME_4);
+    }//GEN-LAST:event_theme4ButttonActionPerformed
+
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void modButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1327,13 +1378,18 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel gameBackground;
     private javax.swing.JPanel gamePage;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel loginBackground;
     private javax.swing.JPanel loginPage;
+    private javax.swing.JButton modButton;
     private javax.swing.JLabel modeBackground;
     private javax.swing.JPanel modePage;
     private javax.swing.JLabel orText;
