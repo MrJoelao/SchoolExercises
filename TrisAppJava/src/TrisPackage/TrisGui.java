@@ -31,6 +31,7 @@ public class TrisGui extends javax.swing.JFrame {
     private static final String DEFAULT_USERNAME = "admin";
     private static final String DEFAULT_PASSWORD = "admin";
     private static final boolean DEFAULT_TYPE = false;
+    private static final String FILENAME_SM = "score.dat";
     
     // Costanti per i codici d'errore della password
     private static final int PASSWORD_SECURE = 0;
@@ -144,6 +145,7 @@ public class TrisGui extends javax.swing.JFrame {
     private TrisNormal trisPvP;
     private TrisAI trisAI;
     private LoginManager loginManager;
+    private ScoreManager scoreManager;
     /**
      * Creates new form TrisGui
      */
@@ -152,7 +154,7 @@ public class TrisGui extends javax.swing.JFrame {
         
         //istanzio login manager con le impostazioni predefinite
         loginManager = new LoginManager(FILENAME_LM, DEFAULT_USERNAME, DEFAULT_PASSWORD, DEFAULT_TYPE);
-        
+        scoreManager = new ScoreManager(FILENAME_SM);
         
         //metto il pannello principale di welcome
         selectPanel(WELCOME_PAGE,0);
@@ -927,14 +929,14 @@ public class TrisGui extends javax.swing.JFrame {
             
             trisAI.printBoard();
             
-            if(winPopUp(trisAI.checkWinner())){ return true;}
+            //if(winPopUp(trisAI.checkWinner())){ return true;} //Per verificare la vincita
             
             int[] computerMove = trisAI.computerMove();
             setIconAtPosition(computerMove[0], computerMove[1]); 
             
             trisAI.printBoard();
             
-            if(winPopUp(trisAI.checkWinner())){ return true;}
+            //if(winPopUp(trisAI.checkWinner())){ return true;} //Per verificare la vincita
             
         } else {
             result = trisPvP.move(row, col);
@@ -953,23 +955,46 @@ public class TrisGui extends javax.swing.JFrame {
             } else {
                 errorPopUp.setVisible(true);
             }
-            if(winPopUp(trisPvP.checkWinner())){ return true;}
+            //if(winPopUp(trisPvP.checkWinner())){ return true;}
         }
         return false;
     }
     
-    public boolean winPopUp(int result){
+    public boolean winPopUp(int result, String redName, String blueName) {
         boolean flag = true;
-        switch(result){
-            case 1 -> redWinPopUp.setVisible(true);
-            case 0 -> blueWinPopUp.setVisible(true);
-            case -1 -> tiePopUp.setVisible(true);
-            default -> {
+        String winnerName = "";
+        String loserName = "";
+
+        switch(result) {
+            case 1:
+                redWinPopUp.setVisible(true);
+                winnerName = redName;
+                loserName = blueName;
+                break;
+            case 0:
+                blueWinPopUp.setVisible(true);
+                winnerName = blueName;
+                loserName = redName;
+                break;
+            case -1:
+                tiePopUp.setVisible(true);
+                break;
+            default:
                 flag = false;
-                }
-            }
+                break;
+        }
+
+        // Aggiornamento del punteggio dei giocatori
+        if (!winnerName.isEmpty()) {
+            scoreManager.addVictory(winnerName); // Aggiorna il punteggio del vincitore
+        }
+        if (!loserName.isEmpty()) {
+            scoreManager.addDefeat(loserName); // Aggiorna il punteggio del perdente
+        }
+
         return flag;
     }
+
     
     public void setIconAtPosition(int row, int col) {
         char computerSymbol = (playerSymbol == 'X') ? 'O' : 'X'; // Determina il simbolo del computer  
