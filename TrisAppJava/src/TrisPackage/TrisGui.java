@@ -98,10 +98,9 @@ public class TrisGui extends javax.swing.JFrame {
     /*To-Do:
      * bug logico: quando si verica un messaggio di vincita o d'errore è comunque possibile premere i tasti dietro, creando così 
      *             un susseguirsi d'errori. importante perchè così si permette di vincere più volte andando a sporcare il punteggio.
-     * Mancata implementazione: il punteggio non è stato ancora implementato e associato all'username. (punteggio, salvataggio su file e 
-     *                          associazione del punteggio con l'username).
+     
      * Mancata implementazione: sezione classifica non disponibile.
-     * Mancata implementazione: sezione d'aiuto per l'utente tramie tasto "i" di informazioni non disonibile.
+     * Mancata implementazione: Cambio password non funzionante.
      * 
      * 
      * Completati:
@@ -123,6 +122,8 @@ public class TrisGui extends javax.swing.JFrame {
      * Mancata implementazione: sezione delle impostazioni non disponibile. ✅
      * Mancata implementazione grafica: manca completamente l'implementazione grafica con il gioco tramite user vs AI. ✅
      * Mancata implementazione grafica: pulsante per la chiusura dei popUp non interactable. ✅
+     * Mancata implementazione: il punteggio non è stato ancora implementato e associato all'username. (punteggio, salvataggio su file e 
+     *                          associazione del punteggio con l'username). ✅
      * Implementazione codice: aggiunto un timer nella funzione selectPanel() permettendo così di far vedere eventuali messaggi 
      *                         prima di cambiare pannello, inserire il tempo d'attesa in ms. ✅
      * Bug logico: non è gestito il caso del pareggio dalla classe 1v1 del tris, non avendo modo di saperlo se si verifica si rimane bloccati. ✅
