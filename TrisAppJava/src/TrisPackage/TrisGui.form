@@ -1099,7 +1099,7 @@
         <Component class="javax.swing.JLabel" name="difficultyBackground">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Icons/difficultyBackground.png"/>
+              <Image iconType="3" name="/Icons/difficultyPage0.png"/>
             </Property>
           </Properties>
           <Constraints>

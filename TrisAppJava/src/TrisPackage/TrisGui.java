@@ -817,7 +817,7 @@ public class TrisGui extends javax.swing.JFrame {
         difficultyPage.add(easyButton);
         easyButton.setBounds(120, 240, 220, 50);
 
-        difficultyBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/difficultyBackground.png"))); // NOI18N
+        difficultyBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/difficultyPage0.png"))); // NOI18N
         difficultyPage.add(difficultyBackground);
         difficultyBackground.setBounds(0, 0, 450, 800);
 
@@ -1558,6 +1558,7 @@ public class TrisGui extends javax.swing.JFrame {
             modeBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/playModePage" + numTheme + ".png")));
             chooseTeamBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/chooseTeamPage" + numTheme + ".png")));
             gameBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/gamePage" + numTheme + ".png")));
+            difficultyBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/difficultyPage" + numTheme + ".png")));
             themeSave(FILENAME_THEME, numTheme);
         } catch (NullPointerException e) {
             System.err.println("[TM] Icone del tema " + numTheme + " non trovate. Impostazione del tema predefinito.");
