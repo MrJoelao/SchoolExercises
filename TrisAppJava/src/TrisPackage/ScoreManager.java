@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author joels
+ * author joels
  */
 public class ScoreManager {
     private String fileName; // Nome del file dove sono salvati i punteggi
@@ -20,11 +20,12 @@ public class ScoreManager {
     private void createFileIfNotExists() {
         File file = new File(fileName);
         if (!file.exists()) {
+            System.err.println("[SM] Il file " + fileName + " non esiste, creazione...");;
             try {
                 file.createNewFile();
-                System.out.println("[SM] Il file " + fileName + " è stato creato con successo.");
+                System.out.println("[SM] Il file " + fileName + " e' stato creato con successo.");
             } catch (IOException e) {
-                System.out.println("[SM] Errore durante la creazione del file " + fileName);
+                System.err.println("[SM] Errore durante la creazione del file " + fileName);
                 e.printStackTrace();
             }
         }
@@ -46,36 +47,48 @@ public class ScoreManager {
             saveAllPlayerScores(playerScores); // Salva tutti i punteggi aggiornati su file
             System.out.println("[SM] Giocatore " + playerName + " aggiunto con successo.");
         } else {
-            System.out.println("[SM] Errore: Il giocatore " + playerName + " è già presente.");
+            System.err.println("[SM] Errore: Il giocatore " + playerName + " e' già presente.");
         }
     }
 
     // Metodo per aggiungere una vittoria a un giocatore
     public void addVictory(String playerName) {
         List<PlayerScore> playerScores = loadAllPlayerScores(); // Carica tutti i punteggi dei giocatori
+        boolean playerFound = false;
         for (PlayerScore playerScore : playerScores) {
             if (playerScore.getPlayerName().equals(playerName)) {
                 playerScore.addVictory(); // Aggiungi una vittoria al giocatore
-                saveAllPlayerScores(playerScores); // Salva tutti i punteggi aggiornati su file
-                System.out.println("[SM] Vittoria aggiunta per " + playerName);
-                return;
+                playerFound = true;
+                break;
             }
         }
-        System.out.println("[SM] Errore: Il giocatore " + playerName + " non esiste.");
+        if (!playerFound) {
+            PlayerScore newPlayer = new PlayerScore(playerName); // Crea un nuovo giocatore
+            newPlayer.addVictory(); // Aggiungi una vittoria al nuovo giocatore
+            playerScores.add(newPlayer); // Aggiungi il nuovo giocatore alla lista dei punteggi
+        }
+        saveAllPlayerScores(playerScores); // Salva tutti i punteggi aggiornati su file
+        System.out.println("[SM] Vittoria aggiunta per " + playerName);
     }
 
     // Metodo per aggiungere una sconfitta a un giocatore
     public void addDefeat(String playerName) {
         List<PlayerScore> playerScores = loadAllPlayerScores(); // Carica tutti i punteggi dei giocatori
+        boolean playerFound = false;
         for (PlayerScore playerScore : playerScores) {
             if (playerScore.getPlayerName().equals(playerName)) {
                 playerScore.addDefeat(); // Aggiungi una sconfitta al giocatore
-                saveAllPlayerScores(playerScores); // Salva tutti i punteggi aggiornati su file
-                System.out.println("[SM] Sconfitta aggiunta per " + playerName);
-                return;
+                playerFound = true;
+                break;
             }
         }
-        System.out.println("[SM] Errore: Il giocatore " + playerName + " non esiste.");
+        if (!playerFound) {
+            PlayerScore newPlayer = new PlayerScore(playerName); // Crea un nuovo giocatore
+            newPlayer.addDefeat(); // Aggiungi una sconfitta al nuovo giocatore
+            playerScores.add(newPlayer); // Aggiungi il nuovo giocatore alla lista dei punteggi
+        }
+        saveAllPlayerScores(playerScores); // Salva tutti i punteggi aggiornati su file
+        System.out.println("[SM] Sconfitta aggiunta per " + playerName);
     }
 
     // Metodo privato per caricare tutti i punteggi dei giocatori da file
@@ -89,7 +102,7 @@ public class ScoreManager {
         } catch (EOFException | FileNotFoundException e) {
             // Fine del file
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("[SM] Errore durante il caricamento dei punteggi dei giocatori");
+            System.err.println("[SM] Errore durante il caricamento dei punteggi dei giocatori");
             e.printStackTrace();
         }
         return playerScores;
@@ -102,10 +115,21 @@ public class ScoreManager {
                 oos.writeObject(playerScore); // Scrivi il punteggio del giocatore su file
             }
         } catch (IOException e) {
-            System.out.println("[SM] Errore durante il salvataggio dei punteggi dei giocatori");
+            System.err.println("[SM] Errore durante il salvataggio dei punteggi dei giocatori");
             e.printStackTrace();
         }
     }
+    
+    public int getPlayerVictories(String playerName) {
+        List<PlayerScore> playerScores = loadAllPlayerScores();
+        for (PlayerScore playerScore : playerScores) {
+            if (playerScore.getPlayerName().equals(playerName)) {
+                return playerScore.getVictories();
+            }
+        }
+        return 0; // Se il giocatore non viene trovato, restituisce 0 vittorie
+    }
+
 
     // Classe PlayerScore definita direttamente all'interno di ScoreManager
     private static class PlayerScore implements Serializable {
