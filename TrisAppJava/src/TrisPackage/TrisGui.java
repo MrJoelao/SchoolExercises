@@ -1289,25 +1289,25 @@ public class TrisGui extends javax.swing.JFrame {
                 flag = false;
                 break;
         }
-
-        // Aggiornamento del punteggio dei giocatori
-        if (!winnerName.isEmpty()) {
-            scoreManager.addVictory(winnerName); // Aggiorna il punteggio del vincitore
-            if (winnerName.equals(redName)) {
-                redPointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(redName))); // Aggiorna il punteggio del giocatore rosso
-            } else {
-                bluePointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(blueName))); // Aggiorna il punteggio del giocatore blu
+        if(!flagAI){
+            // Aggiornamento del punteggio dei giocatori
+            if (!winnerName.isEmpty()) {
+                scoreManager.addVictory(winnerName); // Aggiorna il punteggio del vincitore
+                if (winnerName.equals(redName)) {
+                    redPointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(redName))); // Aggiorna il punteggio del giocatore rosso
+                } else {
+                    bluePointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(blueName))); // Aggiorna il punteggio del giocatore blu
+                }
+            }
+            if (!loserName.isEmpty()) {
+                scoreManager.addDefeat(loserName); // Aggiorna il punteggio del perdente
+                if (loserName.equals(redName)) {
+                    redPointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(redName))); // Aggiorna il punteggio del giocatore rosso
+                } else {
+                    bluePointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(blueName))); // Aggiorna il punteggio del giocatore blu
+                }
             }
         }
-        if (!loserName.isEmpty()) {
-            scoreManager.addDefeat(loserName); // Aggiorna il punteggio del perdente
-            if (loserName.equals(redName)) {
-                redPointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(redName))); // Aggiorna il punteggio del giocatore rosso
-            } else {
-                bluePointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(blueName))); // Aggiorna il punteggio del giocatore blu
-            }
-        }
-
         return flag;
     }
 
@@ -1618,7 +1618,11 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_friendButtonActionPerformed
 
     private void continueButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton1ActionPerformed
-        selectPanel(LOGIN_PAGE,0);
+        if(!flagAI){
+            selectPanel(LOGIN_PAGE,0);
+        }else{
+            selectPanel(GAME_PAGE,0);
+        }
     }//GEN-LAST:event_continueButton1ActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -1794,11 +1798,8 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_modButtonActionPerformed
 
     private void continueButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton3ActionPerformed
-        if(!flagAI){
             selectPanel(CHOOSE_TEAM_PAGE,0);
-        }else{
-            selectPanel(GAME_PAGE,0);
-        }
+        
     }//GEN-LAST:event_continueButton3ActionPerformed
 
     private void smallBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smallBackButtonActionPerformed

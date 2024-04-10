@@ -100,27 +100,27 @@ public class TrisAI {
     }
 
     public int[] computerMove() {
-        int[] move;
-        switch (difficulty) {
-            case 1:
-                move = getRandomMove();
-                break;
-            case 2:
-                if (random.nextInt(100) < 50) {
-                    move = getBestMove();
-                } else {
-                    move = getRandomMove();
-                }
-                break;
-            case 3:
+    int[] move;
+    switch (difficulty) {
+        case 1:
+            move = getRandomMove();
+            break;
+        case 2:
+            if (random.nextInt(100) < 60) {
                 move = getBestMove();
-                break;
-            default:
+            } else {
                 move = getRandomMove();
-        }
-        board[move[0]][move[1]] = PLAYER_O;
-        return move;
+            }
+            break;
+        case 3:
+            move = getBestMove();
+            break;
+        default:
+            move = getRandomMove();
     }
+    board[move[0]][move[1]] = PLAYER_O;
+    return move;
+}
 
     private int[] getRandomMove() {
         int row, column;
