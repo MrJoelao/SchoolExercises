@@ -31,6 +31,7 @@ public class TrisGui extends javax.swing.JFrame {
     private static final int CHOOSE_DIFF = 4;
     private static final int GAME_PAGE = 5;
     private static final int SETTINGS_PAGE = 6;
+    private static final int RANK_PAGE = 7;
     
     private static final String FILENAME_LM = "credentials.dat";
     private static final String DEFAULT_USERNAME = "admin";
@@ -1914,17 +1915,17 @@ public class TrisGui extends javax.swing.JFrame {
         settingsPage.setVisible(true);
     }//GEN-LAST:event_settingsButton2ActionPerformed
 
-    private void continueButton4settingsHandler(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_continueButton4settingsHandler
+    private void smallBackButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smallBackButton4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_continueButton4settingsHandler
+    }//GEN-LAST:event_smallBackButton4ActionPerformed
 
     private void continueButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_continueButton4ActionPerformed
 
-    private void smallBackButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smallBackButton4ActionPerformed
+    private void continueButton4settingsHandler(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_continueButton4settingsHandler
         // TODO add your handling code here:
-    }//GEN-LAST:event_smallBackButton4ActionPerformed
+    }//GEN-LAST:event_continueButton4settingsHandler
 
     /**
      * @param args the command line arguments
