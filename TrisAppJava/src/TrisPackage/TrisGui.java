@@ -1794,7 +1794,11 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_modButtonActionPerformed
 
     private void continueButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton3ActionPerformed
-        selectPanel(CHOOSE_TEAM_PAGE,0);
+        if(!flagAI){
+            selectPanel(CHOOSE_TEAM_PAGE,0);
+        }else{
+            selectPanel(GAME_PAGE,0);
+        }
     }//GEN-LAST:event_continueButton3ActionPerformed
 
     private void smallBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smallBackButtonActionPerformed

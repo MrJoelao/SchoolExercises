@@ -106,7 +106,7 @@ public class TrisAI {
                 move = getRandomMove();
                 break;
             case 2:
-                if (random.nextInt(100) < 40) {
+                if (random.nextInt(100) < 50) {
                     move = getBestMove();
                 } else {
                     move = getRandomMove();
