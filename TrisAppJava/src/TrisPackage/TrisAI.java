@@ -147,7 +147,8 @@ public class TrisAI {
 
     private int minimax(char[][] board, int depth, boolean isMaximizing) {
         int result = checkWinner();
-        if (result != 10) {
+        
+        if (result != EMPTY) {
             return result;
         }
 

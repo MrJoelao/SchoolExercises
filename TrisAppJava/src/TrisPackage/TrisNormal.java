@@ -57,7 +57,7 @@ public class TrisNormal {
                 if (board[i][0] == 'X') {
                     return 1; // Vittoria di 'X'
                 } else {
-                    return 0; // Vittoria di 'O'
+                    return -1; // Vittoria di 'O'
                 }
             }
         }
@@ -68,7 +68,7 @@ public class TrisNormal {
                 if (board[0][i] == 'X') {
                     return 1; // Vittoria di 'X'
                 } else {
-                    return 0; // Vittoria di 'O'
+                    return -1; // Vittoria di 'O'
                 }
             }
         }
@@ -78,14 +78,14 @@ public class TrisNormal {
             if (board[0][0] == 'X') {
                 return 1; // Vittoria di 'X'
             } else {
-                return 0; // Vittoria di 'O'
+                return -1; // Vittoria di 'O'
             }
         }
         if (board[0][2] != '-' && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
             if (board[0][2] == 'X') {
                 return 1; // Vittoria di 'X'
             } else {
-                return 0; // Vittoria di 'O'
+                return -1; // Vittoria di 'O'
             }
         }
 
@@ -103,7 +103,7 @@ public class TrisNormal {
             }
         }
         if (tie) {
-            return -1; // Pareggio
+            return 0; // Pareggio
         }
 
         return 3; // Nessun vincitore né pareggio
