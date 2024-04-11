@@ -193,11 +193,6 @@ public class TrisGui extends javax.swing.JFrame {
         teamButtons = new javax.swing.ButtonGroup();
         themeButtons = new javax.swing.ButtonGroup();
         diffButtons = new javax.swing.ButtonGroup();
-        rankPage = new javax.swing.JPanel();
-        continueButton4 = new javax.swing.JButton();
-        statsButton = new javax.swing.JButton();
-        smallBackButton4 = new javax.swing.JButton();
-        rankBackground = new javax.swing.JLabel();
         settingsPage = new javax.swing.JPanel();
         theme0Buttton = new javax.swing.JRadioButton();
         theme1Buttton = new javax.swing.JRadioButton();
@@ -209,12 +204,9 @@ public class TrisGui extends javax.swing.JFrame {
         theme7Buttton = new javax.swing.JRadioButton();
         deleteButton = new javax.swing.JButton();
         cancelSettingsButton = new javax.swing.JButton();
-        modButton = new javax.swing.JButton();
-        sponge = new javax.swing.JToggleButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        sponge = new javax.swing.JToggleButton();
         backgroundMenu = new javax.swing.JLabel();
         welcomePage = new javax.swing.JPanel();
         continueButton = new javax.swing.JButton();
@@ -241,6 +233,11 @@ public class TrisGui extends javax.swing.JFrame {
         smallBackButton2 = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         modeBackground = new javax.swing.JLabel();
+        rankPage = new javax.swing.JPanel();
+        continueButton4 = new javax.swing.JButton();
+        statsButton = new javax.swing.JButton();
+        smallBackButton4 = new javax.swing.JButton();
+        rankBackground = new javax.swing.JLabel();
         difficultyPage = new javax.swing.JPanel();
         continueButton3 = new javax.swing.JButton();
         smallBackButton = new javax.swing.JButton();
@@ -297,61 +294,6 @@ public class TrisGui extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
-        rankPage.setLayout(null);
-
-        continueButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
-        continueButton4.setBorder(null);
-        continueButton4.setContentAreaFilled(false);
-        continueButton4.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
-        continueButton4.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonP.png"))); // NOI18N
-        continueButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonR.png"))); // NOI18N
-        continueButton4.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonRP.png"))); // NOI18N
-        continueButton4.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                continueButton4settingsHandler(evt);
-            }
-        });
-        continueButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                continueButton4ActionPerformed(evt);
-            }
-        });
-        rankPage.add(continueButton4);
-        continueButton4.setBounds(179, 696, 100, 50);
-
-        statsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/statsButton.png"))); // NOI18N
-        statsButton.setToolTipText("");
-        statsButton.setContentAreaFilled(false);
-        statsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        statsButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/statsButtonP.png"))); // NOI18N
-        statsButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/statsButtonR.png"))); // NOI18N
-        statsButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/statsButtonRP.png"))); // NOI18N
-        statsButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        rankPage.add(statsButton);
-        statsButton.setBounds(200, 610, 54, 60);
-
-        smallBackButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/smallBackButton.png"))); // NOI18N
-        smallBackButton4.setBorder(null);
-        smallBackButton4.setContentAreaFilled(false);
-        smallBackButton4.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/smallBackButtonP.png"))); // NOI18N
-        smallBackButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/smallBackButtonR.png"))); // NOI18N
-        smallBackButton4.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/smallBackButtonRP.png"))); // NOI18N
-        smallBackButton4.setVerifyInputWhenFocusTarget(false);
-        smallBackButton4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        smallBackButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                smallBackButton4ActionPerformed(evt);
-            }
-        });
-        rankPage.add(smallBackButton4);
-        smallBackButton4.setBounds(20, 20, 50, 50);
-
-        rankBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/rankPage0.png"))); // NOI18N
-        rankPage.add(rankBackground);
-        rankBackground.setBounds(0, 0, 450, 800);
-
-        getContentPane().add(rankPage);
-
         settingsPage.setOpaque(false);
         settingsPage.setLayout(null);
 
@@ -367,7 +309,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme0Buttton);
-        theme0Buttton.setBounds(49, 236, 85, 80);
+        theme0Buttton.setBounds(49, 262, 85, 80);
 
         themeButtons.add(theme1Buttton);
         theme1Buttton.setContentAreaFilled(false);
@@ -380,7 +322,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme1Buttton);
-        theme1Buttton.setBounds(139, 236, 85, 80);
+        theme1Buttton.setBounds(139, 262, 85, 80);
 
         themeButtons.add(theme2Buttton);
         theme2Buttton.setContentAreaFilled(false);
@@ -393,7 +335,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme2Buttton);
-        theme2Buttton.setBounds(229, 236, 85, 80);
+        theme2Buttton.setBounds(229, 262, 85, 80);
 
         themeButtons.add(theme3Buttton);
         theme3Buttton.setContentAreaFilled(false);
@@ -406,7 +348,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme3Buttton);
-        theme3Buttton.setBounds(319, 236, 85, 80);
+        theme3Buttton.setBounds(319, 262, 85, 80);
 
         themeButtons.add(theme4Buttton);
         theme4Buttton.setContentAreaFilled(false);
@@ -419,7 +361,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme4Buttton);
-        theme4Buttton.setBounds(49, 322, 85, 80);
+        theme4Buttton.setBounds(49, 349, 85, 80);
 
         themeButtons.add(theme5Buttton);
         theme5Buttton.setContentAreaFilled(false);
@@ -432,7 +374,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme5Buttton);
-        theme5Buttton.setBounds(139, 322, 85, 80);
+        theme5Buttton.setBounds(139, 349, 85, 80);
 
         themeButtons.add(theme6Buttton);
         theme6Buttton.setContentAreaFilled(false);
@@ -445,7 +387,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme6Buttton);
-        theme6Buttton.setBounds(229, 322, 85, 80);
+        theme6Buttton.setBounds(229, 349, 85, 80);
 
         themeButtons.add(theme7Buttton);
         theme7Buttton.setContentAreaFilled(false);
@@ -458,7 +400,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(theme7Buttton);
-        theme7Buttton.setBounds(319, 322, 85, 80);
+        theme7Buttton.setBounds(319, 349, 85, 80);
 
         deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/deleteButton.png"))); // NOI18N
         deleteButton.setBorder(null);
@@ -471,7 +413,7 @@ public class TrisGui extends javax.swing.JFrame {
             }
         });
         settingsPage.add(deleteButton);
-        deleteButton.setBounds(120, 516, 36, 40);
+        deleteButton.setBounds(240, 525, 36, 40);
 
         cancelSettingsButton.setBorder(null);
         cancelSettingsButton.setContentAreaFilled(false);
@@ -483,20 +425,17 @@ public class TrisGui extends javax.swing.JFrame {
         settingsPage.add(cancelSettingsButton);
         cancelSettingsButton.setBounds(392, 177, 30, 30);
 
-        modButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modButton.png"))); // NOI18N
-        modButton.setBorder(null);
-        modButton.setContentAreaFilled(false);
-        modButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modButtonP.png"))); // NOI18N
-        modButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modButtonR.png"))); // NOI18N
-        modButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/modButtonRP.png"))); // NOI18N
-        modButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        modButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modButtonActionPerformed(evt);
-            }
-        });
-        settingsPage.add(modButton);
-        modButton.setBounds(196, 516, 57, 63);
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Themes");
+        settingsPage.add(jLabel7);
+        jLabel7.setBounds(18, 194, 416, 60);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Settings");
+        settingsPage.add(jLabel8);
+        jLabel8.setBounds(18, 432, 416, 70);
 
         sponge.setBorder(null);
         sponge.setContentAreaFilled(false);
@@ -508,34 +447,8 @@ public class TrisGui extends javax.swing.JFrame {
         settingsPage.add(sponge);
         sponge.setBounds(0, 0, 450, 800);
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Themes");
-        settingsPage.add(jLabel7);
-        jLabel7.setBounds(18, 184, 416, 29);
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Settings");
-        settingsPage.add(jLabel8);
-        jLabel8.setBounds(18, 432, 416, 29);
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Old Password");
-        jLabel9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        settingsPage.add(jLabel9);
-        jLabel9.setBounds(256, 489, 139, 29);
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("New Password");
-        jLabel10.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        settingsPage.add(jLabel10);
-        jLabel10.setBounds(256, 547, 139, 29);
-
         backgroundMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settingsPage.png"))); // NOI18N
-        backgroundMenu.setText("jLabel7");
+        backgroundMenu.setToolTipText("");
         settingsPage.add(backgroundMenu);
         backgroundMenu.setBounds(0, 0, 450, 800);
 
@@ -787,6 +700,61 @@ public class TrisGui extends javax.swing.JFrame {
         modeBackground.setBounds(0, 0, 450, 800);
 
         getContentPane().add(modePage);
+
+        rankPage.setLayout(null);
+
+        continueButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
+        continueButton4.setBorder(null);
+        continueButton4.setContentAreaFilled(false);
+        continueButton4.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButton.png"))); // NOI18N
+        continueButton4.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonP.png"))); // NOI18N
+        continueButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonR.png"))); // NOI18N
+        continueButton4.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/continueButtonRP.png"))); // NOI18N
+        continueButton4.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                continueButton4settingsHandler(evt);
+            }
+        });
+        continueButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continueButton4ActionPerformed(evt);
+            }
+        });
+        rankPage.add(continueButton4);
+        continueButton4.setBounds(179, 696, 100, 50);
+
+        statsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/statsButton.png"))); // NOI18N
+        statsButton.setToolTipText("");
+        statsButton.setContentAreaFilled(false);
+        statsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        statsButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/statsButtonP.png"))); // NOI18N
+        statsButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/statsButtonR.png"))); // NOI18N
+        statsButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/statsButtonRP.png"))); // NOI18N
+        statsButton.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        rankPage.add(statsButton);
+        statsButton.setBounds(200, 610, 54, 60);
+
+        smallBackButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/smallBackButton.png"))); // NOI18N
+        smallBackButton4.setBorder(null);
+        smallBackButton4.setContentAreaFilled(false);
+        smallBackButton4.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/smallBackButtonP.png"))); // NOI18N
+        smallBackButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/smallBackButtonR.png"))); // NOI18N
+        smallBackButton4.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/smallBackButtonRP.png"))); // NOI18N
+        smallBackButton4.setVerifyInputWhenFocusTarget(false);
+        smallBackButton4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        smallBackButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smallBackButton4ActionPerformed(evt);
+            }
+        });
+        rankPage.add(smallBackButton4);
+        smallBackButton4.setBounds(20, 20, 50, 50);
+
+        rankBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/rankPage0.png"))); // NOI18N
+        rankPage.add(rankBackground);
+        rankBackground.setBounds(0, 0, 450, 800);
+
+        getContentPane().add(rankPage);
 
         difficultyPage.setLayout(null);
 
@@ -1856,10 +1824,6 @@ public class TrisGui extends javax.swing.JFrame {
         deleteFiles();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void modButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_modButtonActionPerformed
-
     private void continueButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton3ActionPerformed
             selectPanel(CHOOSE_TEAM_PAGE,0);
         
@@ -2005,7 +1969,6 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JPanel gamePage;
     private javax.swing.JRadioButton hardButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -2014,11 +1977,9 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel loginBackground;
     private javax.swing.JPanel loginPage;
     private javax.swing.JRadioButton mediumButton;
-    private javax.swing.JButton modButton;
     private javax.swing.JLabel modeBackground;
     private javax.swing.JPanel modePage;
     private javax.swing.JLabel orText;
