@@ -129,6 +129,30 @@ public class ScoreManager {
         }
         return 0; // Se il giocatore non viene trovato, restituisce 0 vittorie
     }
+    
+    // Metodo per ottenere tutti i nomi dei giocatori
+    public List<String> getAllPlayerNames() {
+        List<String> playerNames = new ArrayList<>();
+        List<PlayerScore> playerScores = loadAllPlayerScores(); // Carica tutti i punteggi dei giocatori
+        for (PlayerScore playerScore : playerScores) {
+            playerNames.add(playerScore.getPlayerName()); // Aggiungi il nome del giocatore alla lista
+        }
+        return playerNames;
+    }
+    
+    // Metodo per ottenere tutti i nomi dei giocatori con il numero di vittorie e sconfitte
+    public List<String[]> getAllPlayerStats() {
+        List<String[]> playerStats = new ArrayList<>();
+        List<PlayerScore> playerScores = loadAllPlayerScores(); // Carica tutti i punteggi dei giocatori
+        for (PlayerScore playerScore : playerScores) {
+            String playerName = playerScore.getPlayerName();
+            int victories = playerScore.getVictories();
+            int defeats = playerScore.getDefeats();
+            String[] stats = {playerName, String.valueOf(victories), String.valueOf(defeats)};
+            playerStats.add(stats); // Aggiungi il nome del giocatore con le vittorie e le sconfitte alla lista
+        }
+        return playerStats;
+    }
 
 
     // Classe PlayerScore definita direttamente all'interno di ScoreManager
