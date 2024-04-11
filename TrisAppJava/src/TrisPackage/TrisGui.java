@@ -152,7 +152,9 @@ public class TrisGui extends javax.swing.JFrame {
     private boolean flagLogin1 = false;
     private boolean flagAI = false; //1 vs 1 / 1 vs AI
     private int difficulty = 2;
-
+    private int redPoint=0;
+    private int bluePoint=0;
+        
     
     private char vincitore;
     private String username0 = "";
@@ -1300,17 +1302,25 @@ public class TrisGui extends javax.swing.JFrame {
         boolean flag = true;
         String winnerName = "";
         String loserName = "";
-
+        
         switch(result) {
             case 1:
                 redWinPopUp.setVisible(true);
                 winnerName = redName;
                 loserName = blueName;
+                if(flagAI){
+                    redPoint++;
+                    redPointTextField.setText(""+redPoint);
+                }
                 break;
             case 0:
                 blueWinPopUp.setVisible(true);
                 winnerName = blueName;
                 loserName = redName;
+                if(flagAI){
+                    bluePoint++;
+                    bluePointTextField.setText(""+bluePoint);
+                }
                 break;
             case -1:
                 tiePopUp.setVisible(true);
