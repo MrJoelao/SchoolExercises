@@ -153,8 +153,9 @@ public class TrisAI {
 
     private int minimax(char[][] board, int depth, boolean isMaximizing) {
         int result = checkWinner();
+        
         if (result != EMPTY) {
-            return result; // Restituisce il risultato della partita: 1 per vittoria X, 0 per parità, -1 per vittoria O
+            return result;
         }
 
         if (isMaximizing) {

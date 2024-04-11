@@ -100,11 +100,7 @@ public class TrisGui extends javax.swing.JFrame {
     
     //<editor-fold defaultstate="collapsed" desc=" To-Do List">
     /*To-Do:
-     * bug logico: quando si verica un messaggio di vincita o d'errore è comunque possibile premere i tasti dietro, creando così 
-     *             un susseguirsi d'errori. importante perchè così si permette di vincere più volte andando a sporcare il punteggio.
      
-     * Mancata implementazione: sezione classifica non disponibile.
-     * Mancata implementazione: Cambio password non funzionante.
      * 
      * 
      * Completati:
@@ -143,6 +139,9 @@ public class TrisGui extends javax.swing.JFrame {
      * Mancata implementazione: sezione di diverse difficoltà user vs AI non disponibile. ✅
      * Mancata implementazione grafica: sezione di scelta grafica di diverse difficoltà user vs AI non disponibile. ✅
      * Mancata implementazione grafica: manca un bottone nella chooseTeamPage per tornare indietro, e uno simile o per mettere in pausa nella gamePage. ✅
+     * bug logico: quando si verica un messaggio di vincita o d'errore è comunque possibile premere i tasti dietro, creando così 
+     *             un susseguirsi d'errori. importante perchè così si permette di vincere più volte andando a sporcare il punteggio. ✅
+     * Mancata implementazione: sezione classifica non disponibile. ✅
      * */
     //</editor-fold>
     
@@ -221,6 +220,7 @@ public class TrisGui extends javax.swing.JFrame {
         popUpMessage = new javax.swing.JLabel();
         popUpTitle = new javax.swing.JLabel();
         popUpBackground = new javax.swing.JLabel();
+        sponge5 = new javax.swing.JToggleButton();
         usernameTextField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
         continueButton2 = new javax.swing.JButton();
@@ -262,19 +262,23 @@ public class TrisGui extends javax.swing.JFrame {
         cancelButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         redWinBackground = new javax.swing.JLabel();
+        sponge1 = new javax.swing.JToggleButton();
         errorPopUp = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cancelButton1 = new javax.swing.JButton();
         errorMessageBackground = new javax.swing.JLabel();
+        sponge2 = new javax.swing.JToggleButton();
         tiePopUp = new javax.swing.JPanel();
         cancelButton3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         tieBackground = new javax.swing.JLabel();
+        sponge3 = new javax.swing.JToggleButton();
         blueWinPopUp = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
         blueWinBackground = new javax.swing.JLabel();
+        sponge4 = new javax.swing.JToggleButton();
         buttonBox9 = new javax.swing.JButton();
         buttonBox8 = new javax.swing.JButton();
         buttonBox7 = new javax.swing.JButton();
@@ -536,6 +540,16 @@ public class TrisGui extends javax.swing.JFrame {
         popUpBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/errorPopUp.png"))); // NOI18N
         popUpPanel.add(popUpBackground);
         popUpBackground.setBounds(0, 0, 450, 800);
+
+        sponge5.setBorder(null);
+        sponge5.setContentAreaFilled(false);
+        sponge5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sponge5ActionPerformed(evt);
+            }
+        });
+        popUpPanel.add(sponge5);
+        sponge5.setBounds(0, 0, 450, 800);
 
         loginPage.add(popUpPanel);
         popUpPanel.setBounds(0, 0, 450, 800);
@@ -964,6 +978,16 @@ public class TrisGui extends javax.swing.JFrame {
         redWinPopUp.add(redWinBackground);
         redWinBackground.setBounds(0, 0, 450, 800);
 
+        sponge1.setBorder(null);
+        sponge1.setContentAreaFilled(false);
+        sponge1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sponge1ActionPerformed(evt);
+            }
+        });
+        redWinPopUp.add(sponge1);
+        sponge1.setBounds(0, 0, 450, 800);
+
         gamePage.add(redWinPopUp);
         redWinPopUp.setBounds(0, 0, 450, 800);
 
@@ -997,6 +1021,16 @@ public class TrisGui extends javax.swing.JFrame {
         errorPopUp.add(errorMessageBackground);
         errorMessageBackground.setBounds(0, 0, 450, 800);
 
+        sponge2.setBorder(null);
+        sponge2.setContentAreaFilled(false);
+        sponge2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sponge2ActionPerformed(evt);
+            }
+        });
+        errorPopUp.add(sponge2);
+        sponge2.setBounds(0, 0, 450, 800);
+
         gamePage.add(errorPopUp);
         errorPopUp.setBounds(0, 0, 450, 800);
 
@@ -1024,6 +1058,16 @@ public class TrisGui extends javax.swing.JFrame {
         tiePopUp.add(tieBackground);
         tieBackground.setBounds(0, 0, 450, 800);
 
+        sponge3.setBorder(null);
+        sponge3.setContentAreaFilled(false);
+        sponge3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sponge3ActionPerformed(evt);
+            }
+        });
+        tiePopUp.add(sponge3);
+        sponge3.setBounds(0, 0, 450, 800);
+
         gamePage.add(tiePopUp);
         tiePopUp.setBounds(0, 0, 450, 800);
 
@@ -1050,6 +1094,16 @@ public class TrisGui extends javax.swing.JFrame {
         blueWinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/blueWin.png"))); // NOI18N
         blueWinPopUp.add(blueWinBackground);
         blueWinBackground.setBounds(0, 0, 450, 800);
+
+        sponge4.setBorder(null);
+        sponge4.setContentAreaFilled(false);
+        sponge4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sponge4ActionPerformed(evt);
+            }
+        });
+        blueWinPopUp.add(sponge4);
+        sponge4.setBounds(0, 0, 450, 800);
 
         gamePage.add(blueWinPopUp);
         blueWinPopUp.setBounds(0, 0, 450, 800);
@@ -1307,35 +1361,33 @@ public class TrisGui extends javax.swing.JFrame {
                 winnerName = redName;
                 loserName = blueName;
                 break;
-            case 0:
+            case -1:
                 blueWinPopUp.setVisible(true);
                 winnerName = blueName;
                 loserName = redName;
                 break;
-            case -1:
+            case 0:
                 tiePopUp.setVisible(true);
                 break;
             default:
                 flag = false;
                 break;
         }
-        if(!flagAI){
-            // Aggiornamento del punteggio dei giocatori
-            if (!winnerName.isEmpty()) {
-                scoreManager.addVictory(winnerName); // Aggiorna il punteggio del vincitore
-                if (winnerName.equals(redName)) {
-                    redPointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(redName))); // Aggiorna il punteggio del giocatore rosso
-                } else {
-                    bluePointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(blueName))); // Aggiorna il punteggio del giocatore blu
-                }
+        // Aggiornamento del punteggio dei giocatori
+        if (!winnerName.isEmpty()) {
+            scoreManager.addVictory(winnerName); // Aggiorna il punteggio del vincitore
+            if (winnerName.equals(redName)) {
+                redPointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(redName))); // Aggiorna il punteggio del giocatore rosso
+            } else {
+                bluePointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(blueName))); // Aggiorna il punteggio del giocatore blu
             }
-            if (!loserName.isEmpty()) {
-                scoreManager.addDefeat(loserName); // Aggiorna il punteggio del perdente
-                if (loserName.equals(redName)) {
-                    redPointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(redName))); // Aggiorna il punteggio del giocatore rosso
-                } else {
-                    bluePointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(blueName))); // Aggiorna il punteggio del giocatore blu
-                }
+        }
+        if (!loserName.isEmpty()) {
+            scoreManager.addDefeat(loserName); // Aggiorna il punteggio del perdente
+            if (loserName.equals(redName)) {
+                redPointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(redName))); // Aggiorna il punteggio del giocatore rosso
+            } else {
+                bluePointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(blueName))); // Aggiorna il punteggio del giocatore blu
             }
         }
         return flag;
@@ -1558,7 +1610,11 @@ public class TrisGui extends javax.swing.JFrame {
                         
                         
                         resetButtos();
-
+                        
+                        // Aggiornamento del punteggio dei giocatori
+                        redPointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(usernameRed))); // Aggiorna il punteggio del giocatore rosso
+                        bluePointTextField.setText(String.valueOf(scoreManager.getPlayerVictories(usernameBlue))); // Aggiorna il punteggio del giocatore blu
+                            
                         errorPopUp.setVisible(false);
                         redWinPopUp.setVisible(false);
                         blueWinPopUp.setVisible(false);
@@ -1671,6 +1727,7 @@ public class TrisGui extends javax.swing.JFrame {
     private void AIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AIButtonActionPerformed
         selectPanel(CHOOSE_DIFF,0);
         flagAI = true;
+        username1 = "AI";
     }//GEN-LAST:event_AIButtonActionPerformed
 
     private void friendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendButtonActionPerformed
@@ -1784,12 +1841,14 @@ public class TrisGui extends javax.swing.JFrame {
 
     private void teamRedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamRedButtonActionPerformed
         usernameRed = username0;
+        usernameBlue = username1;
         System.out.println("[TG] Team scelto: " + flagTeam + " per: " + usernameRed);
         flagTeam = 'X';
     }//GEN-LAST:event_teamRedButtonActionPerformed
 
     private void teamBlueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamBlueButtonActionPerformed
         usernameBlue = username0;
+        usernameRed = username1;
         System.out.println("[TG] Team scelto: " + flagTeam + " per: " + usernameBlue);
         flagTeam = 'O';
     }//GEN-LAST:event_teamBlueButtonActionPerformed
@@ -1847,7 +1906,7 @@ public class TrisGui extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void continueButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButton3ActionPerformed
-            selectPanel(CHOOSE_TEAM_PAGE,0);
+        selectPanel(CHOOSE_TEAM_PAGE,0);
         
     }//GEN-LAST:event_continueButton3ActionPerformed
 
@@ -1908,6 +1967,26 @@ public class TrisGui extends javax.swing.JFrame {
     private void statsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statsButtonActionPerformed
         selectPanel(RANK_PAGE, 0);
     }//GEN-LAST:event_statsButtonActionPerformed
+
+    private void sponge1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sponge1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sponge1ActionPerformed
+
+    private void sponge2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sponge2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sponge2ActionPerformed
+
+    private void sponge3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sponge3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sponge3ActionPerformed
+
+    private void sponge4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sponge4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sponge4ActionPerformed
+
+    private void sponge5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sponge5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sponge5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2023,6 +2102,11 @@ public class TrisGui extends javax.swing.JFrame {
     private javax.swing.JButton smallBackButton2;
     private javax.swing.JButton smallBackButton3;
     private javax.swing.JToggleButton sponge;
+    private javax.swing.JToggleButton sponge1;
+    private javax.swing.JToggleButton sponge2;
+    private javax.swing.JToggleButton sponge3;
+    private javax.swing.JToggleButton sponge4;
+    private javax.swing.JToggleButton sponge5;
     private javax.swing.JButton statsButton;
     private javax.swing.JRadioButton teamBlueButton;
     private javax.swing.ButtonGroup teamButtons;
