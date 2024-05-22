@@ -10,8 +10,6 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
 import javafx.stage.Stage;
 import java.io.IOException;
-import javafx.scene.AmbientLight;
-import javafx.scene.PointLight;
 import javafx.scene.transform.Rotate;
 
 /**
@@ -26,7 +24,7 @@ public class PlyFileViewerJava extends Application {
     public static final int EXCEPTION = -2;
 
     // Percorso del file PLY da visualizzare
-    private String filePath = "airplane.ply";
+    private String filePath = "airplane.ply"; // LowerJawScan.ply = Binario, airplane.ply = ASCII.
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -59,8 +57,15 @@ public class PlyFileViewerJava extends Application {
 
         // Creazione della mesh da visualizzare
         TriangleMesh mesh = new TriangleMesh();
-        plyReader.getVertices().forEach(vertex -> mesh.getPoints().addAll((float) vertex.getX(), (float) vertex.getY(), (float) vertex.getZ()));
-        plyReader.getFaces().forEach(face -> mesh.getFaces().addAll(face.getVertexIndices()));
+        // Aggiunta dei vertici al mesh
+        for (Vertex vertex : plyReader.getVertices()) {
+            mesh.getPoints().addAll((float) vertex.getX(), (float) vertex.getY(), (float) vertex.getZ());
+        }
+
+        // Aggiunta delle facce al mesh
+        for (Face face : plyReader.getFaces()) {
+            mesh.getFaces().addAll(face.getVertexIndices());
+        }
 
         // Creazione della vista della mesh
         MeshView meshView = new MeshView(mesh);
@@ -73,15 +78,7 @@ public class PlyFileViewerJava extends Application {
         meshView.setRotate(180);
         root.getChildren().add(meshView);
 
-        // Creazione delle luci
-        PointLight pointLight = new PointLight();
-        pointLight.setColor(Color.WHITE);
-        pointLight.setTranslateX(800);
-        pointLight.setTranslateY(0);
-        pointLight.setTranslateZ(-1000);
-        root.getChildren().addAll(new AmbientLight(Color.WHITE), pointLight);
-
-        // Impostazione del titolo e della scena del palcoscenico
+        // Titolo e scena
         primaryStage.setTitle("PlyFileViewer-Java");
         primaryStage.setScene(scene);
         primaryStage.show();
