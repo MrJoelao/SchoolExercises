@@ -1,32 +1,78 @@
 package plyfileviewer.java;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 
-// Classe per leggere file PLY in formato binario
 class PlyReaderBin extends PlyReader {
 
     @Override
-    public void readPlyFile(String filePath) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                byte[] bytes = line.getBytes();
-                StringBuilder binaryStringBuilder = new StringBuilder();
-                if (line.startsWith("ply") || line.startsWith("format") || line.startsWith("element")
-                        || line.startsWith("property") || line.startsWith("end_header")) {
+    public void readPlyFile(String filePath) throws IOException{
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(filePath))) {
+            List<String> header = new ArrayList<>();
+            StringBuilder lineBuilder = new StringBuilder();
+            int b;
+
+            // Leggi l'intestazione
+            while ((b = bis.read()) != -1) {
+                if (b == '\n') {
+                    String line = lineBuilder.toString();
+                    header.add(line);
                     plyContent.add(line);
-                } else if (!line.startsWith("comment")) {
-                    for (byte b : bytes) {
-                        String binary = Integer.toBinaryString(b & 0xFF);
-                        while (binary.length() < 8) {
-                            binary = "0" + binary;
-                        }
-                        binaryStringBuilder.append(binary).append(" ");
+                    if (line.trim().equals("end_header")) {
+                        break;
                     }
-                    plyContent.add(binaryStringBuilder.toString());
+                    lineBuilder.setLength(0);
+                } else {
+                    lineBuilder.append((char) b);
                 }
+            }
+
+            // Analizza l'intestazione per ottenere il numero di vertici e facce
+            int vertexCount = 0;
+            int faceCount = 0;
+            boolean littleEndian = false;
+
+            for (String line : header) {
+                if (line.startsWith("element vertex")) {
+                    vertexCount = Integer.parseInt(line.split(" ")[2]);
+                } else if (line.startsWith("element face")) {
+                    faceCount = Integer.parseInt(line.split(" ")[2]);
+                } else if (line.startsWith("format binary_little_endian")) {
+                    littleEndian = true;
+                } else if (line.startsWith("format binary_big_endian")) {
+                    littleEndian = false;
+                }
+            }
+
+            ByteOrder byteOrder = littleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+
+            // Leggi i vertici
+            for (int i = 0; i < vertexCount; i++) {
+                byte[] vertexBytes = new byte[12]; // 3 float (x, y, z) * 4 bytes per float
+                bis.read(vertexBytes);
+                ByteBuffer buffer = ByteBuffer.wrap(vertexBytes).order(byteOrder);
+                float x = buffer.getFloat();
+                float y = buffer.getFloat();
+                float z = buffer.getFloat();
+                vertices.add(new Vertex(x, y, z));
+            }
+
+            // Leggi le facce
+            for (int i = 0; i < faceCount; i++) {
+                int vertexPerFace = bis.read(); // Leggi il numero di vertici per faccia
+                byte[] faceBytes = new byte[vertexPerFace * 4]; // Ogni indice di vertice è un int (4 bytes)
+                bis.read(faceBytes);
+                ByteBuffer buffer = ByteBuffer.wrap(faceBytes).order(byteOrder);
+                int[] vertexIndices = new int[vertexPerFace];
+                for (int j = 0; j < vertexPerFace; j++) {
+                    vertexIndices[j] = buffer.getInt();
+                }
+                faces.add(new Face(vertexIndices));
             }
         }
     }
