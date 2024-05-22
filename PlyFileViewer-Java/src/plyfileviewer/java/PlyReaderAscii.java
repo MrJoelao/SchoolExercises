@@ -3,27 +3,26 @@ package plyfileviewer.java;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlyReaderAscii {
 
+    private List<String> plyContent;
 
     public PlyReaderAscii(String filePath) {
+        plyContent = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                byte[] bytes = line.getBytes();
-                if (line.startsWith("ply") || line.startsWith("format") || line.startsWith("element")
-                        || line.startsWith("property") || line.startsWith("end_header")) {
-                    System.out.println(line);
-                } else if (!line.startsWith("comment")) {
-                    // Converte ogni byte in una rappresentazione ASCII
-                    for (byte b : bytes) {
-                        System.out.print(b + "\n");
-                    }
-                }
+                plyContent.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<String> getPlyContent() {
+        return plyContent;
     }
 }
