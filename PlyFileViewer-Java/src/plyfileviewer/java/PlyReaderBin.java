@@ -12,13 +12,18 @@ class PlyReaderBin extends PlyReader {
 
     @Override
     public void readPlyFile(String filePath) throws IOException {
+        // Utilizza un BufferedInputStream per leggere il file
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(filePath))) {
+            // Leggi l'intestazione del file
             List<String> header = readHeader(bis);
+            // Ottieni il numero di vertici e facce dal file
             int[] counts = getCounts(header);
+            // Controlla se il file è in formato little endian o big endian
             boolean littleEndian = isLittleEndian(header);
 
             ByteOrder byteOrder = littleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
 
+            // Leggi i vertici e le facce del file
             readVertices(bis, counts[0], byteOrder);
             readFaces(bis, counts[1], byteOrder);
         }
@@ -29,7 +34,7 @@ class PlyReaderBin extends PlyReader {
         StringBuilder lineBuilder = new StringBuilder();
         int b;
 
-        // Leggi l'intestazione
+        // Leggi l'intestazione del file fino a quando non trovi "end_header"
         while ((b = bis.read()) != -1) {
             if (b == '\n') {
                 String line = lineBuilder.toString();
@@ -51,6 +56,7 @@ class PlyReaderBin extends PlyReader {
         int vertexCount = 0;
         int faceCount = 0;
 
+        // Ottieni il numero di vertici e facce dal file
         for (String line : header) {
             if (line.startsWith("element vertex")) {
                 vertexCount = Integer.parseInt(line.split(" ")[2]);
@@ -63,6 +69,7 @@ class PlyReaderBin extends PlyReader {
     }
 
     private boolean isLittleEndian(List<String> header) {
+        // Controlla se il file è in formato little endian o big endian
         for (String line : header) {
             if (line.startsWith("format binary_little_endian")) {
                 return true;
@@ -70,11 +77,12 @@ class PlyReaderBin extends PlyReader {
                 return false;
             }
         }
-        // Metto come default little endian se il formato non è specificato
+        // Se il formato non è specificato, metti come default little endian
         return true;
     }
 
     private void readVertices(BufferedInputStream bis, int vertexCount, ByteOrder byteOrder) throws IOException {
+        // Leggi i vertici del file
         for (int i = 0; i < vertexCount; i++) {
             byte[] vertexBytes = new byte[12]; // 3 float per vertice * 4 bytes per float
             bis.read(vertexBytes);
@@ -87,6 +95,7 @@ class PlyReaderBin extends PlyReader {
     }
 
     private void readFaces(BufferedInputStream bis, int faceCount, ByteOrder byteOrder) throws IOException {
+        // Leggi le facce del file
         for (int i = 0; i < faceCount; i++) {
             int vertexPerFace = bis.read(); // Leggi il numero di vertici per faccia
             byte[] faceBytes = new byte[vertexPerFace * 4]; // Ogni indice di vertice è un int (4 bytes)
