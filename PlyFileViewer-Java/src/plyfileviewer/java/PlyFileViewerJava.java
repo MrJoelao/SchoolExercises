@@ -14,7 +14,7 @@ import javafx.scene.transform.Rotate;
 
 /**
  * Classe principale dell'applicazione PlyFileViewerJava.
- * Questa classe estende Application di JavaFX e gestisce la visualizzazione di un file PLY.
+ * Questa classe estende Application di JavaFX e gestisce la visualizzazione di un file PLY. prova commit
  */
 public class PlyFileViewerJava extends Application {
     // Costanti per identificare il tipo di file PLY
