@@ -34,4 +34,16 @@ abstract class PlyReader {
             System.out.println(line);
         }
     }
+
+    public void debugPrintVertices() {
+        for (Vertex vertex : vertices) {
+            System.out.println("Vertex: X=" + vertex.getX() + " Y=" + vertex.getY() + " Z=" + vertex.getZ());
+        }
+    }
+
+    public void debugPrintFaces() {
+        for (Face face : faces) {
+            System.out.println("Face: " + face.getVertexIndices()[0] + " " + face.getVertexIndices()[1] + " " + face.getVertexIndices()[2]);
+        }
+    }
 }
