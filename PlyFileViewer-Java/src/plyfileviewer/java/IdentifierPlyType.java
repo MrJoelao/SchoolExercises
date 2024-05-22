@@ -1,8 +1,9 @@
 package plyfileviewer.java;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class IdentifierPlyType {
     public static final int ASCII = 0; // Costante per gestire i file ASCII
@@ -13,26 +14,30 @@ public class IdentifierPlyType {
     // Metodo per identificare il tipo di file PLY (ASCII o binario)
     public static int identifyPlyType(String filePath) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(filePath)); // Apriamo il file in lettura
-            String firstLine = reader.readLine(); // Leggiamo la prima riga
-            reader.close(); // Chiudiamo il BufferedReader
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
-            if (firstLine != null && firstLine.trim().equalsIgnoreCase("ply")) {
-                BufferedReader secondLineReader = new BufferedReader(new FileReader(filePath)); // Riapriamo il file
-                secondLineReader.readLine(); // Saltiamo la prima riga
-                String secondLine = secondLineReader.readLine(); // Leggiamo la seconda riga
-                secondLineReader.close(); // Chiudiamo il BufferedReader
-
-                if (secondLine != null && secondLine.trim().equalsIgnoreCase("format ascii")) {
-                    return ASCII; // Il file è nel formato ASCII
-                } else {
-                    return BINARY; // Il file è nel formato binario
+            // Leggiamo le prime righe del file per determinare il tipo
+            String line;
+            int lineCount = 0;
+            boolean asciiHeaderFound = false;
+            while ((line = bufferedReader.readLine()) != null && lineCount < 10) { // Leggiamo solo le prime 10 righe
+                if (line.contains("binary")) {
+                    return BINARY;
+                } else if (line.contains("element") || line.contains("property")) {
+                    asciiHeaderFound = true;
                 }
+                lineCount++;
+            }
+
+            // Se non abbiamo trovato "binary" nel file, ma abbiamo trovato parti del header ASCII, è ASCII
+            if (asciiHeaderFound) {
+                return ASCII;
             } else {
-                return INVALID; // Il file non è un file PLY valido
+                return INVALID; // Se non corrisponde a nessuno dei due, è un file non valido
             }
         } catch (IOException e) {
-            System.err.println("Exception: " + e.getMessage());
+            e.printStackTrace();
             return EXCEPTION; // Gestione dell'eccezione
         }
     }

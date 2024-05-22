@@ -28,4 +28,10 @@ abstract class PlyReader {
     public List<Face> getFaces() {
         return faces;
     }
+
+    public void debugPrintContent() {
+        for (String line : plyContent) {
+            System.out.println(line);
+        }
+    }
 }
