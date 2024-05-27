@@ -14,7 +14,7 @@ import javafx.scene.transform.Rotate;
 
 /**
  * Classe principale dell'applicazione PlyFileViewerJava.
- * Questa classe estende Application di JavaFX e gestisce la visualizzazione di un file PLY. prova commit
+ * Questa classe estende Application di JavaFX e gestisce la visualizzazione di un file PLY. così pulli :)
  */
 public class PlyFileViewerJava extends Application {
     // Costanti per identificare il tipo di file PLY
@@ -24,7 +24,7 @@ public class PlyFileViewerJava extends Application {
     public static final int EXCEPTION = -2;
 
     // Percorso del file PLY da visualizzare
-    private String filePath = "airplane.ply"; // LowerJawScan.ply = Binario, airplane.ply = ASCII.
+    private String filePath = "LowerJawScan.ply"; // LowerJawScan.ply = Binario, airplane.ply = ASCII.
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -60,13 +60,18 @@ public class PlyFileViewerJava extends Application {
         // Aggiunta dei vertici al mesh
         for (Vertex vertex : plyReader.getVertices()) {
             mesh.getPoints().addAll((float) vertex.getX(), (float) vertex.getY(), (float) vertex.getZ());
+
         }
 
         // Aggiunta delle facce al mesh
         for (Face face : plyReader.getFaces()) {
-            mesh.getFaces().addAll(face.getVertexIndices());
+            for (int index : face.getVertexIndices()) {
+                mesh.getFaces().addAll(index - 1);
+                mesh.getFaces().addAll(0);
+            }
         }
 
+        mesh.getTexCoords().addAll(0,0);
         // Creazione della vista della mesh
         MeshView meshView = new MeshView(mesh);
         meshView.setDrawMode(DrawMode.FILL);
@@ -87,8 +92,8 @@ public class PlyFileViewerJava extends Application {
         System.out.println("Number of vertices: " + plyReader.getVertices().size());
         System.out.println("Number of faces: " + plyReader.getFaces().size());
         plyReader.debugPrintContent();
-        plyReader.debugPrintVertices();
-        plyReader.debugPrintFaces();
+        /*plyReader.debugPrintVertices();
+        plyReader.debugPrintFaces();*/
     }
 
     public static void main(String[] args) {
