@@ -2,7 +2,6 @@ package plyfileviewer.java;
 
 import javafx.application.Application;
 import javafx.geometry.Point3D;
-import javafx.scene.AmbientLight;
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,10 +13,8 @@ import javafx.scene.shape.TriangleMesh;
 import javafx.scene.shape.VertexFormat;
 import javafx.stage.Stage;
 import java.io.IOException;
-
 import javafx.scene.transform.Rotate;
 import javafx.scene.PerspectiveCamera;
-import javafx.scene.transform.Translate;
 
 /**
  * Classe principale dell'applicazione PlyFileViewerJava.
@@ -30,19 +27,25 @@ public class PlyFileViewerJava extends Application {
     public static final int BINARY = 1;
     public static final int INVALID = -1;
     public static final int EXCEPTION = -2;
-    private Point3D aCenterPoint;
-    private Point3D CameraPosition;
-    private Camera camera;
-    private boolean debug = false;
+
+    // Costanti per la dimensione della scena
+    public static final int SCENE_HEIGHT = 600;
+    public static final int SCENE_WIDTH = (int) (SCENE_HEIGHT * 1.7);
+
+    // Debug
+    public final boolean debug = false;
 
     // Percorso del file PLY da visualizzare
-    private String filePath = "airplane.ply"; // LowerJawScan.ply = Binario, airplane.ply = ASCII.
+    public final String filePath = "LowerJawScan.ply"; // LowerJawScan.ply = Binario, airplane.ply = ASCII.
+
+//    private Point3D aCenterPoint;
+//    private Point3D CameraPosition;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         // Creazione di un gruppo per contenere la mesh
         Group root = new Group();
-        Scene scene = new Scene(root, 800, 600, true);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, true);
         scene.setFill(Color.WHITE);
 
         PlyReader plyReader = null;
@@ -70,6 +73,7 @@ public class PlyFileViewerJava extends Application {
         // Creazione della mesh da visualizzare
         TriangleMesh mesh = new TriangleMesh(VertexFormat.POINT_TEXCOORD);
         // Aggiunta dei vertici al mesh
+        assert plyReader != null;
         for (Vertex vertex : plyReader.getVertices()) {
             mesh.getPoints().addAll((float) vertex.getX(), (float) vertex.getY(), (float) vertex.getZ());
         }
@@ -88,10 +92,8 @@ public class PlyFileViewerJava extends Application {
         meshView.setMaterial(new PhongMaterial(Color.RED));
         root.getChildren().add(meshView);
 
-        //Camera
-        camera = new PerspectiveCamera();
-        setCameraPosition(meshView);
-        scene.setCamera(camera);
+        // Impostazione della camera
+        scene.setCamera(setCameraPosition(meshView));
 
         // Titolo e scena
         primaryStage.setTitle("PlyFileViewer-Java");
@@ -110,8 +112,8 @@ public class PlyFileViewerJava extends Application {
     }
 
     // Imposta la posizione della camera per visualizzare la mesh
-    public void setCameraPosition(MeshView mesh){
-        //camera = new PerspectiveCamera(); // Costruttore già chiamato in start
+    public Camera setCameraPosition(MeshView mesh){
+        Camera camera = new PerspectiveCamera();
 
         // Reset della camera
         camera.getTransforms().clear();
@@ -123,15 +125,15 @@ public class PlyFileViewerJava extends Application {
         Rect3D boundingRect = calculateBoundingBox(mesh);
 
         // Calcolo del punto centrale del bounding box
-        Point3D centerPoint = new Point3D((boundingRect.MinX + boundingRect.MaxX)/2, (boundingRect.MinY + boundingRect.MaxY) / 2, (boundingRect.MinZ + boundingRect.MaxZ)/2);
-        Point3D cameraPoint = new Point3D(centerPoint.getX(), centerPoint.getY(), boundingRect.MinZ + ((boundingRect.MaxZ-boundingRect.MinZ)* 4));
+        Point3D centerPoint = new Point3D((boundingRect.MinX + boundingRect.MaxX)/ 3.4, (boundingRect.MinY + boundingRect.MaxY) / 3, (boundingRect.MinZ + boundingRect.MaxZ) / 3);
+        Point3D cameraPoint = new Point3D(centerPoint.getX(), centerPoint.getY(), boundingRect.MinZ + ((boundingRect.MaxZ-boundingRect.MinZ) * 4));
 
         // Impostazione del punto centrale e della posizione della camera
-        aCenterPoint = centerPoint;
-        CameraPosition = cameraPoint;
+//        aCenterPoint = centerPoint;
+//        CameraPosition = cameraPoint;
 
         // Traslazione della camera
-        Translate pivot = new Translate(cameraPoint.getX(), cameraPoint.getY(), cameraPoint.getZ());
+        //Translate pivot = new Translate(cameraPoint.getX(), cameraPoint.getY(), cameraPoint.getZ());
         camera.translateXProperty().set(cameraPoint.getX());
         camera.translateYProperty().set(cameraPoint.getY());
         camera.translateZProperty().set(cameraPoint.getZ());
@@ -148,22 +150,15 @@ public class PlyFileViewerJava extends Application {
         camera.getTransforms().add(yRotate);
         camera.setNearClip(0.125f);
         camera.setFarClip(100000f);
-
-        // Aggiunta di una luce ambientale
-        AmbientLight ambientLight = new AmbientLight();
-        ambientLight.setColor(Color.CORAL);
-
         camera.setViewOrder(10);
 
+        return camera;
     }
 
     // Calcola il bounding box di una MeshView
     public Rect3D calculateBoundingBox(MeshView mesh){
-        // Calcolo del bounding box
-        Rect3D boundingBox = new Rect3D(mesh.getBoundsInParent());
-        aCenterPoint = new Point3D((boundingBox.MinX+boundingBox.MaxX)/2, (boundingBox.MinY+boundingBox.MaxY)/2, (boundingBox.MinZ+boundingBox.MaxZ)/2);
-
-        return boundingBox;
+        //aCenterPoint = new Point3D((boundingBox.MinX+boundingBox.MaxX)/2, (boundingBox.MinY+boundingBox.MaxY)/2, (boundingBox.MinZ+boundingBox.MaxZ)/2);
+        return new Rect3D(mesh.getBoundsInParent());
     }
 
     public static void main(String[] args) {
