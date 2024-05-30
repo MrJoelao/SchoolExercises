@@ -1,10 +1,13 @@
 package plyfileviewer.java;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point3D;
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.DrawMode;
@@ -18,7 +21,7 @@ import javafx.scene.PerspectiveCamera;
 
 /**
  * Classe principale dell'applicazione PlyFileViewerJava.
- * Questa classe estende Application di JavaFX e gestisce la visualizzazione di un file PLY. così pulli :)
+ * Questa classe estende Application di JavaFX e gestisce la visualizzazione di un file PLY.
  */
 
 public class PlyFileViewerJava extends Application {
@@ -36,7 +39,7 @@ public class PlyFileViewerJava extends Application {
     public final boolean debug = false;
 
     // Percorso del file PLY da visualizzare
-    public final String filePath = "LowerJawScan.ply"; // LowerJawScan.ply = Binario, airplane.ply = ASCII.
+    public final String filePath = "airplane.ply"; // LowerJawScan.ply = Binario, airplane.ply = ASCII.
 
 //    private Point3D aCenterPoint;
 //    private Point3D CameraPosition;
@@ -100,6 +103,9 @@ public class PlyFileViewerJava extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        // Gestione del mouse
+        mouseHandler(meshView, scene);
+
         // Stampa di debug
         if(debug){
             System.out.println("Number of vertices: " + plyReader.getVertices().size());
@@ -153,6 +159,50 @@ public class PlyFileViewerJava extends Application {
         camera.setViewOrder(10);
 
         return camera;
+    }
+
+    public void mouseHandler(MeshView meshView, Scene scene){
+        // Creo le trasformazioni di rotazione
+        Rotate rotateX = new Rotate(0, Rotate.X_AXIS);
+        Rotate rotateY = new Rotate(0, Rotate.Y_AXIS);
+
+        // Calcolo il bounding box della mesh
+        Bounds boundingRect = meshView.getBoundsInParent();
+
+        // Calcolo il punto centrale del bounding box
+        Point3D centerPoint = new Point3D((boundingRect.getMinX() + boundingRect.getMaxX()) / 2,
+                (boundingRect.getMinY() + boundingRect.getMaxY()) / 2,
+                (boundingRect.getMinZ() + boundingRect.getMaxZ()) / 2);
+
+        // Imposto il centro di rotazione della mesh
+        rotateX.setPivotX(centerPoint.getX());
+        rotateX.setPivotY(centerPoint.getY());
+        rotateX.setPivotZ(centerPoint.getZ());
+
+        rotateY.setPivotX(centerPoint.getX());
+        rotateY.setPivotY(centerPoint.getY());
+        rotateY.setPivotZ(centerPoint.getZ());
+
+        // Aggiungo le trasformazioni alla mesh
+        meshView.getTransforms().addAll(rotateX, rotateY);
+
+        double rotationScale = 0.5; // Fattore di scala per la rotazione
+
+        EventHandler<MouseEvent> mouseHandler = event -> {
+            if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+                double deltaX = event.getX() - scene.getWidth() / 2;
+                double deltaY = event.getY() - scene.getHeight() / 2;
+
+                // Calcola l'angolo della rotazione in base alla posizione del mouse rispetto al centro della scena
+                double angleX = deltaY / scene.getHeight() * 360 * rotationScale; // Rotazione lungo l'asse X
+                double angleY = deltaX / scene.getWidth() * 360 * rotationScale; // Rotazione lungo l'asse Y
+
+                // Applica la rotazione
+                rotateX.setAngle(angleX);
+                rotateY.setAngle(angleY);
+            }
+        };
+        scene.setOnMouseDragged(mouseHandler);
     }
 
     // Calcola il bounding box di una MeshView
