@@ -7,7 +7,7 @@ A number of resources are used for the tris, such as images, [icons](https://www
 
 ## Requirements
 
-- JDK 8 or higher
+- JDK 19 or higher
 - NetBeans IDE
 
 ## Installation
