@@ -3,7 +3,7 @@
 This project is a school exercise simulating a management system for an airline. The project was developed using NetBeans IDE and the Java programming language.
 
 ## Java version
-The project was developed using Java 8.
+The project was developed using Java 19.
 
 ## Classes
 
