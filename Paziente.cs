@@ -103,7 +103,9 @@ public class Paziente
     /// <returns>Un paziente nuovo</returns>
     public static Paziente caricaPaziente(string nome_file)
     {
+        //Console.WriteLine("funzione");
         string testo = File.ReadAllText(nome_file);
+        Console.WriteLine(testo);
 
         return null;
     }
