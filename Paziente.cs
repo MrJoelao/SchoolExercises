@@ -4,10 +4,11 @@ public class Paziente
 {
     private string nome, cognome, luogo_nascita, provincia, codice_fiscale, codice_asl, categoria, medico, professione;
     private string[] indirizzi;
+    private DateTime data_nascita;
     private bool estero, controllo_validità, sesso; //true=uomo
 
     public Paziente(string inome, string icognome, string iluogoNascita, string iprovincia, string icodiceFiscale,
-        string icodiceAsl, string icategoria, string imedico, string iprofessione, string[] iindirizzi, bool iestero,
+        string icodiceAsl, string icategoria, string imedico, string iprofessione, string[] iindirizzi, DateTime idataNascita, bool iestero,
         bool icontrolloValidità, bool isesso)
     {
         nome = inome;
@@ -20,6 +21,7 @@ public class Paziente
         medico = imedico;
         professione = iprofessione;
         indirizzi = iindirizzi;
+        data_nascita = idataNascita;
         estero = iestero;
         controllo_validità = icontrolloValidità;
         sesso = isesso;
@@ -108,6 +110,11 @@ public class Paziente
         Console.WriteLine(testo);
 
         return null;
+    }
+
+    public new string ToString()
+    {
+        return nome + cognome+data_nascita;
     }
     
 }
