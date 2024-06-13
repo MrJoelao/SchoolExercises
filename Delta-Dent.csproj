@@ -8,4 +8,8 @@
         <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Include="wwwroot\assets\dottore.svg" />
+    </ItemGroup>
+
 </Project>
