@@ -6,12 +6,12 @@
 }
 
 .buttonContainer{
+    padding: 0.3rem;
     width: 100%;
     height: 2.5rem;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: #72B7FF;
-    vertical-align: center;
 }
 
 .slideContainer{
@@ -23,9 +23,11 @@
     background-color: #4787CA;
     color: white;
     font-weight: bold;
-    padding: 0.2rem;
     border-radius: 10px;
     padding-left: 2rem;
     padding-right: 2rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    margin-right: 1rem;
     border: none;
 }
