@@ -1,31 +1,22 @@
 @page "/Anagrafica"
 <PageTitle>Anagrafica</PageTitle>
+@rendermode InteractiveServer
 
-<div class="toolbar">
-    <div class="slideContainer"></div>
-    <div class="buttonContainer">
-        <button class="defButton" >AGGIUNGI</button>
-        <button class="defButton">MODIFICA</button>
-        <button class="defButton">ELIMINA</button>
-        <button class="defButtonSmall">STAMPA</button>
-        <input type="text" class="inputSmall" placeholder="Search" />
-    </div>
-</div>
+<div class="toolbar"><div class="slideContainer"></div><div class="buttonContainer"><button class="defButton" @onclick="@toggleForm">AGGIUNGI</button><button class="defButton">MODIFICA</button><button class="defButton">ELIMINA</button></div></div>
 
 @if (visible)
 {
-<!-- div contenente il pop-up per l'inserimento dei dati -->
-<div>
-    <!-- div contenente la barra superiore -->
+    <!-- div contenente il pop-up per l'inserimento dei dati -->
     <div>
-        <button>Dati personali</button>
-        <button>Familiari</button>
-        <button>Contatti - Fatturazione</button>
-        <button>Note</button>
+        <!-- div contenente la barra superiore -->
+        <div>
+            <button>Dati personali</button>
+            <button>Familiari</button>
+            <button>Contatti - Fatturazione</button>
+            <button>Note</button>
+        </div>
     </div>
-</div>
 }
-
 
 @code {
     
