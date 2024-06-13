@@ -213,32 +213,6 @@
     border-radius: 1.4375rem; /* Angoli arrotondati */
 }
 
-/* Stile per la riga della password */
-.login-page .passwordRow {
-    position: relative;
-    display: flex;
-    gap: 0rem 0.625rem; /* Spazio tra gli elementi */
-    margin: 0.6875rem 0.8125rem; /* Margine interno */
-}
-
-/* Stile per l'icona della password */
-.login-page .passwordIcon {
-    position: relative;
-    margin: 0.0625rem 0rem 0.125rem; /* Margine interno */
-    width: 1.3125rem; /* Larghezza fissa */
-    min-width: 0rem; /* Larghezza minima impostata a 0 */
-    height: 1.3125rem; /* Altezza fissa */
-}
-
-/* Stile per l'etichetta della password */
-.login-page .passwordLabel {
-    position: relative;
-    min-width: 0rem; /* Larghezza minima impostata a 0 */
-    font: 500 1rem/1.5 "Mplus 1p", Helvetica, Arial, serif; /* Stile del font */
-    color: #b3b3b3; /* Colore del testo */
-    letter-spacing: 0.04rem; /* Spaziatura tra lettere */
-}
-
 /* Stile per il pulsante di login */
 .login-page .loginButton {
     position: relative;
@@ -258,8 +232,8 @@
 
 /* Stile per il link della password dimenticata */
 .login-page .forgotPassword {
-    position: relative;
-    display: flex;
+    /*position: relative;
+    display: flex;*/
     justify-content: center; /* Centrato orizzontalmente */
     margin: 0.625rem 0rem 0rem; /* Margine superiore */
     font: 500 0.9375rem/1.46 "Mplus 1p", Helvetica, Arial, serif; /* Stile del font */
@@ -310,4 +284,11 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.visible{
+    display: block;
+}
+.invisible{
+    display: none;
 }
