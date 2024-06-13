@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Include="wwwroot\assets\dottore.svg" />
+      <None Include="wwwroot\assets\loginAssets\dottore.svg" />
     </ItemGroup>
 
 </Project>

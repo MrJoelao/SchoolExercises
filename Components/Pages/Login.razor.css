@@ -172,28 +172,25 @@
 }
 
 /* Stile per la riga dell'email */
-.login-page .emailRow {
+.login-page .BoxRow {
     position: relative;
     display: flex;
     gap: 0rem 0.625rem; /* Spazio tra gli elementi */
     margin: 0.6875rem 0.8125rem; /* Margine interno */
-}
-
-/* Stile per l'icona dell'email */
-.login-page .emailIcon {
-    position: relative;
-    margin: 0.1875rem 0rem; /* Margine interno */
-    width: 1.3125rem; /* Larghezza fissa */
-    min-width: 0rem; /* Larghezza minima impostata a 0 */
-    height: 1.125rem; /* Altezza fissa */
-}
-
-/* Stile per l'etichetta dell'email */
-.login-page .emailLabel {
-    position: relative;
+    border: none;
+    padding-left: 1.8rem;
     min-width: 0rem; /* Larghezza minima impostata a 0 */
     font: 500 1rem/1.5 "Mplus 1p", Helvetica, Arial, serif; /* Stile del font */
     color: #b3b3b3; /* Colore del testo */
+    background-color: #ebebeb; /* Colore di sfondo */
+    letter-spacing: 0.04rem; /* Spaziatura tra lettere */
+    background: url("./assets/loginAssets/emailIcon.svg") no-repeat left center;
+    outline: none;
+}
+
+.login-page .BoxRow::placeholder {
+    color: #b3b3b3;
+    font: 500 1rem/1.5 "Mplus 1p", Helvetica, Arial, serif; /* Stile del font */
     letter-spacing: 0.04rem; /* Spaziatura tra lettere */
 }
 
