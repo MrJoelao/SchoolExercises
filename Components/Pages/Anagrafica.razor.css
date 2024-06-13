@@ -1,0 +1,31 @@
+.toolbar{
+    width: 95%;
+    height: 5rem;
+    background-color: #3D7BD9;
+    border-radius: 10px;
+}
+
+.buttonContainer{
+    width: 100%;
+    height: 2.5rem;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #72B7FF;
+    vertical-align: center;
+}
+
+.slideContainer{
+    width: 100%;
+    height: 2.5rem;
+}
+
+.defButton{
+    background-color: #4787CA;
+    color: white;
+    font-weight: bold;
+    padding: 0.2rem;
+    border-radius: 10px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border: none;
+}
