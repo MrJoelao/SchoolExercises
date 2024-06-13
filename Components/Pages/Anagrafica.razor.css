@@ -23,11 +23,57 @@
     background-color: #4787CA;
     color: white;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 5px;
     padding-left: 2rem;
     padding-right: 2rem;
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
-    margin-right: 1rem;
+    margin-right: 0.5rem;
     border: none;
+    transition: background-color 0.3s ease;
+}
+
+.defButton:hover {
+    background-color: #316393;
+}
+
+.defButtonSmall{
+    background-color: #4787CA;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    margin-right: 0.5rem;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.defButtonSmall:hover {
+    background-color: #316393;
+}
+
+.inputSmall{
+    border: none;
+    border-radius: 5px;
+    background-image: url("./assets/lente.svg");
+} 
+
+.inputSmall {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: url('./assets/lente.svg') no-repeat right center;
+    background-size: 20px 20px; /* adjust size as needed */
+    width: 200px; /* adjust width as needed */
+    box-sizing: border-box; /* ensures padding is included in the width */
+    border: none;
+    padding: 0.2rem;
+    padding-right: 1.5rem;
+    background-color: white;
+}
+
+.inputSmall::placeholder {
+    color: #999;
 }
