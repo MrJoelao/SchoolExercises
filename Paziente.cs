@@ -4,10 +4,11 @@ public class Paziente
 {
     private string nome, cognome, luogo_nascita, provincia, codice_fiscale, codice_asl, categoria, medico, professione;
     private string[] indirizzi;
+    private DateTime data_nascita;
     private bool estero, controllo_validità, sesso; //true=uomo
 
     public Paziente(string inome, string icognome, string iluogoNascita, string iprovincia, string icodiceFiscale,
-        string icodiceAsl, string icategoria, string imedico, string iprofessione, string[] iindirizzi, bool iestero,
+        string icodiceAsl, string icategoria, string imedico, string iprofessione, string[] iindirizzi, DateTime idataNascita, bool iestero,
         bool icontrolloValidità, bool isesso)
     {
         nome = inome;
@@ -20,14 +21,10 @@ public class Paziente
         medico = imedico;
         professione = iprofessione;
         indirizzi = iindirizzi;
+        data_nascita = idataNascita;
         estero = iestero;
         controllo_validità = icontrolloValidità;
         sesso = isesso;
-    }
-    
-    public Paziente()
-    {
-        
     }
 
     public string getNome()
@@ -80,6 +77,11 @@ public class Paziente
         return (string[]) indirizzi.Clone();
     }
     
+    public DateTime getDataNascita()
+    {
+        return data_nascita;
+    }
+    
     public bool getEstero()
     {
         return estero;
@@ -103,9 +105,30 @@ public class Paziente
     /// <returns>Un paziente nuovo</returns>
     public static Paziente caricaPaziente(string nome_file)
     {
-        string testo = File.ReadAllText(nome_file);
+        Paziente nuovo;
+        String testo;
+        try
+        {
+            testo = File.ReadAllText(nome_file);
+            //Console.WriteLine(testo);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+
+        String[] parti = testo.Split('\n');
+        /*foreach (String s in parti)
+        {
+            Console.WriteLine(s+'\n');
+        }*/
 
         return null;
+    }
+
+    public new string ToString()
+    {
+        return nome + cognome+data_nascita;
     }
     
 }
