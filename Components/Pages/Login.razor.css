@@ -30,6 +30,7 @@
 /* Stile per l'immagine di copertina */
 .login-page .coverImage {
     position: relative;
+    height: 100%;
     width: 100%; /* Larghezza massima */
     min-width: 0rem; /* Larghezza minima impostata a 0 */
     border-radius: 1.875rem 0rem 0rem 1.875rem; /* Angoli arrotondati */
