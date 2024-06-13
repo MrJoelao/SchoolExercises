@@ -26,11 +26,6 @@ public class Paziente
         controllo_validità = icontrolloValidità;
         sesso = isesso;
     }
-    
-    public Paziente()
-    {
-        
-    }
 
     public string getNome()
     {
@@ -82,6 +77,11 @@ public class Paziente
         return (string[]) indirizzi.Clone();
     }
     
+    public DateTime getDataNascita()
+    {
+        return data_nascita;
+    }
+    
     public bool getEstero()
     {
         return estero;
@@ -105,9 +105,23 @@ public class Paziente
     /// <returns>Un paziente nuovo</returns>
     public static Paziente caricaPaziente(string nome_file)
     {
-        //Console.WriteLine("funzione");
-        string testo = File.ReadAllText(nome_file);
-        Console.WriteLine(testo);
+        Paziente nuovo;
+        String testo;
+        try
+        {
+            testo = File.ReadAllText(nome_file);
+            //Console.WriteLine(testo);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+
+        String[] parti = testo.Split('\n');
+        /*foreach (String s in parti)
+        {
+            Console.WriteLine(s+'\n');
+        }*/
 
         return null;
     }
