@@ -82,15 +82,30 @@
     display: inline-block;
     font-weight: bold;
     height: 2.3rem;
+    margin-top:-30px;
 }
 
 .side{
     background-color: #4787CA;
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
     color: white;
+    text-align: center;
+    height: 1.8rem;
+    padding-top: 0.1rem;
+    width:2rem;
+    display: inline-block;
 }
 
 .inline{
     display: inline-block;
+}
+
+.number{
+    margin-left: -0.4rem;
+    width: 2.5rem;
+    border: none; 
+    padding-bottom: 3px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
