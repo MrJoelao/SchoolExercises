@@ -1,14 +1,1 @@
-﻿Mario
-Rossi
-Milano
-Milano
-rssmro31cbt4156qwx
-MI0325
-boh
-Ippocrate
-Avvocato
-{via libero comune, via malavoglia}
-3/8/1966
-true
-true
-true
+﻿111111111

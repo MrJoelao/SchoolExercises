@@ -1,10 +1,11 @@
+@using System.Net
 <input type="checkbox" title="Navigation menu" class="navbar-toggler"/>
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="Anagrafica" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> anagrafica
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Anagrafica
             </NavLink>
         </div>
 
@@ -55,5 +56,35 @@
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Community
             </NavLink>
         </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Login Temp
+            </NavLink>
+        </div>
     </nav>
 </div>
+
+@code
+{
+    private bool[] buttons=new bool[9];
+    private string fileName = "prova.txt";
+
+    protected override async Task OnInitializedAsync()
+    {
+        readNavFile(fileName);
+    }
+
+    public void readNavFile(string name)
+    {
+        string value = File.ReadAllText(name);
+        for (int i = 0; i < 9; i++)
+        {
+            if (value[i] == '1')
+            {
+                buttons[i] = true;
+            }
+        }
+        //Console.WriteLine(value);
+    }
+}

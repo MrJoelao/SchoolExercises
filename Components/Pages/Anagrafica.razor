@@ -33,68 +33,86 @@
     <div>
         <!-- div contenente la barra superiore -->
         <div>
-            <button>DATI PERSONALI</button>
-            <button>FAMILIARI</button>
-            <button>CONTATTI - FATTURAZIONE</button>
-            <button>NOTE</button>
+            <div class="inline">
+                <button>DATI PERSONALI</button>
+                <button>FAMILIARI</button>
+                <button>CONTATTI - FATTURAZIONE</button>
+                <button>NOTE</button>
+            </div>
+            <div class="inline">
+                <button @onclick="@toggleForm">X</button>
+            </div>
         </div>
-        <!-- div contenente i form principali -->
+        <!-- div colonna a sinistra -->
         <div>
-            <div class="inline">
-                COGNOME*<br/>
-                <input type="text" placeholder="Poretti"/>
+            <!-- div contenente i form principali -->
+            <div>
+                <div class="inline">
+                    COGNOME*<br/>
+                    <input type="text" placeholder="Poretti"/>
+                </div>
+                <div class="inline">
+                    NOME*<br/>
+                    <input type="text" placeholder="Giacomo"/>
+                </div><br/>
+                <div class="inline">
+                    <div>LUOGO DI NASCITA <div class="inline">estero<input type="checkbox"></div></div><br/>
+                    <input type="text" placeholder="Giacomo"/>
+                </div>
+                <div class="inline">
+                    PROVINCIA<br/>
+                    <input type="text" placeholder="Milano"/>
+                </div>
+                <div class="inline">
+                    SESSO<br/>
+                    <select type="select" placeholder=" ">
+                        <option value="m">Maschio</option>
+                        <option value="f">Femmina</option>
+                    </select>
+                </div><br/>
+                <div class="inline">
+                    DATA NASCITA<br/>
+                    <input type="date"/>
+                </div>
+                <div class="inline">
+                    CODICE ASL<br/>
+                    <input type="text" placeholder="MI333"/>
+                </div>
+                <div class="inline">
+                    <div>CODICE FISCALE <div class="inline">controllo validità<input type="checkbox"></div></div><br/>
+                    <input type="text" placeholder="PRTGCM64H07F205D"/>
+                </div><br/>
+                <div class="inline">
+                    CATEGORIA<br/>
+                    <select type="select" placeholder=" ">
+                        <option value="p">Prova</option>
+                    </select>
+                </div>
+                <div class="inline">
+                    MEDICO<br/>
+                    <input type="text" placeholder="Ippocrate"/>
+                </div>
+                <div class="inline">
+                    PROFESSIONE<br/>
+                    <select type="select" placeholder=" ">
+                        <option value="p">Prova</option>
+                    </select>
+                </div><br/>
+                <div class="inline">
+                    INDIRIZZI<br/>
+                    <input type="text" placeholder="Via ..."/>
+                </div>
             </div>
-            <div class="inline">
-                NOME*<br/>
-                <input type="text" placeholder="Giacomo"/>
-            </div><br/>
-            <div class="inline">
-                <div>LUOGO DI NASCITA <div class="inline">estero<input type="checkbox"></div></div><br/>
-                <input type="text" placeholder="Giacomo"/>
+            <!-- div contenente le referenze -->
+            <div>
+                REFERENZE<br/>
+                <div class="inline"><button>MOTIVO</button><button>NOMINATIVO</button><button>NOTE</button></div>
             </div>
-            <div class="inline">
-                PROVINCIA<br/>
-                <input type="text" placeholder="Milano"/>
-            </div>
-            <div class="inline">
-                SESSO<br/>
-                <select type="select" placeholder=" ">
-                    <option value="m">Maschio</option>
-                    <option value="f">Femmina</option>
-                </select>
-            </div><br/>
-            <div class="inline">
-                DATA NASCITA<br/>
-                <input type="date"/>
-            </div>
-            <div class="inline">
-                CODICE ASL<br/>
-                <input type="text" placeholder="MI333"/>
-            </div>
-            <div class="inline">
-                <div>CODICE FISCALE <div class="inline">controllo validità<input type="checkbox"></div></div><br/>
-                <input type="text" placeholder="PRTGCM64H07F205D"/>
-            </div><br/>
-            <div class="inline">
-                CATEGORIA<br/>
-                <select type="select" placeholder=" ">
-                    <option value="p">Prova</option>
-                </select>
-            </div>
-            <div class="inline">
-                MEDICO<br/>
-                <input type="text" placeholder="Ippocrate"/>
-            </div>
-            <div class="inline">
-                PROFESSIONE<br/>
-                <select type="select" placeholder=" ">
-                    <option value="p">Prova</option>
-                </select>
-            </div><br/>
-            <div class="inline">
-                INDIRIZZI<br/>
-                <input type="text" placeholder="Via ..."/>
-            </div>
+        </div>
+        
+        <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
+        <div>
+            
         </div>
     </div>
 }
