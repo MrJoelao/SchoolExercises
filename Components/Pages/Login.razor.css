@@ -184,8 +184,16 @@
     color: #b3b3b3; /* Colore del testo */
     background-color: #ebebeb; /* Colore di sfondo */
     letter-spacing: 0.04rem; /* Spaziatura tra lettere */
-    background: url("./assets/loginAssets/emailIcon.svg") no-repeat left center;
+    
     outline: none;
+}
+
+.imageEmail{
+    background: url("./assets/loginAssets/emailIcon.svg") no-repeat left center;
+}
+
+.imagePassword{
+    background: url("./assets/loginAssets/passwordIcon.svg") no-repeat left center;
 }
 
 .login-page .BoxRow::placeholder {
