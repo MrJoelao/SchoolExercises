@@ -1,6 +1,4 @@
 @page "/Anagrafica"
-@using Microsoft.AspNetCore.Components.Web
-
 <PageTitle>Anagrafica</PageTitle>
 
 <div class="toolbar">
@@ -14,3 +12,28 @@
     </div>
 </div>
 
+@if (visible)
+{
+<!-- div contenente il pop-up per l'inserimento dei dati -->
+<div>
+    <!-- div contenente la barra superiore -->
+    <div>
+        <button>Dati personali</button>
+        <button>Familiari</button>
+        <button>Contatti - Fatturazione</button>
+        <button>Note</button>
+    </div>
+</div>
+}
+
+
+@code {
+    
+    private bool visible = false;
+
+    private void toggleForm()
+    {
+        Console.WriteLine("Spoldi");
+        visible = !visible;
+    }
+}
