@@ -5,15 +5,18 @@
     border-radius: 10px;
 }
 
-.buttonContainer{
+.buttonContainer {
     padding: 0.3rem;
     width: 100%;
     height: 2.5rem;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: #72B7FF;
+    display: flex; 
+    flex-wrap: nowrap; 
+    overflow-x: auto; 
+    overflow-y: hidden;
 }
-
 .slideContainer{
     width: 100%;
     height: 2.5rem;
@@ -65,13 +68,14 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background: url('./assets/lente.svg') no-repeat right center;
-    background-size: 20px 20px; /* adjust size as needed */
-    width: 200px; /* adjust width as needed */
-    box-sizing: border-box; /* ensures padding is included in the width */
+    background-size: 20px 20px; 
+    width: 200px;
+    box-sizing: border-box; 
     border: none;
     padding: 0.2rem;
     padding-right: 1.5rem;
     background-color: white;
+    margin-right: 0.5rem;
 }
 
 .inputSmall::placeholder {
@@ -82,7 +86,8 @@
     display: inline-block;
     font-weight: bold;
     height: 2.3rem;
-    margin-top:-30px;
+    margin-right: 0.3rem;
+    margin-left: 0.3rem;
 }
 
 .side{
@@ -108,4 +113,55 @@
     padding-bottom: 3px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+
+.inputLarge {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: url('./assets/lente.svg') no-repeat right center;
+    background-size: 20px 20px;
+    width: 15rem;
+    box-sizing: border-box;
+    border: none;
+    padding: 0.2rem;
+    padding-right: 1.5rem;
+    background-color: white;
+    margin-left: 0.5rem;
+}
+
+.inputLarge::placeholder {
+    color: #999;
+}
+
+.slideSelez{
+    margin-top:0.5rem;
+    font-weight: bold;
+    color: white;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 0.5rem;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    margin-left: 1rem;
+    border: none;
+    background-color: #72B7FF;
+}
+.slide{
+    margin-top:0.5rem;
+    font-weight: bold;
+    color: black;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 0.5rem;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    margin-left: 1rem;
+    border: none;
+    background-color: #DFEFFF;
+    transition: background-color 0.3s ease;
+}
+
+.slide:hover{
+    
+    background-color: #96beda;
 }
