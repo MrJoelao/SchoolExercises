@@ -77,3 +77,20 @@
 .inputSmall::placeholder {
     color: #999;
 }
+
+.insNumero {
+    display: inline-block;
+    font-weight: bold;
+    height: 2.3rem;
+}
+
+.side{
+    background-color: #4787CA;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    color: white;
+}
+
+.inline{
+    display: inline-block;
+}
