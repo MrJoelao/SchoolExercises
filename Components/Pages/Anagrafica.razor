@@ -2,7 +2,14 @@
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
 
-<div class="toolbar"><div class="slideContainer"></div><div class="buttonContainer"><button class="defButton" @onclick="@toggleForm">AGGIUNGI</button><button class="defButton">MODIFICA</button><button class="defButton">ELIMINA</button></div></div>
+<div class="toolbar">
+    <div class="slideContainer"></div>
+    <div class="buttonContainer">
+        <button class="defButton" @onclick="@toggleForm">AGGIUNGI</button>
+        <button class="defButton">MODIFICA</button>
+        <button class="defButton">ELIMINA</button>
+    </div>
+</div>
 
 @if (visible)
 {
