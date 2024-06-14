@@ -1,5 +1,6 @@
 ﻿@page "/pazienteTemp"
 @rendermode InteractiveServer
+@inject IJSRuntime JS
 <!-- Colonna sinistra -->
 <div>
 
@@ -53,7 +54,14 @@
             </div>
             <!-- Seconda linea -->
             <div class="inline">
-                <button @onclick="@caricaFoto">Carica dal pc</button>
+                <InputFile @ref="inputFile" OnChange="ShowPreview"/>
+                <script>
+                    window.previewImage = (inputElem, imgElem) => {
+                        const url = URL.createObjectURL(inputElem.files[0]);
+                        imgElem.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
+                        imgElem.src = url;
+                    }
+                </script>
                 <div class="inline">
                     RISOLUZIONE
                     <label for="1280">1280 X 800</label>
@@ -74,52 +82,55 @@
             <!-- Linea centrale -->
             <div>
                 <!-- Barra a sinistra(anteprima delle immagini caricate) -->
-                <div class="inline" id="anteprima"></div>
+                <div class="inline" id="anteprima">
+                    <img style="max-width:200px;max-height:200px" @ref="previewImageElem"/>
+                </div>
                 <!-- Quadrante di scelta a destra -->
                 <div class="inline" id="zonaAssegnazione">
                     <!-- Elenco dei quadratini -->
                     <div class="inline">
-                        <img src=""/><br/>
+                        <img src="" alt="Occl. Superiore"/><br/>
                         <p>Occl. Superiore</p>
                     </div>
                     <div class="inline">
-                        <img src=""/><br/>
+                        <img src="" alt="Occl. DX"/><br/>
                         <p>Occl. DX</p>
                     </div>
                     <div class="inline">
-                        <img src=""/><br/>
+                        <img src="" alt="Occl. Frontale"/><br/>
                         <p>Occl. Frontale</p>
                     </div>
                     <div class="inline">
-                        <img src=""/><br/>
+                        <img src="" alt="Occl. SX"/><br/>
                         <p>Occl. SX</p>
                     </div>
                     <div class="inline">
-                        <img src=""/><br/>
+                        <img src="" alt="Occl. Inferiore"/><br/>
                         <p>Occl. Inferiore</p>
                     </div><br/>
                     <div class="inline">
-                        <img src=""/><br/>
+                        <img src="" alt="Laterale"/><br/>
                         <p>Laterale</p>
                     </div>
                     <div class="inline">
-                        <img src=""/><br/>
+                        <img src="" alt="Frontale"/><br/>
                         <p>Frontale</p>
                     </div>
                     <div class="inline">
-                        <img src=""/><br/>
+                        <img src="" alt="Frontale Sorriso"/><br/>
                         <p>Frontale Sorriso</p>
                     </div><br/>
-                    <div class="inline"><br/>
-                        <img src=""/><br/>
+                    <div class="inline">
+                        <br/>
+                        <img src="" alt="RX Panoramica"/><br/>
                         <p>RX Panoramica</p>
                     </div>
                     <div class="inline">
-                        <img src=""/><br/>
+                        <img src="" alt="RX Laterale"/><br/>
                         <p>RX Laterale</p>
                     </div>
                     <div class="inline">
-                        <img src=""/><br/>
+                        <img src="" alt="RX Frontale PA"/><br/>
                         <p>RX Frontale PA</p>
                     </div>
                 </div>
@@ -148,9 +159,10 @@
         visibile = !visibile;
     }
 
-    public void caricaFoto()
-    {
-        
-    }
+    private InputFile? inputFile;
+    private ElementReference previewImageElem;
+
+    private async Task ShowPreview() => await JS.InvokeVoidAsync(
+        "previewImage", inputFile!.Element, previewImageElem);
 
 }
