@@ -74,6 +74,10 @@
     background-image: url("./assets/sidebarAssets/communityIcon.png");
 }
 
+.tempIcon{
+    background-image: url("./assets/sidebarAssets/tempIcon.png");
+}
+
 .anagraficaIcon,
 .preventiviIcon,
 .contabilitàIcon,
@@ -82,7 +86,8 @@
 .consulenzeIcon,
 .statisticheIcon,
 .messaggiIcon,
-.communityIcon {
+.communityIcon,
+.tempIcon{
     background-size: contain; /* Assicura che l'intera immagine sia visibile */
     background-position: left; /* Centra l'immagine */
     background-repeat: no-repeat; /* Evita la ripetizione dell'immagine */
