@@ -54,12 +54,15 @@
             </div>
             <!-- Seconda linea -->
             <div class="inline">
-                <InputFile @ref="inputFile" OnChange="ShowPreview"/>
+                <InputFile @ref="inputFile" OnChange="ShowPreview" multiple="true"/>
                 <script>
                     window.previewImage = (inputElem, imgElem) => {
-                        const url = URL.createObjectURL(inputElem.files[0]);
-                        imgElem.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
-                        imgElem.src = url;
+                        for (let i=0;i<inputElem.files.length;i++){
+                            //console.log(inputElem.files[i])
+                            const url = URL.createObjectURL(inputElem.files[i]);
+                            imgElem.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
+                            imgElem.src = url;
+                        }
                     }
                 </script>
                 <div class="inline">
