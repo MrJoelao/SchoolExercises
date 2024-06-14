@@ -3,7 +3,6 @@
 
 <PageTitle>Login</PageTitle>
 @rendermode InteractiveServer
-
 <div class="login-page mainSection">
     <div class="headerRow">
         <div class="brandingGroup">
@@ -13,7 +12,7 @@
                     <h1 class="mainTitle">DeltaDent Web</h1>
                     <h3 class="mainSubtitle">La tua scelta per un futuro web</h3>
                 </div>
-                <button class="registerButton">Registrati</button>
+                <button class="registerButton"  @onclick="@buttonRegistration">Registrati</button>
             </div>
             <img class="headerIcon" src="./assets/loginAssets/dottore.svg" alt="alt text" />
         </div>
@@ -30,7 +29,7 @@
                 <div class="passwordBox">
                     <input type="password" class="BoxRow imagePassword" placeholder="Password" />
                 </div>
-                <button class="loginButton" @onclick="@login">login</button>
+                <button class="loginButton">login</button>
                 <h5 class="forgotPassword">Password dimenticata</h5>
                 <h5 class="errorMessage invisible">Email e/o password errata</h5>
             </div>
@@ -38,11 +37,45 @@
     </div>
 </div>
 
+@if (_flagBol)
+{
+    <form class="form">
+        <p class="title">Registrati </p>
+        <p class="message">Registrati subito per avere accesso all'app. </p>
+        <div class="flex">
+            <label>
+                <input required="" placeholder="" type="text" class="input">
+                <span>Nome</span>
+            </label>
+
+            <label>
+                <input required="" placeholder="" type="text" class="input">
+                <span>Cognome</span>
+            </label>
+        </div>
+
+        <label>
+            <input required="" placeholder="" type="email" class="input">
+            <span>Email</span>
+        </label>
+
+        <label>
+            <input required="" placeholder="" type="password" class="input">
+            <span>Password</span>
+        </label>
+        <label>
+            <input required="" placeholder="" type="password" class="input">
+            <span>Conferma password</span>
+        </label>
+        <button class="submit">Submit</button>
+    </form>
+}
+
 @code {
-    private void login()
+    Boolean _flagBol = false;
+    
+    private void buttonRegistration()
     {
-            
-        //debug
-        Console.WriteLine("Login effettuato");
+        _flagBol = !_flagBol;
     }
 }
