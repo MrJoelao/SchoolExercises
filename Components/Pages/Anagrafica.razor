@@ -14,7 +14,7 @@
             <button class="defButton">MODIFICA</button>
             <button class="defButton">ELIMINA</button>
             <button class="defButtonSmall">STAMPA</button>
-            <input type="text" placeholder="Ricerca" class="inputSmall"/>
+            <input type="text" placeholder="Ricerca" @bind-value="searchQuery" @oninput="CercaPersona" class="inputSmall"/>
             <div class="insNumero">
                 <div class="side">N</div>
                 <input type="number" class="number"/>
@@ -27,7 +27,30 @@
         </div>
     </div>
 
-    <div class="list"></div>
+    <div class="list">
+        <table class="tabella">
+            <thead>
+            <tr class="headTable">
+                <th>Cognome</th>
+                <th>Nome</th>
+                <th>Data di Nascita</th>
+                <th>Sesso</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var persona in personeFiltrate)
+            {
+            <tr>
+                <td>@persona.Cognome</td>
+                <td>@persona.Nome</td>
+                <td>@persona.DataNascita.ToString("dd/MM/yyyy")</td>
+                <td>@persona.Sesso</td>
+            </tr>
+            }
+            </tbody>
+        </table>
+
+    </div>
 </div>
 
 
@@ -56,11 +79,11 @@
                     <div>
                         <div class="inline containerInput">
                             COGNOME*<br/>
-                            <input type="text" class="inputForm" placeholder="Poretti"/>
+                            <input type="text" @bind="nuovaPersona.Cognome" class="inputForm" placeholder="Poretti"/>
                         </div>
                         <div class="inline containerInput">
                             NOME*<br/>
-                            <input type="text" class="inputForm" placeholder="Giacomo"/>
+                            <input type="text" @bind="nuovaPersona.Nome" class="inputForm" placeholder="Giacomo"/>
                         </div><br/>
                         <div class="inline containerInput">
                             <div>LUOGO DI NASCITA <div class="inline checkbox">estero<input type="checkbox"></div></div>
@@ -72,14 +95,14 @@
                         </div>
                         <div class="inline containerInputSmall">
                             SESSO<br/>
-                            <select type="select"  class="inputFormScleta"placeholder=" ">
+                            <select type="select"  @bind="nuovaPersona.Sesso" class="inputFormScleta"placeholder=" ">
                                 <option value="m">Maschio</option>
                                 <option value="f">Femmina</option>
                             </select>
                         </div><br/>
                         <div class="inline containerInputSmall">
                             DATA NASCITA<br/>
-                            <input type="date" class="inputFormData"/>
+                            <input type="date"  @bind="nuovaPersona.DataNascita" class="inputFormData"/>
                         </div>
                         <div class="inline containerInputSmall">
                             CODICE ASL<br/>
@@ -124,7 +147,7 @@
                 </div>
                 <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
                 <div class="dx">
-                    <button class="buttonAzioniForm">SALVA</button><br/>
+                    <button class="buttonAzioniForm" @onclick="SalvaPersona">SALVA</button><br/>
                     <button class="buttonAzioniForm">SALVA E APRI</button><br/>
                     <button class="buttonAzioniForm">SALVA E CHIUDI</button><br/>
                     <button class="buttonAzioniForm">ANNULLA</button><br/>
@@ -139,13 +162,88 @@
 }
 
 @code {
+    public class Persona
+    {
+        public string Nome { get; set; }
+        public string Cognome { get; set; }
+        public DateTime DataNascita { get; set; }
+        public string Sesso { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Nome};{Cognome};{DataNascita:dd/MM/yyyy};{Sesso}";
+        }
+
+        public static Persona FromString(string linea)
+        {
+            var dati = linea.Split(';');
+            return new Persona
+            {
+                Nome = dati[0],
+                Cognome = dati[1],
+                DataNascita = DateTime.ParseExact(dati[2], "dd/MM/yyyy", null),
+                Sesso = dati[3]
+            };
+        }
+    }
 
     private bool visible = false;
+    private Persona nuovaPersona = new Persona();
+    private List<Persona> persone = new List<Persona>();
+    private List<Persona> personeFiltrate = new List<Persona>();
+    private string filePath;
+    private string searchQuery = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        filePath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "file.txt");
+        CaricaPersone();
+    }
 
     private void toggleForm()
     {
-        Console.WriteLine("Spoldi");
         visible = !visible;
     }
 
+    private void SalvaPersona()
+    {
+        using (StreamWriter sw = new StreamWriter(filePath, true))
+        {
+            sw.WriteLine(nuovaPersona.ToString());
+        }
+        CaricaPersone();
+        toggleForm();
+    }
+
+    private void CaricaPersone()
+    {
+        persone.Clear();
+        personeFiltrate.Clear();
+        if (File.Exists(filePath))
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            foreach (var line in lines)
+            {
+                if (!string.IsNullOrWhiteSpace(line))
+                {
+                    var persona = Persona.FromString(line);
+                    persone.Add(persona);
+                    personeFiltrate.Add(persona);
+                }
+            }
+        }
+    }
+
+    private void CercaPersona(ChangeEventArgs e)
+    {
+        searchQuery = e.Value.ToString();
+        var searchTerms = searchQuery.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        personeFiltrate = persone.Where(p =>
+            searchTerms.All(term => 
+                p.Nome.Contains(term, StringComparison.OrdinalIgnoreCase) || 
+                p.Cognome.Contains(term, StringComparison.OrdinalIgnoreCase)
+            )
+        ).ToList();
+    }
 }

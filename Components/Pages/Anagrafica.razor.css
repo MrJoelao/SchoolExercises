@@ -227,6 +227,29 @@
     width:100%;
 }
 
+.headTable{
+    background-color: #3D7BD9;
+    border-radius: 10px;
+}
+
+.tabella{
+    width:90%;
+    margin-left:5%;
+    border-spacing: 0 0.5rem;
+}
+
+tr{
+    background-color: white;
+    margin-bottom: 0.2rem;
+    border-radius: 1rem;
+}
+th,td{
+
+    border-radius: 5px;
+    border:1px solid blanchedalmond;
+}
+
+
 .dx{
     position: relative;
     text-align: center;
