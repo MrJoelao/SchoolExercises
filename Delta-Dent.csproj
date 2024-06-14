@@ -12,8 +12,4 @@
       <None Include="wwwroot\assets\loginAssets\dottore.svg" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="wwwroot\assets\sidebarAssets\" />
-    </ItemGroup>
-
 </Project>
