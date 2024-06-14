@@ -88,33 +88,35 @@
 @code
 {
     private bool[] buttons = new bool[9];
-    private string path = "./buttons.dat";
+    private string path = "./buttons.txt";
 
     protected override async Task OnInitializedAsync()
     {
         readNavFile(path);
     }
 
-    //legge i primi 9 bit indipendentemente dal totale dei bytes letti
+    //legge i primi 9 caratteri e verifica se sono il carattere '1'
     public void readNavFile(string path)
     {
         try
         {
-            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            string s = File.ReadAllText(path);
+
+            for (int i = 0; i < buttons.Length; i++)
             {
-                byte[] bytes = File.ReadAllBytes(path);
-
-                for (int i = 0; i < buttons.Length; i++)
+                if (s[i] == '1')
                 {
-                    //shifto i bit del primo byte a sinistra e vedo se il primo bit a sinistra è 1 o 0 in base alla divisibiltà per 2
-                    buttons[i] = ((bytes[0] >> i) % 2) != 0;
+                    buttons[i] = true;
                 }
-
-                buttons[8] = ((bytes[1] >> 0) % 2) != 0;
-                /*foreach (bool b in buttons)
+                else
                 {
-                    Console.WriteLine(b);
-                }*/
+                    buttons[i] = false;
+                }
+            }
+
+            foreach (bool b in buttons)
+            {
+                Console.WriteLine(b);
             }
         }
         catch (Exception e)
