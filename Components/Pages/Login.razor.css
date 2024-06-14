@@ -7,6 +7,9 @@
     flex-direction: column;
     background-color: #d4d4d4;
     overflow: hidden; /* Nasconde contenuti che eccedono i limiti del contenitore */
+    width: 100vw; /* larghezza al 100% della larghezza della viewport */
+    height: 100vh; /* altezza al 100% dell'altezza della viewport */
+    max-width: 90rem; /* larghezza massima di 90rem */
 }
 
 /* Stile per la riga dell'intestazione */

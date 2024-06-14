@@ -13,23 +13,23 @@
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: #72B7FF;
-    display: flex; 
-    flex-wrap: nowrap; 
-    overflow-x: auto; 
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
     overflow-y: hidden;
 }
 
 /*per safari & google*/
 .buttonContainer::-webkit-scrollbar {
-    height: 5px; 
+    height: 5px;
     background-color: #3D7BD9;
     border-radius: 10rem;
 }
 
 /*per firefox*/
 .buttonContainer {
-    scrollbar-width: thin; 
-    scrollbar-color: #3D7BD9 #fff; 
+    scrollbar-width: thin;
+    scrollbar-color: #3D7BD9 #fff;
 }
 
 .slideContainer{
@@ -77,15 +77,15 @@
     border: none;
     border-radius: 5px;
     background-image: url("./assets/lente.svg");
-} 
+}
 
 .inputSmall {
     border: 1px solid #ccc;
     border-radius: 5px;
     background: url('./assets/lente.svg') no-repeat right center;
-    background-size: 20px 20px; 
+    background-size: 20px 20px;
     width: 200px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     border: none;
     padding: 0.2rem;
     padding-right: 1.5rem;
@@ -127,7 +127,7 @@
     height:1.8rem;
     margin-left: -0.4rem;
     width: 2.5rem;
-    border: none; 
+    border: none;
     padding-bottom: 3px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -206,7 +206,7 @@
     left: -10%;
     display: flex;
     justify-content: center;
-    align-items: center;   
+    align-items: center;
 }
 
 .Inserimento{
@@ -219,9 +219,81 @@
 .buttonFormContainer{
     border-radius: 5px;
     background-color: #3D7BD9;
-    width: 90%;
+    width: 94%;
     height: 2rem;
     padding: 3px;
+}
+.pulsanti{
+    width:100%;
+}
+
+.dx{
+    position: relative;
+    text-align: center;
+    background-color: #B4D1F0;
+    border-radius:5px;
+    width:15rem;
+    padding-top:0.5rem
+}
+.buttonOpzioniForm{
+    background-color: #3D7BD9;
+    border-radius: 10px;
+    width: 32%;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    border:none;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.buttonOpzioniForm:hover{
+    background-color: #3062ae;
+}
+
+.buttonAzioniForm{
+    background-color: #3D7BD9;
+    border-radius: 10px;
+    width: 95%;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    border:none;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-bottom: 0.5rem;
+}
+
+.buttonAzioniFormIcona {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: url("./assets/importIcon.svg") no-repeat top center;
+    padding-top: 5rem;
+    background-color: #3D7BD9;
+    border-radius: 10px;
+    width: 95%;
+    padding-bottom: 0.3rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-bottom: 0.3rem;
+}
+.iconaImport{
+    color: white;
+    background-color: black;
+    display: block;
+    width: 3rem;
+    height:3rem;
+}
+.buttonAzioniForm:hover{
+    background-color: #3062ae;
+}
+
+.buttonAzioniFormIcona:hover{
+    background-color: #3062ae;
 }
 
 .buttonForm{
@@ -231,6 +303,10 @@
     border-radius: 5px;
     border: none;
     font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.buttonForm:hover{
+    background-color: #91a7bf;
 }
 
 .buttonFormSelected{
@@ -240,16 +316,105 @@
     border-radius: 5px;
     border: none;
     font-size: 14px;
+    transition: background-color 0.3s ease;
 }
 
+.buttonFormSelected:hover{
+    background-color: #4579ae;
+}
 .exitButton{
     background-color: #E34848;
     font-weight: bold;
     color:white;
     border-radius: 100%;
     padding: 3px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border:none;
+    transition: background-color 0.3s ease;
 }
 
-.tabella{
-    
+.exitButton:hover{
+    background-color: #a62d2d;
+}
+.forms{
+    width:100%;
+}
+.containerForm{
+    padding-right: 2rem;
+    margin-top:1.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.inputForm{
+    width: 100%;
+    border:none;
+    border-radius: 2.5px;
+}
+
+.inputFormScleta{
+    width: 100%;
+    border:none;
+    border-radius: 2.5px;
+    background-color: white;
+    padding-top:0.2rem;
+    padding-bottom: 0.2rem;
+}
+
+
+.containerInputLarge{
+    width:100%;
+    font-size: 14px;
+}
+
+.inputFormLarge{
+    height:5rem;
+    border-radius: 5px;
+    border:none;
+    width:100%;
+}
+.inputFormData{
+    padding-right: -0.1rem;
+    width: 97%;
+    border:none;
+    border-radius: 2.5px;
+    background-color: white;
+}
+
+.inputForm::placeholder{
+    color: #505050;
+    border-radius: 5px;
+}
+
+.inputFormSmall{
+    width: 45%;
+    border:none;
+    border-radius: 2.5px;
+}
+
+.containerInput{
+    width:49%;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.containerInputSmall{
+    width:24.5%;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.checkbox{
+    width:40%;
+    text-align: right;
+    font-size: 11px;
+}
+
+.sx{
+    font-weight: bold;
+    background-color: #B4D1F0;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+    padding: 1rem;
 }
