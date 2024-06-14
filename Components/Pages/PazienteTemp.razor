@@ -1,14 +1,48 @@
 ﻿@page "/pazienteTemp"
+@rendermode InteractiveServer
 <!-- Colonna sinistra -->
 <div>
-   
+
 </div>
 <!-- Barra in alto -->
 <div>
-    
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button @onclick="@toggleForm">Carica foto</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
+    <button>...</button>
 </div>
 <!-- Corpo centrale -->
 <div>
+    @if (visibile)
+    {
+        <!-- Form carica foto -->
+        <div>
+            
+        </div>
+    }
     <!-- Prima riga -->
     <div></div>
     <!-- Seconda riga -->
@@ -18,5 +52,16 @@
 </div>
 
 @code {
-    
+
+    private bool visibile = false;
+
+    public void toggleForm()
+    {
+        visibile = !visibile;
+    }
+
+    public void caricaFoto()
+    {
+    }
+
 }
