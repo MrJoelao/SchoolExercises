@@ -1,120 +1,127 @@
 @page "/Anagrafica"
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
+<div class="corpo">
+    <div class="toolbar">
+        <div class="slideContainer">
+            <button class="slideSelez">PAZIENTI</button>
+            <button class="slide">CLIENTI</button>
+            <button class="slide">FORNITORI</button>
+            <button class="slide">CONTATTI</button>
+        </div>
+        <div class="buttonContainer">
+            <button class="defButton" @onclick="@toggleForm">AGGIUNGI</button>
+            <button class="defButton">MODIFICA</button>
+            <button class="defButton">ELIMINA</button>
+            <button class="defButtonSmall">STAMPA</button>
+            <input type="text" placeholder="Ricerca" class="inputSmall"/>
+            <div class="insNumero">
+                <div class="side">N</div>
+                <input type="number" class="number"/>
+            </div>
+            <div class="insNumero">
+                <div class="side">P</div>
+                <input type="number" class="number"/>
+            </div>
+            <input type="text" placeholder="Avanzata" class="inputLarge"/>
+        </div>
+    </div>
 
-<div class="toolbar">
-    <div class="slideContainer">
-        <button class="slideSelez">PAZIENTI</button>
-        <button class="slide">CLIENTI</button>
-        <button class="slide">FORNITORI</button>
-        <button class="slide">CONTATTI</button>
-    </div>
-    <div class="buttonContainer">
-        <button class="defButton" @onclick="@toggleForm">AGGIUNGI</button>
-        <button class="defButton">MODIFICA</button>
-        <button class="defButton">ELIMINA</button>
-        <button class="defButtonSmall">STAMPA</button>
-        <input type="text" placeholder="Ricerca" class="inputSmall"/>
-        <div class="insNumero">
-            <div class="side">N</div>
-            <input type="number" class="number"/>
-        </div>
-        <div class="insNumero">
-            <div class="side">P</div>
-            <input type="number" class="number"/>
-        </div>
-        <input type="text" placeholder="Avanzata" class="inputLarge"/>
-    </div>
+    <div class="list"></div>
 </div>
 
+
 @if (visible)
-{
-    <!-- div contenente il pop-up per l'inserimento dei dati -->
-    <div>
-        <!-- div contenente la barra superiore -->
-        <div>
-            <div class="inline">
-                <button>DATI PERSONALI</button>
-                <button>FAMILIARI</button>
-                <button>CONTATTI - FATTURAZIONE</button>
-                <button>NOTE</button>
-            </div>
-            <div class="inline">
-                <button @onclick="@toggleForm">X</button>
-            </div>
-        </div>
-        <!-- div colonna a sinistra -->
-        <div>
-            <!-- div contenente i form principali -->
+{   
+    <div class="oscuramento">
+        <!-- div contenente il pop-up per l'inserimento dei dati -->
+        <div class="Inserimento">
+            <!-- div contenente la barra superiore -->
             <div>
-                <div class="inline">
-                    COGNOME*<br/>
-                    <input type="text" placeholder="Poretti"/>
+                <div class="inline buttonFormContainer">
+                    <button class="buttonFormSelected">DATI PERSONALI</button>
+                    <button class="buttonForm">FAMILIARI</button>
+                    <button class="buttonForm">CONTATTI - FATTURAZIONE</button>
+                    <button class="buttonForm">NOTE</button>
                 </div>
                 <div class="inline">
-                    NOME*<br/>
-                    <input type="text" placeholder="Giacomo"/>
-                </div><br/>
-                <div class="inline">
-                    <div>LUOGO DI NASCITA <div class="inline">estero<input type="checkbox"></div></div><br/>
-                    <input type="text" placeholder="Giacomo"/>
-                </div>
-                <div class="inline">
-                    PROVINCIA<br/>
-                    <input type="text" placeholder="Milano"/>
-                </div>
-                <div class="inline">
-                    SESSO<br/>
-                    <select type="select" placeholder=" ">
-                        <option value="m">Maschio</option>
-                        <option value="f">Femmina</option>
-                    </select>
-                </div><br/>
-                <div class="inline">
-                    DATA NASCITA<br/>
-                    <input type="date"/>
-                </div>
-                <div class="inline">
-                    CODICE ASL<br/>
-                    <input type="text" placeholder="MI333"/>
-                </div>
-                <div class="inline">
-                    <div>CODICE FISCALE <div class="inline">controllo validità<input type="checkbox"></div></div><br/>
-                    <input type="text" placeholder="PRTGCM64H07F205D"/>
-                </div><br/>
-                <div class="inline">
-                    CATEGORIA<br/>
-                    <select type="select" placeholder=" ">
-                        <option value="p">Prova</option>
-                    </select>
-                </div>
-                <div class="inline">
-                    MEDICO<br/>
-                    <input type="text" placeholder="Ippocrate"/>
-                </div>
-                <div class="inline">
-                    PROFESSIONE<br/>
-                    <select type="select" placeholder=" ">
-                        <option value="p">Prova</option>
-                    </select>
-                </div><br/>
-                <div class="inline">
-                    INDIRIZZI<br/>
-                    <input type="text" placeholder="Via ..."/>
+                    <button @onclick="@toggleForm">X</button>
                 </div>
             </div>
-            <!-- div contenente le referenze -->
+            <!-- div colonna a sinistra -->
             <div>
-                REFERENZE<br/>
-                <div class="inline"><button>MOTIVO</button><button>NOMINATIVO</button><button>NOTE</button></div>
+                <!-- div contenente i form principali -->
+                <div>
+                    <div class="inline">
+                        COGNOME*<br/>
+                        <input type="text" placeholder="Poretti"/>
+                    </div>
+                    <div class="inline">
+                        NOME*<br/>
+                        <input type="text" placeholder="Giacomo"/>
+                    </div><br/>
+                    <div class="inline">
+                        <div>LUOGO DI NASCITA <div class="inline">estero<input type="checkbox"></div></div><br/>
+                        <input type="text" placeholder="Giacomo"/>
+                    </div>
+                    <div class="inline">
+                        PROVINCIA<br/>
+                        <input type="text" placeholder="Milano"/>
+                    </div>
+                    <div class="inline">
+                        SESSO<br/>
+                        <select type="select" placeholder=" ">
+                            <option value="m">Maschio</option>
+                            <option value="f">Femmina</option>
+                        </select>
+                    </div><br/>
+                    <div class="inline">
+                        DATA NASCITA<br/>
+                        <input type="date"/>
+                    </div>
+                    <div class="inline">
+                        CODICE ASL<br/>
+                        <input type="text" placeholder="MI333"/>
+                    </div>
+                    <div class="inline">
+                        <div>CODICE FISCALE <div class="inline">controllo validità<input type="checkbox"></div></div><br/>
+                        <input type="text" placeholder="PRTGCM64H07F205D"/>
+                    </div><br/>
+                    <div class="inline">
+                        CATEGORIA<br/>
+                        <select type="select" placeholder=" ">
+                            <option value="p">Prova</option>
+                        </select>
+                    </div>
+                    <div class="inline">
+                        MEDICO<br/>
+                        <input type="text" placeholder="Ippocrate"/>
+                    </div>
+                    <div class="inline">
+                        PROFESSIONE<br/>
+                        <select type="select" placeholder=" ">
+                            <option value="p">Prova</option>
+                        </select>
+                    </div><br/>
+                    <div class="inline">
+                        INDIRIZZI<br/>
+                        <input type="text" placeholder="Via ..."/>
+                    </div>
+                </div>
+                <!-- div contenente le referenze -->
+                <div >
+                    REFERENZE<br/>
+                    <div class="inline"><button>MOTIVO</button><button>NOMINATIVO</button><button>NOTE</button></div>
+                </div>
             </div>
-        </div>
-        
-        <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
-        <div>
-            
+
+            <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
+            <div>
+
+            </div>
         </div>
     </div>
+    
 }
 
 @code {

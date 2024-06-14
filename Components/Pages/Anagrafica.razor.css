@@ -5,6 +5,7 @@
     border-radius: 10px;
 }
 
+
 .buttonContainer {
     padding: 0.3rem;
     width: 100%;
@@ -17,6 +18,20 @@
     overflow-x: auto; 
     overflow-y: hidden;
 }
+
+/*per safari & google*/
+.buttonContainer::-webkit-scrollbar {
+    height: 5px; 
+    background-color: #3D7BD9;
+    border-radius: 10rem;
+}
+
+/*per firefox*/
+.buttonContainer {
+    scrollbar-width: thin; 
+    scrollbar-color: #3D7BD9 #fff; 
+}
+
 .slideContainer{
     width: 100%;
     height: 2.5rem;
@@ -88,6 +103,8 @@
     height: 2.3rem;
     margin-right: 0.3rem;
     margin-left: 0.3rem;
+    display: flex;
+    flex-wrap: nowrap;
 }
 
 .side{
@@ -107,6 +124,7 @@
 }
 
 .number{
+    height:1.8rem;
     margin-left: -0.4rem;
     width: 2.5rem;
     border: none; 
@@ -162,6 +180,72 @@
 }
 
 .slide:hover{
-    
     background-color: #96beda;
+}
+
+
+.list{
+    width: 95%;
+    height: 80vh;
+    border-radius: 10px;
+    background-color: #7FAFE1;
+    margin-top: 2rem;
+}
+
+.corpo{
+    width: 100%;
+    height: 100%;
+}
+
+.oscuramento {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.17);
+    width: 110%;
+    height: 100%;
+    top: 0;
+    left: -10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+.Inserimento{
+    margin-left: 10%;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.buttonFormContainer{
+    border-radius: 5px;
+    background-color: #3D7BD9;
+    width: 90%;
+    height: 2rem;
+    padding: 3px;
+}
+
+.buttonForm{
+    font-weight: bold;
+    color: black;
+    background-color: #DFEFFF;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+}
+
+.buttonFormSelected{
+    font-weight: bold;
+    color: white;
+    background-color: #72B7FF;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+}
+
+.exitButton{
+    background-color: #E34848;
+    font-weight: bold;
+    color:white;
+    border-radius: 100%;
+    padding: 3px;
 }
