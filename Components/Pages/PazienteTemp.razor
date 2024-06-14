@@ -59,9 +59,12 @@
                     window.previewImage = (inputElem, imgElem) => {
                         for (let i=0;i<inputElem.files.length;i++){
                             //console.log(inputElem.files[i])
+                            let img=document.createElement("img")
+                            img.
                             const url = URL.createObjectURL(inputElem.files[i]);
                             imgElem.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
                             imgElem.src = url;
+                            document.getElementById("divAnteprima").appendChild(img)
                         }
                     }
                 </script>
@@ -85,8 +88,8 @@
             <!-- Linea centrale -->
             <div>
                 <!-- Barra a sinistra(anteprima delle immagini caricate) -->
-                <div class="inline" id="anteprima">
-                    <img style="max-width:200px;max-height:200px" @ref="previewImageElem"/>
+                <div class="inline" id="divAnteprima">
+                    <img @ref="previewImageElem"/>
                 </div>
                 <!-- Quadrante di scelta a destra -->
                 <div class="inline" id="zonaAssegnazione">
@@ -157,7 +160,7 @@
 
     private bool visibile = false;
 
-    public void toggleForm()
+    private void toggleForm()
     {
         visibile = !visibile;
     }
