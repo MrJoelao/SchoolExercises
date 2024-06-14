@@ -12,7 +12,7 @@
                     <h1 class="mainTitle">DeltaDent Web</h1>
                     <h3 class="mainSubtitle">La tua scelta per un futuro web</h3>
                 </div>
-                <button class="registerButton"  @onclick="@buttonRegistration">Registrati</button>
+                <button class="registerButton"  @onclick="@ButtonRegistration">Registrati</button>
             </div>
             <img class="headerIcon" src="./assets/loginAssets/dottore.svg" alt="alt text" />
         </div>
@@ -72,9 +72,9 @@
 }
 
 @code {
-    Boolean _flagBol = false;
+    Boolean _flagBol;
     
-    private void buttonRegistration()
+    private void ButtonRegistration()
     {
         _flagBol = !_flagBol;
     }
