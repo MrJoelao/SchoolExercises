@@ -1,4 +1,5 @@
 @page "/Anagrafica"
+@using System.Reflection.Metadata
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
 <div class="corpo">
@@ -53,58 +54,58 @@
                 <div>
                     <div class="inline">
                         COGNOME*<br/>
-                        <input type="text" placeholder="Poretti"/>
+                        <input type="text" id="cognome" placeholder="Poretti"/>
                     </div>
                     <div class="inline">
                         NOME*<br/>
-                        <input type="text" placeholder="Giacomo"/>
+                        <input type="text" id="nome" placeholder="Giacomo"/>
                     </div><br/>
                     <div class="inline">
                         <div>LUOGO DI NASCITA <div class="inline">estero<input type="checkbox"></div></div><br/>
-                        <input type="text" placeholder="Milano"/>
+                        <input type="text" id="luogoNascita" placeholder="Milano"/>
                     </div>
                     <div class="inline">
                         PROVINCIA<br/>
-                        <input type="text" placeholder="Milano"/>
+                        <input type="text" id="provincia" placeholder="Milano"/>
                     </div>
                     <div class="inline">
                         SESSO<br/>
-                        <select type="select" placeholder=" ">
+                        <select type="select" placeholder=" " id="sesso">
                             <option value="m">Maschio</option>
                             <option value="f">Femmina</option>
                         </select>
                     </div><br/>
                     <div class="inline">
                         DATA NASCITA<br/>
-                        <input type="date"/>
+                        <input id="dataNascita" type="date"/>
                     </div>
                     <div class="inline">
                         CODICE ASL<br/>
-                        <input type="text" placeholder="MI333"/>
+                        <input type="text" id="codiceASL" placeholder="MI333"/>
                     </div>
                     <div class="inline">
                         <div>CODICE FISCALE <div class="inline">controllo validità<input type="checkbox"></div></div><br/>
-                        <input type="text" placeholder="PRTGCM64H07F205D"/>
+                        <input type="text" id="codiceFiscale" placeholder="PRTGCM64H07F205D"/>
                     </div><br/>
                     <div class="inline">
                         CATEGORIA<br/>
-                        <select type="select" placeholder=" ">
+                        <select type="select" id="categoria" placeholder=" ">
                             <option value="p">Prova</option>
                         </select>
                     </div>
                     <div class="inline">
                         MEDICO<br/>
-                        <input type="text" placeholder="Ippocrate"/>
+                        <input type="text" id="medico" placeholder="Ippocrate"/>
                     </div>
                     <div class="inline">
                         PROFESSIONE<br/>
-                        <select type="select" placeholder=" ">
+                        <select type="select" id="professione" placeholder=" ">
                             <option value="p">Prova</option>
                         </select>
                     </div><br/>
                     <div class="inline">
                         INDIRIZZI<br/>
-                        <input type="text" placeholder="Via ..."/>
+                        <input type="text" id="indirizzi" placeholder="Via ..."/>
                     </div>
                 </div>
                 <!-- div contenente le referenze -->
@@ -117,7 +118,7 @@
             <div>
                 <button>SALVA</button><br/>
                 <button>SALVA E APRI</button><br/>
-                <button>SALVA E CHIUDI</button><br/>
+                <button @onclick="@creaPaziente">SALVA E CHIUDI</button><br/>
                 <button>ANNULLA</button><br/>
                 <button>STAMPA</button><br/>
                 <button>IMPORTA CLIENTE</button>
@@ -133,7 +134,12 @@
 
     private void toggleForm()
     {
-        Console.WriteLine("Spoldi");
         visible = !visible;
+    }
+
+    public void creaPaziente()
+    {
+        
+        //Paziente nuovo = new Paziente(webBrowserl.Document.getElementById);
     }
 }
