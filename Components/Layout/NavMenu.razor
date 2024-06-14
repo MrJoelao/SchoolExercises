@@ -1,4 +1,6 @@
 @using System.Net
+@using System
+@using System.IO
 <input type="checkbox" title="Navigation menu" class="navbar-toggler"/>
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
@@ -67,24 +69,38 @@
 
 @code
 {
-    private bool[] buttons=new bool[9];
-    private string fileName = "prova.txt";
+    private bool[] buttons = new bool[9];
+    private string path = "./buttons.dat";
 
     protected override async Task OnInitializedAsync()
     {
-        readNavFile(fileName);
+        readNavFile(path);
     }
 
-    public void readNavFile(string name)
+    //legge i primi 9 bit indipendentemente dal totale dei bytes letti
+    public void readNavFile(string path)
     {
-        string value = File.ReadAllText(name);
-        for (int i = 0; i < 9; i++)
+        try
         {
-            if (value[i] == '1')
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                buttons[i] = true;
+                byte[] bytes = File.ReadAllBytes(path);
+
+                for (int i = 0; i < buttons.Length; i++)
+                {   //shifto i bit del primo byte a sinistra e vedo se il primo bit a sinistra è 1 o 0 in base alla divisibiltà per 2
+                    buttons[i] = ((bytes[0] >> i)%2) != 0;
+                }
+
+                buttons[8] = ((bytes[1] >> 0)%2) != 0;
+                /*foreach (bool b in buttons)
+                {
+                    Console.WriteLine(b);
+                }*/
             }
         }
-        //Console.WriteLine(value);
+        catch (Exception e)
+        {
+            Console.WriteLine("Errore durante la lettura del file: " + e.Message);
+        }
     }
 }
