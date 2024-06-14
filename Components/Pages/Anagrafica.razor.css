@@ -219,7 +219,7 @@
 .buttonFormContainer{
     border-radius: 5px;
     background-color: #3D7BD9;
-    width: 90%;
+    width: 94%;
     height: 2rem;
     padding: 3px;
 }
@@ -231,6 +231,10 @@
     border-radius: 5px;
     border: none;
     font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.buttonForm:hover{
+    background-color: #91a7bf;
 }
 
 .buttonFormSelected{
@@ -240,12 +244,47 @@
     border-radius: 5px;
     border: none;
     font-size: 14px;
+    transition: background-color 0.3s ease;
 }
 
+.buttonFormSelected:hover{
+    background-color: #4579ae;
+}
 .exitButton{
     background-color: #E34848;
     font-weight: bold;
     color:white;
     border-radius: 100%;
     padding: 3px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border:none;
+    transition: background-color 0.3s ease;
+}
+
+.exitButton:hover{
+    background-color: #a62d2d;
+}
+
+.containerForm{
+    margin-top:1.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.inputForm{
+    width: 100%;
+}
+.inputForm::placeholder{
+    color: #505050;
+    border-radius: 5px;
+}
+
+.containerInput{
+    width:45%;
+    font-size: 14px;
+}
+
+.sx{
+    font-weight: bold;
 }

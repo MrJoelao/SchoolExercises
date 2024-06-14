@@ -45,92 +45,95 @@
                     <button class="buttonForm">NOTE</button>
                 </div>
                 <div class="inline">
-                    <button @onclick="@toggleForm">X</button>
+                    <button @onclick="@toggleForm" class="exitButton">X</button>
                 </div>
             </div>
-            <!-- div colonna a sinistra -->
-            <div>
-                <!-- div contenente i form principali -->
-                <div>
-                    <div class="inline">
-                        COGNOME*<br/>
-                        <input type="text" placeholder="Poretti"/>
+            <div class="containerForm">
+                <!-- div colonna a sinistra -->
+                <div class="inline sx" >
+                    <!-- div contenente i form principali -->
+                    <div>
+                        <div class="inline containerInput">
+                            COGNOME*<br/>
+                            <input type="text" class="inputForm" placeholder="Poretti"/>
+                        </div>
+                        <div class="inline containerInput">
+                            NOME*<br/>
+                            <input type="text" class="inputForm" placeholder="Giacomo"/>
+                        </div><br/>
+                        <div class="inline">
+                            <div>LUOGO DI NASCITA <div class="inline">estero<input type="checkbox"></div></div><br/>
+                            <input type="text" placeholder="Giacomo"/>
+                        </div>
+                        <div class="inline">
+                            PROVINCIA<br/>
+                            <input type="text" placeholder="Milano"/>
+                        </div>
+                        <div class="inline">
+                            SESSO<br/>
+                            <select type="select" placeholder=" ">
+                                <option value="m">Maschio</option>
+                                <option value="f">Femmina</option>
+                            </select>
+                        </div><br/>
+                        <div class="inline">
+                            DATA NASCITA<br/>
+                            <input type="date"/>
+                        </div>
+                        <div class="inline">
+                            CODICE ASL<br/>
+                            <input type="text" placeholder="MI333"/>
+                        </div>
+                        <div class="inline">
+                            <div>CODICE FISCALE <div class="inline">controllo validità<input type="checkbox"></div></div><br/>
+                            <input type="text" placeholder="PRTGCM64H07F205D"/>
+                        </div><br/>
+                        <div class="inline">
+                            CATEGORIA<br/>
+                            <select type="select" placeholder=" ">
+                                <option value="p">Prova</option>
+                            </select>
+                        </div>
+                        <div class="inline">
+                            MEDICO<br/>
+                            <input type="text" placeholder="Ippocrate"/>
+                        </div>
+                        <div class="inline">
+                            PROFESSIONE<br/>
+                            <select type="select" placeholder=" ">
+                                <option value="p">Prova</option>
+                            </select>
+                        </div><br/>
+                        <div class="inline">
+                            INDIRIZZI<br/>
+                            <input type="text" placeholder="Via ..."/>
+                        </div>
                     </div>
-                    <div class="inline">
-                        NOME*<br/>
-                        <input type="text" placeholder="Giacomo"/>
-                    </div><br/>
-                    <div class="inline">
-                        <div>LUOGO DI NASCITA <div class="inline">estero<input type="checkbox"></div></div><br/>
-                        <input type="text" placeholder="Giacomo"/>
-                    </div>
-                    <div class="inline">
-                        PROVINCIA<br/>
-                        <input type="text" placeholder="Milano"/>
-                    </div>
-                    <div class="inline">
-                        SESSO<br/>
-                        <select type="select" placeholder=" ">
-                            <option value="m">Maschio</option>
-                            <option value="f">Femmina</option>
-                        </select>
-                    </div><br/>
-                    <div class="inline">
-                        DATA NASCITA<br/>
-                        <input type="date"/>
-                    </div>
-                    <div class="inline">
-                        CODICE ASL<br/>
-                        <input type="text" placeholder="MI333"/>
-                    </div>
-                    <div class="inline">
-                        <div>CODICE FISCALE <div class="inline">controllo validità<input type="checkbox"></div></div><br/>
-                        <input type="text" placeholder="PRTGCM64H07F205D"/>
-                    </div><br/>
-                    <div class="inline">
-                        CATEGORIA<br/>
-                        <select type="select" placeholder=" ">
-                            <option value="p">Prova</option>
-                        </select>
-                    </div>
-                    <div class="inline">
-                        MEDICO<br/>
-                        <input type="text" placeholder="Ippocrate"/>
-                    </div>
-                    <div class="inline">
-                        PROFESSIONE<br/>
-                        <select type="select" placeholder=" ">
-                            <option value="p">Prova</option>
-                        </select>
-                    </div><br/>
-                    <div class="inline">
-                        INDIRIZZI<br/>
-                        <input type="text" placeholder="Via ..."/>
+                    <!-- div contenente le referenze -->
+                    <div >
+                        REFERENZE<br/>
+                        <div class="inline"><button>MOTIVO</button><button>NOMINATIVO</button><button>NOTE</button></div>
                     </div>
                 </div>
-                <!-- div contenente le referenze -->
-                <div >
-                    REFERENZE<br/>
-                    <div class="inline"><button>MOTIVO</button><button>NOMINATIVO</button><button>NOTE</button></div>
-                </div>
-            </div>
 
-            <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
-            <div>
-                <button>SALVA</button><br/>
-                <button>SALVA E APRI</button><br/>
-                <button>SALVA E CHIUDI</button><br/>
-                <button>ANNULLA</button><br/>
-                <button>STAMPA</button><br/>
-                <button>IMPORTA CLIENTE</button>
+                <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
+                <div>
+                    <button>SALVA</button><br/>
+                    <button>SALVA E APRI</button><br/>
+                    <button>SALVA E CHIUDI</button><br/>
+                    <button>ANNULLA</button><br/>
+                    <button>STAMPA</button><br/>
+                    <button>IMPORTA CLIENTE</button>
+                </div>
             </div>
-        </div>
+            </div>
+            
     </div>
     
 }
 
 @code {
-    
+
     private bool visible = false;
 
     private void toggleForm()
@@ -138,4 +141,5 @@
         Console.WriteLine("Spoldi");
         visible = !visible;
     }
+
 }
