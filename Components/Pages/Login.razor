@@ -1,8 +1,9 @@
 @page "/"
+@page "/Login"
 
 <PageTitle>Login</PageTitle>
+@rendermode InteractiveServer
 
-<body class="flex-column">
 <div class="login-page mainSection">
     <div class="headerRow">
         <div class="brandingGroup">
@@ -29,15 +30,19 @@
                 <div class="passwordBox">
                     <input type="password" class="BoxRow imagePassword" placeholder="Password" />
                 </div>
-                <button class="loginButton">login</button>
+                <button class="loginButton" @onclick="@login">login</button>
                 <h5 class="forgotPassword">Password dimenticata</h5>
                 <h5 class="errorMessage invisible">Email e/o password errata</h5>
             </div>
         </div>
     </div>
 </div>
-</body>
 
 @code {
-    
+    private void login()
+    {
+            
+        //debug
+        Console.WriteLine("Login effettuato");
+    }
 }
