@@ -15,7 +15,7 @@
     display: flex;
     gap: 0rem 0.0625rem; /* Spazio tra gli elementi */
     margin: 2.375rem auto 2.125rem; /* Margini superiori e inferiori, centrato orizzontalmente */
-    width: 80.21%;
+    width: 90%;
 }
 
 /* Stile per il gruppo di branding */
@@ -89,6 +89,10 @@
     background-color: white; /* Colore di sfondo */
     border-radius: 1.3125rem; /* Angoli arrotondati */
     padding: 0.46875rem 2.25rem; /* Spaziatura interna */
+}
+
+.registerButton:hover{
+    background-color: #B1D3E7;
 }
 
 /* Stile per l'icona dell'intestazione */
@@ -228,6 +232,10 @@
     border-radius: 1.4375rem; /* Angoli arrotondati */
     padding: 0.5rem; /* Spaziatura interna */
     letter-spacing: 0.05rem; /* Spaziatura tra lettere */
+}
+
+.loginButton:hover{
+    background-color: #56B0E7;
 }
 
 /* Stile per il link della password dimenticata */
