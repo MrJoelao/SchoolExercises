@@ -49,8 +49,9 @@
                 </div>
             </div>
             <div class="containerForm">
+                <div class="forms">
                 <!-- div colonna a sinistra -->
-                <div class="inline sx" >
+                <div class=" sx" >
                     <!-- div contenente i form principali -->
                     <div>
                         <div class="inline containerInput">
@@ -61,69 +62,74 @@
                             NOME*<br/>
                             <input type="text" class="inputForm" placeholder="Giacomo"/>
                         </div><br/>
-                        <div class="inline">
-                            <div>LUOGO DI NASCITA <div class="inline">estero<input type="checkbox"></div></div><br/>
-                            <input type="text" placeholder="Giacomo"/>
+                        <div class="inline containerInput">
+                            <div>LUOGO DI NASCITA <div class="inline checkbox">estero<input type="checkbox"></div></div>
+                            <input type="text" class="inputForm" placeholder="Giacomo"/>
                         </div>
-                        <div class="inline">
+                        <div class="inline containerInputSmall">
                             PROVINCIA<br/>
-                            <input type="text" placeholder="Milano"/>
+                            <input type="text" class="inputForm" placeholder="Milano"/>
                         </div>
-                        <div class="inline">
+                        <div class="inline containerInputSmall">
                             SESSO<br/>
-                            <select type="select" placeholder=" ">
+                            <select type="select"  class="inputFormScleta"placeholder=" ">
                                 <option value="m">Maschio</option>
                                 <option value="f">Femmina</option>
                             </select>
                         </div><br/>
-                        <div class="inline">
+                        <div class="inline containerInputSmall">
                             DATA NASCITA<br/>
-                            <input type="date"/>
+                            <input type="date" class="inputFormData"/>
                         </div>
-                        <div class="inline">
+                        <div class="inline containerInputSmall">
                             CODICE ASL<br/>
-                            <input type="text" placeholder="MI333"/>
+                            <input type="text" class="inputForm"placeholder="MI333"/>
                         </div>
-                        <div class="inline">
-                            <div>CODICE FISCALE <div class="inline">controllo validità<input type="checkbox"></div></div><br/>
-                            <input type="text" placeholder="PRTGCM64H07F205D"/>
+                        <div class="inline containerInput">
+                            <div>CODICE FISCALE <div class="inline checkbox"> cont. validità<input type="checkbox"></div></div>
+                            <input type="text" class="inputForm" placeholder="PRTGCM64H07F205D"/>
                         </div><br/>
-                        <div class="inline">
+                        <div class="inline containerInputSmall">
                             CATEGORIA<br/>
-                            <select type="select" placeholder=" ">
+                            <select type="select" class="inputFormScleta" placeholder=" ">
                                 <option value="p">Prova</option>
                             </select>
                         </div>
-                        <div class="inline">
+                        <div class="inline containerInputSmall">
                             MEDICO<br/>
-                            <input type="text" placeholder="Ippocrate"/>
+                            <input type="text" class="inputForm" placeholder="Ippocrate"/>
                         </div>
-                        <div class="inline">
+                        <div class="inline containerInput">
                             PROFESSIONE<br/>
-                            <select type="select" placeholder=" ">
+                            <select type="select"  class="inputFormScleta"placeholder=" ">
                                 <option value="p">Prova</option>
                             </select>
                         </div><br/>
-                        <div class="inline">
+                        <div class="inline containerInputLarge">
                             INDIRIZZI<br/>
-                            <input type="text" placeholder="Via ..."/>
+                            <input type="text" class="inputFormLarge"placeholder="Via ..."/>
                         </div>
                     </div>
-                    <!-- div contenente le referenze -->
-                    <div >
-                        REFERENZE<br/>
-                        <div class="inline"><button>MOTIVO</button><button>NOMINATIVO</button><button>NOTE</button></div>
+                    
+                </div><!-- div contenente le referenze -->
+                <br/>
+                <div class="sx">
+                    REFERENZE<br/>
+                    <div class="inline pulsanti">
+                        <button class="buttonOpzioniForm">MOTIVO</button>
+                        <button class="buttonOpzioniForm">NOMINATIVO</button>
+                        <button class="buttonOpzioniForm">NOTE</button>
                     </div>
                 </div>
-
+                </div>
                 <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
-                <div>
-                    <button>SALVA</button><br/>
-                    <button>SALVA E APRI</button><br/>
-                    <button>SALVA E CHIUDI</button><br/>
-                    <button>ANNULLA</button><br/>
-                    <button>STAMPA</button><br/>
-                    <button>IMPORTA CLIENTE</button>
+                <div class="dx">
+                    <button class="buttonAzioniForm">SALVA</button><br/>
+                    <button class="buttonAzioniForm">SALVA E APRI</button><br/>
+                    <button class="buttonAzioniForm">SALVA E CHIUDI</button><br/>
+                    <button class="buttonAzioniForm">ANNULLA</button><br/>
+                    <button class="buttonAzioniForm">STAMPA</button><br/>
+                    <button class="buttonAzioniFormIcona">IMPORTA CLIENTE</button>
                 </div>
             </div>
             </div>

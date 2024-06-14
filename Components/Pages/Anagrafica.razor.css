@@ -223,7 +223,79 @@
     height: 2rem;
     padding: 3px;
 }
+.pulsanti{
+    width:100%;
+}
 
+.dx{
+    position: relative;
+    text-align: center;
+    background-color: #B4D1F0;
+    border-radius:5px;
+    width:15rem;
+    padding-top:0.5rem
+}
+.buttonOpzioniForm{
+    background-color: #3D7BD9;
+    border-radius: 10px;
+    width: 32%;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    border:none;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.buttonOpzioniForm:hover{
+    background-color: #3062ae;
+}
+
+.buttonAzioniForm{
+    background-color: #3D7BD9;
+    border-radius: 10px;
+    width: 95%;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    border:none;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-bottom: 0.5rem;
+}
+
+.buttonAzioniFormIcona {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: url("./assets/importIcon.svg") no-repeat top center;
+    padding-top: 5rem;
+    background-color: #3D7BD9;
+    border-radius: 10px;
+    width: 95%;
+    padding-bottom: 0.3rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-bottom: 0.3rem;
+}
+.iconaImport{
+    color: white;
+    background-color: black;
+    display: block;
+    width: 3rem;
+    height:3rem;
+}
+.buttonAzioniForm:hover{
+    background-color: #3062ae;
+}
+
+ .buttonAzioniFormIcona:hover{
+     background-color: #3062ae;
+ }
+ 
 .buttonForm{
     font-weight: bold;
     color: black;
@@ -265,8 +337,11 @@
 .exitButton:hover{
     background-color: #a62d2d;
 }
-
+.forms{
+    width:100%;
+}
 .containerForm{
+    padding-right: 2rem;
     margin-top:1.5rem;
     display: flex;
     flex-wrap: nowrap;
@@ -274,17 +349,72 @@
 
 .inputForm{
     width: 100%;
+    border:none;
+    border-radius: 2.5px;
 }
+
+.inputFormScleta{
+    width: 100%;
+    border:none;
+    border-radius: 2.5px;
+    background-color: white;
+    padding-top:0.2rem;
+    padding-bottom: 0.2rem;
+}
+
+
+.containerInputLarge{
+    width:100%;
+    font-size: 14px;
+}
+
+.inputFormLarge{
+    height:5rem;
+    border-radius: 5px;
+    border:none;
+    width:100%;
+}
+.inputFormData{
+    padding-right: -0.1rem;
+    width: 97%;
+    border:none;
+    border-radius: 2.5px;
+    background-color: white;
+}
+
 .inputForm::placeholder{
     color: #505050;
     border-radius: 5px;
 }
 
+.inputFormSmall{
+    width: 45%;
+    border:none;
+    border-radius: 2.5px;
+}
+
 .containerInput{
-    width:45%;
+    width:49%;
     font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.containerInputSmall{
+    width:24.5%;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.checkbox{
+    width:40%;
+    text-align: right;
+    font-size: 11px;
 }
 
 .sx{
     font-weight: bold;
+    background-color: #B4D1F0;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+    padding: 1rem;
 }
