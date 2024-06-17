@@ -113,6 +113,7 @@
     width: 100%;
     margin-left:0.5%;
     height:auto;
+    margin-bottom: 0.5rem;
 }
 .fileButton{
     padding:1.5rem;
@@ -133,6 +134,29 @@
 
 /*per firefox*/
 .buttonContainer {
+    scrollbar-width: thin;
+    scrollbar-color: #3D7BD9 #fff;
+}
+
+.previews{
+    width:25%;
+    background-color: #3D7BD9;
+    border-radius: 10px;
+    min-height: 30rem;
+    max-height: 30rem;
+    overflow-x: auto;
+    padding:1rem;
+}
+
+/*per safari & google*/
+.previews::-webkit-scrollbar {
+    height: 5px;
+    background-color: #3D7BD9;
+    border-radius: 10rem;
+}
+
+/*per firefox*/
+.previews {
     scrollbar-width: thin;
     scrollbar-color: #3D7BD9 #fff;
 }

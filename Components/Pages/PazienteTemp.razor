@@ -73,8 +73,8 @@
                             
                             // Imposta l'URL come sorgente dell'immagine e le dimensioni
                             img.src = url;
-                            img.style.width = '200px';
-                            img.style.height = '200px';
+                            img.style.width = '150px';
+                            img.style.height = '150px';
                             img.setAttribute("id","img"+i)
                             img.setAttribute("onclick","imageClick('img"+i+"')")
 
@@ -122,7 +122,7 @@
                 <!-- Linea centrale -->
                 <div class="seconda">
                     <!-- Barra a sinistra(anteprima delle immagini caricate) -->
-                    <div class="inline" id="divAnteprima">
+                    <div class="inline previews" id="divAnteprima">
                         <img @ref="previewImageElem" src="" alt=""/>
                     </div>
                     <!-- Quadrante di scelta a destra -->
