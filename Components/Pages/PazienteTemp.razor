@@ -57,7 +57,7 @@
             <div class="inline">
                 <InputFile @ref="inputFile" OnChange="ShowPreview" multiple="true"/>
                 <script>
-                    window.previewImage = (inputElem, imgElems) => {
+                    window.previewImage = (inputElem) => {
                         // Ottiene il contenitore delle anteprime
                         const container = document.getElementById('divAnteprima');
                         // Cancella tutte le anteprime esistenti
@@ -71,12 +71,16 @@
                             
                             // Imposta l'URL come sorgente dell'immagine e le dimensioni
                             img.src = url;
-                            img.style.width = '100px';
-                            img.style.height = '100px';
+                            img.style.width = '500px';
+                            img.style.height = '390px';
+
+                            // Crea un nuovo div e aggiunge l'immagine al div
+                            const div = document.createElement('div');
+                            div.appendChild(img);
                             
                             // Rimuove l'URL temporaneo dopo che l'immagine è stata caricata e aggiunge l'immagine al contenitore
                             img.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
-                            container.appendChild(img);
+                            container.appendChild(div);
                         }
                     }
                 </script>
@@ -102,6 +106,7 @@
             <div>
                 <!-- Barra a sinistra(anteprima delle immagini caricate) -->
                 <div class="inline" id="divAnteprima">
+                    <img @ref="previewImageElem"/>
                 </div>
                 <!-- Quadrante di scelta a destra -->
                 <div class="inline" id="zonaAssegnazione">
