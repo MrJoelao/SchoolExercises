@@ -1,3 +1,40 @@
 ﻿.inline{
     display: inline-block;
 }
+
+.buttonContainer{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 80vw;
+    height: 3rem;
+}
+
+.defButton{
+    height: 100%;
+    width: 3.2rem;
+    background-color: #7FAFE1;
+    border-radius: 5px;
+    border:none;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+}
+
+.formAggiunta{
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+.oscuramento {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.17);
+    width: 110%;
+    height: 100%;
+    top: 0;
+    left: -10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
