@@ -9,10 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="Aggiunta pagina visualizzazione immagini">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Delta-Dent.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Delta-Dent.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Components/Pages/VisImg.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Pages/VisImg.razor" afterDir="false" />
-    </list>
+    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="Creazione struttura pagina VisImg" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,6 +44,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/c9e3996173cec136bc2e9f3b4ec45f2a323b1d63/src/Components/Components/src/ElementReference.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/VisImg.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -138,7 +136,7 @@
       <updated>1718370160247</updated>
       <workItem from="1718370161884" duration="23000" />
       <workItem from="1718608012668" duration="10036000" />
-      <workItem from="1718622883787" duration="6503000" />
+      <workItem from="1718622883787" duration="6852000" />
     </task>
     <task id="LOCAL-00001" summary="aggiustamento nome div">
       <option name="closed" value="true" />
@@ -204,7 +202,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718632635899</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Creazione struttura pagina VisImg">
+      <option name="closed" value="true" />
+      <created>1718633905832</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1718633905832</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,6 +228,7 @@
     <MESSAGE value="Corretta chiamata da js a .net" />
     <MESSAGE value="Immagini si spostano" />
     <MESSAGE value="Aggiunta pagina visualizzazione immagini" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aggiunta pagina visualizzazione immagini" />
+    <MESSAGE value="Creazione struttura pagina VisImg" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creazione struttura pagina VisImg" />
   </component>
 </project>
