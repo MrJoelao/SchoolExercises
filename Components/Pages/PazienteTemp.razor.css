@@ -164,11 +164,13 @@
 .imgUpload{
     background-color: #3D7BD9 ;
     border-radius: 10px;
-    width: 170px;
-    height:170px;
+    width: 110px;
+    height:110px;
 }
 
 .assegnazioni{
+    padding:10px;
+    gap:4px;
     display: flex;
     flex-wrap: wrap;
     background-color: #B4D1F0;
