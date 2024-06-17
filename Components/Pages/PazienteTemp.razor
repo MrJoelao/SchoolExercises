@@ -73,6 +73,8 @@
                             img.src = url;
                             img.style.width = '500px';
                             img.style.height = '390px';
+                            img.setAttribute("id","img"+i)
+                            img.setAttribute("onclick","imageClick('img"+i+"')")
 
                             // Crea un nuovo div e aggiunge l'immagine al div
                             const div = document.createElement('div');
