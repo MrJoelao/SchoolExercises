@@ -70,19 +70,13 @@
                             
                             // Imposta l'URL come sorgente dell'immagine e le dimensioni
                             img.src = url;
-                            img.style.width = '200px';
-                            img.style.height = '200px';
-                            img.setAttribute("id","img"+i)
-                            img.setAttribute("onclick","imageClick('img"+i+"')")
+                            img.style.width = '100px';
+                            img.style.height = '100px';
                             
                             // Rimuove l'URL temporaneo dopo che l'immagine è stata caricata e aggiunge l'immagine al contenitore
                             img.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
                             container.appendChild(img);
                         }
-                    }
-                    function imageClick(imgId){
-                        //console.log(imgId)
-                        DotNet.invokeMethodAsync('Delta-Dent', 'imgClicked()', imgId);
                     }
                 </script>
 
@@ -163,7 +157,7 @@
                 <button>Invia</button>
                 <button @onclick="toggleForm">Annulla</button>
             </div>
-        </div>
+        </div> 
     }
     <!-- Prima riga -->
     <div></div>
@@ -182,16 +176,8 @@
     }
 
     private InputFile? inputFile;
-    private ElementReference previewImageElem, selectedImage, selectedDiv;
+    private ElementReference previewImageElem;
 
     private async Task ShowPreview() => await JS.InvokeVoidAsync(
         "previewImage", inputFile!.Element, previewImageElem);
-
-    [JSInvokable]
-    public static Task imgClicked(string imgId)
-    {
-        Console.WriteLine(imgId);
-        return Task.FromResult(new int());
-    }
-
 }
