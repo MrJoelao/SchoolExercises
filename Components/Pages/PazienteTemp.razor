@@ -1,5 +1,4 @@
 ﻿@page "/pazienteTemp"
-@using System.Reflection.Metadata
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 <!-- Colonna sinistra -->
@@ -215,13 +214,12 @@
 
 @code {
     private bool _visibile;
-
-    private void ToggleForm()
+    
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
     private bool visibile = false;
     
-    private void toggleForm()
+    private void ToggleForm()
     {
         _visibile = !_visibile;
     }
