@@ -37,7 +37,7 @@
 </div>
 <!-- Corpo centrale -->
 <div>
-    @if (visibile)
+    @if (_visibile)
     {
         <div class="oscuramento">
             <!-- Form carica foto -->
@@ -213,11 +213,10 @@
 </div>
 
 @code {
-    private bool _visibile;
+    private bool _visibile = false;
     
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
-    private bool visibile = false;
     
     private void ToggleForm()
     {
