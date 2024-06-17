@@ -78,6 +78,10 @@
                             container.appendChild(img);
                         }
                     }
+                    function imageClick(imgId){
+                        //console.log(imgId)
+                        DotNet.invokeMethodAsync('Delta-Dent', 'imgClicked()', imgId);
+                    }
                 </script>
 
                 <div class="inline">
@@ -176,8 +180,15 @@
     }
 
     private InputFile? inputFile;
-    private ElementReference previewImageElem;
+    private ElementReference previewImageElem, selectedImage, selectedDiv;
 
     private async Task ShowPreview() => await JS.InvokeVoidAsync(
         "previewImage", inputFile!.Element, previewImageElem);
+    
+    [JSInvokable]
+    public static Task imgClicked(string imgId)
+    {
+        Console.WriteLine(imgId);
+        return Task.FromResult(new int());
+    }
 }
