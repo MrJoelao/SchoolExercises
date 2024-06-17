@@ -73,6 +73,8 @@
                             img.src = url;
                             img.style.width = '500px';
                             img.style.height = '390px';
+                            img.setAttribute("id","img"+i)
+                            img.setAttribute("onclick","imageClick('img"+i+"')")
 
                             // Crea un nuovo div e aggiunge l'immagine al div
                             const div = document.createElement('div');
@@ -82,6 +84,10 @@
                             img.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
                             container.appendChild(div);
                         }
+                    }
+                    function imageClick(imgId){
+                        //console.log(imgId)
+                        DotNet.invokeMethodAsync('Delta-Dent', 'imgClicked()', imgId);
                     }
                 </script>
 
@@ -183,8 +189,15 @@
     }
 
     private InputFile? inputFile;
-    private ElementReference previewImageElem;
+    private ElementReference previewImageElem, selectedImage, selectedDiv;
 
     private async Task ShowPreview() => await JS.InvokeVoidAsync(
         "previewImage", inputFile!.Element, previewImageElem);
+    
+    [JSInvokable]
+    public static Task imgClicked(string imgId)
+    {
+        Console.WriteLine(imgId);
+        return Task.FromResult(new int());
+    }
 }
