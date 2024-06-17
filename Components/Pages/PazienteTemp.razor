@@ -1,5 +1,4 @@
 ﻿@page "/pazienteTemp"
-@using System.Reflection.Metadata
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 <!-- Colonna sinistra -->
@@ -23,7 +22,7 @@
     <button class="defButton">...</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
-    <button class="defButton" @onclick="@toggleForm">Carica foto</button>
+    <button class="defButton" @onclick="@ToggleForm">Carica foto</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
@@ -113,13 +112,13 @@
             <div>
                 <!-- Barra a sinistra(anteprima delle immagini caricate) -->
                 <div class="inline" id="divAnteprima">
-                    <img @ref="previewImageElem"/>
+                    <img @ref="previewImageElem" src="" alt=""/>
                 </div>
                 <!-- Quadrante di scelta a destra -->
                 <div class="inline" id="zonaAssegnazione">
                     <!-- Elenco dei quadratini -->
                     <div class="inline">
-                        <img src="" alt="Occl. Superiore", id="occl_sup"/><br/>
+                        <img src="" alt="Occl. Superiore" id="occl_sup"/><br/>
                         <p>Occl. Superiore</p>
                     </div>
                     <div class="inline">
@@ -168,7 +167,7 @@
             <!-- Linea tasti invia e annulla -->
             <div>
                 <button>Invia</button>
-                <button @onclick="toggleForm">Annulla</button>
+                <button @onclick="ToggleForm">Annulla</button>
             </div>
         </div>
         </div>
@@ -184,7 +183,7 @@
 @code {
     private bool visibile = false;
 
-    private void toggleForm()
+    private void ToggleForm()
     {
         visibile = !visibile;
     }
