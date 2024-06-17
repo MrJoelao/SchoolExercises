@@ -167,9 +167,15 @@
     width: 110px;
     height:110px;
 }
+
 .imgUploaded{
     width:90px;
     height:90px;
+}
+
+.imgNotUploaded{
+    width:150px;
+    height:150px;
 }
 
 .assegnazioni{

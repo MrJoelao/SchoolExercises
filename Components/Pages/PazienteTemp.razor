@@ -94,8 +94,10 @@
                     function divClick(divId){
                     //console.log("nci3iqvbi")
                         if (clickedImg!=null&&divId!=null){
+                            clickedImg.style.width = '110px';
+                            clickedImg.style.height = '110px';
                             document.getElementById(divId).innerHTML=''
-                            document.getElementById(divId).appendChild(clickedImg) //sesso anale con le ba
+                            document.getElementById(divId).appendChild(clickedImg)
                             clickedImg=null
                             divId=null
                         }
