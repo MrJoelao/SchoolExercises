@@ -1,5 +1,4 @@
 ﻿@page "/pazienteTemp"
-@using System.Reflection.Metadata
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 <!-- Colonna sinistra -->
@@ -23,7 +22,7 @@
     <button class="defButton">...</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
-    <button class="defButton" @onclick="@toggleForm">Carica foto</button>
+    <button class="defButton" @onclick="@ToggleForm">Carica foto</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
@@ -38,7 +37,7 @@
 </div>
 <!-- Corpo centrale -->
 <div>
-    @if (visibile)
+    @if (_visibile)
     {
         <div class="oscuramento">
             <!-- Form carica foto -->
@@ -123,7 +122,7 @@
                 <div>
                     <!-- Barra a sinistra(anteprima delle immagini caricate) -->
                     <div class="inline" id="divAnteprima">
-                        <img @ref="previewImageElem"/>
+                        <img @ref="previewImageElem" src="" alt=""/>
                     </div>
                     <!-- Quadrante di scelta a destra -->
                     <div class="inline" id="zonaAssegnazione">
@@ -199,7 +198,7 @@
                 <!-- Linea tasti invia e annulla -->
                 <div>
                     <button>Invia</button>
-                    <button @onclick="toggleForm">Annulla</button>
+                    <button @onclick="ToggleForm">Annulla</button>
                 </div>
             </div>
         </div>
@@ -213,11 +212,11 @@
 </div>
 
 @code {
-    private bool visibile = false;
+    private bool _visibile;
 
-    private void toggleForm()
+    private void ToggleForm()
     {
-        visibile = !visibile;
+        _visibile = !_visibile;
     }
 
     private InputFile? inputFile;
