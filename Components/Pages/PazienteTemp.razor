@@ -123,7 +123,7 @@
                 <div class="seconda">
                     <!-- Barra a sinistra(anteprima delle immagini caricate) -->
                     <div class="inline previews" id="divAnteprima">
-                        <img @ref="previewImageElem" src="" alt=""/>
+                        
                     </div>
                     <!-- Quadrante di scelta a destra -->
                     <div class="inline assegnazioni" id="zonaAssegnazione">
@@ -213,8 +213,8 @@
 </div>
 
 @code {
-    private bool _visibile = false;
     
+    private bool _visibile = false;
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
     
@@ -222,12 +222,10 @@
     {
         _visibile = !_visibile;
     }
-    
+
     private async Task OpenFilePicker()
         => await JSRuntime.InvokeVoidAsync("HTMLElement.prototype.click.call",
             inputFile.Element);
-    
-    private ElementReference previewImageElem;
 
     private async Task ShowPreview() => await JS.InvokeVoidAsync(
         "previewImage", inputFile!.Element, "divAnteprima");
