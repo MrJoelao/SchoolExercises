@@ -5,7 +5,7 @@
     position: relative;
     display: flex; /* Disposizione degli elementi in colonna */
     flex-direction: column;
-    background-color: #d4d4d4;
+    background-color: #BADEFD;
     overflow: hidden; /* Nasconde contenuti che eccedono i limiti del contenitore */
     width: 100vw; /* larghezza al 100% della larghezza della viewport */
     height: 100vh; /* altezza al 100% dell'altezza della viewport */
