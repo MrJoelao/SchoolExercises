@@ -1,4 +1,5 @@
 ﻿@page "/pazienteTemp"
+@using System.Reflection.Metadata
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 <!-- Colonna sinistra -->
@@ -118,48 +119,48 @@
                 <div class="inline" id="zonaAssegnazione">
                     <!-- Elenco dei quadratini -->
                     <div class="inline">
-                        <img src="" alt="Occl. Superiore"/><br/>
+                        <img src="" alt="Occl. Superiore", id="occl_sup"/><br/>
                         <p>Occl. Superiore</p>
                     </div>
                     <div class="inline">
-                        <img src="" alt="Occl. DX"/><br/>
+                        <img src="" alt="Occl. DX" id="occl_dx"/><br/>
                         <p>Occl. DX</p>
                     </div>
                     <div class="inline">
-                        <img src="" alt="Occl. Frontale"/><br/>
+                        <img src="" alt="Occl. Frontale" id="occl_front"/><br/>
                         <p>Occl. Frontale</p>
                     </div>
                     <div class="inline">
-                        <img src="" alt="Occl. SX"/><br/>
+                        <img src="" alt="Occl. SX" id="occl_sx"/><br/>
                         <p>Occl. SX</p>
                     </div>
                     <div class="inline">
-                        <img src="" alt="Occl. Inferiore"/><br/>
+                        <img src="" alt="Occl. Inferiore" id="occl_inf"/><br/>
                         <p>Occl. Inferiore</p>
                     </div><br/>
                     <div class="inline">
-                        <img src="" alt="Laterale"/><br/>
+                        <img src="" alt="Laterale" id="laterale"/><br/>
                         <p>Laterale</p>
                     </div>
                     <div class="inline">
-                        <img src="" alt="Frontale"/><br/>
+                        <img src="" alt="Frontale" id="frontale"/><br/>
                         <p>Frontale</p>
                     </div>
                     <div class="inline">
-                        <img src="" alt="Frontale Sorriso"/><br/>
+                        <img src="" alt="Frontale Sorriso" id="front_sorriso"/><br/>
                         <p>Frontale Sorriso</p>
                     </div><br/>
                     <div class="inline">
                         <br/>
-                        <img src="" alt="RX Panoramica"/><br/>
+                        <img src="" alt="RX Panoramica" id="rx_panoramica"/><br/>
                         <p>RX Panoramica</p>
                     </div>
                     <div class="inline">
-                        <img src="" alt="RX Laterale"/><br/>
+                        <img src="" alt="RX Laterale" id="rx_laterale"/><br/>
                         <p>RX Laterale</p>
                     </div>
                     <div class="inline">
-                        <img src="" alt="RX Frontale PA"/><br/>
+                        <img src="" alt="RX Frontale PA" id="rx_frontale"/><br/>
                         <p>RX Frontale PA</p>
                     </div>
                 </div>
@@ -189,16 +190,8 @@
     }
 
     private InputFile? inputFile;
-    private ElementReference previewImageElem, selectedImage, selectedDiv;
+    private ElementReference previewImageElem;
 
     private async Task ShowPreview() => await JS.InvokeVoidAsync(
         "previewImage", inputFile!.Element, previewImageElem);
-    
-    [JSInvokable("imgClicked()")]
-    public static Task ImgClicked(string imgId)
-    {
-        //Console.WriteLine(imgId);
-        
-        return Task.FromResult(new int());
-    }
 }
