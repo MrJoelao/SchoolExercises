@@ -58,7 +58,7 @@
                 <script>
                     window.previewImage = (inputElem, imgElems) => {
                         // Ottiene il contenitore delle anteprime
-                        const container = document.getElementById('anteprima');
+                        const container = document.getElementById('divAnteprima');
                         // Cancella tutte le anteprime esistenti
                         container.innerHTML = '';
                         
@@ -101,7 +101,6 @@
             <div>
                 <!-- Barra a sinistra(anteprima delle immagini caricate) -->
                 <div class="inline" id="divAnteprima">
-                    <img @ref="previewImageElem"/>
                 </div>
                 <!-- Quadrante di scelta a destra -->
                 <div class="inline" id="zonaAssegnazione">
