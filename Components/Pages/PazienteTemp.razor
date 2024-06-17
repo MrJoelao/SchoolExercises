@@ -71,8 +71,8 @@
                             
                             // Imposta l'URL come sorgente dell'immagine e le dimensioni
                             img.src = url;
-                            img.style.width = '500px';
-                            img.style.height = '390px';
+                            img.style.width = '200px';
+                            img.style.height = '200px';
                             img.setAttribute("id","img"+i)
                             img.setAttribute("onclick","imageClick('img"+i+"')")
 
@@ -194,10 +194,11 @@
     private async Task ShowPreview() => await JS.InvokeVoidAsync(
         "previewImage", inputFile!.Element, previewImageElem);
     
-    [JSInvokable]
-    public static Task imgClicked(string imgId)
+    [JSInvokable("imgClicked()")]
+    public static Task ImgClicked(string imgId)
     {
-        Console.WriteLine(imgId);
+        //Console.WriteLine(imgId);
+        
         return Task.FromResult(new int());
     }
 }

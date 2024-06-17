@@ -9,7 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="Aggiunta chiamata da js a .net">
+    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="attivazione eccezioni dettagliate">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Delta-Dent.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Delta-Dent.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Components/Pages/PazienteTemp.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Pages/PazienteTemp.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +49,9 @@
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/appsettings.Development.json" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -137,7 +141,7 @@
       <option name="presentableId" value="Default" />
       <updated>1718370160247</updated>
       <workItem from="1718370161884" duration="23000" />
-      <workItem from="1718608012668" duration="8024000" />
+      <workItem from="1718608012668" duration="9562000" />
     </task>
     <task id="LOCAL-00001" summary="aggiustamento nome div">
       <option name="closed" value="true" />
@@ -155,7 +159,31 @@
       <option name="project" value="LOCAL" />
       <updated>1718615645773</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Spoldi">
+      <option name="closed" value="true" />
+      <created>1718616155675</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1718616155676</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Spoldi2">
+      <option name="closed" value="true" />
+      <created>1718616370180</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1718616370180</updated>
+    </task>
+    <task id="LOCAL-00005" summary="attivazione eccezioni dettagliate">
+      <option name="closed" value="true" />
+      <created>1718616803483</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1718616803483</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +195,9 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="aggiustamento nome div" />
     <MESSAGE value="Aggiunta chiamata da js a .net" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aggiunta chiamata da js a .net" />
+    <MESSAGE value="Spoldi" />
+    <MESSAGE value="Spoldi2" />
+    <MESSAGE value="attivazione eccezioni dettagliate" />
+    <option name="LAST_COMMIT_MESSAGE" value="attivazione eccezioni dettagliate" />
   </component>
 </project>
