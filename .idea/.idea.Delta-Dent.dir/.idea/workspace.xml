@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="attivazione eccezioni dettagliate">
+    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="Corretta chiamata da js a .net">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Delta-Dent.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Delta-Dent.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Components/Pages/PazienteTemp.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Pages/PazienteTemp.razor" afterDir="false" />
     </list>
@@ -51,6 +51,7 @@
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/appsettings.Development.json" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -62,29 +63,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Delta-Dent: IIS Express.executor": "Run",
-    ".NET Launch Settings Profile.Delta-Dent: http.executor": "Run",
-    ".NET Launch Settings Profile.Delta-Dent: https.executor": "Run",
-    "Node.js.PazienteTemp.razor.js.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Delta-Dent: IIS Express.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.Delta-Dent: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.Delta-Dent: https.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.PazienteTemp.razor.js.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\matt3\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\matt3\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\matt3\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\matt3\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\matt3\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\matt3\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Delta-Dent: https">
     <configuration name="Delta-Dent: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Delta-Dent.csproj" />
@@ -141,7 +142,8 @@
       <option name="presentableId" value="Default" />
       <updated>1718370160247</updated>
       <workItem from="1718370161884" duration="23000" />
-      <workItem from="1718608012668" duration="9562000" />
+      <workItem from="1718608012668" duration="10036000" />
+      <workItem from="1718622883787" duration="2042000" />
     </task>
     <task id="LOCAL-00001" summary="aggiustamento nome div">
       <option name="closed" value="true" />
@@ -183,7 +185,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718616803483</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Corretta chiamata da js a .net">
+      <option name="closed" value="true" />
+      <created>1718617734372</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1718617734372</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +208,7 @@
     <MESSAGE value="Spoldi" />
     <MESSAGE value="Spoldi2" />
     <MESSAGE value="attivazione eccezioni dettagliate" />
-    <option name="LAST_COMMIT_MESSAGE" value="attivazione eccezioni dettagliate" />
+    <MESSAGE value="Corretta chiamata da js a .net" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corretta chiamata da js a .net" />
   </component>
 </project>

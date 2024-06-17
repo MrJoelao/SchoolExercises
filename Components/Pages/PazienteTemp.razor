@@ -1,4 +1,5 @@
 ﻿@page "/pazienteTemp"
+@using System.Reflection.Metadata
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 <!-- Colonna sinistra -->
@@ -22,7 +23,7 @@
     <button class="defButton">...</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
-    <button class="defButton" @onclick="@ToggleForm">Carica foto</button>
+    <button class="defButton" @onclick="@toggleForm">Carica foto</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
@@ -40,26 +41,27 @@
     @if (visibile)
     {
         <div class="oscuramento">
-        <!-- Form carica foto -->
-        <div class="formAggiunta">
-            <!-- Prima linea -->
-            <div class="infoForm">
-                <div class="inline elemento">DATA<input class="inputFormData" type="date"/></div>
-                <div class="inline elemento">
-                    TIPO SERIE
-                    <select type="select" class="inputFormSelezione" placeholder=" ">
-                        <option value="p">Prova</option>
-                    </select>
+            <!-- Form carica foto -->
+            <div class="formAggiunta">
+                <!-- Prima linea -->
+                <div class="infoForm">
+                    <div class="inline elemento">DATA<input class="inputFormData" type="date"/></div>
+                    <div class="inline elemento">
+                        TIPO SERIE
+                        <select type="select" class="inputFormSelezione" placeholder=" ">
+                            <option value="p">Prova</option>
+                        </select>
+                    </div>
+                    <div class="inline elemento">NOTE<input class="inputForm" type="text"/></div>
                 </div>
-                <div class="inline elemento">NOTE<input class="inputForm" type="text"/></div>
-            </div>
-            <!-- Seconda linea -->
-            <div class="inline">
-                <InputFile @ref="inputFile" OnChange="ShowPreview" multiple="true"/>
-                <script>
-                    window.previewImage = (inputElem) => {
+                <!-- Seconda linea -->
+                <div class="inline">
+                    <InputFile @ref="inputFile" OnChange="ShowPreview" multiple="true"/>
+                    <script>
+                    let clickedImg=null
+                    window.previewImage = (inputElem, idContainer) => {
                         // Ottiene il contenitore delle anteprime
-                        const container = document.getElementById('divAnteprima');
+                        const container = document.getElementById(idContainer);
                         // Cancella tutte le anteprime esistenti
                         container.innerHTML = '';
                         
@@ -87,91 +89,121 @@
                     }
                     function imageClick(imgId){
                         //console.log(imgId)
-                        DotNet.invokeMethodAsync('Delta-Dent', 'imgClicked()', imgId);
+                        clickedImg=document.getElementById(imgId)
+                    }
+                    function divClick(divId){
+                    //console.log("nci3iqvbi")
+                        if (clickedImg!=null&&divId!=null){
+                            document.getElementById(divId).innerHTML=''
+                            document.getElementById(divId).appendChild(clickedImg)
+                            clickedImg=null
+                            divId=null
+                        }
                     }
                 </script>
 
-                <div class="inline">
-                    RISOLUZIONE
-                    <label for="1280">1280 X 800</label>
-                    <input type="radio" id="1280" name="risoluzione" value="1280">
-                    <label for="1024">1024 X 768</label>
-                    <input type="radio" id="1024" name="risoluzione" value="1024">
-                    <label for="800">800 X 600</label>
-                    <input type="radio" id="800" name="risoluzione" value="800">
-                </div>
-                <div class="inline">
-                    RIDIMENSIONA
-                    <label for="si">SÌ</label>
-                    <input type="radio" id="si" name="ridimensiona" value="si">
-                    <label for="no">NO</label>
-                    <input type="radio" id="no" name="ridimensiona" value="no">
-                </div>
-            </div>
-            <!-- Linea centrale -->
-            <div>
-                <!-- Barra a sinistra(anteprima delle immagini caricate) -->
-                <div class="inline" id="divAnteprima">
-                    <img @ref="previewImageElem" src="" alt=""/>
-                </div>
-                <!-- Quadrante di scelta a destra -->
-                <div class="inline" id="zonaAssegnazione">
-                    <!-- Elenco dei quadratini -->
                     <div class="inline">
-                        <img src="" alt="Occl. Superiore" id="occl_sup"/><br/>
-                        <p>Occl. Superiore</p>
+                        RISOLUZIONE
+                        <label for="1280">1280 X 800</label>
+                        <input type="radio" id="1280" name="risoluzione" value="1280">
+                        <label for="1024">1024 X 768</label>
+                        <input type="radio" id="1024" name="risoluzione" value="1024">
+                        <label for="800">800 X 600</label>
+                        <input type="radio" id="800" name="risoluzione" value="800">
                     </div>
                     <div class="inline">
-                        <img src="" alt="Occl. DX" id="occl_dx"/><br/>
-                        <p>Occl. DX</p>
-                    </div>
-                    <div class="inline">
-                        <img src="" alt="Occl. Frontale" id="occl_front"/><br/>
-                        <p>Occl. Frontale</p>
-                    </div>
-                    <div class="inline">
-                        <img src="" alt="Occl. SX" id="occl_sx"/><br/>
-                        <p>Occl. SX</p>
-                    </div>
-                    <div class="inline">
-                        <img src="" alt="Occl. Inferiore" id="occl_inf"/><br/>
-                        <p>Occl. Inferiore</p>
-                    </div><br/>
-                    <div class="inline">
-                        <img src="" alt="Laterale" id="laterale"/><br/>
-                        <p>Laterale</p>
-                    </div>
-                    <div class="inline">
-                        <img src="" alt="Frontale" id="frontale"/><br/>
-                        <p>Frontale</p>
-                    </div>
-                    <div class="inline">
-                        <img src="" alt="Frontale Sorriso" id="front_sorriso"/><br/>
-                        <p>Frontale Sorriso</p>
-                    </div><br/>
-                    <div class="inline">
-                        <br/>
-                        <img src="" alt="RX Panoramica" id="rx_panoramica"/><br/>
-                        <p>RX Panoramica</p>
-                    </div>
-                    <div class="inline">
-                        <img src="" alt="RX Laterale" id="rx_laterale"/><br/>
-                        <p>RX Laterale</p>
-                    </div>
-                    <div class="inline">
-                        <img src="" alt="RX Frontale PA" id="rx_frontale"/><br/>
-                        <p>RX Frontale PA</p>
+                        RIDIMENSIONA
+                        <label for="si">SÌ</label>
+                        <input type="radio" id="si" name="ridimensiona" value="si">
+                        <label for="no">NO</label>
+                        <input type="radio" id="no" name="ridimensiona" value="no">
                     </div>
                 </div>
-            </div>
-            <!-- Linea tasti invia e annulla -->
-            <div>
-                <button>Invia</button>
-                <button @onclick="ToggleForm">Annulla</button>
+                <!-- Linea centrale -->
+                <div>
+                    <!-- Barra a sinistra(anteprima delle immagini caricate) -->
+                    <div class="inline" id="divAnteprima">
+                        <img @ref="previewImageElem"/>
+                    </div>
+                    <!-- Quadrante di scelta a destra -->
+                    <div class="inline" id="zonaAssegnazione">
+                        <!-- Elenco dei quadratini -->
+                        <div class="inline">
+                            <div id="occl_sup" onclick="divClick('occl_sup')">
+                                <img src="" alt="Occl. Superiore"/><br/>
+                            </div>
+                            <p>Occl. Superiore</p>
+                        </div>
+                        <div class="inline">
+                            <div id="occl_dx" onclick="divClick('occl_dx')">
+                                <img src="" alt="Occl. DX"/><br/>
+                            </div>
+                            <p>Occl. DX</p>
+                        </div>
+                        <div class="inline">
+                            <div id="occl_front" onclick="divClick('occl_front')">
+                                <img src="" alt="Occl. Frontale"/><br/>
+                            </div>
+                            <p>Occl. Frontale</p>
+                        </div>
+                        <div class="inline">
+                            <div id="occl_sx" onclick="divClick('occl_sx')">
+                                <img src="" alt="Occl. SX"/><br/>
+                            </div>
+                            <p>Occl. SX</p>
+                        </div>
+                        <div class="inline">
+                            <div id="occl_inf" onclick="divClick('occl_inf')">
+                                <img src="" alt="Occl. Inferiore"/><br/>
+                            </div>
+                            <p>Occl. Inferiore</p>
+                        </div><br/>
+                        <div class="inline">
+                            <div id="laterale" onclick="divClick('laterale')">
+                                <img src="" alt="Laterale"/><br/>
+                            </div>
+                            <p>Laterale</p>
+                        </div>
+                        <div class="inline">
+                            <div id="frontale" onclick="divClick('frontale')">
+                                <img src="" alt="Frontale"/><br/>
+                            </div>
+                            <p>Frontale</p>
+                        </div>
+                        <div class="inline">
+                            <div id="front_sorriso" onclick="divClick('front_sorriso')">
+                                <img src="" alt="Frontale Sorriso"/><br/>
+                            </div>
+                            <p>Frontale Sorriso</p>
+                        </div><br/>
+                        <div class="inline">
+                            <div id="rx_panoramica" onclick="divClick('rx_panoramica')">
+                                <img src="" alt="RX Panoramica"/><br/>
+                            </div>
+                            <p>RX Panoramica</p>
+                        </div>
+                        <div class="inline">
+                            <div id="rx_laterale" onclick="divClick('rx_laterale')">
+                                <img src="" alt="RX Laterale"/><br/>
+                            </div>
+                            <p>RX Laterale</p>
+                        </div>
+                        <div class="inline">
+                            <div id="rx_frontale" onclick="divClick('rx_frontale')">
+                                <img src="" alt="RX Frontale PA"/><br/>
+                            </div>
+                            <p>RX Frontale PA</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Linea tasti invia e annulla -->
+                <div>
+                    <button>Invia</button>
+                    <button @onclick="toggleForm">Annulla</button>
+                </div>
             </div>
         </div>
-        </div>
-        }
+    }
     <!-- Prima riga -->
     <div></div>
     <!-- Seconda riga -->
@@ -183,7 +215,7 @@
 @code {
     private bool visibile = false;
 
-    private void ToggleForm()
+    private void toggleForm()
     {
         visibile = !visibile;
     }
@@ -192,5 +224,7 @@
     private ElementReference previewImageElem;
 
     private async Task ShowPreview() => await JS.InvokeVoidAsync(
-        "previewImage", inputFile!.Element, previewImageElem);
+        "previewImage", inputFile!.Element, "divAnteprima");
+
 }
+
