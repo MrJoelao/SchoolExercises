@@ -39,8 +39,9 @@
 <div>
     @if (visibile)
     {
+        <div class="oscuramento">
         <!-- Form carica foto -->
-        <div>
+        <div class="formAggiunta">
             <!-- Prima linea -->
             <div>
                 <div class="inline">DATA<input type="date"/></div>
@@ -157,8 +158,9 @@
                 <button>Invia</button>
                 <button @onclick="toggleForm">Annulla</button>
             </div>
-        </div> 
-    }
+        </div>
+        </div>
+        }
     <!-- Prima riga -->
     <div></div>
     <!-- Seconda riga -->
