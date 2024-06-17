@@ -22,6 +22,57 @@
     margin-right: 0.5rem;
 }
 
+.elemento{
+    width: 25%;
+    display: flex;
+    align-items: center;
+}
+.infoForm{
+    display:ruby-text;
+    margin-left: 5px;
+    background-color: #B4D1F0;
+    border-radius: 10px;
+    padding: 1rem;
+    width: 95%;
+    font-weight: bold;
+}
+.fileBar{
+    margin-left: 5px;
+    padding: 1rem;
+    width: 95%;
+    font-weight: bold;
+}
+
+.inputFormData{
+    margin-left: 5px;
+    flex-grow: 1;
+    padding-right: -0.1rem;
+    width: auto;
+    border:none;
+    border-radius: 2.5px;
+    background-color: white;
+}
+
+
+.inputFormSelezione{
+    margin-left: 5px;
+    flex-grow: 1;
+    width: auto;
+    border:none;
+    border-radius: 2.5px;
+    background-color: white;
+    padding-top:0.2rem;
+    padding-bottom: 0.2rem;
+}
+
+.inputForm{
+    margin-left: 5px;
+    width: inherit;
+    flex-grow: 1;
+    border:none;
+    border-radius: 2.5px;
+}
+
 .formAggiunta{
     margin-left: 10%;
     background-color: white;
@@ -39,4 +90,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.fileButton{
+    background-color: #0a53be;
+    background: url("./assets/cartellaIcon.svg") no-repeat center;
+    height: 2.5rem;
+    width: 2.5rem;
 }
