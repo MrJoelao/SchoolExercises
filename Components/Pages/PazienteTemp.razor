@@ -60,7 +60,10 @@
                     <button class="fileButton" @onclick="OpenFilePicker"> </button>
                     <InputFile style="display: none" @ref="inputFile" OnChange="OnInputFileChange" multiple="true" accept="image/*"/>
                     <script>
+                        
                     let clickedImg=null
+                    let names=['Occl. Superiore', 'Occl. DX', 'Occl. Frontale', 'Occl. SX', 'Occl. Inferiore', 'Laterale', 'Frontale', 'Frontale Sorriso', 'RX Panoramica', 'RX Laterale', 'RX FRontale PA']
+                    
                     window.previewImage = (inputElem, idContainer) => {
                         // Ottiene il contenitore delle anteprime
                         const container = document.getElementById(idContainer);
@@ -89,22 +92,28 @@
                             container.appendChild(div);
                         }
                     }
+                    
                     function imageClick(imgId){
                         //console.log(imgId)
                         clickedImg=document.getElementById(imgId)
                     }
+                    
                     function divClick(divId){
                     //console.log("nci3iqvbi")
                         if (clickedImg!=null&&divId!=null){
-                            clickedImg.style.width = '110px';
-                            clickedImg.style.height = '110px';
+                            clickedImg.style.width = '110px'
+                            clickedImg.style.height = '110px'
+                            //cambio l'id dell'immagine con quello del posto dov'è stata messa
+                            clickedImg.setAttribute('id',name[document.getElementById(divId).dataset.value])
+                            //console.log(names[document.getElementById(divId).dataset.value])
                             document.getElementById(divId).innerHTML=''
                             document.getElementById(divId).appendChild(clickedImg)
                             clickedImg=null
                             divId=null
                         }
                     }
-                </script>
+                
+                    </script>
 
                     <div class="inline radioContainer">
                         RISOLUZIONE
@@ -133,67 +142,67 @@
                     <div class="inline assegnazioni" id="zonaAssegnazione">
                         <!-- Elenco dei quadratini -->
                         <div class="inline imgUpload">
-                            <div class="inline" id="occl_sup" onclick="divClick('occl_sup')">
+                            <div class="inline" id="occl_sup" data-value="0" onclick="divClick('occl_sup')">
                                 <img src="" alt="Occl. Superiore"/><br/>
                             </div>
                             <p>Occl. Superiore</p>
                         </div>
                         <div class="inline imgUpload">
-                            <div id="occl_dx" onclick="divClick('occl_dx')">
+                            <div id="occl_dx" data-value="1" onclick="divClick('occl_dx')">
                                 <img src="" alt="Occl. DX"/><br/>
                             </div>
                             <p>Occl. DX</p>
                         </div>
                         <div class="inline imgUpload">
-                            <div id="occl_front" onclick="divClick('occl_front')">
+                            <div id="occl_front" data-value="2" onclick="divClick('occl_front')">
                                 <img src="" alt="Occl. Frontale"/><br/>
                             </div>
                             <p>Occl. Frontale</p>
                         </div>
                         <div class="inline imgUpload">
-                            <div id="occl_sx" onclick="divClick('occl_sx')">
+                            <div id="occl_sx" data-value="3" onclick="divClick('occl_sx')">
                                 <img src="" alt="Occl. SX"/><br/>
                             </div>
                             <p>Occl. SX</p>
                         </div>
                         <div class="inline imgUpload">
-                            <div id="occl_inf" onclick="divClick('occl_inf')">
+                            <div id="occl_inf" data-value="4" onclick="divClick('occl_inf')">
                                 <img src="" alt="Occl. Inferiore"/><br/>
                             </div>
                             <p>Occl. Inferiore</p>
                         </div><br/>
                         <div class="inline imgUpload">
-                            <div id="laterale" onclick="divClick('laterale')">
+                            <div id="laterale" data-value="5" onclick="divClick('laterale')">
                                 <img src="" alt="Laterale"/><br/>
                             </div>
                             <p>Laterale</p>
                         </div>
                         <div class="inline imgUpload">
-                            <div id="frontale" onclick="divClick('frontale')">
+                            <div id="frontale" data-value="6" onclick="divClick('frontale')">
                                 <img src="" alt="Frontale"/><br/>
                             </div>
                             <p>Frontale</p>
                         </div>
                         <div class="inline imgUpload">
-                            <div id="front_sorriso" onclick="divClick('front_sorriso')">
+                            <div id="front_sorriso" data-value="7" onclick="divClick('front_sorriso')">
                                 <img src="" alt="Frontale Sorriso"/><br/>
                             </div>
                             <p>Frontale Sorriso</p>
                         </div><br/>
                         <div class="inline imgUpload">
-                            <div id="rx_panoramica" onclick="divClick('rx_panoramica')">
+                            <div id="rx_panoramica" data-value="8" onclick="divClick('rx_panoramica')">
                                 <img src="" alt="RX Panoramica"/><br/>
                             </div>
                             <p>RX Panoramica</p>
                         </div>
                         <div class="inline imgUpload">
-                            <div id="rx_laterale" onclick="divClick('rx_laterale')">
+                            <div id="rx_laterale" data-value="9" onclick="divClick('rx_laterale')">
                                 <img src="" alt="RX Laterale"/><br/>
                             </div>
                             <p>RX Laterale</p>
                         </div>
                         <div class="inline imgUpload">
-                            <div id="rx_frontale" onclick="divClick('rx_frontale')">
+                            <div id="rx_frontale" data-value="10" onclick="divClick('rx_frontale')">
                                 <img src="" alt="RX Frontale PA"/><br/>
                             </div>
                             <p>RX Frontale PA</p>
@@ -211,7 +220,7 @@
     <!-- profilo paziente -->
     <div class="AreaPaziente inline">
         <img src="./assets/test/test.jpg" class="immaginePaziente">
-        <div class="sezione"> marco moccia</div>
+        <div class="sezione"> marco doccia</div>
         <div class="intestazione">INFO CARTELLA</div>
         <div class="sezione" style="text-align: unset">
             <div class="sxAlign">
@@ -346,15 +355,15 @@
     {
         if (loadedFiles.Any())
         {
-            foreach (var file in loadedFiles)
+            for (int i=0;i<loadedFiles.Count();i++)
             {
                 try
                 {
-                    var trustedFileName = Path.GetRandomFileName()+".png";
+                    var trustedFileName = getImgName(i)+".png";
                     var path = Path.Combine(env.ContentRootPath, "uploads", trustedFileName);
 
                     await using FileStream fs = new(path, FileMode.Create);
-                    await file.OpenReadStream().CopyToAsync(fs);
+                    await loadedFiles[i].OpenReadStream().CopyToAsync(fs);
 
                     Console.WriteLine($"File saved: {trustedFileName}");
                 }
@@ -367,4 +376,9 @@
         }
     }
 
+    private string getImgName(int index)
+    {
+        //Console.WriteLine("\n\n\n\n"+f);
+        return Path.GetRandomFileName();
+    }
 }
