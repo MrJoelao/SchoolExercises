@@ -12,6 +12,29 @@
     margin-bottom: 1rem;
 }
 
+.AreaPaziente{
+    text-align: center;
+    padding:2rem;
+    height: 85vh;
+    width:20%;
+    background-color: #7FAFE1;
+    border-radius: 10px;
+    overflow-y: auto;
+    
+}
+
+/*per safari & google*/
+.AreaPaziente::-webkit-scrollbar {
+    height: 5px;
+    background-color: #3D7BD9;
+    border-radius: 10rem;
+}
+
+/*per firefox*/
+.AreaPaziente {
+    scrollbar-width: thin;
+    scrollbar-color: #3D7BD9 #fff;
+}
 .defButton{
     height: 3rem;
     width: 3.2rem;
@@ -139,6 +162,7 @@
 }
 
 .previews{
+    text-align: center;
     width:30%;
     background-color: #3D7BD9;
     border-radius: 10px;
@@ -178,6 +202,45 @@
     height:150px;
 }
 
+.utilsButtonsCOntainer{
+    background-color: #B4D1F0;
+    border-radius: 10px;
+    width:100%;
+    padding: 1rem;
+    margin-left: 0.5%;
+    margin-bottom: 0.5rem;
+    height: 4rem;
+    display: ruby-text;
+    
+}
+
+.annulla{
+    width:25%;
+    border:none;
+    background-color: #3D7BD9;
+    height:110%;
+    border-radius: 10px;
+    font-weight: bold;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: white;
+    position: relative;
+    left: 0.5rem;
+}
+
+.salva{
+    width:25%;
+    border:none;
+    background-color: #3D7BD9;
+    height:110%;
+    border-radius: 10px;
+    font-weight: bold;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: white;
+    position: relative;
+    right: 0.5rem;
+}
 .assegnazioni{
     padding:10px;
     gap:4px;
