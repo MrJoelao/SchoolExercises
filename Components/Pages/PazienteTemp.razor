@@ -1,6 +1,8 @@
 ﻿@page "/pazienteTemp"
 @rendermode InteractiveServer
 @inject IJSRuntime JS
+@inject IWebHostEnvironment env
+
 <!-- Colonna sinistra -->
 <div>
 
@@ -56,7 +58,7 @@
                 <!-- Seconda linea -->
                 <div class="inline seconda">
                     <button class="fileButton" @onclick="OpenFilePicker"> </button>
-                    <InputFile style="display: none" @ref="inputFile" OnChange="ShowPreview" multiple="true"/>
+                    <InputFile style="display: none" @ref="inputFile" OnChange="OnInputFileChange" multiple="true" accept="image/*"/>
                     <script>
                     let clickedImg=null
                     window.previewImage = (inputElem, idContainer) => {
@@ -201,7 +203,7 @@
                 <!-- Linea tasti invia e annulla -->
                 <div class="utilsButtonsCOntainer">
                     <button class="annulla" @onclick="ToggleForm">Annulla</button>
-                    <button class="salva">Invia</button>
+                    <button class="salva" @onclick="SaveFiles">Invia</button>
                 </div>
             </div>
         </div>
@@ -215,10 +217,10 @@
 </div>
 
 @code {
-    
     private bool _visibile = false;
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
+    private List<IBrowserFile> loadedFiles = new();
     
     private void ToggleForm()
     {
@@ -226,11 +228,45 @@
     }
 
     private async Task OpenFilePicker()
-        => await JSRuntime.InvokeVoidAsync("HTMLElement.prototype.click.call",
-            inputFile.Element);
+        => await JSRuntime.InvokeVoidAsync("HTMLElement.prototype.click.call", inputFile!.Element);
 
-    private async Task ShowPreview() => await JS.InvokeVoidAsync(
-        "previewImage", inputFile!.Element, "divAnteprima");
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        loadedFiles = e.GetMultipleFiles().ToList();
+        await ShowPreview();
+    }
+
+    private async Task ShowPreview()
+    {
+        if (inputFile != null)
+        {
+            await JSRuntime.InvokeVoidAsync("previewImage", inputFile.Element, "divAnteprima");
+        }
+    }
+
+    private async Task SaveFiles()
+    {
+        if (loadedFiles.Any())
+        {
+            foreach (var file in loadedFiles)
+            {
+                try
+                {
+                    var trustedFileName = Path.GetRandomFileName()+".png";
+                    var path = Path.Combine(env.ContentRootPath, "uploads", trustedFileName);
+
+                    await using FileStream fs = new(path, FileMode.Create);
+                    await file.OpenReadStream().CopyToAsync(fs);
+
+                    Console.WriteLine($"File saved: {trustedFileName}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error saving file: {ex.Message}");
+                }
+            }
+            ToggleForm();
+        }
+    }
 
 }
-

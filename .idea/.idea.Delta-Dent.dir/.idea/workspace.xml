@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="Minor fix identazione">
+    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Delta-Dent.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Delta-Dent.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Components/Pages/PazienteTemp.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Pages/PazienteTemp.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Components/Pages/PazienteTemp.razor.css" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Pages/PazienteTemp.razor.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +48,7 @@
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/c9e3996173cec136bc2e9f3b4ec45f2a323b1d63/src/Components/Components/src/ElementReference.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/VisImg.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -60,30 +60,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Delta-Dent: IIS Express.executor": "Run",
-    ".NET Launch Settings Profile.Delta-Dent: http.executor": "Run",
-    ".NET Launch Settings Profile.Delta-Dent: https.executor": "Run",
-    "Node.js.PazienteTemp.razor.js.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Delta-Dent: IIS Express.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.Delta-Dent: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.Delta-Dent: https.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.PazienteTemp.razor.js.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\matt3\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\matt3\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\matt3\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\matt3\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\matt3\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\matt3\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Delta-Dent: https">
     <configuration name="Delta-Dent: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Delta-Dent.csproj" />
@@ -141,7 +141,9 @@
       <updated>1718370160247</updated>
       <workItem from="1718370161884" duration="23000" />
       <workItem from="1718608012668" duration="10036000" />
-      <workItem from="1718622883787" duration="7925000" />
+      <workItem from="1718622883787" duration="8394000" />
+      <workItem from="1718694341003" duration="118000" />
+      <workItem from="1718694485034" duration="3672000" />
     </task>
     <task id="LOCAL-00001" summary="aggiustamento nome div">
       <option name="closed" value="true" />
@@ -223,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718634356816</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="corretto resize immagini spostate">
+      <option name="closed" value="true" />
+      <created>1718635545152</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1718635545152</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,6 +253,7 @@
     <MESSAGE value="Aggiunta pagina visualizzazione immagini" />
     <MESSAGE value="Creazione struttura pagina VisImg" />
     <MESSAGE value="Minor fix identazione" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor fix identazione" />
+    <MESSAGE value="corretto resize immagini spostate" />
+    <option name="LAST_COMMIT_MESSAGE" value="corretto resize immagini spostate" />
   </component>
 </project>
