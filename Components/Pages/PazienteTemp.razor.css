@@ -181,6 +181,14 @@
     height:auto;
     margin-bottom: 0.5rem;
 }
+
+.imgButton{
+    height:110px;
+    width:110px;
+}
+.descImg{
+    font-weight: bold;
+}
 .fileButton{
     padding:1.5rem;
     border:none;
