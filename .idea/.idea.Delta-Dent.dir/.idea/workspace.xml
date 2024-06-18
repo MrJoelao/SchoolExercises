@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="upload immagini" />
+    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="prova 2">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -140,7 +142,7 @@
       <workItem from="1718608012668" duration="10036000" />
       <workItem from="1718622883787" duration="8394000" />
       <workItem from="1718694341003" duration="118000" />
-      <workItem from="1718694485034" duration="3981000" />
+      <workItem from="1718694485034" duration="4280000" />
     </task>
     <task id="LOCAL-00001" summary="aggiustamento nome div">
       <option name="closed" value="true" />
@@ -238,7 +240,23 @@
       <option name="project" value="LOCAL" />
       <updated>1718698339352</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="prova gitignore">
+      <option name="closed" value="true" />
+      <created>1718698619560</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1718698619560</updated>
+    </task>
+    <task id="LOCAL-00014" summary="prova 2">
+      <option name="closed" value="true" />
+      <created>1718698730109</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1718698730109</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,6 +278,8 @@
     <MESSAGE value="Minor fix identazione" />
     <MESSAGE value="corretto resize immagini spostate" />
     <MESSAGE value="upload immagini" />
-    <option name="LAST_COMMIT_MESSAGE" value="upload immagini" />
+    <MESSAGE value="prova gitignore" />
+    <MESSAGE value="prova 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="prova 2" />
   </component>
 </project>
