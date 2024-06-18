@@ -207,11 +207,88 @@
         </div>
     }
     <!-- profilo paziente -->
-    <div class="AreaPaziente"></div>
-    <!-- Seconda riga -->
-    <div></div>
-    <!-- Terza riga -->
-    <div></div>
+    <div class="AreaPaziente inline">
+        <img src="./assets/test/test.jpg" class="immaginePaziente">
+        <div class="sezione"> marco moccia</div>
+        <div class="intestazione">INFO CARTELLA</div>
+        <div class="sezione" style="text-align: unset">
+            <div class="sxAlign">
+                N<br/>
+                ETA' PAZIENTE
+            </div>
+            <div class="dxAlign">
+                @numeroCartella<br/>
+                @etaPaziente
+            </div>
+        </div>
+        
+        
+        <div class="intestazione">INFO OAS</div>
+        <div class="sezione" style="text-align: unset">
+            <div class="sxAlign">
+                RISCHIO<br/>
+                ESAME<br/>
+                VISITA<br/>
+                MAD<br/>
+                TRATTAMENTO
+            </div>
+            <div class="dxAlign">
+                @rischio<br/>
+                @esame<br/>
+                @visita<br/>
+                @mad<br/>
+                @dataTrattamento
+            </div>
+        </div>
+
+
+        <div class="intestazione">INFO OAS</div>
+        <div class="sezione" style="text-align: unset">
+            <div class="sxAlign">
+                ANAMNESI<br/>
+                PRIMA VISITA<br/>
+                PARODONTO<br/>
+                SPECIALISTICA<br/>
+                PRESCRIZIONI<br/>
+                PIANI TRATT.<br/>
+                INCONTRI<br/>
+                REFERTI<br/>
+                PRESENTAZIONI
+            </div>
+            <div class="dxAlign">
+                @anamanesi<br/>
+                @prima<br/>
+                @paradonto<br/>
+                @specialistica<br/>
+                @prescrizioni<br/>
+                @pianiTrattamenti<br/>
+                @incontri<br/>
+                @referti<br/>
+                @presentazioni
+            </div>
+        </div>
+
+        <div class="intestazione">INFO OAS</div>
+        <div class="sezione" style="text-align: unset">
+            <div class="sxAlign">
+                FATTURATO<br/>
+                PREVENTIVI<br/>
+                CURE EXTRA<br/>
+                ESEGUITO
+            </div>
+            <div class="dxAlign">
+                @fatturato<br/>
+                @preventivi<br/>
+                @extras<br/>
+                @eseguito
+            </div>
+        </div>
+    </div>
+    <!-- area centrale -->
+    <div class="AreaCentrale inline">
+        
+    </div>
+    
 </div>
 
 @code {

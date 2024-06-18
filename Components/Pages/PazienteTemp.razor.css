@@ -23,6 +23,36 @@
     
 }
 
+.AreaCentrale{
+    width:79%;
+    text-align: center;
+    height: 85vh;
+}
+
+.sezione{
+    background-color: #3D7BD9;
+    padding:1rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+}
+
+.intestazione{
+    text-align: left;
+    font-size: 13px;
+    color: white;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.immaginePaziente{
+    margin-bottom: 0.5rem;
+    width:60%;
+    aspect-ratio: 1 / 1;
+    border-radius: 100%;
+    border: #1A56B0 solid 5px;
+}
+
 /*per safari & google*/
 .AreaPaziente::-webkit-scrollbar {
     height: 5px;
@@ -252,4 +282,25 @@
     width:97%;
     max-width: 30rem;
     margin-left:3%;
+}
+
+
+.sxAlign{
+    display: table-cell;
+    height: 100%;
+    width:69%;
+    text-align: left;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.dxAlign{
+    display: table-cell;
+    height: 100%;
+    width:29%;
+    text-align: right;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
 }
