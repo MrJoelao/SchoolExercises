@@ -23,8 +23,9 @@
     
 }
 
-.AreaCentrale{
-    width:79%;
+.AreaCentrale{position: absolute;
+    margin-left: 1rem;
+    width:62vw;
     text-align: center;
     height: 85vh;
 }
@@ -133,6 +134,17 @@
     padding-bottom: 0.2rem;
 }
 
+.inputSelezione{
+    margin-left: 5px;
+    width: 20%;
+    border:none;
+    height: 80%;
+    border-radius: 2.5px;
+    background-color: white;
+    padding-top:0.2rem;
+    padding-bottom: 0.2rem;
+}
+
 .inputForm{
     margin-left: 5px;
     width: inherit;
@@ -149,6 +161,7 @@
 }
 
 .oscuramento {
+    z-index: 9;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.17);
     width: 110%;
@@ -240,10 +253,85 @@
     margin-left: 0.5%;
     margin-bottom: 0.5rem;
     height: 4rem;
-    display: ruby-text;
+    font-size: 0.9rem;
+}
+
+.check{
+    background: #515151;
+    border: 5px;
+    height:50%;
+    aspect-ratio: 1/1;
+}
+
+.sez1{
+    width:30%;
+    height:100%;
+}
+
+.sez2{
+    text-align: left;
+    color: white;
+    font-weight: bold;
+    width:20%;
+    height:100%;
+}
+
+.esame{
+    border: solid 3px #FFFFFF;
+    border-radius: 5px;
+    height:87%;
+}
+.formattazione{
+    color: white;
+    font-weight: bold;
+}
+
+.bigInput{
+    resize: none;
+    width:100%;
+    height:4.5rem;
+    background-color: white;
+    border:none;
+    border-radius: 5px;
+}
+
+.insTesto{
+    width: 100%;
+    height: auto;
+    margin-bottom: 0.3rem;
+    display: flex;
     
 }
 
+.spazioTesto{
+    width:28%;
+    font-weight: bold;
+    color:white;
+
+    height: 100%;
+}
+
+.spazioInput{
+    width:69%;
+}
+
+
+.smallInput{
+    width:100%;
+    height:3rem;
+    background-color: white;
+    border:none;
+    border-radius: 5px;
+}
+.secondaSezione{
+    background-color: #7FAFE1;
+    width: 100%;
+    height: 15rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    padding:1rem;
+    display: flex;
+}
 .annulla{
     width:25%;
     border:none;
@@ -259,6 +347,7 @@
 }
 
 .salva{
+    margin-left: 49%;
     width:25%;
     border:none;
     background-color: #3D7BD9;
@@ -284,6 +373,17 @@
     margin-left:3%;
 }
 
+.barraStatoPaziente{
+    text-align: left;
+    background-color: #7FAFE1;
+    color: white;
+    height: 4rem;
+    padding: 1rem;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
 
 .sxAlign{
     display: table-cell;
@@ -303,4 +403,85 @@
     color: white;
     font-size: 12px;
     font-weight: bold;
+}
+
+.utilButton{
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    background-color: #3D7BD9;
+    height: 90%;
+    aspect-ratio: 1/1;
+    border:none;
+    border-radius: 5px;
+}
+
+.add{
+    background: url("./assets/paziente/add.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+.edit{
+    background: url("./assets/paziente/edit.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+.bin{
+    background: url("./assets/paziente/bin.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+.lock{
+    background: url("./assets/paziente/lock.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+.notify{
+    background: url("./assets/paziente/notify.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+
+.pin{
+    background: url("./assets/paziente/pin.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+.save{
+    background: url("./assets/paziente/save.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+
+.stamp{
+    background: url("./assets/paziente/stamp.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+
+
+.add:hover{
+    background: url("./assets/paziente/add.svg") no-repeat center;
+    background-color: #2962b6;
+}
+.edit:hover{
+    background: url("./assets/paziente/edit.svg") no-repeat center;
+    background-color: #2962b6;
+}
+.bin:hover{
+    background: url("./assets/paziente/bin.svg") no-repeat center;
+    background-color: #2962b6;
+}
+.lock:hover{
+    background: url("./assets/paziente/lock.svg") no-repeat center;
+    background-color:#2962b6;
+}
+.notify:hover{
+    background: url("./assets/paziente/notify.svg") no-repeat center;
+    background-color: #2962b6;
+}
+
+.pin:hover{
+    background: url("./assets/paziente/pin.svg") no-repeat center;
+    background-color: #2962b6;
+}
+.save:hover{
+    background: url("./assets/paziente/save.svg") no-repeat center;
+    background-color: #2962b6;
+}
+
+.stamp:hover{
+    background: url("./assets/paziente/stamp.svg") no-repeat center;
+    background-color: #2962b6;
 }
