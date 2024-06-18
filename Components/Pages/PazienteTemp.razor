@@ -39,27 +39,27 @@
 </div>
 <!-- Corpo centrale -->
 <div>
-    @if (_visibile)
-    {
-        <div class="oscuramento">
-            <!-- Form carica foto -->
-            <div class="formAggiunta">
-                <!-- Prima linea -->
-                <div class="infoForm">
-                    <div class="inline elemento">DATA<input class="inputFormData" type="date"/></div>
-                    <div class="inline elemento">
-                        TIPO SERIE
-                        <select type="select" class="inputFormSelezione" placeholder=" ">
-                            <option value="p">Prova</option>
-                        </select>
-                    </div>
-                    <div class="inline elemento">NOTE<input class="inputForm" type="text"/></div>
+@if (_visibile)
+{
+    <div class="oscuramento">
+        <!-- Form carica foto -->
+        <div class="formAggiunta">
+            <!-- Prima linea -->
+            <div class="infoForm">
+                <div class="inline elemento">DATA<input class="inputFormData" type="date"/></div>
+                <div class="inline elemento">
+                    TIPO SERIE
+                    <select type="select" class="inputFormSelezione" placeholder=" ">
+                        <option value="p">Prova</option>
+                    </select>
                 </div>
-                <!-- Seconda linea -->
-                <div class="inline seconda">
-                    <button class="fileButton" @onclick="OpenFilePicker"> </button>
-                    <InputFile style="display: none" @ref="inputFile" OnChange="OnInputFileChange" multiple="true" accept="image/*"/>
-                    <script>
+                <div class="inline elemento">NOTE<input class="inputForm" type="text"/></div>
+            </div>
+            <!-- Seconda linea -->
+            <div class="inline seconda">
+                <button class="fileButton" @onclick="OpenFilePicker"> </button>
+                <InputFile style="display: none" @ref="inputFile" OnChange="OnInputFileChange" multiple="true" accept="image/*"/>
+                <script>
                         
                     let clickedImg=null
                     let names=['Occl. Superiore', 'Occl. DX', 'Occl. Frontale', 'Occl. SX', 'Occl. Inferiore', 'Laterale', 'Frontale', 'Frontale Sorriso', 'RX Panoramica', 'RX Laterale', 'RX Frontale PA']
@@ -70,7 +70,15 @@
                         const container = document.getElementById(idContainer);
                         // Cancella tutte le anteprime esistenti
                         container.innerHTML = '';
-                        
+
+                        // Verifico che non si abbia già caricato le immagini
+                        let initialized=false
+                        for(let i=0;i<filesNames.length;i++){
+                            if (filesNames[i]!=null){
+                                initialized=true
+                                break
+                            }
+                        }
                         // Itera su tutti i file selezionati
                         for (let i = 0; i < inputElem.files.length; i++) {
                             // Crea un URL temporaneo per il file e crea l'immagine
@@ -92,7 +100,17 @@
                             img.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
                             container.appendChild(div)
                             
-                            filesNames[i]=(inputElem.files[i].name)
+                            if (initialized){
+                                for(let j=0;j<filesNames.length;j++){
+                                    if (filesNames[j]===null){
+                                        filesNames[j]=inputElem.files[i].name
+                                        break
+                                    }
+                                }
+                            }
+                            else{
+                                filesNames[i]=(inputElem.files[i].name)
+                            }
                         }
                     }
                     
@@ -130,8 +148,13 @@
                     function getDivName(name){
                         //cerco nei nomi dei file la corrispondenza e ritorno parallelamente il nome della sezione in cui è stata messa la fot
                         for(let i=0;i<filesNames.length;i++){
+                            if (filesNames[i]==null){
+                                throw new Error("Non sono state caricate tutte le immagini")
+                            }
+                        }
+                        for(let i=0;i<filesNames.length;i++){
+                            //console.log(filesNames[i])
                             if ((filesNames[i])===name){
-                                //console.log(names[i])
                                 return names[i]
                             }
                         }
@@ -139,245 +162,245 @@
                     
                     </script>
 
-                    <div class="inline radioContainer">
-                        RISOLUZIONE
-                        <label for="1280">1280 X 800</label>
-                        <input type="radio" id="1280" name="risoluzione" value="1280">
-                        <label for="1024">1024 X 768</label>
-                        <input type="radio" id="1024" name="risoluzione" value="1024">
-                        <label for="800">800 X 600</label>
-                        <input type="radio" id="800" name="risoluzione" value="800">
-                    </div>
-                    <div class="inline radioContainer">
-                        RIDIMENSIONA
-                        <label for="si">SÌ</label>
-                        <input type="radio" id="si" name="ridimensiona" value="si">
-                        <label for="no">NO</label>
-                        <input type="radio" id="no" name="ridimensiona" value="no">
-                    </div>
+                <div class="inline radioContainer">
+                    RISOLUZIONE
+                    <label for="1280">1280 X 800</label>
+                    <input type="radio" id="1280" name="risoluzione" value="1280">
+                    <label for="1024">1024 X 768</label>
+                    <input type="radio" id="1024" name="risoluzione" value="1024">
+                    <label for="800">800 X 600</label>
+                    <input type="radio" id="800" name="risoluzione" value="800">
                 </div>
-                <!-- Linea centrale -->
-                <div class="seconda">
-                    <!-- Barra a sinistra(anteprima delle immagini caricate) -->
-                    <div class="inline previews" id="divAnteprima">
-                        
-                    </div>
-                    <!-- Quadrante di scelta a destra -->
-                    <div class="inline assegnazioni" id="zonaAssegnazione">
-                        <!-- Elenco dei quadratini -->
-                        <div class="inline imgUpload">
-                            <div class="inline imgButton" id="Occl. Superiore" data-value="0" onclick="divClick('Occl. Superiore')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">Occl. Superiore</p>
-                        </div>
-                        <div class="inline imgUpload">
-                            <div class="inline imgButton" id="Occl. DX" data-value="1" onclick="divClick('Occl. DX')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">Occl. DX</p>
-                        </div>
-                        <div class="inline imgUpload">
-                            <div  class="inline imgButton" id="Occ. Frontale" data-value="2" onclick="divClick('Occ. Frontale')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">Occl. Frontale</p>
-                        </div>
-                        <div class="inline imgUpload">
-                            <div class="inline imgButton" id="Occl. SX" data-value="3" onclick="divClick('Occl. SX')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">Occl. SX</p>
-                        </div>
-                        <div class="inline imgUpload">
-                            <div class="inline imgButton" id="Occl. Inferiore" data-value="4" onclick="divClick('Occl. Inferiore')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">Occl. Inferiore</p>
-                        </div><br/>
-                        <div class="inline imgUpload">
-                            <div class="inline imgButton" id="Laterale" data-value="5" onclick="divClick('Laterale')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">Laterale</p>
-                        </div>
-                        <div class="inline imgUpload">
-                            <div class="inline imgButton" id="Frontale" data-value="6" onclick="divClick('Frontale')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">Frontale</p>
-                        </div>
-                        <div class="inline imgUpload">
-                            <div class="inline imgButton" id="Frontale Sorriso" data-value="7" onclick="divClick('Frontale Sorriso')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">Frontale Sorriso</p>
-                        </div><br/>
-                        <div class="inline imgUpload">
-                            <div class="inline imgButton" id="RX Panoramica" data-value="8" onclick="divClick('RX Panoramica')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">RX Panoramica</p>
-                        </div>
-                        <div class="inline imgUpload">
-                            <div class="inline imgButton" id="RX Laterale" data-value="9" onclick="divClick('RX Laterale')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">RX Laterale</p>
-                        </div>
-                        <div class="inline imgUpload">
-                            <div class="inline imgButton" id="RX Frontale PA" data-value="10" onclick="divClick('RX Frontale PA')">
-                                <img src="" alt=""/><br/>
-                            </div>
-                            <p class="descImg">RX Frontale PA</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Linea tasti invia e annulla -->
-                <div class="utilsButtonsCOntainer">
-                    <button class="annulla" @onclick="ToggleForm">Annulla</button>
-                    <button class="salva" @onclick="SaveFiles">Invia</button>
+                <div class="inline radioContainer">
+                    RIDIMENSIONA
+                    <label for="si">SÌ</label>
+                    <input type="radio" id="si" name="ridimensiona" value="si">
+                    <label for="no">NO</label>
+                    <input type="radio" id="no" name="ridimensiona" value="no">
                 </div>
             </div>
-        </div>
-    }
-    <!-- profilo paziente -->
-    <div class="AreaPaziente inline">
-        <img src="./assets/test/test.jpg" class="immaginePaziente">
-        <div class="sezione"> marco doccia</div>
-        <div class="intestazione">INFO CARTELLA</div>
-        <div class="sezione" style="text-align: unset">
-            <div class="sxAlign">
-                N<br/>
-                ETA' PAZIENTE
-            </div>
-            <div class="dxAlign">
-                @numeroCartella<br/>
-                @etaPaziente
-            </div>
-        </div>
-        
-        
-        <div class="intestazione">INFO OAS</div>
-        <div class="sezione" style="text-align: unset">
-            <div class="sxAlign">
-                RISCHIO<br/>
-                ESAME<br/>
-                VISITA<br/>
-                MAD<br/>
-                TRATTAMENTO
-            </div>
-            <div class="dxAlign">
-                @rischio<br/>
-                @esame<br/>
-                @visita<br/>
-                @mad<br/>
-                @dataTrattamento
-            </div>
-        </div>
+            <!-- Linea centrale -->
+            <div class="seconda">
+                <!-- Barra a sinistra(anteprima delle immagini caricate) -->
+                <div class="inline previews" id="divAnteprima">
 
-
-        <div class="intestazione">INFO OAS</div>
-        <div class="sezione" style="text-align: unset">
-            <div class="sxAlign">
-                ANAMNESI<br/>
-                PRIMA VISITA<br/>
-                PARODONTO<br/>
-                SPECIALISTICA<br/>
-                PRESCRIZIONI<br/>
-                PIANI TRATT.<br/>
-                INCONTRI<br/>
-                REFERTI<br/>
-                PRESENTAZIONI
+                </div>
+                <!-- Quadrante di scelta a destra -->
+                <div class="inline assegnazioni" id="zonaAssegnazione">
+                    <!-- Elenco dei quadratini -->
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Occl. Superiore" data-value="0" onclick="divClick('Occl. Superiore')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Occl. Superiore</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Occl. DX" data-value="1" onclick="divClick('Occl. DX')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Occl. DX</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div  class="inline imgButton" id="Occ. Frontale" data-value="2" onclick="divClick('Occ. Frontale')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Occl. Frontale</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Occl. SX" data-value="3" onclick="divClick('Occl. SX')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Occl. SX</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Occl. Inferiore" data-value="4" onclick="divClick('Occl. Inferiore')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Occl. Inferiore</p>
+                    </div><br/>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Laterale" data-value="5" onclick="divClick('Laterale')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Laterale</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Frontale" data-value="6" onclick="divClick('Frontale')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Frontale</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Frontale Sorriso" data-value="7" onclick="divClick('Frontale Sorriso')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Frontale Sorriso</p>
+                    </div><br/>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="RX Panoramica" data-value="8" onclick="divClick('RX Panoramica')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">RX Panoramica</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="RX Laterale" data-value="9" onclick="divClick('RX Laterale')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">RX Laterale</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="RX Frontale PA" data-value="10" onclick="divClick('RX Frontale PA')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">RX Frontale PA</p>
+                    </div>
+                </div>
             </div>
-            <div class="dxAlign">
-                @anamanesi<br/>
-                @prima<br/>
-                @paradonto<br/>
-                @specialistica<br/>
-                @prescrizioni<br/>
-                @pianiTrattamenti<br/>
-                @incontri<br/>
-                @referti<br/>
-                @presentazioni
-            </div>
-        </div>
-
-        <div class="intestazione">INFO OAS</div>
-        <div class="sezione" style="text-align: unset">
-            <div class="sxAlign">
-                FATTURATO<br/>
-                PREVENTIVI<br/>
-                CURE EXTRA<br/>
-                ESEGUITO
-            </div>
-            <div class="dxAlign">
-                @fatturato<br/>
-                @preventivi<br/>
-                @extras<br/>
-                @eseguito
+            <!-- Linea tasti invia e annulla -->
+            <div class="utilsButtonsCOntainer">
+                <button class="annulla" @onclick="ToggleForm">Annulla</button>
+                <button class="salva" @onclick="SaveFiles">Invia</button>
             </div>
         </div>
     </div>
-    <!-- area centrale -->
-    <div class="AreaCentrale inline">
-        <div class="barraStatoPaziente">
-            PIANI DI CURA
-            <select type="select" class="inputSelezione" placeholder=" ">
-                <option value="p">Prova</option>
-            </select>
-            
-            <button class="utilButton add"></button>
-            <button class="utilButton edit"></button>
-            <button class="utilButton lock"></button>
-            <button class="utilButton notify"></button>
-            <button class="utilButton bin"></button>
-            <button class="utilButton save"></button>
-            <button class="utilButton stamp"></button>
-            <button class="utilButton pin"></button>
-            
-            <input class="check" type="checkbox"/> NON INIZIATO
-            <input class="check" type="checkbox"/> TERMINATO
-            <input class="check" type="checkbox"/> INTERROTTO
-            <input class="check" type="checkbox"/> DOCUMENTATO
+}
+<!-- profilo paziente -->
+<div class="AreaPaziente inline">
+    <img src="./assets/test/test.jpg" class="immaginePaziente">
+    <div class="sezione"> marco doccia</div>
+    <div class="intestazione">INFO CARTELLA</div>
+    <div class="sezione" style="text-align: unset">
+        <div class="sxAlign">
+            N<br/>
+            ETA' PAZIENTE
         </div>
-        
-        <div class="secondaSezione">
-            <div class="sez1">
-                <div class="insTesto">
-                    <div class="spazioTesto inline">
-                        DIAGNOSI
-                    </div>
-                    <div class="spazioInput inline">
-                        <textarea class="bigInput"></textarea>
-                    </div>
-                </div>
-                <div class="insTesto">
-                    <div class="spazioTesto inline">
-                        STATO
-                    </div>
-                    <div class="spazioInput inline">
-                        <input type="text" class="smallInput"/>
-                    </div>
-                </div>
-                <div class="insTesto inline">
-                    <div class="spazioTesto inline">
-                        NOTE MED.
-                    </div>
-                    <div class="spazioInput inline">
-                        <textarea class="bigInput"></textarea>
-
-                    </div>
-                </div>
-            </div>
-            
-            <div class="sez2">
-                ESAMI
-                <div class="esame"></div>
-            </div>
+        <div class="dxAlign">
+            @numeroCartella<br/>
+            @etaPaziente
         </div>
     </div>
-    
+
+
+    <div class="intestazione">INFO OAS</div>
+    <div class="sezione" style="text-align: unset">
+        <div class="sxAlign">
+            RISCHIO<br/>
+            ESAME<br/>
+            VISITA<br/>
+            MAD<br/>
+            TRATTAMENTO
+        </div>
+        <div class="dxAlign">
+            @rischio<br/>
+            @esame<br/>
+            @visita<br/>
+            @mad<br/>
+            @dataTrattamento
+        </div>
+    </div>
+
+
+    <div class="intestazione">INFO OAS</div>
+    <div class="sezione" style="text-align: unset">
+        <div class="sxAlign">
+            ANAMNESI<br/>
+            PRIMA VISITA<br/>
+            PARODONTO<br/>
+            SPECIALISTICA<br/>
+            PRESCRIZIONI<br/>
+            PIANI TRATT.<br/>
+            INCONTRI<br/>
+            REFERTI<br/>
+            PRESENTAZIONI
+        </div>
+        <div class="dxAlign">
+            @anamanesi<br/>
+            @prima<br/>
+            @paradonto<br/>
+            @specialistica<br/>
+            @prescrizioni<br/>
+            @pianiTrattamenti<br/>
+            @incontri<br/>
+            @referti<br/>
+            @presentazioni
+        </div>
+    </div>
+
+    <div class="intestazione">INFO OAS</div>
+    <div class="sezione" style="text-align: unset">
+        <div class="sxAlign">
+            FATTURATO<br/>
+            PREVENTIVI<br/>
+            CURE EXTRA<br/>
+            ESEGUITO
+        </div>
+        <div class="dxAlign">
+            @fatturato<br/>
+            @preventivi<br/>
+            @extras<br/>
+            @eseguito
+        </div>
+    </div>
+</div>
+<!-- area centrale -->
+<div class="AreaCentrale inline">
+    <div class="barraStatoPaziente">
+        PIANI DI CURA
+        <select type="select" class="inputSelezione" placeholder=" ">
+            <option value="p">Prova</option>
+        </select>
+
+        <button class="utilButton add"></button>
+        <button class="utilButton edit"></button>
+        <button class="utilButton lock"></button>
+        <button class="utilButton notify"></button>
+        <button class="utilButton bin"></button>
+        <button class="utilButton save"></button>
+        <button class="utilButton stamp"></button>
+        <button class="utilButton pin"></button>
+
+        <input class="check" type="checkbox"/> NON INIZIATO
+        <input class="check" type="checkbox"/> TERMINATO
+        <input class="check" type="checkbox"/> INTERROTTO
+        <input class="check" type="checkbox"/> DOCUMENTATO
+    </div>
+
+    <div class="secondaSezione">
+        <div class="sez1">
+            <div class="insTesto">
+                <div class="spazioTesto inline">
+                    DIAGNOSI
+                </div>
+                <div class="spazioInput inline">
+                    <textarea class="bigInput"></textarea>
+                </div>
+            </div>
+            <div class="insTesto">
+                <div class="spazioTesto inline">
+                    STATO
+                </div>
+                <div class="spazioInput inline">
+                    <input type="text" class="smallInput"/>
+                </div>
+            </div>
+            <div class="insTesto inline">
+                <div class="spazioTesto inline">
+                    NOTE MED.
+                </div>
+                <div class="spazioInput inline">
+                    <textarea class="bigInput"></textarea>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="sez2">
+            ESAMI
+            <div class="esame"></div>
+        </div>
+    </div>
+</div>
+
 </div>
 
 @code {
@@ -401,12 +424,12 @@
     private float preventivi;
     private float extras;
     private float eseguito;
-    
+
     private bool _visibile = false;
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
     private List<IBrowserFile> loadedFiles = new();
-    
+
     private void ToggleForm()
     {
         _visibile = !_visibile;
@@ -417,6 +440,8 @@
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
+        //fare il push di loadedFiles perché se non scarica solo le ultime immaginin selezionate
+        List<IBrowserFile> temp = new();
         loadedFiles = e.GetMultipleFiles().ToList();
         await ShowPreview();
     }
@@ -433,11 +458,11 @@
     {
         if (loadedFiles.Any())
         {
-            for (int i=0;i<loadedFiles.Count();i++)
+            for (int i = 0; i < loadedFiles.Count(); i++)
             {
                 try
                 {
-                    var trustedFileName = await getImgName(loadedFiles[i].Name)+".png";
+                    var trustedFileName = await getImgName(loadedFiles[i].Name) + ".png";
                     //Console.WriteLine("\n\nAAAAAAAAAAAAAAAAAAAAA\n\n"+trustedFileName);
                     var path = Path.Combine(env.ContentRootPath, "uploads", trustedFileName);
 
@@ -451,12 +476,14 @@
                     Console.WriteLine($"Error saving file: {ex.Message}");
                 }
             }
+
             ToggleForm();
         }
     }
-    
+
     private async Task<string> getImgName(string name)
     {
         return await JS.InvokeAsync<string>("getDivName", name);
     }
+
 }
