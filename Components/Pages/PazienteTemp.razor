@@ -149,11 +149,18 @@
                         return confirmedNames
                     }
                     
+                    function changePage(){
+                        
+                        location.href='/VisImg'
+                    }
+                    
                     function setTinyImages(imgs){
+                        document.getElementById('immPiccole').innerHTML=''
                         for(let i=0;i<imgs.length;i++){
                             document.getElementById('immPiccole').appendChild(document.getElementById(imgs[i].name))
                             document.getElementById(imgs[i].name).style.width='100%'
-                            document.getElementById(imgs[i].name).style.height='100%'
+                            document.getElementById(imgs[i].name).style.height='auto'
+                            document.getElementById(imgs[i].name).setAttribute('onclick','changePage()')
                         }
                     }
                     
