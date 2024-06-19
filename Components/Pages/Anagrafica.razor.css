@@ -181,13 +181,24 @@
     background-color: #96beda;
 }
 
-
+/*
 .list{
     width: 95%;
     height: 80vh;
     border-radius: 10px;
     background-color: #7FAFE1;
     margin-top: 2rem;
+}*/
+
+.list{
+    width: 95%;
+    height: 85vh;
+    border-radius: 10px;
+    background-color: #7FAFE1;
+    margin-top: 2rem;
+    display: block;
+    max-height: 80rem;
+    overflow-x: auto;
 }
 
 .corpo{
@@ -419,11 +430,20 @@
 }
 
 .styled-table {
+    width: 97%;
+    margin-left: 1%;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+    max-height: 6rem;
+    overflow-x: auto;
+}
+/*
+.styled-table {
     width: 90%;
     margin-left: 5%;
     border-collapse: separate;
     border-spacing: 0 0.5rem;
-}
+}*/
 
 .styled-table thead {
     background-color: #3D7BD9;
