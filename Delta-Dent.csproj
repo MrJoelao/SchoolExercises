@@ -11,9 +11,6 @@
     <ItemGroup>
       <None Include="wwwroot\assets\loginAssets\dottore.svg" />
       <None Remove="prova.txt" />
-      <None Update="Components\Pages\VisImg.css">
-        <DependentUpon>VisImg.razor</DependentUpon>
-      </None>
     </ItemGroup>
 
     <ItemGroup>

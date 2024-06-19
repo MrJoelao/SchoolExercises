@@ -584,14 +584,6 @@
     text-align: right;
     line-height: 2.2rem;
 }
-.altopuls{
-    position: absolute;
-    left: 33%;
-    top:2rem;
-    height: 40%;
-    word-spacing: 227% ;
-    
-}
 
 .cheks{
     display: flex;

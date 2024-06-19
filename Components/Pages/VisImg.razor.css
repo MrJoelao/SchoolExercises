@@ -1,0 +1,32 @@
+.defButton{
+    height: 3rem;
+    width: 3.2rem;
+    background-color: #7FAFE1;
+    border-radius: 5px;
+    border:none;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+}
+
+.buttonContainer{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 80vw;
+    height: 4rem;
+    margin-bottom: 1rem;
+}
+
+/*per safari & google*/
+.buttonContainer::-webkit-scrollbar {
+    height: 5px;
+    background-color: #3D7BD9;
+    border-radius: 10rem;
+}
+
+/*per firefox*/
+.buttonContainer {
+    scrollbar-width: thin;
+    scrollbar-color: #3D7BD9 #fff;
+}
