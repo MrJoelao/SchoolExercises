@@ -1,6 +1,9 @@
 @page "/"
 @page "/Login"
 
+@using MySql.Data.MySqlClient
+@inject IConfiguration Configuration
+
 <PageTitle>Login</PageTitle>
 @rendermode InteractiveServer
 <div class="login-page mainSection">
@@ -12,7 +15,7 @@
                     <h1 class="mainTitle">DeltaDent Web</h1>
                     <h3 class="mainSubtitle">La tua scelta per un futuro web</h3>
                 </div>
-                <button class="registerButton"  @onclick="@ButtonRegistration">Registrati</button>
+                <button class="registerButton" @onclick="ButtonRegistration">Registrati</button>
             </div>
             <img class="headerIcon" src="./assets/loginAssets/dottore.svg" alt="alt text" />
         </div>
@@ -39,43 +42,88 @@
 
 @if (_flagBol)
 {
-    <form class="form">
-        <p class="title">Registrati </p>
-        <p class="message">Registrati subito per avere accesso all'app. </p>
+    <form class="form" @onsubmit="HandleRegistration">
+        <p class="title">Registrati</p>
+        <p class="message">Registrati subito per avere accesso all'app.</p>
         <div class="flex">
             <label>
-                <input required="" placeholder="" type="text" class="input">
+                <input required @bind="Nome" placeholder="" type="text" class="input">
                 <span>Nome</span>
             </label>
 
             <label>
-                <input required="" placeholder="" type="text" class="input">
+                <input required @bind="Cognome" placeholder="" type="text" class="input">
                 <span>Cognome</span>
             </label>
         </div>
 
         <label>
-            <input required="" placeholder="" type="email" class="input">
+            <input required @bind="Email" placeholder="" type="email" class="input">
             <span>Email</span>
         </label>
 
         <label>
-            <input required="" placeholder="" type="password" class="input">
+            <input required @bind="Password" placeholder="" type="password" class="input">
             <span>Password</span>
         </label>
         <label>
-            <input required="" placeholder="" type="password" class="input">
+            <input required @bind="ConfermaPassword" placeholder="" type="password" class="input">
             <span>Conferma password</span>
         </label>
-        <button class="submit">Submit</button>
+        <button class="submit" type="submit">Submit</button>
     </form>
 }
 
 @code {
-    Boolean _flagBol;
-    
+    private bool _flagBol;
+    private string Nome { get; set; }
+    private string Cognome { get; set; }
+    private string Email { get; set; }
+    private string Password { get; set; }
+    private string ConfermaPassword { get; set; }
+
     private void ButtonRegistration()
     {
         _flagBol = !_flagBol;
+    }
+
+    private async Task HandleRegistration()
+    {
+        try
+        {
+            if (Password != ConfermaPassword)
+            {
+                // Gestisci l'errore di password non corrispondenti (opzionale)
+                return;
+            }
+
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            using var connection = new MySqlConnection(connectionString);
+            await connection.OpenAsync();
+
+            var query = "INSERT INTO accessi (Nome, Cognome, Email, Password) VALUES (@Nome, @Cognome, @Email, @Password)";
+            using var command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@Nome", Nome);
+            command.Parameters.AddWithValue("@Cognome", Cognome);
+            command.Parameters.AddWithValue("@Email", Email);
+            command.Parameters.AddWithValue("@Password", Password);
+
+            await command.ExecuteNonQueryAsync();
+
+            // Reset dei campi del form dopo la registrazione
+            Nome = string.Empty;
+            Cognome = string.Empty;
+            Email = string.Empty;
+            Password = string.Empty;
+            ConfermaPassword = string.Empty;
+            _flagBol = false;
+
+            Console.WriteLine("Dati inseriti correttamente.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Errore durante l'inserimento nella tabella: {ex.Message}");
+            // Gestisci l'errore appropriatamente (ad esempio, mostra un messaggio all'utente)
+        }
     }
 }
