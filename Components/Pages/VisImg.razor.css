@@ -37,3 +37,8 @@
     border:solid 5px #7FAFE1;
     border-radius: 10px;
 }
+
+.dx{
+    display: inline;
+    width:29%;
+}
