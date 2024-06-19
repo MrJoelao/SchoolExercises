@@ -71,14 +71,6 @@
                         // Cancella tutte le anteprime esistenti
                         container.innerHTML = '';
 
-                        // Verifico che non si abbia già caricato le immagini
-                        let initialized=false
-                        for(let i=0;i<filesNames.length;i++){
-                            if (filesNames[i]!=null){
-                                initialized=true
-                                break
-                            }
-                        }
                         // Itera su tutti i file selezionati
                         for (let i = 0; i < inputElem.files.length; i++) {
                             // Crea un URL temporaneo per il file e crea l'immagine
@@ -100,17 +92,7 @@
                             img.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
                             container.appendChild(div)
                             
-                            if (initialized){
-                                for(let j=0;j<filesNames.length;j++){
-                                    if (filesNames[j]===null){
-                                        filesNames[j]=inputElem.files[i].name
-                                        break
-                                    }
-                                }
-                            }
-                            else{
-                                filesNames[i]=(inputElem.files[i].name)
-                            }
+                            filesNames[i]=inputElem.files[i].name
                         }
                     }
                     
@@ -127,16 +109,24 @@
                             //cambio l'id dell'immagine con quello del posto dov'è stata messa
                             clickedImg.setAttribute('id',divId+'i')
                             //aggiorna l'array dei nomi dei file per tenere traccia dei cambi
+                            console.log("filenames prima del ciclo: "+filesNames)
                             for(let i=0;i<filesNames.length;i++){
                                 for(let j=0;j<names.length;j++){
-                                    if (divId===name[i]){
+                                    if (divId===names[i]){
+                                        console.log("Prima dello scambio:")
+                                        console.log("filenames[i]: "+filesNames[i])
+                                        console.log("filenames[j]: "+filesNames[j])
                                         let temp=filesNames[i]
                                         filesNames[i]=filesNames[j]
                                         filesNames[j]=temp
+                                        console.log("Dopo lo scambio:")
+                                        console.log("filenames[i]: "+filesNames[i])
+                                        console.log("filenames[j]: "+filesNames[j])
                                         break
                                     }
                                 }
                             }
+                            console.log("filenames dopo il ciclo: "+filesNames)
                             //console.log(names[document.getElementById(divId).dataset.value])
                             document.getElementById(divId).innerHTML=''
                             document.getElementById(divId).appendChild(clickedImg)
@@ -201,7 +191,7 @@
                         <p class="descImg">Occl. DX</p>
                     </div>
                     <div class="inline imgUpload">
-                        <div  class="inline imgButton" id="Occ. Frontale" data-value="2" onclick="divClick('Occ. Frontale')">
+                        <div class="inline imgButton" id="Occ. Frontale" data-value="2" onclick="divClick('Occ. Frontale')">
                             <img src="" alt=""/><br/>
                         </div>
                         <p class="descImg">Occl. Frontale</p>
@@ -398,10 +388,10 @@
             ESAMI
             <div class="esame"></div>
         </div>
-    <div class="sez3">
-                
-            </div>
+        <div class="sez3">
+
         </div>
+    </div>
 </div>
 </div>
 
@@ -442,9 +432,7 @@
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
-        //fare il push di loadedFiles perché se non scarica solo le ultime immaginin selezionate
-        List<IBrowserFile> temp = new();
-        loadedFiles = e.GetMultipleFiles().ToList();
+        loadedFiles = e.GetMultipleFiles(11).ToList();
         await ShowPreview();
     }
 
