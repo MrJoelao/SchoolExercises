@@ -155,6 +155,7 @@
                     }
                     
                     function setTinyImages(imgs){
+                        document.getElementById('immPiccole').innerHTML=''
                         for(let i=0;i<imgs.length;i++){
                             document.getElementById('immPiccole').appendChild(document.getElementById(imgs[i].name))
                             document.getElementById(imgs[i].name).style.width='100%'
