@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="prova4">
+    <list default="true" id="db32abb0-3e39-4677-a8d3-b44469b3c4e9" name="Changes" comment="Immagini hanno i nomi giusti + vari commenti">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Delta-Dent.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Delta-Dent.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Components/Pages/PazienteTemp.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Components/Pages/PazienteTemp.razor" afterDir="false" />
     </list>
@@ -46,10 +46,12 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/c9e3996173cec136bc2e9f3b4ec45f2a323b1d63/src/Components/Components/src/ElementReference.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/c9e3996173cec136bc2e9f3b4ec45f2a323b1d63/src/Components/Web/src/Forms/InputFile/InputFileChangeEventArgs.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/c9e3996173cec136bc2e9f3b4ec45f2a323b1d63/src/JSInterop/Microsoft.JSInterop/src/JSRuntimeExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/df0050fd946b40a4bbaf8bc1a5ecb7c75e8b0/b9/390aebbf/02000058pdb68.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/df0050fd946b40a4bbaf8bc1a5ecb7c75e8b0/1f/5c67a484/IBrowserFile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/PazienteTemp.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/matt3/RiderProjects/Delta-Dent/Components/Pages/VisImg.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -143,7 +145,8 @@
       <workItem from="1718608012668" duration="10036000" />
       <workItem from="1718622883787" duration="8394000" />
       <workItem from="1718694341003" duration="118000" />
-      <workItem from="1718694485034" duration="8142000" />
+      <workItem from="1718694485034" duration="18771000" />
+      <workItem from="1718780816479" duration="3746000" />
     </task>
     <task id="LOCAL-00001" summary="aggiustamento nome div">
       <option name="closed" value="true" />
@@ -265,7 +268,55 @@
       <option name="project" value="LOCAL" />
       <updated>1718699009616</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="corretto assegnamento id immagini">
+      <option name="closed" value="true" />
+      <created>1718703002200</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1718703002200</updated>
+    </task>
+    <task id="LOCAL-00017" summary="non era vero adesso sì">
+      <option name="closed" value="true" />
+      <created>1718703110869</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1718703110869</updated>
+    </task>
+    <task id="LOCAL-00018" summary="va circa salvataggio img">
+      <option name="closed" value="true" />
+      <created>1718708253015</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1718708253015</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Spoldi nero">
+      <option name="closed" value="true" />
+      <created>1718724198376</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1718724198376</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Carica 11 file">
+      <option name="closed" value="true" />
+      <created>1718782365093</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1718782365093</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Immagini hanno i nomi giusti + vari commenti">
+      <option name="closed" value="true" />
+      <created>1718782960709</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1718782960709</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,6 +341,12 @@
     <MESSAGE value="prova gitignore" />
     <MESSAGE value="prova 2" />
     <MESSAGE value="prova4" />
-    <option name="LAST_COMMIT_MESSAGE" value="prova4" />
+    <MESSAGE value="corretto assegnamento id immagini" />
+    <MESSAGE value="non era vero adesso sì" />
+    <MESSAGE value="va circa salvataggio img" />
+    <MESSAGE value="Spoldi nero" />
+    <MESSAGE value="Carica 11 file" />
+    <MESSAGE value="Immagini hanno i nomi giusti + vari commenti" />
+    <option name="LAST_COMMIT_MESSAGE" value="Immagini hanno i nomi giusti + vari commenti" />
   </component>
 </project>
