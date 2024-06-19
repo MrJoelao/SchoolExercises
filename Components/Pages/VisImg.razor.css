@@ -30,3 +30,10 @@
     scrollbar-width: thin;
     scrollbar-color: #3D7BD9 #fff;
 }
+.bigDivv {
+    display: inline-block;
+    width:70%;
+    height:85vh;
+    border:solid 5px #7FAFE1;
+    border-radius: 10px;
+}
