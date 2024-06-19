@@ -92,7 +92,7 @@
                             img.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
                             container.appendChild(div)
                             
-                            filesNames[i]= inputElem.files[i].name
+                            //filesNames[i]= inputElem.files[i].name
                         }
                     }
                     
@@ -107,14 +107,10 @@
                             clickedImg.style.width = '110px'
                             clickedImg.style.height = '110px'
                             //aggiorna l'array dei nomi dei file per tenere traccia dei cambi
-                            for(let i=0;i<filesNames.length;i++){
-                                for(let j=0;j<names.length;j++){
-                                    if (divId===name[i]){
-                                        let temp=filesNames[i]
-                                        filesNames[i]=filesNames[j]
-                                        filesNames[j]=temp
-                                        break
-                                    }
+                            for(let i=0;i<names.length;i++){
+                                if (divId===names[i]){
+                                    filesNames[i]=clickedImg.id
+                                    break
                                 }
                             }
                             //console.log(names[document.getElementById(divId).dataset.value])
@@ -134,12 +130,19 @@
                     }
                     
                     function getToUploadFiles(allFiles){
-                        let confirmed=[]
+                        let confirmedNames=[]
                         for (let i=0;i<allFiles.length;i++){
-                            for (let j=0;j<names.length;j++){
-                                if (document.getElementById(names[j]).firstChild.id === allFiles[i].name){
-                                    confirmed.push(allFiles[i])
-                                }
+                            getToUploadFilesAssistant(allFiles[i].name, confirmedNames)
+                        }
+                        //console.log(confirmed)
+                        return confirmedNames
+                    }
+                    
+                    function getToUploadFilesAssistant(name, confirmedNames){
+                        for (let j=0;j<names.length;j++){
+                            if (document.getElementById(names[j]).firstChild.id === name){
+                                confirmedNames.push(name)
+                                return;
                             }
                         }
                         console.log(confirmed)
@@ -332,32 +335,32 @@
 <div class="AreaCentrale inline">
     <div class="barraStatoPaziente">
         <div class="containerStatus">
-            
-        PIANI DI CURA
-        <select type="select" class="inputSelezione" placeholder=" ">
-            <option value="p">Prova</option>
-        </select>
 
-        <button class="utilButton add"></button>
-        <button class="utilButton edit"></button>
-        <button class="utilButton lock"></button>
-        <button class="utilButton notify"></button>
-        <button class="utilButton bin"></button>
-        <button class="utilButton save"></button>
-        <button class="utilButton stamp"></button>
-        <button class="utilButton pin"></button>
-        <div class="inline">
-            <div class="inline cheks">
-                <label class="buttonScheda" for="btniniz" id="label90"></label>
-                <input style="display: none" type="checkbox" id="btniniz" onclick="toggleSfondo('label90')"> NON INIZIATO
-                <label class="buttonScheda" for="btnterm" id="label91"></label>
-                <input style="display: none" type="checkbox" id="btnterm" onclick="toggleSfondo('label91')">TERMINATO
-                <label class="buttonScheda" for="btninterr" id="label92"></label>
-                <input style="display: none" type="checkbox" id="btninterr" onclick="toggleSfondo('label92')"> INTERROTTO
-                <label class="buttonScheda" for="btndocum" id="label93"></label>
-                <input style="display: none" type="checkbox" id="btndocum" onclick="toggleSfondo('label93')"> DOCUMENTATO
+            PIANI DI CURA
+            <select type="select" class="inputSelezione" placeholder=" ">
+                <option value="p">Prova</option>
+            </select>
+
+            <button class="utilButton add"></button>
+            <button class="utilButton edit"></button>
+            <button class="utilButton lock"></button>
+            <button class="utilButton notify"></button>
+            <button class="utilButton bin"></button>
+            <button class="utilButton save"></button>
+            <button class="utilButton stamp"></button>
+            <button class="utilButton pin"></button>
+            <div class="inline">
+                <div class="inline cheks">
+                    <label class="buttonScheda" for="btniniz" id="label90"></label>
+                    <input style="display: none" type="checkbox" id="btniniz" onclick="toggleSfondo('label90')"> NON INIZIATO
+                    <label class="buttonScheda" for="btnterm" id="label91"></label>
+                    <input style="display: none" type="checkbox" id="btnterm" onclick="toggleSfondo('label91')">TERMINATO
+                    <label class="buttonScheda" for="btninterr" id="label92"></label>
+                    <input style="display: none" type="checkbox" id="btninterr" onclick="toggleSfondo('label92')"> INTERROTTO
+                    <label class="buttonScheda" for="btndocum" id="label93"></label>
+                    <input style="display: none" type="checkbox" id="btndocum" onclick="toggleSfondo('label93')"> DOCUMENTATO
+                </div>
             </div>
-        </div>
 
         </div>
     </div>
@@ -387,14 +390,14 @@
                 <div class="spazioInput inline">
                     <textarea class="bigInput"></textarea>
 
-                    </div>
                 </div>
             </div>
-            
-            <div class="sez2">
-                ESAMI
-                <div class="esame"></div>
-            </div>
+        </div>
+
+        <div class="sez2">
+            ESAMI
+            <div class="esame"></div>
+        </div>
         <div class="sez3">
             <div class="sxpuls">
                 FOTO<br/>
@@ -510,7 +513,7 @@
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
     private List<IBrowserFile> allLoadedFiles = new();
-    private long maxFileSize = 1024*100;
+    private long maxFileSize = 1024 * 100;
 
     private void ToggleForm()
     {
@@ -526,24 +529,35 @@
         if (inputFile != null)
         {
             await JSRuntime.InvokeVoidAsync("previewImage", inputFile.Element, "divAnteprima");
-            
         }
     }
 
     private async Task SaveFiles()
     {
-        //List<IBrowserFile> toUploadFiles = await JS.InvokeAsync<List<Object>>("getToUploadFiles", allLoadedFiles);
-        if (allLoadedFiles.Any())
+        string[] toUploadFilesNames = await JS.InvokeAsync<string[]>("getToUploadFiles", allLoadedFiles);
+        
+        if (toUploadFilesNames.Any())
         {
-            for (int i = 0; i < allLoadedFiles.Count(); i++)
+            List<IBrowserFile> confirmedFiles = new();
+            foreach (var name in toUploadFilesNames)
+            {
+                foreach (var f in allLoadedFiles)
+                {
+                    if (f.Name == name)
+                    {
+                        confirmedFiles.Add(f);
+                    }
+                }
+            }
+            for (int i = 0; i < confirmedFiles.Count(); i++)
             {
                 try
                 {
-                    var trustedFileName = await JS.InvokeAsync<string>("getDivName",allLoadedFiles[i].Name)+".png";
+                    var trustedFileName = await JS.InvokeAsync<string>("getDivName", confirmedFiles[i].Name) + ".png";
                     var path = Path.Combine(env.ContentRootPath, "uploads", trustedFileName);
 
                     await using FileStream fs = new(path, FileMode.Create);
-                    await allLoadedFiles[i].OpenReadStream(maxFileSize).CopyToAsync(fs);
+                    await confirmedFiles[i].OpenReadStream(maxFileSize).CopyToAsync(fs);
 
                     Console.WriteLine($"File saved: {trustedFileName}");
                 }
