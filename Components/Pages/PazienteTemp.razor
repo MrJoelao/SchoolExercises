@@ -570,8 +570,15 @@
                 }
             }
 
+            resetVariables();
             ToggleForm();
         }
+    }
+
+    private void resetVariables()
+    {
+        inputFile = null;
+        allLoadedFiles = new();
     }
 
 }
