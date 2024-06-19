@@ -323,7 +323,11 @@
 .esame{
     border: solid 3px #FFFFFF;
     border-radius: 5px;
+    width: 100%;
     height:87%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    display: inline-grid;
 }
 .formattazione{
     color: white;
@@ -387,7 +391,7 @@
 .secondaSezione{
     background-color: #7FAFE1;
     width: 100%;
-    height: 15rem;
+    height: 24.5vh;
     border-radius: 10px;
     margin-top: 1rem;
     padding:1rem;
@@ -607,4 +611,11 @@
     border-radius: 2px;
     width:100%;
     height:100%;
+}
+.terzaSezione{
+    margin-top:1rem;
+    width:100%;
+    background-color: #7FAFE1;
+    border-radius: 10px;
+    height: 50vh;
 }
