@@ -504,3 +504,16 @@
     background: url("./assets/paziente/stamp.svg") no-repeat center;
     background-color: #2962b6;
 }
+
+.buttonScheda{
+    padding:1rem;
+    background-color: #515151;
+    width: 1.5rem;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
+}
+
+.selezionato {
+    border: solid 3px #0a58ca;
+    background: url("assets/paziente/check.svg") no-repeat center;
+}
