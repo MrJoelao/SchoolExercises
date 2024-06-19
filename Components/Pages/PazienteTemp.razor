@@ -145,10 +145,18 @@
                                 return;
                             }
                         }
-                        console.log(confirmed)
-                        return confirmed
+                        //console.log(confirmed)
+                        return confirmedNames
                     }
-                                        
+                    
+                    function setTinyImages(imgs){
+                        for(let i=0;i<imgs.length;i++){
+                            document.getElementById('immPiccole').appendChild(document.getElementById(imgs[i].name))
+                            document.getElementById(imgs[i].name).style.width='100%'
+                            document.getElementById(imgs[i].name).style.height='100%'
+                        }
+                    }
+                    
                     </script>
 
                 <div class="inline radioContainer">
@@ -396,7 +404,7 @@
 
         <div class="sez2">
             ESAMI
-            <div class="esame"></div>
+            <div class="esame" id="immPiccole"></div>
         </div>
         <div class="sez3">
             <div class="sxpuls">
@@ -447,10 +455,10 @@
                 <input style="display: none" type="checkbox" id="btn16" onclick="toggleSfondo('label16')">
             </div>
             <script>
-                    function toggleSfondo(id){
-                        document.getElementById(id).classList.toggle('selezionato');
-                    }
-                </script>
+                function toggleSfondo(id){
+                    document.getElementById(id).classList.toggle('selezionato');
+                }
+            </script>
         </div>
         <div class="sez4">
             PIANO TRATTAMENTO<br/>
@@ -570,6 +578,7 @@
                 }
             }
 
+            await JS.InvokeVoidAsync("setTinyImages",confirmedFiles);
             resetVariables();
             ToggleForm();
         }
