@@ -97,37 +97,28 @@
                     }
                     
                     function imageClick(imgId){
-                        //console.log(imgId)
                         clickedImg=document.getElementById(imgId)
                     }
                     
                     function divClick(divId){
-                    //console.log("nci3iqvbi")
                         if (clickedImg!=null&&divId!=null){
                             clickedImg.style.width = '110px'
                             clickedImg.style.height = '110px'
-                            //cambio l'id dell'immagine con quello del posto dov'è stata messa
-                            clickedImg.setAttribute('id',divId+'i')
                             //aggiorna l'array dei nomi dei file per tenere traccia dei cambi
-                            console.log("filenames prima del ciclo: "+filesNames)
                             for(let i=0;i<filesNames.length;i++){
-                                for(let j=0;j<names.length;j++){
-                                    if (divId===names[i]){
-                                        console.log("Prima dello scambio:")
-                                        console.log("filenames[i]: "+filesNames[i])
-                                        console.log("filenames[j]: "+filesNames[j])
-                                        let temp=filesNames[i]
-                                        filesNames[i]=filesNames[j]
-                                        filesNames[j]=temp
-                                        console.log("Dopo lo scambio:")
-                                        console.log("filenames[i]: "+filesNames[i])
-                                        console.log("filenames[j]: "+filesNames[j])
-                                        break
+                                if (filesNames[i]===clickedImg.id){
+                                    for(let j=0;j<names.length;j++){
+                                        if (divId===names[j]){
+                                            let temp=filesNames[i]
+                                            filesNames[i]=filesNames[j]
+                                            filesNames[j]=temp
+                                            break
+                                        }
                                     }
                                 }
                             }
-                            console.log("filenames dopo il ciclo: "+filesNames)
-                            //console.log(names[document.getElementById(divId).dataset.value])
+                            //cambio l'id dell'immagine con quello del posto dov'è stata messa
+                            clickedImg.setAttribute('id',divId+'i')
                             document.getElementById(divId).innerHTML=''
                             document.getElementById(divId).appendChild(clickedImg)
                             clickedImg=null
@@ -136,16 +127,16 @@
                     }
                     
                     function getDivName(name){
-                        //cerco nei nomi dei file la corrispondenza e ritorno parallelamente il nome della sezione in cui è stata messa la fot
+                        /*//cerco nei nomi dei file la corrispondenza e ritorno parallelamente il nome della sezione in cui è stata messa la fot
                         for(let i=0;i<filesNames.length;i++){
                             if (filesNames[i]==null){
                                 throw new Error("Non sono state caricate tutte le immagini")
                             }
-                        }
+                        }*/
                         for(let i=0;i<filesNames.length;i++){
                             //console.log(filesNames[i])
-                            if ((filesNames[i])===name){
-                                return names[i]
+                            if ((filesNames[i])===name/* la posizione nell'array e il nome passatogli*/){
+                                return names[i]    // il nome corrispondente nell'array dei nomi "medici"
                             }
                         }
                     }
