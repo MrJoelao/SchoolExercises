@@ -320,6 +320,8 @@
 <!-- area centrale -->
 <div class="AreaCentrale inline">
     <div class="barraStatoPaziente">
+        <div class="containerStatus">
+            
         PIANI DI CURA
         <select type="select" class="inputSelezione" placeholder=" ">
             <option value="p">Prova</option>
@@ -333,11 +335,20 @@
         <button class="utilButton save"></button>
         <button class="utilButton stamp"></button>
         <button class="utilButton pin"></button>
+        <div class="inline">
+            <div class="inline cheks">
+                <label class="buttonScheda" for="btniniz" id="label90"></label>
+                <input style="display: none" type="checkbox" id="btniniz" onclick="toggleSfondo('label90')"> NON INIZIATO
+                <label class="buttonScheda" for="btnterm" id="label91"></label>
+                <input style="display: none" type="checkbox" id="btnterm" onclick="toggleSfondo('label91')">TERMINATO
+                <label class="buttonScheda" for="btninterr" id="label92"></label>
+                <input style="display: none" type="checkbox" id="btninterr" onclick="toggleSfondo('label92')"> INTERROTTO
+                <label class="buttonScheda" for="btndocum" id="label93"></label>
+                <input style="display: none" type="checkbox" id="btndocum" onclick="toggleSfondo('label93')"> DOCUMENTATO
+            </div>
+        </div>
 
-        <input class="check" type="checkbox"/> NON INIZIATO
-        <input class="check" type="checkbox"/> TERMINATO
-        <input class="check" type="checkbox"/> INTERROTTO
-        <input class="check" type="checkbox"/> DOCUMENTATO
+        </div>
     </div>
 
     <div class="secondaSezione">
@@ -373,12 +384,22 @@
                 ESAMI
                 <div class="esame"></div>
             </div>
-            <div class="sez3">
-                <label class="buttonScheda" for="btn1" id="label1" ></label>
+        <div class="sez3">
+            <div class="sxpuls">
+                FOTO<br/>
+                IMP<br/>
+                TELE<br/>
+                OPT<br/>
+            </div>
+            <div class="altopuls">
+                INI INIT FIN DIS
+            </div>
+            <div class="buttonsContainer">
+                <label class="buttonScheda" for="btn1" id="label1"></label>
                 <input style="display: none" type="checkbox" id="btn1" onclick="toggleSfondo('label1')">
                 <label class="buttonScheda" for="btn2" id="label2"></label>
                 <input style="display: none" type="checkbox" id="btn2" onclick="toggleSfondo('label2')">
-                <label class="buttonScheda" for="btn3" id="label3" ></label>
+                <label class="buttonScheda" for="btn3" id="label3"></label>
                 <input style="display: none" type="checkbox" id="btn3" onclick="toggleSfondo('label3')">
                 <label class="buttonScheda" for="btn4" id="label4"></label>
                 <input style="display: none" type="checkbox" id="btn4" onclick="toggleSfondo('label4')">
@@ -406,12 +427,13 @@
                 <input style="display: none" type="checkbox" id="btn15" onclick="toggleSfondo('label15')">
                 <label class="buttonScheda" for="btn16" id="label16"></label>
                 <input style="display: none" type="checkbox" id="btn16" onclick="toggleSfondo('label16')">
-                <script>
+            </div>
+            <script>
                     function toggleSfondo(id){
                         document.getElementById(id).classList.toggle('selezionato');
                     }
                 </script>
-            </div>
+        </div>
         </div>
     </div>
     
