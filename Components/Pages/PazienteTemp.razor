@@ -92,7 +92,7 @@
                             img.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
                             container.appendChild(div)
                             
-                            filesNames[i]=(inputElem.files[i].name)
+                            filesNames[i]= inputElem.files[i].name
                         }
                     }
                     
@@ -106,8 +106,6 @@
                         if (clickedImg!=null&&divId!=null){
                             clickedImg.style.width = '110px'
                             clickedImg.style.height = '110px'
-                            //cambio l'id dell'immagine con quello del posto dov'è stata messa
-                            clickedImg.setAttribute('id',divId+'i')
                             //aggiorna l'array dei nomi dei file per tenere traccia dei cambi
                             for(let i=0;i<filesNames.length;i++){
                                 for(let j=0;j<names.length;j++){
@@ -133,6 +131,19 @@
                                 return names[i]    // il nome corrispondente nell'array dei nomi "medici"
                             }
                         }
+                    }
+                    
+                    function getToUploadFiles(allFiles){
+                        let confirmed=[]
+                        for (let i=0;i<allFiles.length;i++){
+                            for (let j=0;j<names.length;j++){
+                                if (document.getElementById(names[j]).firstChild.id === allFiles[i].name){
+                                    confirmed.push(allFiles[i])
+                                }
+                            }
+                        }
+                        console.log(confirmed)
+                        return confirmed
                     }
                                         
                     </script>
@@ -176,7 +187,7 @@
                         <p class="descImg">Occl. DX</p>
                     </div>
                     <div class="inline imgUpload">
-                        <div class="inline imgButton" id="Occ. Frontale" data-value="2" onclick="divClick('Occ. Frontale')">
+                        <div class="inline imgButton" id="Occl. Frontale" data-value="2" onclick="divClick('Occl. Frontale')">
                             <img src="" alt=""/><br/>
                         </div>
                         <p class="descImg">Occl. Frontale</p>
@@ -464,7 +475,7 @@
     private bool _visibile = false;
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
-    private List<IBrowserFile> loadedFiles = new();
+    private List<IBrowserFile> allLoadedFiles = new();
     private long maxFileSize = 1024*100;
 
     private void ToggleForm()
@@ -477,32 +488,28 @@
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
-        loadedFiles = e.GetMultipleFiles(11).ToList();
-        await ShowPreview();
-    }
-
-    private async Task ShowPreview()
-    {
+        allLoadedFiles.AddRange(e.GetMultipleFiles(11).ToList());
         if (inputFile != null)
         {
             await JSRuntime.InvokeVoidAsync("previewImage", inputFile.Element, "divAnteprima");
+            
         }
     }
 
     private async Task SaveFiles()
     {
-        if (loadedFiles.Any())
+        //List<IBrowserFile> toUploadFiles = await JS.InvokeAsync<List<Object>>("getToUploadFiles", allLoadedFiles);
+        if (allLoadedFiles.Any())
         {
-            for (int i = 0; i < loadedFiles.Count(); i++)
+            for (int i = 0; i < allLoadedFiles.Count(); i++)
             {
                 try
                 {
-                    var trustedFileName = await getImgName(loadedFiles[i].Name)+".png";
-                    //Console.WriteLine("\n\nAAAAAAAAAAAAAAAAAAAAA\n\n"+trustedFileName);
+                    var trustedFileName = await JS.InvokeAsync<string>("getDivName",allLoadedFiles[i].Name)+".png";
                     var path = Path.Combine(env.ContentRootPath, "uploads", trustedFileName);
 
                     await using FileStream fs = new(path, FileMode.Create);
-                    await loadedFiles[i].OpenReadStream().CopyToAsync(fs);
+                    await allLoadedFiles[i].OpenReadStream(maxFileSize).CopyToAsync(fs);
 
                     Console.WriteLine($"File saved: {trustedFileName}");
                 }
@@ -514,11 +521,6 @@
 
             ToggleForm();
         }
-    }
-
-    private async Task<string> getImgName(string name)
-    {
-        return await JS.InvokeAsync<string>("getDivName", name);
     }
 
 }
