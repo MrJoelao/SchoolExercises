@@ -92,7 +92,7 @@
                             img.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
                             container.appendChild(div)
                             
-                            filesNames[i]= inputElem.files[i].name
+                            //filesNames[i]= inputElem.files[i].name
                         }
                     }
                     
@@ -102,22 +102,16 @@
                     }
                     
                     function divClick(divId){
-                    //console.log("nci3iqvbi")
                         if (clickedImg!=null&&divId!=null){
                             clickedImg.style.width = '110px'
                             clickedImg.style.height = '110px'
                             //aggiorna l'array dei nomi dei file per tenere traccia dei cambi
-                            for(let i=0;i<filesNames.length;i++){
-                                for(let j=0;j<names.length;j++){
-                                    if (divId===name[i]){
-                                        let temp=filesNames[i]
-                                        filesNames[i]=filesNames[j]
-                                        filesNames[j]=temp
-                                        break
-                                    }
+                            for(let i=0;i<names.length;i++){
+                                if (divId===names[i]){
+                                    filesNames[i]=clickedImg.id
+                                    break
                                 }
                             }
-                            //console.log(names[document.getElementById(divId).dataset.value])
                             document.getElementById(divId).innerHTML=''
                             document.getElementById(divId).appendChild(clickedImg)
                             clickedImg=null
@@ -136,14 +130,19 @@
                     function getToUploadFiles(allFiles){
                         let confirmed=[]
                         for (let i=0;i<allFiles.length;i++){
-                            for (let j=0;j<names.length;j++){
-                                if (document.getElementById(names[j]).firstChild.id === allFiles[i].name){
-                                    confirmed.push(allFiles[i])
-                                }
+                            getToUploadFilesAssistant(allFiles[i].name,confirmed)
+                        }
+                        //console.log(confirmed)
+                        return null
+                    }
+                    
+                    function getToUploadFilesAssistant(name, confirmed){
+                        for (let j=0;j<names.length;j++){
+                            if (document.getElementById(names[j]).firstChild.id ===name){
+                                confirmed.push(name)
+                                return;
                             }
                         }
-                        console.log(confirmed)
-                        return confirmed
                     }
                                         
                     </script>
@@ -476,7 +475,7 @@
 
     private async Task SaveFiles()
     {
-        //List<IBrowserFile> toUploadFiles = await JS.InvokeAsync<List<Object>>("getToUploadFiles", allLoadedFiles);
+        List<IBrowserFile> toUploadFiles = await JS.InvokeAsync<List<IBrowserFile>>("getToUploadFiles", allLoadedFiles);
         if (allLoadedFiles.Any())
         {
             for (int i = 0; i < allLoadedFiles.Count(); i++)
