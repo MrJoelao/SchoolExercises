@@ -127,20 +127,13 @@
                     }
                     
                     function getDivName(name){
-                        /*//cerco nei nomi dei file la corrispondenza e ritorno parallelamente il nome della sezione in cui è stata messa la fot
                         for(let i=0;i<filesNames.length;i++){
-                            if (filesNames[i]==null){
-                                throw new Error("Non sono state caricate tutte le immagini")
-                            }
-                        }*/
-                        for(let i=0;i<filesNames.length;i++){
-                            //console.log(filesNames[i])
                             if ((filesNames[i])===name/* la posizione nell'array e il nome passatogli*/){
                                 return names[i]    // il nome corrispondente nell'array dei nomi "medici"
                             }
                         }
                     }
-                    
+                                        
                     </script>
 
                 <div class="inline radioContainer">
@@ -412,6 +405,7 @@
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
     private List<IBrowserFile> loadedFiles = new();
+    private long maxFileSize = 1024*100;
 
     private void ToggleForm()
     {
@@ -448,7 +442,7 @@
                     var path = Path.Combine(env.ContentRootPath, "uploads", trustedFileName);
 
                     await using FileStream fs = new(path, FileMode.Create);
-                    await loadedFiles[i].OpenReadStream().CopyToAsync(fs);
+                    await loadedFiles[i].OpenReadStream(maxFileSize).CopyToAsync(fs);
 
                     Console.WriteLine($"File saved: {trustedFileName}");
                 }
