@@ -97,7 +97,9 @@
     padding: 1rem;
     border-radius: 10px;
     border-top-left-radius: 0px;
-    height:97%
+    height:85vh;
+    display:flex;
+    flex-direction: column;
 }
 
 .dato{
@@ -370,7 +372,7 @@
     background-color: white;
     width: 99%;
     margin-left: 1%;
-    height:15rem;
+    height:100%;
     resize: none;
     border:none;
     margin-top: 1rem;
