@@ -43,13 +43,15 @@
                 <th>DA FATTURARE</th>
                 <th>TERMINATE</th>
                 <th>DOCUMENTATO</th>
-                <th><div>Lock</div></th>
+                <th>
+                    <div>Lock</div>
+                </th>
             </tr>
             </thead>
             <tbody>
-            
+
             <!-- Qui vengono aggiunte le righe della tabella -->
-            @foreach(var paziente in pazienti)
+            @foreach (var paziente in pazienti)
             {
                 <tr>
                     <td>@paziente.Surname</td>
@@ -61,10 +63,12 @@
                     <td>@paziente.Billable</td>
                     <td>@(paziente.Completed ? "SÌ" : "NO")</td>
                     <td>@(paziente.Documented ? "SÌ" : "NO")</td>
-                    <td><input type="checkbox"/></td>
+                    <td>
+                        <input type="checkbox"/>
+                    </td>
                 </tr>
             }
-            
+
             </tbody>
         </table>
 
@@ -73,7 +77,7 @@
 
 
 @if (visible)
-{   
+{
     <div class="oscuramento">
         <!-- div contenente il pop-up per l'inserimento dei dati -->
         <div class="Inserimento">
@@ -91,95 +95,105 @@
             </div>
             <div class="containerForm">
                 <div class="forms">
-                <!-- div colonna a sinistra -->
-                <div class=" sx" >
-                    <!-- div contenente i form principali -->
-                    <div>
-                        <div class="inline containerInput">
-                            COGNOME*<br/>
-                            <input type="text" @bind="nuovoPaziente.Surname" class="inputForm" placeholder="Poretti"/>
+                    <!-- div colonna a sinistra -->
+                    <div class=" sx">
+                        <!-- div contenente i form principali -->
+                        <div>
+                            <div class="inline containerInput">
+                                COGNOME*<br/>
+                                <input type="text" @bind="nuovoPaziente.Surname" class="inputForm" placeholder="Poretti"/>
+                            </div>
+                            <div class="inline containerInput">
+                                NOME*<br/>
+                                <input type="text" @bind="nuovoPaziente.FirstName" class="inputForm" placeholder="Giacomo"/>
+                            </div><br/>
+                            <div class="inline containerInput">
+                                <div>
+                                    LUOGO DI NASCITA
+                                    <div class="inline checkbox">estero<input @bind="nuovoPaziente.Foreigner" type="checkbox"></div>
+                                </div>
+                                <input type="text" class="inputForm" placeholder="Milano"/>
+                            </div>
+                            <div class="inline containerInputSmall">
+                                PROVINCIA<br/>
+                                <input type="text" @bind="nuovoPaziente.BirthProvince" class="inputForm" placeholder="Milano"/>
+                            </div>
+                            <div class="inline containerInputSmall">
+                                SESSO<br/>
+                                <select type="select" @bind="gender" class="inputFormScleta" placeholder=" ">
+                                    <option value="m">Maschio</option>
+                                    <option value="f">Femmina</option>
+                                </select>
+                            </div><br/>
+                            <div class="inline containerInputSmall">
+                                DATA NASCITA<br/>
+                                <input type="date" @bind="nuovoPaziente.BirthDate" class="inputFormData"/>
+                            </div>
+                            <div class="inline containerInputSmall">
+                                CODICE ASL<br/>
+                                <input type="text" @bind="nuovoPaziente.CAsl" class="inputForm" placeholder="MI333"/>
+                            </div>
+                            <div class="inline containerInput">
+                                <div>
+                                    CODICE FISCALE
+                                    <div class="inline checkbox">cont. validità<input type="checkbox"></div>
+                                </div>
+                                <input type="text" class="inputForm" @bind="nuovoPaziente.CF" placeholder="PRTGCM64H07F205D"/>
+                            </div><br/>
+                            <div class="inline containerInputSmall">
+                                CATEGORIA<br/>
+                                <select type="select" class="inputFormScleta" placeholder=" ">
+                                    <option value="p">Prova</option>
+                                </select>
+                            </div>
+                            <div class="inline containerInputSmall">
+                                MEDICO<br/>
+                                <input type="text" @bind="nuovoPaziente.DoctorID" class="inputForm" placeholder="Ippocrate"/>
+                            </div>
+                            <div class="inline containerInput">
+                                PROFESSIONE<br/>
+                                <select type="select" class="inputFormScleta"placeholder=" ">
+                                    <option value="p">Prova</option>
+                                </select>
+                            </div><br/>
+                            <div class="inline containerInputLarge">
+                                INDIRIZZI<br/>
+                                <input type="text" class="inputFormLarge"placeholder="Via ..."/>
+                            </div>
                         </div>
-                        <div class="inline containerInput">
-                            NOME*<br/>
-                            <input type="text" @bind="nuovoPaziente.FirstName" class="inputForm" placeholder="Giacomo"/>
-                        </div><br/>
-                        <div class="inline containerInput">
-                            <div>LUOGO DI NASCITA <div class="inline checkbox">estero<input @bind="nuovoPaziente.Foreigner" type="checkbox"></div></div>
-                            <input type="text" class="inputForm" placeholder="Giacomo"/>
-                        </div>
-                        <div class="inline containerInputSmall">
-                            PROVINCIA<br/>
-                            <input type="text" @bind="nuovoPaziente.BirthProvince" class="inputForm" placeholder="Milano"/>
-                        </div>
-                        <div class="inline containerInputSmall">
-                            SESSO<br/>
-                            <select type="select"  @bind="gender" class="inputFormScleta"placeholder=" ">
-                                <option value="m">Maschio</option>
-                                <option value="f">Femmina</option>
-                            </select>
-                        </div><br/>
-                        <div class="inline containerInputSmall">
-                            DATA NASCITA<br/>
-                            <input type="date"  @bind="nuovoPaziente.BirthDate" class="inputFormData"/>
-                        </div>
-                        <div class="inline containerInputSmall">
-                            CODICE ASL<br/>
-                            <input type="text" class="inputForm"placeholder="MI333"/>
-                        </div>
-                        <div class="inline containerInput">
-                            <div>CODICE FISCALE <div class="inline checkbox"> cont. validità<input type="checkbox"></div></div>
-                            <input type="text" class="inputForm" placeholder="PRTGCM64H07F205D"/>
-                        </div><br/>
-                        <div class="inline containerInputSmall">FF
-                            CATEGORIA<br/>
-                            <select type="select" class="inputFormScleta" placeholder=" ">
-                                <option value="p">Prova</option>
-                            </select>
-                        </div>
-                        <div class="inline containerInputSmall">
-                            MEDICO<br/>
-                            <input type="text" class="inputForm" placeholder="Ippocrate"/>
-                        </div>
-                        <div class="inline containerInput">
-                            PROFESSIONE<br/>
-                            <select type="select"  class="inputFormScleta"placeholder=" ">
-                                <option value="p">Prova</option>
-                            </select>
-                        </div><br/>
-                        <div class="inline containerInputLarge">
-                            INDIRIZZI<br/>
-                            <input type="text" class="inputFormLarge"placeholder="Via ..."/>
+
+                    </div><!-- div contenente le referenze -->
+                    <br/>
+                    <div class="sx">
+                        REFERENZE<br/>
+                        <div class="inline pulsanti">
+                            <button class="buttonOpzioniForm">MOTIVO</button>
+                            <button class="buttonOpzioniForm">NOMINATIVO</button>
+                            <button class="buttonOpzioniForm">NOTE</button>
                         </div>
                     </div>
-                    
-                </div><!-- div contenente le referenze -->
-                <br/>
-                <div class="sx">
-                    REFERENZE<br/>
-                    <div class="inline pulsanti">
-                        <button class="buttonOpzioniForm">MOTIVO</button>
-                        <button class="buttonOpzioniForm">NOMINATIVO</button>
-                        <button class="buttonOpzioniForm">NOTE</button>
-                    </div>
-                </div>
                 </div>
                 <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
                 <div class="dx">
-                    <button class="buttonAzioniForm" @onclick="salvaPaziente">SALVA</button><br/>
+                    <button class="buttonAzioniForm">SALVA</button><br/>
                     <button class="buttonAzioniForm">SALVA E APRI</button><br/>
-                    <button class="buttonAzioniForm">SALVA E CHIUDI</button><br/>
+                    <button class="buttonAzioniForm" @onclick="salvaPaziente">SALVA E CHIUDI</button><br/>
                     <button class="buttonAzioniForm">ANNULLA</button><br/>
-                    <button class="buttonAzioniForm" >STAMPA</button><br/>
+                    <button class="buttonAzioniForm">STAMPA</button><br/>
+                    @if (showFormErr)
+                    {
+                        <div>Verificare i dati immessi</div>
+                    }
                     <button class="buttonAzioniFormIcona">IMPORTA CLIENTE</button>
                 </div>
             </div>
-            </div>
-            
+        </div>
+
     </div>
-    
 }
 
 @code {
+
     public class Persona
     {
         public string Nome { get; set; }
@@ -204,20 +218,21 @@
             };
         }
     }
-    
+
     //PRIMA
 
     private bool visible = false;
     private List<Persona> personeFiltrate = new List<Persona>();
     private string filePath;
     private string searchQuery = string.Empty;
-    
+
     //DOPO
-    
-    Paziente nuovoPaziente = new Paziente();
-    List<Paziente> pazienti = new List<Paziente>();
+
+    Paziente nuovoPaziente = new();
+    List<Paziente> pazienti = new();
     string gender;
     private string tableRows = "";
+    private bool showFormErr = false;
 
     protected override void OnInitialized()
     {
@@ -228,7 +243,7 @@
     {
         visible = !visible;
     }
-    
+
     private void getAllFromDB()
     {
         DbManager db = new DbManager();
@@ -250,40 +265,50 @@
             Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
             throw;
         }
-        
+
         db.CloseConnection();
     }
 
     private void CercaPersona(ChangeEventArgs e)
-    { /*
-        searchQuery = e.Value.ToString();
-        var searchTerms = searchQuery.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+    {
+        /*
+            searchQuery = e.Value.ToString();
+            var searchTerms = searchQuery.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-        personeFiltrate = persone.Where(p =>
-            searchTerms.All(term => 
-                p.Nome.Contains(term, StringComparison.OrdinalIgnoreCase) || 
-                p.Cognome.Contains(term, StringComparison.OrdinalIgnoreCase)
-            )
-        ).ToList();*/
+            personeFiltrate = persone.Where(p =>
+                searchTerms.All(term =>
+                    p.Nome.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                    p.Cognome.Contains(term, StringComparison.OrdinalIgnoreCase)
+                )
+            ).ToList();*/
     }
-    
+
     public void salvaPaziente()
     {
         nuovoPaziente.Gender = determinaSesso(gender);
-        
-        //salva il paziente
-        Paziente paziente = new Paziente(nuovoPaziente.FirstName,nuovoPaziente.Surname, (gender == "m"? false : true ), "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, 1,nuovoPaziente.Locked);
-        
-        pazienti.Add(paziente);
-        
-        paziente.SaveInDB();
-        toggleForm();
+        if (checkInputs())
+        {
+            //salva il paziente
+            Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, (gender == "m" ? false : true), "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, 1, nuovoPaziente.Locked);
+
+            pazienti.Add(paziente);
+
+            paziente.SaveInDB();
+            //se è visibile lo tolgo
+            if (showFormErr) showFormErr = !showFormErr;
+            toggleForm();
+        }
+        else
+        {
+            //mostro l'errore
+            showFormErr = !showFormErr;
+        }
     }
-    
+
     public bool determinaSesso(string genderOfPerson)
     {
         bool flagGender = false;
-        
+
         // false = maschio, true = femmina
         if (genderOfPerson == "M" || genderOfPerson == "m")
         {
@@ -293,7 +318,13 @@
         {
             flagGender = true;
         }
-        
+
         return flagGender;
     }
+
+    public bool checkInputs()
+    {
+        
+    }
+
 }
