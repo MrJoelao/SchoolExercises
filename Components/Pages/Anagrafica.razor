@@ -1,6 +1,9 @@
 @page "/Anagrafica"
+@using MySql.Data.MySqlClient
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
+
+
 <div class="corpo">
     <div class="toolbar">
         <div class="slideContainer">
@@ -38,15 +41,18 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var persona in personeFiltrate)
+            
+            <!-- Qui vengono aggiunte le righe della tabella -->
+            @foreach(var paziente in pazienti)
             {
-            <tr>
-                <td>@persona.Cognome</td>
-                <td>@persona.Nome</td>
-                <td>@persona.DataNascita.ToString("dd/MM/yyyy")</td>
-                <td>@persona.Sesso</td>
-            </tr>
+                <tr>
+                    <td>@paziente.Surname</td>
+                    <td>@paziente.FirstName</td>
+                    <td>@paziente.BirthDate</td>
+                    <td>@(paziente.Gender ? "Femmina" : "Maschio")</td>
+                </tr>
             }
+            
             </tbody>
         </table>
 
@@ -79,11 +85,11 @@
                     <div>
                         <div class="inline containerInput">
                             COGNOME*<br/>
-                            <input type="text" @bind="nuovaPersona.Cognome" class="inputForm" placeholder="Poretti"/>
+                            <input type="text" @bind="nuovoPaziente.Surname" class="inputForm" placeholder="Poretti"/>
                         </div>
                         <div class="inline containerInput">
                             NOME*<br/>
-                            <input type="text" @bind="nuovaPersona.Nome" class="inputForm" placeholder="Giacomo"/>
+                            <input type="text" @bind="nuovoPaziente.FirstName" class="inputForm" placeholder="Giacomo"/>
                         </div><br/>
                         <div class="inline containerInput">
                             <div>LUOGO DI NASCITA <div class="inline checkbox">estero<input type="checkbox"></div></div>
@@ -95,14 +101,14 @@
                         </div>
                         <div class="inline containerInputSmall">
                             SESSO<br/>
-                            <select type="select"  @bind="nuovaPersona.Sesso" class="inputFormScleta"placeholder=" ">
+                            <select type="select"  @bind="gender" class="inputFormScleta"placeholder=" ">
                                 <option value="m">Maschio</option>
                                 <option value="f">Femmina</option>
                             </select>
                         </div><br/>
                         <div class="inline containerInputSmall">
                             DATA NASCITA<br/>
-                            <input type="date"  @bind="nuovaPersona.DataNascita" class="inputFormData"/>
+                            <input type="date"  @bind="nuovoPaziente.BirthDate" class="inputFormData"/>
                         </div>
                         <div class="inline containerInputSmall">
                             CODICE ASL<br/>
@@ -147,11 +153,11 @@
                 </div>
                 <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
                 <div class="dx">
-                    <button class="buttonAzioniForm" @onclick="SalvaPersona">SALVA</button><br/>
+                    <button class="buttonAzioniForm" @onclick="salvaPaziente">SALVA</button><br/>
                     <button class="buttonAzioniForm">SALVA E APRI</button><br/>
                     <button class="buttonAzioniForm">SALVA E CHIUDI</button><br/>
                     <button class="buttonAzioniForm">ANNULLA</button><br/>
-                    <button class="buttonAzioniForm">STAMPA</button><br/>
+                    <button class="buttonAzioniForm" >STAMPA</button><br/>
                     <button class="buttonAzioniFormIcona">IMPORTA CLIENTE</button>
                 </div>
             </div>
@@ -188,54 +194,53 @@
     }
 
     private bool visible = false;
-    private Persona nuovaPersona = new Persona();
-    private List<Persona> persone = new List<Persona>();
     private List<Persona> personeFiltrate = new List<Persona>();
     private string filePath;
     private string searchQuery = string.Empty;
+    
+    
+    Paziente nuovoPaziente = new Paziente();
+    List<Paziente> pazienti = new List<Paziente>();
+    string gender;
+    private string tableRows = "";
 
     protected override void OnInitialized()
     {
-        filePath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "file.txt");
-        CaricaPersone();
+        getAllFromDB();
     }
 
     private void toggleForm()
     {
         visible = !visible;
     }
-
-    private void SalvaPersona()
+    
+    private void getAllFromDB()
     {
-        using (StreamWriter sw = new StreamWriter(filePath, true))
-        {
-            sw.WriteLine(nuovaPersona.ToString());
-        }
-        CaricaPersone();
-        toggleForm();
-    }
+        DbManager db = new DbManager();
+        string query = "SELECT * FROM PATIENT";
 
-    private void CaricaPersone()
-    {
-        persone.Clear();
-        personeFiltrate.Clear();
-        if (File.Exists(filePath))
+        try
         {
-            string[] lines = File.ReadAllLines(filePath);
-            foreach (var line in lines)
+            using (MySqlDataReader reader = db.ExecuteReader(query))
             {
-                if (!string.IsNullOrWhiteSpace(line))
+                while (reader.Read())
                 {
-                    var persona = Persona.FromString(line);
-                    persone.Add(persona);
-                    personeFiltrate.Add(persona);
+                    Paziente paziente = new Paziente().getFromDBReader(reader);
+                    pazienti.Add(paziente);
                 }
             }
         }
+        catch (Exception e)
+        {
+            Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
+            throw;
+        }
+        
+        db.CloseConnection();
     }
 
     private void CercaPersona(ChangeEventArgs e)
-    {
+    { /*
         searchQuery = e.Value.ToString();
         var searchTerms = searchQuery.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -244,6 +249,35 @@
                 p.Nome.Contains(term, StringComparison.OrdinalIgnoreCase) || 
                 p.Cognome.Contains(term, StringComparison.OrdinalIgnoreCase)
             )
-        ).ToList();
+        ).ToList();*/
+    }
+    
+    public void salvaPaziente()
+    {
+        nuovoPaziente.Gender = determinaSesso(gender);
+        
+        //salva il paziente
+        Paziente paziente = new Paziente(nuovoPaziente.FirstName,nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", "Prova", "Prova", false, false, 1);
+        
+        pazienti.Add(paziente);
+        
+        paziente.SaveInDB();
+    }
+    
+    public bool determinaSesso(string genderOfPerson)
+    {
+        bool flagGender = false;
+        
+        // false = maschio, true = femmina
+        if (genderOfPerson == "M" || genderOfPerson == "m")
+        {
+            flagGender = false;
+        }
+        else if (genderOfPerson == "F" || genderOfPerson == "f")
+        {
+            flagGender = true;
+        }
+        
+        return flagGender;
     }
 }
