@@ -130,18 +130,17 @@
                     }
                     
                     function getToUploadFiles(allFiles){
-                        let confirmedNames=[]
+                        let confirmedNames=['','','','','','','','','','','']
                         for (let i=0;i<allFiles.length;i++){
                             getToUploadFilesAssistant(allFiles[i].name, confirmedNames)
                         }
-                        //console.log(confirmed)
                         return confirmedNames
                     }
                     
                     function getToUploadFilesAssistant(name, confirmedNames){
                         for (let j=0;j<names.length;j++){
                             if (document.getElementById(names[j]).firstChild.id === name){
-                                confirmedNames.push(name)
+                                confirmedNames[j]= name
                                 return;
                             }
                         }
@@ -564,42 +563,39 @@
     {
         string[] toUploadFilesNames = await JS.InvokeAsync<string[]>("getToUploadFiles", allLoadedFiles);
 
-        if (toUploadFilesNames.Any())
+        List<IBrowserFile> confirmedFiles = new();
+        foreach (var name in toUploadFilesNames)
         {
-            List<IBrowserFile> confirmedFiles = new();
-            foreach (var name in toUploadFilesNames)
+            foreach (var f in allLoadedFiles)
             {
-                foreach (var f in allLoadedFiles)
+                if (f.Name == name)
                 {
-                    if (f.Name == name)
-                    {
-                        confirmedFiles.Add(f);
-                    }
+                    confirmedFiles.Add(f);
                 }
             }
-
-            for (int i = 0; i < confirmedFiles.Count(); i++)
-            {
-                try
-                {
-                    var trustedFileName = await JS.InvokeAsync<string>("getDivName", confirmedFiles[i].Name) + ".png";
-                    var path = Path.Combine(env.ContentRootPath, "uploads", trustedFileName);
-
-                    await using FileStream fs = new(path, FileMode.Create);
-                    await confirmedFiles[i].OpenReadStream(maxFileSize).CopyToAsync(fs);
-
-                    Console.WriteLine($"File saved: {trustedFileName}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error saving file: {ex.Message}");
-                }
-            }
-
-            await JS.InvokeVoidAsync("setTinyImages", confirmedFiles);
-            await resetVariables();
-            ToggleForm();
         }
+
+        for (int i = 0; i < confirmedFiles.Count(); i++)
+        {
+            try
+            {
+                var trustedFileName = await JS.InvokeAsync<string>("getDivName", confirmedFiles[i].Name) + ".png";
+                var path = Path.Combine(env.ContentRootPath, "uploads", trustedFileName);
+
+                await using FileStream fs = new(path, FileMode.Create);
+                await confirmedFiles[i].OpenReadStream(maxFileSize).CopyToAsync(fs);
+
+                Console.WriteLine($"File saved: {trustedFileName}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving file: {ex.Message}");
+            }
+        }
+
+        await JS.InvokeVoidAsync("setTinyImages", confirmedFiles);
+        await resetVariables();
+        ToggleForm();
     }
 
     private async Task resetVariables()

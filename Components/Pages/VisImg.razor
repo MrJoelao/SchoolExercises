@@ -1,4 +1,6 @@
 @page "/VisImg"
+@inject IWebHostEnvironment env
+
 <!-- Barra in alto -->
 <div class="buttonContainer">
     <button class="defButton">...</button>
@@ -33,7 +35,7 @@
 <div class="mainBody">
     <div class="bigDiv">
         <div>
-
+            <img src="@imgSrc"/>
         </div>
     </div>
     <!-- Menù a destra -->
@@ -95,4 +97,12 @@
 
 @code {
 
+    private string imgSrc;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        imgSrc = Directory.GetFiles(Path.Combine(env.ContentRootPath,"tempImg"), "*.png")[0];
+        Console.WriteLine(imgSrc);
+    }
+    
 }
