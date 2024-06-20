@@ -539,7 +539,7 @@
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
     private List<IBrowserFile> allLoadedFiles = new();
-    private long maxFileSize = 1024 * 100;
+    private long maxFileSize = 1024 * 1000;
 
     private void ToggleForm()
     {
@@ -610,7 +610,17 @@
     [JSInvokable]
     public static Task moveImg(string name)
     {
-        Console.WriteLine("\n\n\n"+name+"\n\n\n");
+        //Console.WriteLine("\n\n\n"+name+"\n\n\n");
+        string path = Path.Combine(Path.GetFullPath("."), "uploads", name);
+        //Console.WriteLine("\n\n\n\n"+path+"n\n\n\n");
+        if (!File.Exists(path))
+        {
+            using (FileStream fs = File.Open(path, FileMode.Open))
+            {
+                
+            }
+        }
+        
         return null;
     }
 
