@@ -148,11 +148,18 @@
                         //console.log(confirmed)
                         return confirmedNames
                     }
-                    
-                    function changePage(){
-                        
-                        location.href='/VisImg'
+
+                    function resetVariables(){
+                        filesNames=new Array(11).fill(null)
                     }
+
+                    window.changePage = (name) => {
+                        DotNet.invokeMethodAsync('Delta-Dent', 'moveImg', name)
+                            .then(data => {
+                                //console.log(data);
+                                //location.href='/VisImg'
+                            });
+                    };
                     
                     function setTinyImages(imgs){
                         document.getElementById('immPiccole').innerHTML=''
@@ -160,7 +167,7 @@
                             document.getElementById('immPiccole').appendChild(document.getElementById(imgs[i].name))
                             document.getElementById(imgs[i].name).style.width='100%'
                             document.getElementById(imgs[i].name).style.height='100%'
-                            document.getElementById(imgs[i].name).setAttribute('onclick','changePage()')
+                            document.getElementById(imgs[i].name).setAttribute("onclick","changePage('"+imgs[i].name+"')")
                         }
                     }
                     
@@ -554,7 +561,7 @@
     private async Task SaveFiles()
     {
         string[] toUploadFilesNames = await JS.InvokeAsync<string[]>("getToUploadFiles", allLoadedFiles);
-        
+
         if (toUploadFilesNames.Any())
         {
             List<IBrowserFile> confirmedFiles = new();
@@ -568,6 +575,7 @@
                     }
                 }
             }
+
             for (int i = 0; i < confirmedFiles.Count(); i++)
             {
                 try
@@ -586,16 +594,24 @@
                 }
             }
 
-            await JS.InvokeVoidAsync("setTinyImages",confirmedFiles);
-            resetVariables();
+            await JS.InvokeVoidAsync("setTinyImages", confirmedFiles);
+            await resetVariables();
             ToggleForm();
         }
     }
 
-    private void resetVariables()
+    private async Task resetVariables()
     {
         inputFile = null;
         allLoadedFiles = new();
+        await JS.InvokeVoidAsync("resetVariables");
+    }
+
+    [JSInvokable]
+    public static Task moveImg(string name)
+    {
+        Console.WriteLine("\n\n\n"+name+"\n\n\n");
+        return null;
     }
 
 }
