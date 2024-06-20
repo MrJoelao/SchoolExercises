@@ -24,6 +24,7 @@ public class Paziente
     public bool Locked { get; set; }
     
     public int DoctorID { get; set; }
+    public int PatientID { get; set; }
 
     // Costruttore con parametri
     public Paziente(string firstName, string surname, bool gender, string telephone, string phone1, string phone2,
@@ -79,6 +80,7 @@ public class Paziente
     public Paziente getFromDBReader(MySqlDataReader reader)
     {
         Paziente paziente = new Paziente();
+        paziente.PatientID = reader.GetInt32("patientID");
         paziente.DoctorID = reader.GetInt32("doctorID");
         paziente.FirstName = reader.GetString("first_name");
         paziente.Surname = reader.GetString("surname");
