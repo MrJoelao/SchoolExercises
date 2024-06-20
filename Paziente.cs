@@ -20,12 +20,15 @@ public class Paziente
     public bool Completed { get; set; }
     public bool Documented { get; set; }
     
+    public bool Foreigner { get; set; }
+    public bool Locked { get; set; }
+    
     public int DoctorID { get; set; }
 
     // Costruttore con parametri
     public Paziente(string firstName, string surname, bool gender, string telephone, string phone1, string phone2,
-        string cf, string cAsl, DateTime birthDate, string birthPlace, string birthProvince, string billable,
-        bool completed, bool documented, int doctorID)
+        string cf, string cAsl, DateTime birthDate, string birthPlace, bool foreinger, string birthProvince, string billable,
+        bool completed, bool documented, int doctorID, bool locked)
     {
         FirstName = firstName;
         Surname = surname;
@@ -37,11 +40,13 @@ public class Paziente
         CAsl = cAsl;
         BirthDate = birthDate;
         BirthPlace = birthPlace;
+        Foreigner = foreinger;
         BirthProvince = birthProvince;
         Billable = billable;
         Completed = completed;
         Documented = documented;
         DoctorID = doctorID;
+        Locked = locked;
     }
 
     // Costruttore vuoto
@@ -55,7 +60,7 @@ public class Paziente
         DbManager db = new DbManager(); // Uso i parametri di default impostati nel costruttore
 
         // Creo la query da eseguire
-        string query = $"INSERT INTO PATIENT (doctorID, first_name, surname, gender, telephone, phone_1, phone_2, cf, c_asl, birth_date, birth_place, birth_province, billable, completed, documented) VALUES ('{DoctorID}', '{FirstName}', '{Surname}', {Gender}, '{Telephone}', '{Phone1}', '{Phone2}', '{CF}', '{CAsl}', '{BirthDate:yyyy-MM-dd}', '{BirthPlace}', '{BirthProvince}', '{Billable}', {Completed}, {Documented})";
+        string query = $"INSERT INTO PATIENT (doctorID, first_name, surname, gender, telephone, phone_1, phone_2, cf, c_asl, birth_date, birth_place, foreigner, birth_province, billable, completed, documented, locked) VALUES ('{DoctorID}', '{FirstName}', '{Surname}', {Gender}, '{Telephone}', '{Phone1}', '{Phone2}', '{CF}', '{CAsl}', '{BirthDate:yyyy-MM-dd}', '{BirthPlace}', {Foreigner}, '{BirthProvince}', '{Billable}', {Completed}, {Documented}, {Locked})";
 
         // Eseguo la query
         try
@@ -86,9 +91,11 @@ public class Paziente
         paziente.BirthDate = reader.GetDateTime("birth_date");
         paziente.BirthPlace = reader.GetString("birth_place");
         paziente.BirthProvince = reader.GetString("birth_province");
+        paziente.Foreigner = reader.GetBoolean("foreigner");
         paziente.Billable = reader.GetString("billable");
         paziente.Completed = reader.GetBoolean("completed");
         paziente.Documented = reader.GetBoolean("documented");
+        paziente.Locked = reader.GetBoolean("locked");
         
         return paziente;
     }
