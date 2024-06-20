@@ -1,7 +1,7 @@
 
 .sfondo {
     z-index: 9;
-    position: absolute;
+    position: fixed;
     background: url("./assets/sfondo.svg")no-repeat left;
     background-color: #BADEFD;
     width: 110%;
@@ -11,8 +11,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
+    
     resize: none;
+    zoom: 1;
     transform: scale(1);
     transform-origin: 0 0;
 }
@@ -28,13 +29,13 @@
 }
 
 .registering{
-    height: 100%;
-    width: 60%;
+    height: 100vh;
+    width: 40vw;
     background-image: linear-gradient(#009AF0, #0060F0);
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     display: grid;
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: repeat(2,20vw);
     grid-template-rows: repeat(1, 100%);
 }
 
@@ -51,18 +52,24 @@
     background: url("./assets/loginAssets/dottore.svg") no-repeat bottom;
 }
 
-.registerButton{
-    border:none;
+.registerButton {
+    border: none;
     background: white;
     padding: 1rem;
     border-radius: 1000px;
-    width:8rem;
+    width: 7vw;
     color: #595959;
+    font-size: 2vh;
 }
 .registerButton:hover{
     background: #b8b8b8;
 }
 
 h2{
-    font: 800 2.5rem/1.47 "Mplus 1p", Helvetica, Arial, serif;
+    font: 800 4rem/1.47 "Mplus 1p", Helvetica, Arial, serif;
+    font-size: 5vh;
+}
+
+p{
+    font-size: 2vh;
 }
