@@ -1,0 +1,68 @@
+
+.sfondo {
+    z-index: 9;
+    position: absolute;
+    background: url("./assets/sfondo.svg")no-repeat left;
+    background-color: #BADEFD;
+    width: 110%;
+    height: 100%;
+    top: 0;
+    left: -10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    resize: none;
+    transform: scale(1);
+    transform-origin: 0 0;
+}
+
+.accessForm{
+    margin-left: 10%;
+    width: 60%;
+    height: 80%;
+    border-radius: 15px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.registering{
+    height: 100%;
+    width: 60%;
+    background-image: linear-gradient(#009AF0, #0060F0);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: repeat(1, 100%);
+}
+
+.sx {
+    font-weight: bold;
+    color: white;
+    display: grid;
+    justify-content: right;
+    align-content: center;
+}
+.dx{
+    width: 100%;
+    height: 100%;
+    background: url("./assets/loginAssets/dottore.svg") no-repeat bottom;
+}
+
+.registerButton{
+    border:none;
+    background: white;
+    padding: 1rem;
+    border-radius: 1000px;
+    width:8rem;
+    color: #595959;
+}
+.registerButton:hover{
+    background: #b8b8b8;
+}
+
+h2{
+    font: 800 2.5rem/1.47 "Mplus 1p", Helvetica, Arial, serif;
+}
