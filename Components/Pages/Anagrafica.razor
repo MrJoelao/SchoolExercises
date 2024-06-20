@@ -15,7 +15,7 @@
         <div class="buttonContainer">
             <button class="defButton" @onclick="@toggleForm">AGGIUNGI</button>
             <button class="defButton">MODIFICA</button>
-            <button class="defButton">ELIMINA</button>
+            <button class="defButton" @onclick="deleteFromDB">ELIMINA</button>
             <button class="defButtonSmall">STAMPA</button>
             <input type="text" placeholder="Ricerca" @bind-value="searchQuery" @oninput="CercaPersona" class="inputSmall"/>
             <div class="insNumero">
@@ -53,7 +53,7 @@
             <!-- Qui vengono aggiunte le righe della tabella -->
             @foreach (var paziente in pazienti)
             {
-                <tr @onclick="() => updateLastClicked(paziente.PatientID)">
+                <tr @onclick="() => updateLastClicked(paziente)">
                     <td>@paziente.Surname</td>
                     <td>@paziente.FirstName</td>
                     <td>@paziente.BirthDate</td>
@@ -233,7 +233,7 @@
     string gender;
     private string tableRows = "";
     private bool showFormErr = false;
-    private int lastClicked = -1;
+    Paziente lastClickedP = null;
 
     protected override void OnInitialized()
     {
@@ -328,10 +328,22 @@
         return true;
     }
 
-    public void updateLastClicked(int pID)
+    public void updateLastClicked(Paziente p)
     {
-        lastClicked = pID;
-        Console.WriteLine(lastClicked);
+        lastClickedP = p;
+    }
+
+    public void deleteFromDB()
+    {
+        if (lastClickedP!=null)
+        {
+            string query = $"DELETE FROM PATIENT WHERE patientID=" + lastClickedP.PatientID;
+            DbManager db = new DbManager();
+            db.MakeQuery(query);
+            pazienti.Remove(lastClickedP);
+            lastClickedP = null;
+        }
+        
     }
 
 }
