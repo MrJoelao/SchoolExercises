@@ -155,9 +155,11 @@
 
                     window.changePage = (name) => {
                         DotNet.invokeMethodAsync('Delta-Dent', 'moveImg', name)
-                            .then(data => {
-                                //console.log(data);
-                                //location.href='/VisImg'
+                            .then(result => {
+                                //console.log(result)
+                                if (result!=null){
+                                    location.href='/VisImg'
+                                }
                             });
                     };
                     
@@ -167,7 +169,7 @@
                             document.getElementById('immPiccole').appendChild(document.getElementById(imgs[i].name))
                             document.getElementById(imgs[i].name).style.width='100%'
                             document.getElementById(imgs[i].name).style.height='100%'
-                            document.getElementById(imgs[i].name).setAttribute("onclick","changePage('"+imgs[i].name+"')")
+                            document.getElementById(imgs[i].name).setAttribute("onclick","changePage('"+names[i]+".png"+"')")
                         }
                     }
                     
@@ -506,11 +508,11 @@
             </div>
         </div>
     </div>
-        
-        <div class="terzaSezione">
-        
-        </div>
-    </div> 
+
+    <div class="terzaSezione">
+
+    </div>
+</div>
 </div>
 
 @code {
@@ -539,7 +541,7 @@
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
     private List<IBrowserFile> allLoadedFiles = new();
-    private long maxFileSize = 1024 * 100;
+    private long maxFileSize = 1024 * 1000;
 
     private void ToggleForm()
     {
@@ -610,8 +612,22 @@
     [JSInvokable]
     public static Task moveImg(string name)
     {
-        Console.WriteLine("\n\n\n"+name+"\n\n\n");
-        return null;
+        //Console.WriteLine("\n\n\n"+name+"\n\n\n");
+        string startPath = Path.Combine(Path.GetFullPath("."), "uploads", name);
+        string endPath = Path.Combine(Path.GetFullPath("."), "tempImg", name);
+        //Console.WriteLine("\n\n\n\n"+path+"n\n\n\n");
+
+        try
+        {
+            File.Move(startPath, endPath);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+
+        return Task.CompletedTask;
     }
 
 }
