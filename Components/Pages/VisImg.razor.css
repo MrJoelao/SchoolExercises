@@ -33,7 +33,7 @@
 .bigDiv {
     display: inline-block;
     width:70%;
-    height:85vh;
+    height:87vh;
     border:solid 5px #7FAFE1;
     border-radius: 10px;
 }
@@ -46,7 +46,6 @@
 }
 
 .dx{
-    padding: 1rem;
 }
 .buttonBar{
     width:100%;
@@ -98,7 +97,7 @@
     padding: 1rem;
     border-radius: 10px;
     border-top-left-radius: 0px;
-    height:100%
+    height:97%
 }
 
 .dato{
@@ -124,10 +123,256 @@
     margin-left: 0.4rem;
 }
 .text{
+    font-weight: bold;
+    color:white;
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
 }
 
 .UtilsButtonS{
-    
+    margin-top:0.4rem;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: repeat(2, 2.5rem);
+    gap:0.3rem;
+    width: 99%;
+    margin-left: 1%;
+}
+
+.buttonStr{
+    border:none;
+    width: 100%;
+    height: 100%;
+    background-color: #3D7BD9;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.buttonStr:hover{
+    background-color: #29569a;
+}
+
+.buttonSx{
+
+    border:none;
+    width: 100%;
+    height: 100%;
+    background: url("./assets/visImg/sc.svg") no-repeat center;
+    background-color: #3D7BD9;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.buttonSx:hover{
+    background-color: #29569a;
+}
+
+.buttonDx{
+
+    border:none;
+    width: 100%;
+    height: 100%;
+    background: url("./assets/visImg/dx.svg") no-repeat center;
+    background-color: #3D7BD9;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.buttonDx:hover{
+    background-color: #29569a;
+}
+
+.valutazione{
+    background-color: #3D7BD9;
+    border-radius: 10px;
+    width: 100%;
+    margin-left: 1%;
+    padding:1rem;
+    margin-top:0.4rem;
+}
+
+.ValtopBar{
+    display: grid;
+    padding-bottom: 0.5rem;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: repeat(1, 2.5rem);
+}
+
+.valButton{
+    background-color: #DFEFFF;
+    color: black;
+    border-radius: 10px;
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
+    border:none;
+    transition: background-color 0.3s ease;
+}
+
+.valButton:hover{
+    background-color: #909fae;
+}
+
+.bold{
+    background: url("./assets/visImg/bold.svg") no-repeat center;
+    background-color: #DFEFFF;
+    border-radius: 5px;
+    border:none;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s ease;
+}
+.bold:hover{
+    background-color: #909dac;
+}
+
+.center{
+    background: url("./assets/visImg/center.svg") no-repeat center;
+    background-color: #DFEFFF;
+    border-radius: 5px;
+    border:none;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s ease;
+}
+.center:hover{
+    background-color: #909dac;
+}
+
+.color{
+    background: url("./assets/visImg/color.svg") no-repeat center;
+    background-color: #DFEFFF;
+    border-radius: 5px;
+    border:none;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s ease;
+}
+.color:hover{
+    background-color: #909dac;
+}
+
+.italic{
+    background: url("./assets/visImg/italix.svg")no-repeat center;
+    background-color: #DFEFFF;
+    border-radius: 5px;
+    border:none;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s ease;
+}
+.italic:hover{
+    background-color: #909dac;
+}
+
+.left{
+    background: url("./assets/visImg/left.svg") no-repeat center;
+    background-color: #DFEFFF;
+    border-radius: 5px;
+    border:none;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s ease;
+}
+.left:hover{
+    background-color: #909dac;
+}
+
+.maiusc{
+    background: url("./assets/visImg/maiusc.svg") no-repeat center;
+    background-color: #DFEFFF;
+    border-radius: 5px;
+    border:none;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s ease;
+}
+.maiusc:hover{
+    background-color: #909dac;
+}
+
+.right{
+    background: url("./assets/visImg/right.svg") no-repeat center;
+    background-color: #DFEFFF;
+    border-radius: 5px;
+    border:none;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s ease;
+}
+.right:hover{
+    background-color: #909dac;
+}
+
+.underline{
+    background: url("./assets/visImg/underline.svg") no-repeat center;
+    background-color: #DFEFFF;
+    border-radius: 5px;
+    border:none;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s ease;
+}
+.underline:hover{
+    background-color: #909dac;
+}
+
+.contenitorePuls{
+    display: grid;
+    gap:5px;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(1, 2rem);
+}
+
+.note{
+    width: 100%;
+    height: 10rem;
+    border-radius: 5px;
+    border: none;
+    margin-top: 4px;
+    resize: none;
+}
+
+.categoria{
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    grid-template-rows: repeat(1, 2rem);
+    justify-items: right;
+}
+
+.server{
+    background: url("./assets/visImg/server.svg") no-repeat center;
+    background-color: #DFEFFF;
+    border-radius: 5px;
+    border:none;
+    height: 100%;
+    aspect-ratio: 1/1;
+    transition: background-color 0.3s ease;
+}
+.server:hover{
+    background-color: #909dac;
+}
+
+.select{
+    border:none;
+    border-radius: 5px;
+    width: 100%;
+    height:100%;
+}
+
+.bigInputGrand{
+    background-color: white;
+    width: 99%;
+    margin-left: 1%;
+    height:15rem;
+    resize: none;
+    border:none;
+    margin-top: 1rem;
+    border-radius: 10px;
 }
