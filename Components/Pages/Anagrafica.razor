@@ -262,6 +262,7 @@
         nuovoPaziente.Gender = (gender == "m" ? false : true);
         if (checkInputs(paziente))
         {
+            sanatizePatient(paziente);
             pazienti.Add(paziente);
 
             paziente.SaveInDB();
@@ -286,6 +287,11 @@
             return false;
         }
 
+        return true;
+    }
+    
+    public void sanatizePatient(Paziente paziente)
+    {
         // Per prevenire sql injection
         paziente.FirstName = paziente.FirstName.Replace("'", "''");
         paziente.Surname = paziente.Surname.Replace("'", "''");
@@ -297,8 +303,6 @@
         paziente.BirthPlace = paziente.BirthPlace.Replace("'", "''");
         paziente.BirthProvince = paziente.BirthProvince.Replace("'", "''");
         paziente.Billable = paziente.Billable.Replace("'", "''");
-
-        return true;
     }
 
     public void updateLastClicked(Paziente p)
