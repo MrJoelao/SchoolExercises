@@ -321,10 +321,13 @@
     {
         if (lastClickedP!=null)
         {
-            string query = $"DELETE FROM PATIENT WHERE patientID=" + lastClickedP.PatientID;
+            string query = "DELETE FROM PATIENT WHERE patientID=" + lastClickedP.PatientID;
             DbManager db = new DbManager();
             db.MakeQuery(query);
             pazienti.Remove(lastClickedP);
+            query = "UPDATE VISIT SET patientID=-1 WHERE patientID=" + lastClickedP.PatientID;
+            db = new DbManager();
+            db.MakeQuery(query);
             lastClickedP = null;
             pazientiFiltrati = pazienti;
         }
