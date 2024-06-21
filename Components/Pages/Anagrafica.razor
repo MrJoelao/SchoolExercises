@@ -148,13 +148,13 @@
                             </div>
                             <div class="inline containerInput">
                                 PROFESSIONE<br/>
-                                <select type="select" class="inputFormScleta"placeholder=" ">
+                                <select type="select" class="inputFormScleta" placeholder=" ">
                                     <option value="p">Prova</option>
                                 </select>
                             </div><br/>
                             <div class="inline containerInputLarge">
                                 INDIRIZZI<br/>
-                                <input type="text" class="inputFormLarge"placeholder="Via ..."/>
+                                <input type="text" class="inputFormLarge" placeholder="Via ..."/>
                             </div>
                         </div>
 
@@ -189,36 +189,8 @@
 }
 
 @code {
-
-    public class Persona
-    {
-        public string Nome { get; set; }
-        public string Cognome { get; set; }
-        public DateTime DataNascita { get; set; }
-        public string Sesso { get; set; }
-
-        public override string ToString()
-        {
-            return $"{Nome};{Cognome};{DataNascita:dd/MM/yyyy};{Sesso}";
-        }
-
-        public static Persona FromString(string linea)
-        {
-            var dati = linea.Split(';');
-            return new Persona
-            {
-                Nome = dati[0],
-                Cognome = dati[1],
-                DataNascita = DateTime.ParseExact(dati[2], "dd/MM/yyyy", null),
-                Sesso = dati[3]
-            };
-        }
-    }
-
-    //PRIMA
-
     private bool visible = false;
-    private List<Persona> personeFiltrate = new List<Persona>();
+    private List<Paziente> PazientiFiltrati = new List<Paziente>();
     private string filePath;
     private string searchQuery = string.Empty;
 
@@ -226,8 +198,7 @@
 
     Paziente nuovoPaziente = new();
     List<Paziente> pazienti = new();
-    string gender;
-    private string tableRows = "";
+    string gender = null!;
     private bool showFormErr = false;
     Paziente lastClickedP = null;
 
@@ -254,6 +225,7 @@
                 {
                     Paziente paziente = new Paziente().getFromDBReader(reader);
                     pazienti.Add(paziente);
+                    
                 }
             }
         }
@@ -268,21 +240,21 @@
 
     private void CercaPersona(ChangeEventArgs e)
     {
-        /*
+        
             searchQuery = e.Value.ToString();
             var searchTerms = searchQuery.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-            personeFiltrate = persone.Where(p =>
+            PazientiFiltrati = pazienti.Where(p =>
                 searchTerms.All(term =>
-                    p.Nome.Contains(term, StringComparison.OrdinalIgnoreCase) ||
-                    p.Cognome.Contains(term, StringComparison.OrdinalIgnoreCase)
+                    p.FirstName.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                    p.Surname.Contains(term, StringComparison.OrdinalIgnoreCase)
                 )
-            ).ToList();*/
+            ).ToList();
     }
 
     public void salvaPaziente()
     {
-        nuovoPaziente.Gender = determinaSesso(gender);
+        nuovoPaziente.Gender = (gender == "m" ? false : true);
         if (checkInputs())
         {
             //salva il paziente
@@ -291,6 +263,7 @@
             pazienti.Add(paziente);
 
             paziente.SaveInDB();
+            
             //se è visibile lo tolgo
             if (showFormErr) showFormErr = !showFormErr;
             toggleForm();
@@ -300,23 +273,6 @@
             //mostro l'errore
             showFormErr = !showFormErr;
         }
-    }
-
-    public bool determinaSesso(string genderOfPerson)
-    {
-        bool flagGender = false;
-
-        // false = maschio, true = femmina
-        if (genderOfPerson == "M" || genderOfPerson == "m")
-        {
-            flagGender = false;
-        }
-        else if (genderOfPerson == "F" || genderOfPerson == "f")
-        {
-            flagGender = true;
-        }
-
-        return flagGender;
     }
 
     public bool checkInputs()
@@ -339,7 +295,6 @@
             pazienti.Remove(lastClickedP);
             lastClickedP = null;
         }
-        
     }
 
 }
