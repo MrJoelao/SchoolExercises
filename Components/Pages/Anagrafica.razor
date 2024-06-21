@@ -22,6 +22,10 @@
                 <div class="side">N</div>
                 <input type="number" class="number"/>
             </div>
+            <div class="insNumero">
+                <div class="side">P</div>
+                <input type="number" min="1" class="number" @bind-value="nPage" @oninput="changePage"/>
+            </div>
             <input type="text" placeholder="Avanzata" class="inputLarge"/>
         </div>
     </div>
@@ -201,10 +205,12 @@
     string gender = null!;
     private bool showFormErr = false;
     Paziente lastClickedP = null;
+    private int nPage=1;
+    private int patientsDisplayed = 50;
 
     protected override void OnInitialized()
     {
-        getPatientFromDB(1, 50);
+        getPatientFromDB(1, patientsDisplayed);
     }
 
     private void toggleForm()
@@ -214,6 +220,7 @@
 
     private void getPatientFromDB(int minRow, int maxRow)
     {
+        pazienti = new();
         DbManager db = new DbManager();
         MySqlDataReader r = db.ExecuteReader("SELECT MIN(patientID) FROM PATIENT");
         if (r.Read())
@@ -222,7 +229,6 @@
             db.CloseConnection();
             db = new DbManager();
             string query = "SELECT * FROM PATIENT WHERE patientID BETWEEN " + (minPID + minRow) + " AND " + (minPID + maxRow);
-
 
             try
             {
@@ -330,6 +336,15 @@
             db.MakeQuery(query);
             lastClickedP = null;
             pazientiFiltrati = pazienti;
+        }
+    }
+
+    public void changePage()
+    {
+        if (nPage > 0)
+        {
+            Console.WriteLine(nPage);
+            getPatientFromDB( patientsDisplayed * nPage - ( patientsDisplayed - 1 ), patientsDisplayed * nPage) ;
         }
     }
 
