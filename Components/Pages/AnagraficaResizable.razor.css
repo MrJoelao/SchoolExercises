@@ -7,6 +7,8 @@
 
  */
 
+
+
 /*stile applicato alla parte superiore della barra utente*/
 .pages{
     background: #3D7BD9;
@@ -82,7 +84,7 @@
     background: url("./assets/lente.svg") no-repeat right;
     height: 100%;
     width:100%;
-    padding-right: 1rem;
+    padding-right: 2.5rem;
     padding-top: 0.5rem;
     padding-left: 0.5rem;
     padding-bottom: 0.5rem;
@@ -90,7 +92,120 @@
     border:none;
     font-size: 1vw;
     text-transform: uppercase;
-    color: white;
-    background-color: #3D7BD9;
+    color: black;
+    background-color: white;
     transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+/*stile applicato al div a lato degli spinner*/
+.sideNum{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    background-color: #3D7BD9;
+    border-top-left-radius: .4rem;
+    border-bottom-left-radius: .4rem;
+    color: white;
+    font-weight: bold;
+}
+/*stile spinner*/
+.inNum{
+    width: 100%;
+    height:100%;
+    border:none;
+    border-top-right-radius: .4rem;
+    border-bottom-right-radius: .4rem;
+}
+
+/*stile per il body effettivo della pagica contenente la tabella*/
+.centro{
+    height: 85vh;
+    background-color: #7FAFE1;
+    border-radius: 0.5rem;
+}
+
+.corpo{
+    background-color: #7FAFE1;
+    padding:1rem;
+    border-radius: 5px;
+    height: 85vh;
+    overflow-x: auto;
+}
+
+/*heading della tabella*/
+.heading{
+    background-color: #3D7BD9;
+    padding: 1rem;
+    border-radius: .4rem;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/*row tabella*/
+.rigo{
+    background-color: white;
+    padding: 1rem;
+    border-radius: .4rem;
+    color: black;
+    text-transform: uppercase;
+}
+
+/*stile singola cella*/
+.cella{
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lock{
+    background: url("./assets/lockIco.svg") no-repeat center;
+    background-size: contain;
+}
+
+/*stile per oscurare la pagina quando il pop up è aperto*/
+.oscuramento{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.17);
+    width: 110%;
+    height: 100%;
+    top: 0;
+    left: -10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*stile per il container del pop up*/
+.popUp{
+    margin-left: 10%;
+    background-color: white;
+    border-radius: 0.7rem;
+}
+
+/*media query custom per migliorare l'esperienza utente mobile*/
+@media (max-width: 768px){
+    .btnTool{
+        font-size: .7rem;
+        border-radius: .5rem;
+    }
+    
+    .scheda{
+        font-size: .7rem;
+        border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
+    }
+    
+    .inputRicerca{
+        background: none;
+        font-size: .7rem;
+        border-radius: .5rem;
+        background-color: white;
+        padding-right: .5rem;
+    }
+
+    .centro{
+        height: 75vh;
+    }
 }

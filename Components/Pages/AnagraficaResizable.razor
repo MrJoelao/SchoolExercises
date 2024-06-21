@@ -3,89 +3,219 @@
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
 
-<!--top bar-->
 <div class="container-fluid mt-5 mt-sm-0">
-    <!--pages: questa sezione deve dividersi in 2 siccome i pulsanti occupano solo metà dello spazio del container genitore-->
-    <div class="row pages">
-        <!--suddivido la riga in 2 colonne-->
-        <div class="col-md-8 col-sm-12">
-            <!--suddivido la colonna in 4, uno per ogni pulsante-->
-            <div class="row">
-                <div class="col ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
-                    <button class="scheda selectedPage" id="btnPaziente">
-                        pazienti
-                    </button>
-                </div>
-                    
-                <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
-                    <button class="scheda unselectedPage" id="btnClienti">
-                        clienti
-                    </button>
-                </div>
+    <!--top bar-->
+    <div class="container-fluid">
+        <!--pages: questa sezione deve dividersi in 2 siccome i pulsanti occupano solo metà dello spazio del container genitore-->
+        <div class="row pages">
+            <!--suddivido la riga in 2 colonne-->
+            <div class="col-md-8 col-sm-12">
+                <!--suddivido la colonna in 4, uno per ogni pulsante-->
+                <div class="row">
+                    <div class="col ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
+                        <button class="scheda selectedPage" id="btnPaziente">
+                            pazienti
+                        </button>
+                    </div>
 
-                <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
-                    <button class="scheda unselectedPage" id="btnFornitori">
-                        fornitori
-                    </button>
-                </div>
+                    <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
+                        <button class="scheda unselectedPage" id="btnClienti">
+                            clienti
+                        </button>
+                    </div>
 
-                <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
-                    <button class="scheda unselectedPage" id="btnContatti">
-                        contatti
-                    </button>
+                    <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
+                        <button class="scheda unselectedPage" id="btnFornitori">
+                            fornitori
+                        </button>
+                    </div>
+
+                    <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
+                        <button class="scheda unselectedPage" id="btnContatti">
+                            contatti
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!--questa colonna resterà vuota per spaziare e eventualemte rimossa per dispositivi mobili-->
+            <div class="col hidden-sm">
+
+            </div>
+        </div>
+        <!--buttons-->
+        <div class="row toolbar">
+            <!-- suddivisione in 2-2-2-1-3-1-1 della barra-->
+            <div class="col-3 col-sm-2 col-md-2 ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool" @onclick="toggleForm" id="btnAggiungi">
+                    Aggiungi
+                </button>
+            </div>
+
+            <div class="col-3 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool" id="btnModifica">
+                    Modifica
+                </button>
+            </div>
+
+            <div class="col-3 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool" id="btnElimina">
+                    elimina
+                </button>
+            </div>
+
+            <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool" id="btnStampa">
+                    Stampa
+                </button>
+            </div>
+
+            <div class="col-3 col-sm-2 col-md-3 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <input class="inputRicerca" id="txtRicerca" placeholder="Ricerca"/> <!--@bind-value="searchValue" @oninput="searchPatient"-->
+            </div>
+
+            <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <div class="col sideNum">
+                    N
+                </div>
+                <div class="col">
+                    <input class="inNum" id="inputCartella" type="number" placeholder="0"/>
+                </div>
+            </div>
+
+            <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <div class="col sideNum">
+                    P
+                </div>
+                <div class="col">
+                    <input class="inNum" id="inputPagina" type="number" placeholder="0"/>
                 </div>
             </div>
         </div>
-        <!--questa colonna resterà vuota per spaziare e eventualemte rimossa per dispositivi mobili-->
-        <div class="col hidden-sm">
-            
-        </div>
     </div>
-    <!--buttons-->
-    <div class="row toolbar">
-        <!-- suddivisione in 2-2-2-1-2-2-->
-        <div class="col-2 col-sm-2 col-md-2 ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
-            <button class="btnTool" id="btnAggiungi">
-                Aggiungi
-            </button>
-        </div>
-        
-        <div class="col-2 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
-            <button class="btnTool" id="btnModifica">
-                Modifica
-            </button>
-        </div>
 
-        <div class="col-2 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
-            <button class="btnTool" id="btnElimina">
-                elimina
-            </button>
-        </div>
-        
-        <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
-            <button class="btnTool" id="btnStampa">
-                Stampa
-            </button>
-        </div>
+    <!-- corpo centrale della pagina -->
 
-        <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
-            <input class="btnTool" id="inputRicerca" placeholder="Ricerca"/>  <!--@bind-value="searchValue" @oninput="searchPatient"-->
+    <div class="container-fluid corpo mt-1">
+        <!-- heading della tabella -->
+        <div class="row heading">
+            <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
+            <div class="col-3 col-sm-2 cella">
+                cognome
+            </div>
+            <div class="col-2 col-sm-1 cella">
+                nome
+            </div>
+            <div class="col-2 col-sm-1 cella">
+                nascita
+            </div>
+            <div class="col-2 col-sm-1 cella">
+                età
+            </div>
+            <div class="col-2 col-sm-1 cella">
+                telefono
+            </div>
+            <div class=" d-none d-sm-block col-1 cella">
+                telefono2
+            </div>
+            <div class=" d-none d-sm-block col-1 cella">
+                fatturare
+            </div>
+            <div class=" d-none d-sm-block col-1 cella">
+                terminato
+            </div>
+            <div class="d-none d-sm-block col-1 cella">
+                documentato
+            </div>
+            <div class="d-none d-sm-block col-1 cella lock">
+
+            </div>
+            <div class="col-1 cella">
+
+            </div>
+        </div>
+        <!-- body della tabella-->
+        <div class>
+            <div class="row rigo mt-1">
+                <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
+                <div class="col-3 col-sm-2 cella">
+                    cognome
+                </div>
+                <div class="col-2 col-sm-1 cella">
+                    nome
+                </div>
+                <div class="col-2 col-sm-1 cella">
+                    nascita
+                </div>
+                <div class="col-2 col-sm-1 cella">
+                    età
+                </div>
+                <div class="col-2 col-sm-1 cella">
+                    telefono
+                </div>
+                <div class=" d-none d-sm-block col-1 cella">
+                    telefono2
+                </div>
+                <div class=" d-none d-sm-block col-1 cella">
+                    fatturare
+                </div>
+                <div class=" d-none d-sm-block col-1 cella">
+                    terminato
+                </div>
+                <div class="d-none d-sm-block col-1 cella">
+                    documentato
+                </div>
+                <div class="col-1 cella">
+                    <input type="checkbox"/>
+                </div>
+
+                <div class="col-1 cella">
+
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>
 
+@if (visible)
+{   
+    <!--div utilizzato per oscurare la pagina mentre il pop up viene aperto-->
+    <div class="oscuramento">
+        <!--contenitore popup-->
+        <div class="popUp">
+            <!--parte superiore-->
+            <div class="row">
+                <!--barra pulsanti-->
+                <div class="col-11 barra">
+
+                </div>
+                <!--barra pulsanti-->
+                <div class="col-1">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 @code {
-    /*
     private bool visible = false;
+
+    private void toggleForm()
+    {
+        visible = !visible;
+    }
+    /*
     private string filePath;
-    
+
     string searchValue = string.Empty;
-    
+
 
     Paziente nuovoPaziente = new();
     List<Paziente> pazienti = new();
     List<Paziente> pazientiFiltrati = new();
-    
+
     string gender = null!;
     private bool showFormErr = false;
     Paziente lastClickedP = null;
@@ -94,12 +224,9 @@
     {
         getAllFromDB();
     }
+    */
 
-    private void toggleForm()
-    {
-        visible = !visible;
-    }
-
+    /*
     private void getAllFromDB()
     {
         DbManager db = new DbManager();
@@ -113,7 +240,7 @@
                 {
                     Paziente paziente = new Paziente().getFromDBReader(reader);
                     pazienti.Add(paziente);
-                    
+
                 }
             }
         }
@@ -122,14 +249,14 @@
             Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
             throw;
         }
-        
+
         pazientiFiltrati = pazienti;
         db.CloseConnection();
     }
-    
+
     private void searchPatient(ChangeEventArgs e)
     {
-    
+
         searchValue = e.Value.ToString();
         var searchTerms = searchValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -152,9 +279,9 @@
             pazienti.Add(paziente);
 
             paziente.SaveInDB();
-            
+
             pazientiFiltrati = pazienti;
-            
+
             //se è visibile lo tolgo
             if (showFormErr) showFormErr = !showFormErr;
             toggleForm();
