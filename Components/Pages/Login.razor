@@ -1,14 +1,14 @@
 @page "/"
 @page "/Login"
 
-@using MySql.Data.MySqlClient
+@using MySqlConnector;
 @inject IConfiguration Configuration
 @rendermode InteractiveServer
 <PageTitle>Login</PageTitle>
 <div class="login-page mainSection">
     <div class="headerRow">
         <div class="brandingGroup">
-            <img class="coverImage" src="./assets/loginAssets/sfondoBlu.png" alt="alt text" />
+            <img class="coverImage" src="./assets/loginAssets/sfondoBlu.png" alt="alt text"/>
             <div class="titleContent">
                 <div class="titlesGrid">
                     <h1 class="mainTitle">DeltaDent Web</h1>
@@ -16,7 +16,7 @@
                 </div>
                 <button class="registerButton" @onclick="ButtonRegistration">Registrati</button>
             </div>
-            <img class="headerIcon" src="./assets/loginAssets/dottore.svg" alt="alt text" />
+            <img class="headerIcon" src="./assets/loginAssets/dottore.svg" alt="alt text"/>
         </div>
         <div class="loginGroup">
             <div class="backgroundRectangle"></div>
@@ -26,10 +26,10 @@
                     <h3 class="welcomeSubtitle">Benvenuto</h3>
                 </div>
                 <div class="emailBox">
-                    <input type="email" class="BoxRow imageEmail" placeholder="Email Address" />
+                    <input type="email" class="BoxRow imageEmail" placeholder="Email Address"/>
                 </div>
                 <div class="passwordBox">
-                    <input type="password" class="BoxRow imagePassword" placeholder="Password" />
+                    <input type="password" class="BoxRow imagePassword" placeholder="Password"/>
                 </div>
                 <button class="loginButton">login</button>
                 <h5 class="forgotPassword">Password dimenticata</h5>
@@ -46,35 +46,37 @@
         <p class="message">Registrati subito per avere accesso all'app.</p>
         <div class="flex">
             <label>
-                <input required @bind="Nome" placeholder="" type="text" class="input">
+                <input @bind="Nome" placeholder=" " type="text" class="input" maxlength="25">
                 <span>Nome</span>
             </label>
-
             <label>
-                <input required @bind="Cognome" placeholder="" type="text" class="input">
+                <input @bind="Cognome" placeholder=" " type="text" class="input" maxlength="25">
                 <span>Cognome</span>
             </label>
         </div>
-
         <label>
-            <input required @bind="Email" placeholder="" type="email" class="input">
+            <input @bind="Email" placeholder=" " type="email" class="input" maxlength="100">
             <span>Email</span>
         </label>
-
         <label>
-            <input required @bind="Password" placeholder="" type="password" class="input">
+            <input @bind="Password" placeholder=" " type="password" class="input" maxlength="100">
             <span>Password</span>
         </label>
         <label>
-            <input required @bind="ConfermaPassword" placeholder="" type="password" class="input">
+            <input @bind="ConfermaPassword" placeholder=" " type="password" class="input" maxlength="100">
             <span>Conferma password</span>
         </label>
+        @if (err)
+        {
+            <div class="message">Si è verificato un errore, verificare i dati immessi</div>
+        }
         <button class="submit" type="submit">Submit</button>
     </form>
 }
 
 @code {
-    private bool _flagBol;
+    private bool _flagBol = false;
+    private bool err = false;
     private string Nome { get; set; }
     private string Cognome { get; set; }
     private string Email { get; set; }
@@ -90,24 +92,18 @@
     {
         try
         {
-            if (Password != ConfermaPassword)
+            if (Password != ConfermaPassword || checkExist() || !verifyDoctor())
             {
-                // Gestisci l'errore di password non corrispondenti (opzionale)
+                err = true;
                 return;
             }
 
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            using var connection = new MySqlConnection(connectionString);
-            await connection.OpenAsync();
+            err = false;
 
-            var query = "INSERT INTO accessi (Nome, Cognome, Email, Password) VALUES (@Nome, @Cognome, @Email, @Password)";
-            using var command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@Nome", Nome);
-            command.Parameters.AddWithValue("@Cognome", Cognome);
-            command.Parameters.AddWithValue("@Email", Email);
-            command.Parameters.AddWithValue("@Password", Password);
-
-            await command.ExecuteNonQueryAsync();
+            var query = $"INSERT INTO doctor (first_name, surname, email, password) VALUES ('{Nome}', '{Cognome}', '{Email}', '{Password}')";
+            DbManager db = new DbManager();
+            db.MakeQuery(query);
+            db.CloseConnection();
 
             // Reset dei campi del form dopo la registrazione
             Nome = string.Empty;
@@ -115,14 +111,43 @@
             Email = string.Empty;
             Password = string.Empty;
             ConfermaPassword = string.Empty;
-            _flagBol = false;
 
-            Console.WriteLine("Dati inseriti correttamente.");
+            //Console.WriteLine("Dati inseriti correttamente.");
+            ButtonRegistration();
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Errore durante l'inserimento nella tabella: {ex.Message}");
-            // Gestisci l'errore appropriatamente (ad esempio, mostra un messaggio all'utente)
+            Console.WriteLine($"Errore durante la registrazione dei dati: {ex.Message}");
+            err = true;
         }
     }
+
+    // Per prevenire sql injection verifica che gli input non contengano "'" e non siano vuoti, torna true se sono validi
+    public bool verifyDoctor()
+    {
+        return !Nome.Contains("'") && Nome.Length > 0 && !Cognome.Contains("'") && Cognome.Length > 0 && !Email.Contains("'") && Email.Length > 0 && !Password.Contains("'") && Password.Length > 0;
+    }
+
+    private bool checkExist()
+    {
+        string query = $"SELECT email FROM doctor WHERE email='{Email}'";
+        DbManager db = new DbManager();
+        using (MySqlDataReader reader = db.ExecuteReader(query))
+        {
+            if (reader.Read())
+            {
+                if (reader.GetString("email") != null)
+                {
+                    Console.WriteLine("\n\nEsiste\n\n");
+                    db.CloseConnection();
+                    return true;
+                }
+            }
+        }
+
+        Console.WriteLine("\n\nNon esiste\n\n");
+        db.CloseConnection();
+        return false;
+    }
+
 }
