@@ -81,6 +81,7 @@
 
 @code {
 
+    private DbManager db = new DbManager();
     private bool RegForm = false;
     private bool errReg = false;
     private bool errLogin = false;
@@ -110,7 +111,7 @@
             errReg = false;
 
             var query = $"INSERT INTO doctor (first_name, surname, email, password) VALUES ('{NomeReg}', '{CognomeReg}', '{EmailReg}', '{Reg}')";
-            DbManager db = new DbManager();
+            db.OpenConnection();
             db.MakeQuery(query);
             db.CloseConnection();
 
@@ -140,7 +141,7 @@
     private bool checkExist(string email)
     {
         string query = $"SELECT email FROM doctor WHERE email='{email}'";
-        DbManager db = new DbManager();
+        db.OpenConnection();
         using (MySqlDataReader reader = db.ExecuteReader(query))
         {
             if (reader.Read())
@@ -161,8 +162,18 @@
     {
         if (checkExist(emailLog) && checkPassw(passwLog))
         {
-            errLogin = false;
-            NavManager.NavigateTo("/Anagrafica");
+            string query = $"SELECT doctorID FROM doctor WHERE email='{emailLog}'";
+            db.OpenConnection();
+            using (MySqlDataReader reader = db.ExecuteReader(query))
+            {
+                if (reader.Read())
+                {
+                    int medID = reader.GetInt32("doctorID");
+                    db.CloseConnection();
+                    errLogin = false;
+                    NavManager.NavigateTo($"/Anagrafica/{medID}");
+                }
+            }
         }
         else
         {
@@ -174,7 +185,7 @@
     private bool checkPassw(string passw)
     {
         string query = $"SELECT password FROM doctor WHERE password='{passw}'";
-        DbManager db = new DbManager();
+        db.OpenConnection();
         using (MySqlDataReader reader = db.ExecuteReader(query))
         {
             if (reader.Read())

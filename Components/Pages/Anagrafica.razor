@@ -1,4 +1,6 @@
 @page "/Anagrafica"
+@page "/Anagrafica/{tempMedID}"
+@using System.ComponentModel
 @using MySqlConnector;
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
@@ -192,6 +194,11 @@
 }
 
 @code {
+
+    [Parameter] 
+    public string tempMedID { get; set; }
+    private int medID { get; set; }
+    
     DBPopulator dbPopulator = new DBPopulator();
     DbManager db = new DbManager();
     
@@ -211,6 +218,7 @@
     protected override async Task OnInitializedAsync()
     {
         await getPatientFromDB(0, patientsDisplayed);
+        medID = Int32.Parse(tempMedID);
     }
     
     public void populator()
@@ -245,7 +253,6 @@
     {
         if (nPage > 0)
         {
-            //Console.WriteLine(nPage);
             getPatientFromDB( patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage) ;
         }
     }
