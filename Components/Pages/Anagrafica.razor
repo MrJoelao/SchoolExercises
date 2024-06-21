@@ -16,7 +16,7 @@
             <button class="defButton" @onclick="@toggleForm">AGGIUNGI</button>
             <button class="defButton">MODIFICA</button>
             <button class="defButton" @onclick="deleteFromDB">ELIMINA</button>
-            <button class="defButtonSmall">STAMPA</button>
+            <button class="defButtonSmall" @onclick="populator">STAMPA</button>
             <input type="text" placeholder="Ricerca" @bind-value="searchValue" @oninput="searchPatient" class="inputSmall"/>
             <div class="insNumero">
                 <div class="side">N</div>
@@ -192,6 +192,14 @@
 }
 
 @code {
+    DBPopulator dbPopulator = new DBPopulator();
+
+    public void populator()
+    {
+        
+        dbPopulator.Populator(FlagPatient: true);
+    }
+
     private bool visible = false;
     private string filePath;
     
@@ -210,7 +218,7 @@
 
     protected override void OnInitialized()
     {
-        getPatientFromDB(1, patientsDisplayed);
+        getPatientFromDB(0, patientsDisplayed);
     }
 
     private void toggleForm()
