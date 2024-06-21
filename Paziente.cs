@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 namespace Delta_Dent;
 
@@ -55,7 +55,7 @@ public class Paziente
     {
     }
 
-    public void SaveInDB()
+    public async Task saveInDB()
     {
         // Creo un'istanza di DbManager
         DbManager db = new DbManager(); // Uso i parametri di default impostati nel costruttore
@@ -66,15 +66,15 @@ public class Paziente
         // Eseguo la query
         try
         {
-            db.MakeQuery(query);
+            await db.MakeQueryAsync(query);
         }
         catch (Exception e)
         {
             Console.WriteLine("Errore durante l'inserimento del paziente: " + e.Message);
             throw;
         }
-        
-        db.CloseConnection();
+    
+        await db.CloseConnectionAsync();
     }
 
     public Paziente getFromDBReader(MySqlDataReader reader)
@@ -100,6 +100,36 @@ public class Paziente
         paziente.Locked = reader.GetBoolean("locked");
         
         return paziente;
+    }
+    
+    //controlla se i campi sono vuoti
+    public bool checkInputs() {
+        // Controlla se uno qualsiasi dei campi è vuoto o nullo
+        return !string.IsNullOrEmpty(FirstName) &&
+               !string.IsNullOrEmpty(Surname) &&
+               !string.IsNullOrEmpty(Telephone) &&
+               !string.IsNullOrEmpty(Phone1) &&
+               !string.IsNullOrEmpty(Phone2) &&
+               !string.IsNullOrEmpty(CF) &&
+               !string.IsNullOrEmpty(CAsl) &&
+               !string.IsNullOrEmpty(BirthPlace) &&
+               !string.IsNullOrEmpty(BirthProvince) &&
+               !string.IsNullOrEmpty(Billable);
+    }
+    
+    public void sanitizePatient()
+    {
+        // Per prevenire sql injection
+        FirstName = FirstName.Replace("'", "''");
+        Surname = Surname.Replace("'", "''");
+        Telephone = Telephone.Replace("'", "''");
+        Phone1 = Phone1.Replace("'", "''");
+        Phone2 = Phone2.Replace("'", "''");
+        CF = CF.Replace("'", "''");
+        CAsl = CAsl.Replace("'", "''");
+        BirthPlace = BirthPlace.Replace("'", "''");
+        BirthProvince = BirthProvince.Replace("'", "''");
+        Billable = Billable.Replace("'", "''");
     }
 
     // Metodo ToString() per una rappresentazione leggibile dell'oggetto

@@ -1,8 +1,9 @@
 @page "/"
 @page "/Login"
+
+@using MySqlConnector;
 @inject IConfiguration Configuration
 @rendermode InteractiveServer
-@using MySql.Data.MySqlClient
 @inject NavigationManager NavManager
 
 <PageTitle>Login</PageTitle>
