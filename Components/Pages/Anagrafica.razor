@@ -234,6 +234,8 @@
             Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
             throw;
         }
+
+        pazientiFiltrati = pazienti;
         db.CloseConnection();
     }
     
