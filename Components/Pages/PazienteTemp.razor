@@ -563,18 +563,31 @@
     {
         string[] toUploadFilesNames = await JS.InvokeAsync<string[]>("getToUploadFiles", allLoadedFiles);
 
+        Console.WriteLine("\n\n");
+        foreach (var s in toUploadFilesNames)
+        {
+            Console.WriteLine(s);
+        }
+
         List<IBrowserFile> confirmedFiles = new();
         foreach (var name in toUploadFilesNames)
         {
             foreach (var f in allLoadedFiles)
             {
-                if (f.Name == name)
+                if (f.Name == name && !fileListAlreadyContains(f.Name, confirmedFiles))
                 {
                     confirmedFiles.Add(f);
                 }
             }
         }
-
+        
+        Console.WriteLine("\n\n");
+        foreach (var s in confirmedFiles)
+        {
+            Console.WriteLine(s.Name);
+        }
+        Console.WriteLine("\n\n");
+        
         for (int i = 0; i < confirmedFiles.Count(); i++)
         {
             try
@@ -596,6 +609,19 @@
         await JS.InvokeVoidAsync("setTinyImages", confirmedFiles);
         await resetVariables();
         ToggleForm();
+    }
+
+    private bool fileListAlreadyContains(string fileName, List<IBrowserFile> list)
+    {
+        foreach (var f in list)
+        {
+            if (fileName == f.Name)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private async Task resetVariables()
