@@ -1,5 +1,5 @@
 @page "/Anagrafica"
-@using MySql.Data.MySqlClient
+@using MySqlConnector;
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
 
@@ -175,7 +175,7 @@
                 </div>
                 <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
                 <div class="dx">
-                    <button class="buttonAzioniForm" @onclick="salvaPaziente">SALVA E CHIUDI</button><br/>
+                    <button class="buttonAzioniForm" @onclick="savePatient">SALVA E CHIUDI</button><br/>
                     <button class="buttonAzioniForm">SALVA E APRI</button><br/>
                     <button class="buttonAzioniForm" @onclick="toggleForm">ANNULLA</button><br/>
                     <button class="buttonAzioniForm">STAMPA</button><br/>
@@ -193,6 +193,7 @@
 
 @code {
     DBPopulator dbPopulator = new DBPopulator();
+    DbManager db = new DbManager();
     
     Paziente nuovoPaziente = new();
     Paziente lastClickedP = null;
@@ -207,12 +208,9 @@
     private int nPage=1;
     private int patientsDisplayed = 50;
     
-    DbManager db = new DbManager();
-    
-    
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        getPatientFromDB(0, patientsDisplayed);
+        await getPatientFromDB(0, patientsDisplayed);
     }
     
     public void populator()
@@ -224,44 +222,9 @@
     {
         visible = !visible;
     }
-
-    private void getPatientFromDB(int minRow, int maxRow)
-    {
-        pazienti = new();
-        MySqlDataReader r = db.ExecuteReader("SELECT MIN(patientID) FROM PATIENT");
-        if (r.Read())
-        {
-            int minPID = r.GetInt32("MIN(patientID)");
-            db.CloseConnection();
-            db = new DbManager();
-            string query = "SELECT * FROM PATIENT WHERE patientID BETWEEN " + (minPID + minRow) + " AND " + (minPID + maxRow);
-
-            try
-            {
-                using (MySqlDataReader reader = db.ExecuteReader(query))
-                {
-                    while (reader.Read())
-                    {
-                        Paziente paziente = new Paziente().getFromDBReader(reader);
-                        pazienti.Add(paziente);
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
-                throw;
-            }
-
-            pazientiFiltrati = pazienti;
-            db.CloseConnection();
-        }
-    }
     
     private void searchPatient(ChangeEventArgs e)
     {
-    
         searchValue = e.Value.ToString();
         var searchTerms = searchValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -273,75 +236,9 @@
         ).ToList();
     }
 
-    public void salvaPaziente()
-    {
-        //salva il paziente
-        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, (gender == "m" ? false : true), "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, 1, nuovoPaziente.Locked);
-        
-        nuovoPaziente.Gender = (gender == "m" ? false : true);
-        if (checkInputs(paziente))
-        {
-            sanitizePatient(paziente);
-            pazienti.Add(paziente);
-
-            paziente.SaveInDB();
-            
-            pazientiFiltrati = pazienti;
-            
-            //se è visibile lo tolgo
-            if (showFormErr) showFormErr = !showFormErr;
-            toggleForm();
-        }
-        else
-        {
-            //mostro l'errore
-            showFormErr = !showFormErr;
-        }
-    }
-
-    public bool checkInputs(Paziente paziente)
-    {
-        if (string.IsNullOrEmpty(paziente.FirstName) || string.IsNullOrEmpty(paziente.Surname) || string.IsNullOrEmpty(paziente.Telephone) || string.IsNullOrEmpty(paziente.Phone1) || string.IsNullOrEmpty(paziente.Phone2) || string.IsNullOrEmpty(paziente.CF) || string.IsNullOrEmpty(paziente.CAsl) || string.IsNullOrEmpty(paziente.BirthPlace) || string.IsNullOrEmpty(paziente.BirthProvince) || string.IsNullOrEmpty(paziente.Billable))
-        {
-            return false;
-        }
-        return true;
-    }
-    
-    public void sanitizePatient(Paziente paziente)
-    {
-        // Per prevenire sql injection
-        paziente.FirstName = paziente.FirstName.Replace("'", "''");
-        paziente.Surname = paziente.Surname.Replace("'", "''");
-        paziente.Telephone = paziente.Telephone.Replace("'", "''");
-        paziente.Phone1 = paziente.Phone1.Replace("'", "''");
-        paziente.Phone2 = paziente.Phone2.Replace("'", "''");
-        paziente.CF = paziente.CF.Replace("'", "''");
-        paziente.CAsl = paziente.CAsl.Replace("'", "''");
-        paziente.BirthPlace = paziente.BirthPlace.Replace("'", "''");
-        paziente.BirthProvince = paziente.BirthProvince.Replace("'", "''");
-        paziente.Billable = paziente.Billable.Replace("'", "''");
-    }
-
     public void updateLastClicked(Paziente p)
     {
         lastClickedP = p;
-    }
-
-    public void deleteFromDB()
-    {
-        if (lastClickedP!=null)
-        {
-            string query = "DELETE FROM PATIENT WHERE patientID=" + lastClickedP.PatientID;
-            db = new DbManager();
-            db.MakeQuery(query);
-            pazienti.Remove(lastClickedP);
-            query = "UPDATE VISIT SET patientID=-1 WHERE patientID=" + lastClickedP.PatientID;
-            db = new DbManager();
-            db.MakeQuery(query);
-            lastClickedP = null;
-            pazientiFiltrati = pazienti;
-        }
     }
     
     public void changePage()
@@ -352,5 +249,113 @@
             getPatientFromDB( patientsDisplayed * nPage - ( patientsDisplayed - 1 ), patientsDisplayed * nPage) ;
         }
     }
+    
+    // Metodi con utilizzo del database
+    public async Task<int?> getMinPatientID()
+    {
+        string queryMinPatientID = "SELECT MIN(patientID) FROM PATIENT";
+        MySqlDataReader reader;
 
+        await db.OpenConnectionAsync();
+        reader = await db.ExecuteReaderAsync(queryMinPatientID);
+
+        if (!await reader.ReadAsync())
+        {
+            await db.CloseConnectionAsync();
+            return null;
+        }
+
+        int minPID = reader.GetInt32("MIN(patientID)");
+        await db.CloseConnectionAsync();
+        await db.CloseReaderAsync(reader);
+        return minPID;
+    }
+    
+    public async Task getPatientFromDB(int minRow, int maxRow)
+    {
+        pazienti = new();
+
+        var minPID = await getMinPatientID();
+        if (minPID == null)
+        {
+            Console.WriteLine("Errore durante il recupero del minimo patientID");
+            return;
+        }
+
+        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID BETWEEN {minPID + minRow} AND {minPID + maxRow}";
+
+        await db.OpenConnectionAsync();
+
+        using (var reader = await db.ExecuteReaderAsync(queryRangePatient))
+        {
+            while (await reader.ReadAsync())
+            {
+                var paziente = new Paziente().getFromDBReader(reader);
+                pazienti.Add(paziente);
+            }
+            await db.CloseReaderAsync(reader);
+        }
+
+        pazientiFiltrati = pazienti;
+        await db.CloseConnectionAsync();
+    }
+    
+    public async Task savePatient()
+    {
+        //salva il paziente
+        nuovoPaziente.Gender = (gender != "m");
+    
+        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, 1, nuovoPaziente.Locked);
+    
+        if (!paziente.checkInputs())
+        {
+            //mostro l'errore
+            showFormErr = !showFormErr;
+            return;
+        }
+
+        paziente.sanitizePatient();
+    
+        pazienti.Add(paziente);
+
+        await paziente.saveInDB();
+    
+        pazientiFiltrati = pazienti;
+    
+        //se è visibile lo tolgo
+        if (showFormErr) showFormErr = !showFormErr;
+        toggleForm();
+    }
+    
+    public async Task deleteFromDB()
+    {
+        if (lastClickedP == null)
+        {
+            Console.WriteLine("Nessun paziente selezionato");
+            return;
+        }
+
+        string queryDeletePatient = "DELETE FROM PATIENT WHERE patientID=" + lastClickedP.PatientID;
+    
+        await db.OpenConnectionAsync();
+    
+        await db.MakeQueryAsync(queryDeletePatient);
+    
+        pazienti.Remove(lastClickedP);
+        pazientiFiltrati = pazienti;
+    
+        await unLinkPatient();
+    
+        lastClickedP = null;
+    
+        await db.CloseConnectionAsync();
+    }
+    
+    public async Task unLinkPatient()
+    {
+        string queryUnlinkPatient = "UPDATE VISIT SET patientID=-1 WHERE patientID=" + lastClickedP.PatientID;
+    
+        await db.OpenConnectionAsync();
+        await db.MakeQueryAsync(queryUnlinkPatient);
+    }
 }
