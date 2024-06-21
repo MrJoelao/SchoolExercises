@@ -563,12 +563,6 @@
     {
         string[] toUploadFilesNames = await JS.InvokeAsync<string[]>("getToUploadFiles", allLoadedFiles);
 
-        Console.WriteLine("\n\n");
-        foreach (var s in toUploadFilesNames)
-        {
-            Console.WriteLine(s);
-        }
-
         List<IBrowserFile> confirmedFiles = new();
         foreach (var name in toUploadFilesNames)
         {
@@ -580,14 +574,7 @@
                 }
             }
         }
-        
-        Console.WriteLine("\n\n");
-        foreach (var s in confirmedFiles)
-        {
-            Console.WriteLine(s.Name);
-        }
-        Console.WriteLine("\n\n");
-        
+
         for (int i = 0; i < confirmedFiles.Count(); i++)
         {
             try
