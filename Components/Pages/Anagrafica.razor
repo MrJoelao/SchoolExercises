@@ -171,10 +171,9 @@
                 </div>
                 <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
                 <div class="dx">
-                    <button class="buttonAzioniForm">SALVA</button><br/>
-                    <button class="buttonAzioniForm">SALVA E APRI</button><br/>
                     <button class="buttonAzioniForm" @onclick="salvaPaziente">SALVA E CHIUDI</button><br/>
-                    <button class="buttonAzioniForm">ANNULLA</button><br/>
+                    <button class="buttonAzioniForm">SALVA E APRI</button><br/>
+                    <button class="buttonAzioniForm" @onclick="toggleForm">ANNULLA</button><br/>
                     <button class="buttonAzioniForm">STAMPA</button><br/>
                     @if (showFormErr)
                     {
@@ -205,7 +204,7 @@
 
     protected override void OnInitialized()
     {
-        getAllFromDB();
+        getPatientFromDB();
     }
 
     private void toggleForm()
@@ -213,7 +212,7 @@
         visible = !visible;
     }
 
-    private void getAllFromDB()
+    private void getPatientFromDB()
     {
         DbManager db = new DbManager();
         string query = "SELECT * FROM PATIENT";
@@ -235,8 +234,6 @@
             Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
             throw;
         }
-        
-        pazientiFiltrati = pazienti;
         db.CloseConnection();
     }
     
