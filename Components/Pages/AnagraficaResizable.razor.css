@@ -1,0 +1,96 @@
+/*
+--COLORI USATI OCMUNEMENTE--
+
+#3D7BD9 -> blu scuro
+#72B7FF -> blu medio         
+#DFEFFF -> blu chiaro
+
+ */
+
+/*stile applicato alla parte superiore della barra utente*/
+.pages{
+    background: #3D7BD9;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding-top: 1rem;
+}
+
+/*stile generico pulsanti scheda*/
+.scheda{
+    height: 100%;
+    width:90%;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
+    border:none;
+    text-transform: uppercase;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+/*stile hover (lo sfondo diviene leggermente scuro*/
+.scheda:hover{
+    filter: brightness(0.8);
+}
+
+/*stile applicato alla scheda selezionata*/
+.selectedPage{
+    background-color: #72B7FF ;
+    color: white;
+}
+/*stile applicato alla scheda non selezionata*/
+.unselectedPage{
+    background-color: #DFEFFF;
+    color: black;
+}
+
+/*stile toolbar*/
+.toolbar{
+    background-color: #72B7FF;
+    border-bottom-right-radius: 0.6rem;
+    border-bottom-left-radius: 0.6rem;
+    padding: 0.3rem;
+}
+
+/*stile pulsanti toolbar*/
+.btnTool{
+    height: 100%;
+    width:100%;
+    padding: 0.5rem;
+    border-radius: 0.5vw;
+    border:none;
+    font-size: 1vw;
+    font-weight: bold;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+    background-color: #3D7BD9;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+/*stile hover (lo sfondo diviene leggermente scuro)*/
+.btnTool:hover{
+    filter: brightness(0.8);
+}
+
+/*stile pulsanti toolbar*/
+.inputRicerca{
+    background: url("./assets/lente.svg") no-repeat right;
+    height: 100%;
+    width:100%;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.5vw;
+    border:none;
+    font-size: 1vw;
+    text-transform: uppercase;
+    color: white;
+    background-color: #3D7BD9;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+}

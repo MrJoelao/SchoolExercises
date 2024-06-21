@@ -1,0 +1,192 @@
+@page "/AnagraficaR"
+@using MySql.Data.MySqlClient
+<PageTitle>Anagrafica</PageTitle>
+@rendermode InteractiveServer
+
+<!--top bar-->
+<div class="container-fluid mt-5 mt-sm-0">
+    <!--pages: questa sezione deve dividersi in 2 siccome i pulsanti occupano solo metà dello spazio del container genitore-->
+    <div class="row pages">
+        <!--suddivido la riga in 2 colonne-->
+        <div class="col-md-8 col-sm-12">
+            <!--suddivido la colonna in 4, uno per ogni pulsante-->
+            <div class="row">
+                <div class="col ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
+                    <button class="scheda selectedPage" id="btnPaziente">
+                        pazienti
+                    </button>
+                </div>
+                    
+                <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
+                    <button class="scheda unselectedPage" id="btnClienti">
+                        clienti
+                    </button>
+                </div>
+
+                <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
+                    <button class="scheda unselectedPage" id="btnFornitori">
+                        fornitori
+                    </button>
+                </div>
+
+                <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
+                    <button class="scheda unselectedPage" id="btnContatti">
+                        contatti
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--questa colonna resterà vuota per spaziare e eventualemte rimossa per dispositivi mobili-->
+        <div class="col hidden-sm">
+            
+        </div>
+    </div>
+    <!--buttons-->
+    <div class="row toolbar">
+        <!-- suddivisione in 2-2-2-1-2-2-->
+        <div class="col-2 col-sm-2 col-md-2 ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
+            <button class="btnTool" id="btnAggiungi">
+                Aggiungi
+            </button>
+        </div>
+        
+        <div class="col-2 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+            <button class="btnTool" id="btnModifica">
+                Modifica
+            </button>
+        </div>
+
+        <div class="col-2 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+            <button class="btnTool" id="btnElimina">
+                elimina
+            </button>
+        </div>
+        
+        <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+            <button class="btnTool" id="btnStampa">
+                Stampa
+            </button>
+        </div>
+
+        <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+            <input class="btnTool" id="inputRicerca" placeholder="Ricerca"/>  <!--@bind-value="searchValue" @oninput="searchPatient"-->
+        </div>
+    </div>
+</div>
+
+@code {
+    /*
+    private bool visible = false;
+    private string filePath;
+    
+    string searchValue = string.Empty;
+    
+
+    Paziente nuovoPaziente = new();
+    List<Paziente> pazienti = new();
+    List<Paziente> pazientiFiltrati = new();
+    
+    string gender = null!;
+    private bool showFormErr = false;
+    Paziente lastClickedP = null;
+
+    protected override void OnInitialized()
+    {
+        getAllFromDB();
+    }
+
+    private void toggleForm()
+    {
+        visible = !visible;
+    }
+
+    private void getAllFromDB()
+    {
+        DbManager db = new DbManager();
+        string query = "SELECT * FROM PATIENT";
+
+        try
+        {
+            using (MySqlDataReader reader = db.ExecuteReader(query))
+            {
+                while (reader.Read())
+                {
+                    Paziente paziente = new Paziente().getFromDBReader(reader);
+                    pazienti.Add(paziente);
+                    
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
+            throw;
+        }
+        
+        pazientiFiltrati = pazienti;
+        db.CloseConnection();
+    }
+    
+    private void searchPatient(ChangeEventArgs e)
+    {
+    
+        searchValue = e.Value.ToString();
+        var searchTerms = searchValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        pazientiFiltrati = pazienti.Where(p =>
+            searchTerms.All(term =>
+                p.FirstName.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                p.Surname.Contains(term, StringComparison.OrdinalIgnoreCase)
+            )
+        ).ToList();
+    }
+
+    public void salvaPaziente()
+    {
+        nuovoPaziente.Gender = (gender == "m" ? false : true);
+        if (checkInputs())
+        {
+            //salva il paziente
+            Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, (gender == "m" ? false : true), "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, 1, nuovoPaziente.Locked);
+
+            pazienti.Add(paziente);
+
+            paziente.SaveInDB();
+            
+            pazientiFiltrati = pazienti;
+            
+            //se è visibile lo tolgo
+            if (showFormErr) showFormErr = !showFormErr;
+            toggleForm();
+        }
+        else
+        {
+            //mostro l'errore
+            showFormErr = !showFormErr;
+        }
+    }
+
+    public bool checkInputs()
+    {
+        return true;
+    }
+
+    public void updateLastClicked(Paziente p)
+    {
+        lastClickedP = p;
+    }
+
+    public void deleteFromDB()
+    {
+        if (lastClickedP!=null)
+        {
+            string query = $"DELETE FROM PATIENT WHERE patientID=" + lastClickedP.PatientID;
+            DbManager db = new DbManager();
+            db.MakeQuery(query);
+            pazienti.Remove(lastClickedP);
+            lastClickedP = null;
+            pazientiFiltrati = pazienti;
+        }
+    }
+    */
+}
