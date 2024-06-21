@@ -193,32 +193,31 @@
 
 @code {
     DBPopulator dbPopulator = new DBPopulator();
-
-    public void populator()
-    {
-        
-        dbPopulator.Populator(FlagPatient: true);
-    }
-
-    private bool visible = false;
-    private string filePath;
     
-    string searchValue = string.Empty;
-    
-
     Paziente nuovoPaziente = new();
+    Paziente lastClickedP = null;
     List<Paziente> pazienti = new();
     List<Paziente> pazientiFiltrati = new();
     
-    string gender = null!;
+    private string gender = null!;
+    private string filePath;
+    private string searchValue = string.Empty;
     private bool showFormErr = false;
-    Paziente lastClickedP = null;
+    private bool visible = false;
     private int nPage=1;
     private int patientsDisplayed = 50;
-
+    
+    DbManager db = new DbManager();
+    
+    
     protected override void OnInitialized()
     {
         getPatientFromDB(0, patientsDisplayed);
+    }
+    
+    public void populator()
+    {
+        dbPopulator.Populator(FlagPatient: true);
     }
 
     private void toggleForm()
@@ -229,7 +228,6 @@
     private void getPatientFromDB(int minRow, int maxRow)
     {
         pazienti = new();
-        DbManager db = new DbManager();
         MySqlDataReader r = db.ExecuteReader("SELECT MIN(patientID) FROM PATIENT");
         if (r.Read())
         {
@@ -307,7 +305,6 @@
         {
             return false;
         }
-
         return true;
     }
     
@@ -336,7 +333,7 @@
         if (lastClickedP!=null)
         {
             string query = "DELETE FROM PATIENT WHERE patientID=" + lastClickedP.PatientID;
-            DbManager db = new DbManager();
+            db = new DbManager();
             db.MakeQuery(query);
             pazienti.Remove(lastClickedP);
             query = "UPDATE VISIT SET patientID=-1 WHERE patientID=" + lastClickedP.PatientID;
@@ -346,7 +343,7 @@
             pazientiFiltrati = pazienti;
         }
     }
-
+    
     public void changePage()
     {
         if (nPage > 0)
