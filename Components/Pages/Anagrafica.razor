@@ -204,7 +204,7 @@
 
     protected override void OnInitialized()
     {
-        getPatientFromDB();
+        getPatientFromDB(1, 50);
     }
 
     private void toggleForm()
@@ -212,31 +212,39 @@
         visible = !visible;
     }
 
-    private void getPatientFromDB()
+    private void getPatientFromDB(int minRow, int maxRow)
     {
         DbManager db = new DbManager();
-        string query = "SELECT * FROM PATIENT";
-
-        try
+        MySqlDataReader r = db.ExecuteReader("SELECT MIN(patientID) FROM PATIENT");
+        if (r.Read())
         {
-            using (MySqlDataReader reader = db.ExecuteReader(query))
+            int minPID = r.GetInt32("MIN(patientID)");
+            db.CloseConnection();
+            db = new DbManager();
+            string query = "SELECT * FROM PATIENT WHERE patientID BETWEEN " + (minPID + minRow) + " AND " + (minPID + maxRow);
+
+
+            try
             {
-                while (reader.Read())
+                using (MySqlDataReader reader = db.ExecuteReader(query))
                 {
-                    Paziente paziente = new Paziente().getFromDBReader(reader);
-                    pazienti.Add(paziente);
-                    
+                    while (reader.Read())
+                    {
+                        Paziente paziente = new Paziente().getFromDBReader(reader);
+                        pazienti.Add(paziente);
+
+                    }
                 }
             }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
-            throw;
-        }
+            catch (Exception e)
+            {
+                Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
+                throw;
+            }
 
-        pazientiFiltrati = pazienti;
-        db.CloseConnection();
+            pazientiFiltrati = pazienti;
+            db.CloseConnection();
+        }
     }
     
     private void searchPatient(ChangeEventArgs e)
@@ -261,7 +269,7 @@
         nuovoPaziente.Gender = (gender == "m" ? false : true);
         if (checkInputs(paziente))
         {
-            sanatizePatient(paziente);
+            sanitizePatient(paziente);
             pazienti.Add(paziente);
 
             paziente.SaveInDB();
@@ -289,7 +297,7 @@
         return true;
     }
     
-    public void sanatizePatient(Paziente paziente)
+    public void sanitizePatient(Paziente paziente)
     {
         // Per prevenire sql injection
         paziente.FirstName = paziente.FirstName.Replace("'", "''");
