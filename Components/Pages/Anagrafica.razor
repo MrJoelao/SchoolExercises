@@ -256,12 +256,12 @@
 
     public void salvaPaziente()
     {
+        //salva il paziente
+        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, (gender == "m" ? false : true), "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, 1, nuovoPaziente.Locked);
+        
         nuovoPaziente.Gender = (gender == "m" ? false : true);
-        if (checkInputs())
+        if (checkInputs(paziente))
         {
-            //salva il paziente
-            Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, (gender == "m" ? false : true), "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, 1, nuovoPaziente.Locked);
-
             pazienti.Add(paziente);
 
             paziente.SaveInDB();
@@ -279,8 +279,25 @@
         }
     }
 
-    public bool checkInputs()
+    public bool checkInputs(Paziente paziente)
     {
+        if (string.IsNullOrEmpty(paziente.FirstName) || string.IsNullOrEmpty(paziente.Surname) || string.IsNullOrEmpty(paziente.Telephone) || string.IsNullOrEmpty(paziente.Phone1) || string.IsNullOrEmpty(paziente.Phone2) || string.IsNullOrEmpty(paziente.CF) || string.IsNullOrEmpty(paziente.CAsl) || string.IsNullOrEmpty(paziente.BirthPlace) || string.IsNullOrEmpty(paziente.BirthProvince) || string.IsNullOrEmpty(paziente.Billable))
+        {
+            return false;
+        }
+
+        // Per prevenire sql injection
+        paziente.FirstName = paziente.FirstName.Replace("'", "''");
+        paziente.Surname = paziente.Surname.Replace("'", "''");
+        paziente.Telephone = paziente.Telephone.Replace("'", "''");
+        paziente.Phone1 = paziente.Phone1.Replace("'", "''");
+        paziente.Phone2 = paziente.Phone2.Replace("'", "''");
+        paziente.CF = paziente.CF.Replace("'", "''");
+        paziente.CAsl = paziente.CAsl.Replace("'", "''");
+        paziente.BirthPlace = paziente.BirthPlace.Replace("'", "''");
+        paziente.BirthProvince = paziente.BirthProvince.Replace("'", "''");
+        paziente.Billable = paziente.Billable.Replace("'", "''");
+
         return true;
     }
 
