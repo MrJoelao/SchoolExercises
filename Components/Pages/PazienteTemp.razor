@@ -585,7 +585,7 @@
                 await using FileStream fs = new(path, FileMode.Create);
                 await confirmedFiles[i].OpenReadStream(maxFileSize).CopyToAsync(fs);
 
-                Console.WriteLine($"File saved: {trustedFileName}");
+                //Console.WriteLine($"File saved: {trustedFileName}");
             }
             catch (Exception ex)
             {

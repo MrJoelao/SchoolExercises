@@ -24,7 +24,7 @@
             </div>
             <div class="insNumero">
                 <div class="side">P</div>
-                <input type="number" min="1" class="number" @bind-value="nPage" @oninput="changePage"/>
+                <input type="number" min="1" class="number" @bind="nPage" @oninput="changePage"/>
             </div>
             <input type="text" placeholder="Avanzata" class="inputLarge"/>
         </div>
@@ -101,22 +101,22 @@
                         <div>
                             <div class="inline containerInput">
                                 COGNOME*<br/>
-                                <input type="text" @bind="nuovoPaziente.Surname" class="inputForm" placeholder="Poretti"/>
+                                <input type="text" @bind="nuovoPaziente.Surname" class="inputForm" placeholder="Poretti" maxlength="25"/>
                             </div>
                             <div class="inline containerInput">
                                 NOME*<br/>
-                                <input type="text" @bind="nuovoPaziente.FirstName" class="inputForm" placeholder="Giacomo"/>
+                                <input type="text" @bind="nuovoPaziente.FirstName" class="inputForm" placeholder="Giacomo" maxlength="25"/>
                             </div><br/>
                             <div class="inline containerInput">
                                 <div>
                                     LUOGO DI NASCITA
-                                    <div class="inline checkbox">estero<input @bind="nuovoPaziente.Foreigner" type="checkbox"></div>
+                                    <div class="inline checkbox">estero<input @bind="nuovoPaziente.Foreigner" type="checkbox" maxlength="25"></div>
                                 </div>
                                 <input type="text" class="inputForm" placeholder="Milano"/>
                             </div>
                             <div class="inline containerInputSmall">
                                 PROVINCIA<br/>
-                                <input type="text" @bind="nuovoPaziente.BirthProvince" class="inputForm" placeholder="Milano"/>
+                                <input type="text" @bind="nuovoPaziente.BirthProvince" class="inputForm" placeholder="Milano" maxlength="25"/>
                             </div>
                             <div class="inline containerInputSmall">
                                 SESSO<br/>
@@ -131,12 +131,12 @@
                             </div>
                             <div class="inline containerInputSmall">
                                 CODICE ASL<br/>
-                                <input type="text" @bind="nuovoPaziente.CAsl" class="inputForm" placeholder="MI333"/>
+                                <input type="text" @bind="nuovoPaziente.CAsl" class="inputForm" placeholder="MI333" maxlength="5"/>
                             </div>
                             <div class="inline containerInput">
                                 <div>
                                     CODICE FISCALE
-                                    <div class="inline checkbox">cont. validità<input type="checkbox"></div>
+                                    <div class="inline checkbox">cont. validità<input type="checkbox" maxlength="16"></div>
                                 </div>
                                 <input type="text" class="inputForm" @bind="nuovoPaziente.CF" placeholder="PRTGCM64H07F205D"/>
                             </div><br/>
@@ -148,7 +148,7 @@
                             </div>
                             <div class="inline containerInputSmall">
                                 MEDICO<br/>
-                                <input type="text" @bind="nuovoPaziente.DoctorID" class="inputForm" placeholder="Ippocrate"/>
+                                <input type="text" @bind="nuovoPaziente.DoctorID" class="inputForm" placeholder="Ippocrate" maxlength="25"/>
                             </div>
                             <div class="inline containerInput">
                                 PROFESSIONE<br/>
@@ -158,7 +158,7 @@
                             </div><br/>
                             <div class="inline containerInputLarge">
                                 INDIRIZZI<br/>
-                                <input type="text" class="inputFormLarge" placeholder="Via ..."/>
+                                <input type="text" class="inputFormLarge" placeholder="Via ..."  maxlength="25"/>
                             </div>
                         </div>
 
@@ -204,7 +204,6 @@
     private string filePath;
     
     string searchValue = string.Empty;
-    
 
     Paziente nuovoPaziente = new();
     List<Paziente> pazienti = new();
@@ -213,7 +212,7 @@
     string gender = null!;
     private bool showFormErr = false;
     Paziente lastClickedP = null;
-    private int nPage=1;
+    private int nPage = 1;
     private int patientsDisplayed = 50;
 
     protected override void OnInitialized()
@@ -351,8 +350,8 @@
     {
         if (nPage > 0)
         {
-            Console.WriteLine(nPage);
-            getPatientFromDB( patientsDisplayed * nPage - ( patientsDisplayed - 1 ), patientsDisplayed * nPage) ;
+            //Console.WriteLine(nPage);
+            getPatientFromDB( patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage) ;
         }
     }
 
