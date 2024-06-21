@@ -1,6 +1,6 @@
 using Bogus;
 using Delta_Dent;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 class DBPopulator
 {
