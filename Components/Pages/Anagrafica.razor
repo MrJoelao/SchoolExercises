@@ -4,6 +4,7 @@
 @using MySqlConnector;
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
+@inject NavigationManager NavManager
 
 <div class="container-fluid mt-5 mt-sm-0">
     <!--top bar-->
@@ -139,7 +140,7 @@
         <div class >
             @foreach (var paziente in pazientiFiltrati)
             {
-                <div class = "row rigo mt-1" @onclick="() => updateLastClicked(paziente)">
+                <div class = "row rigo mt-1" @onclick="() => updateLastClicked(paziente)" @ondblclick="() => navigateToPatientPage(paziente)">
                     <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
                     <div class = "col-3 col-sm-2 cella" >
                         @paziente.Surname
@@ -190,6 +191,7 @@
         </div>
     </div>
 </div>
+
 
 @if (visible)
 {
@@ -625,6 +627,7 @@
             db.CloseConnection();
             await getPatientFromDB(0, patientsDisplayed);
         }
+
         lastClickedP = null;
         toggleForm();
     }
@@ -697,4 +700,13 @@
         nuovoPaziente.CF = lastClickedP.CF;
         toggleForm();
     }
+
+    private void navigateToPatientPage(Paziente p)
+    {
+        if (p != null)
+        {
+            NavManager.NavigateTo($"/SchedaPaziente/{p.PatientID}");
+        }
+    }
+
 }

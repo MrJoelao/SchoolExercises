@@ -1,4 +1,4 @@
-﻿@page "/pazienteTemp"
+﻿@page "/SchedaPaziente"
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 @inject IWebHostEnvironment env
@@ -535,6 +535,7 @@
     private float preventivi;
     private float extras;
     private float eseguito;
+    
 
     private bool _visibile = false;
     [Inject] private IJSRuntime JSRuntime { get; set; }
