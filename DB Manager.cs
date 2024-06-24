@@ -5,7 +5,7 @@ public class DbManager
 {
     public MySqlConnection Conn { get; private set; }
     
-    public DbManager(string server = "The-J-Computer", string user = "user", string password = "adminN", string database = "deltadentdb", string port = "3306")
+    public DbManager(string server = "The-J-Computer", string user = "user", string password = "admin", string database = "deltadentdb", string port = "3306")
     {
         Console.WriteLine("Attempting to open connection...");
         OpenConnection(server, user, password, database, port);

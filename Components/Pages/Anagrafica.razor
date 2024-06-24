@@ -70,13 +70,16 @@
                     </td>
                 </tr>
             }
-            @if(dbError){
-            <tr>
-                <td colspan = "10" align="center">
-                    <svg fill="none" height="25" viewBox="0 0 24 24" width="25" xmlns="http://www.w3.org/2000/svg"><path d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill="#393a37"></path></svg>
-                    Si è verificato un errore nella lettura del database
-                </td>
-            </tr>
+            @if (dbError)
+            {
+                <tr>
+                    <td colspan="10" align="center">
+                        <svg fill="none" height="25" viewBox="0 0 24 24" width="25" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill="#393a37"></path>
+                        </svg>
+                        Si è verificato un errore nella lettura del database
+                    </td>
+                </tr>
             }
 
             </tbody>
@@ -122,7 +125,7 @@
                                     LUOGO DI NASCITA
                                     <div class="inline checkbox">estero<input @bind="nuovoPaziente.Foreigner" type="checkbox" maxlength="25"></div>
                                 </div>
-                                <input type="text" class="inputForm" placeholder="Milano"/>
+                                <input type="text" class="inputForm" placeholder="Milano" @bind="nuovoPaziente.BirthPlace"/>
                             </div>
                             <div class="inline containerInputSmall">
                                 PROVINCIA<br/>
@@ -220,7 +223,7 @@
     private bool showFormErr = false; // Mostra l'errore del form
     private bool visible = false; // Mostra il form
     private bool dbError = false; // Errore del database
-    private int nPage=1; // Numero di pagina
+    private int nPage = 1; // Numero di pagina
     private int patientsDisplayed = 50; // Numero di pazienti visualizzati per pagina
 
     protected override async Task OnInitializedAsync()
@@ -246,22 +249,12 @@
             displayDbError();
         }
     }
-    
-    public void displayDbError()
-    {
-        dbError = true;
-    }
 
-    public void populator()
-    {
-        dbPopulator.Populator(FlagPatient: true);
-    }
+    public void displayDbError() => dbError = true;
 
-    private void toggleForm()
-    {
-        visible = !visible;
-        lastClickedP = null;
-    }
+    public void populator() => dbPopulator.Populator(FlagPatient: true);
+
+    private void toggleForm() => visible = !visible;
 
     private void searchPatient(ChangeEventArgs e)
     {
@@ -283,10 +276,10 @@
     {
         if (nPage > 0)
         {
-            await getPatientFromDB( patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage) ;
+            await getPatientFromDB(patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage);
         }
     }
-    
+
     // Metodi con utilizzo del database
     public async Task<int?> getMinPatientID()
     {
@@ -330,6 +323,7 @@
                 var paziente = new Paziente().getFromDBReader(reader);
                 pazienti.Add(paziente);
             }
+
             await db.CloseReaderAsync(reader);
         }
 
@@ -339,47 +333,56 @@
 
     public async Task savePatient()
     {
-        if (!checkPatientExist())
+        nuovoPaziente.Gender = gender != "m";
+        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", nuovoPaziente.CF, nuovoPaziente.CAsl, nuovoPaziente.BirthDate, nuovoPaziente.BirthPlace, nuovoPaziente.Foreigner, nuovoPaziente.BirthProvince, "NO", false, false, medID, nuovoPaziente.Locked);
+
+        if (!paziente.checkInputs())
         {
-            //salva il paziente
-            nuovoPaziente.Gender = gender != "m";
+            //mostro l'errore
+            showFormErr = true;
+            return;
+        }
 
-            Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, medID, nuovoPaziente.Locked);
+        //se è visibile lo tolgo
+        showFormErr = false;
 
-            if (!paziente.checkInputs())
-            {
-                //mostro l'errore
-                showFormErr = !showFormErr;
-                return;
-            }
-
-            paziente.sanitizePatient();
-
+        paziente.sanitizePatient();
+        if (!checkPatientExist(paziente))
+        {
             pazienti.Add(paziente);
 
             await paziente.saveInDB();
 
             pazientiFiltrati = pazienti;
 
-            //se è visibile lo tolgo
-            if (showFormErr) showFormErr = !showFormErr;
-            toggleForm();
             nuovoPaziente = new();
         }
         else
         {
-            
+            db.OpenConnection();
+            await db.MakeQueryAsync($"UPDATE PATIENT SET first_name='{paziente.FirstName}', surname='{paziente.Surname}', gender={paziente.Gender}, cf='{paziente.CF}', c_asl='{paziente.CAsl}', birth_date='{paziente.BirthDate:yyyy-MM-dd}', birth_place='{paziente.BirthPlace}', birth_province='{paziente.BirthProvince}', foreigner={paziente.Foreigner} WHERE patientID={lastClickedP.PatientID}");
+            db.CloseConnection();
+            await getPatientFromDB(0, patientsDisplayed);
         }
+        lastClickedP = null;
+        toggleForm();
     }
 
     //ritorna true se lo trova
-    public bool checkPatientExist()//spoldi è maggiorenne
+    public bool checkPatientExist(Paziente p)
     {
+        if (p == null) return false;
         db.OpenConnection();
-        using (MySqlDataReader r = db.ExecuteReader($"SELECT firstname, surname FROM patient WHERE first_name={nuovoPaziente.FirstName} AND surname={nuovoPaziente.Surname}"))
+        using (MySqlDataReader r = db.ExecuteReader($"SELECT first_name, surname FROM PATIENT WHERE first_name='{p.FirstName}' AND surname='{p.Surname}'"))
         {
+            if (r.Read())
+            {
+                db.CloseConnection();
+                return true;
+            }
+
             db.CloseConnection();
-            return r.Read() && r.GetString("first_name") == nuovoPaziente.FirstName && r.GetString("surname") == nuovoPaziente.Surname;
+            return false;
         }
     }
 
@@ -417,9 +420,15 @@
 
     public void openModifyPatient()
     {
+        if (lastClickedP == null)
+        {
+            return;
+        }
+
         nuovoPaziente.FirstName = lastClickedP.FirstName;
         nuovoPaziente.Surname = lastClickedP.Surname;
         nuovoPaziente.Foreigner = lastClickedP.Foreigner;
+        nuovoPaziente.BirthPlace = lastClickedP.BirthPlace;
         nuovoPaziente.BirthProvince = lastClickedP.BirthProvince;
         nuovoPaziente.Gender = lastClickedP.Gender;
         nuovoPaziente.BirthDate = lastClickedP.BirthDate;

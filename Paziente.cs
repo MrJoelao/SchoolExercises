@@ -136,6 +136,6 @@ public class Paziente
     // Metodo ToString() per una rappresentazione leggibile dell'oggetto
     public override string ToString()
     {
-        return $"{FirstName} {Surname}, Data di nascita: {BirthDate.ToShortDateString()}";
+        return $"{FirstName} {Surname}, Nato il: {BirthDate.ToShortDateString()}";
     }
 }
