@@ -4,6 +4,8 @@
 @using MySqlConnector;
 @inject IConfiguration Configuration
 @rendermode InteractiveServer
+@inject NavigationManager NavManager
+
 <PageTitle>Login</PageTitle>
 <div class="login-page mainSection">
     <div class="headerRow">
@@ -26,47 +28,50 @@
                     <h3 class="welcomeSubtitle">Benvenuto</h3>
                 </div>
                 <div class="emailBox">
-                    <input type="email" class="BoxRow imageEmail" placeholder="Email Address"/>
+                    <input type="email" @bind="emailLog" class="BoxRow imageEmail" placeholder=" "/>
                 </div>
                 <div class="passwordBox">
-                    <input type="password" class="BoxRow imagePassword" placeholder="Password"/>
+                    <input type="password" @bind="passwLog" class="BoxRow imagePassword" placeholder=" "/>
                 </div>
-                <button class="loginButton">login</button>
+                <button class="loginButton" @onclick="tryLogin">Login</button>
                 <h5 class="forgotPassword">Password dimenticata</h5>
-                <h5 class="errorMessage invisible">Email e/o password errata</h5>
+                @if (errLogin)
+                {
+                    <h5 class="errorMessage">Email e/o password errata</h5>
+                }
             </div>
         </div>
     </div>
 </div>
 
-@if (_flagBol)
+@if (RegForm)
 {
     <form class="form" @onsubmit="HandleRegistration">
-        <p class="title">Registrati</p>
-        <p class="message">Registrati subito per avere accesso all'app.</p>
+        <p class="title">Registrazione</p>
+        <p class="message">Registrati subito per avere accesso a DeltaDent Web</p>
         <div class="flex">
             <label>
-                <input @bind="Nome" placeholder=" " type="text" class="input" maxlength="25">
+                <input @bind="NomeReg" placeholder=" " type="text" class="input" maxlength="25">
                 <span>Nome</span>
             </label>
             <label>
-                <input @bind="Cognome" placeholder=" " type="text" class="input" maxlength="25">
+                <input @bind="CognomeReg" placeholder=" " type="text" class="input" maxlength="25">
                 <span>Cognome</span>
             </label>
         </div>
         <label>
-            <input @bind="Email" placeholder=" " type="email" class="input" maxlength="100">
+            <input @bind="EmailReg" placeholder=" " type="email" class="input" maxlength="100">
             <span>Email</span>
         </label>
         <label>
-            <input @bind="Password" placeholder=" " type="password" class="input" maxlength="100">
+            <input @bind="Reg" placeholder=" " type="password" class="input" maxlength="100">
             <span>Password</span>
         </label>
         <label>
-            <input @bind="ConfermaPassword" placeholder=" " type="password" class="input" maxlength="100">
+            <input @bind="ConfermaPasswordReg" placeholder=" " type="password" class="input" maxlength="100">
             <span>Conferma password</span>
         </label>
-        @if (err)
+        @if (errReg)
         {
             <div class="message">Si è verificato un errore, verificare i dati immessi</div>
         }
@@ -75,78 +80,127 @@
 }
 
 @code {
-    private bool _flagBol = false;
-    private bool err = false;
-    private string Nome { get; set; }
-    private string Cognome { get; set; }
-    private string Email { get; set; }
-    private string Password { get; set; }
-    private string ConfermaPassword { get; set; }
+
+    private DbManager db = new DbManager();
+    private bool RegForm = false;
+    private bool errReg = false;
+    private bool errLogin = false;
+    private string NomeReg { get; set; }
+    private string CognomeReg { get; set; }
+    private string EmailReg { get; set; }
+    private string Reg { get; set; }
+    private string ConfermaPasswordReg { get; set; }
+    private string emailLog { get; set; }
+    private string passwLog { get; set; }
 
     private void ButtonRegistration()
     {
-        _flagBol = !_flagBol;
+        RegForm = !RegForm;
+    }
+    
+    private void resetTextLogin()
+    {
+        // Reset dei campi del form dopo la registrazione
+        NomeReg = string.Empty;
+        CognomeReg = string.Empty;
+        EmailReg = string.Empty;
+        Reg = string.Empty;
+        ConfermaPasswordReg = string.Empty;
     }
 
     private async Task HandleRegistration()
     {
         try
         {
-            if (Password != ConfermaPassword || checkExist() || !verifyDoctor())
+            if (Reg != ConfermaPasswordReg || await checkExist(EmailReg) || !verifyDoctor())
             {
-                err = true;
+                errReg = true;
                 return;
             }
 
-            err = false;
+            errReg = false;
 
-            var query = $"INSERT INTO doctor (first_name, surname, email, password) VALUES ('{Nome}', '{Cognome}', '{Email}', '{Password}')";
-            DbManager db = new DbManager();
-            db.MakeQuery(query);
-            db.CloseConnection();
+            var query = $"INSERT INTO doctor (first_name, surname, email, password) VALUES ('{NomeReg}', '{CognomeReg}', '{EmailReg}', '{Reg}')";
+            await db.OpenConnectionAsync();
+            await db.MakeQueryAsync(query);
+            await db.CloseConnectionAsync();
 
-            // Reset dei campi del form dopo la registrazione
-            Nome = string.Empty;
-            Cognome = string.Empty;
-            Email = string.Empty;
-            Password = string.Empty;
-            ConfermaPassword = string.Empty;
+            resetTextLogin();
 
             //Console.WriteLine("Dati inseriti correttamente.");
             ButtonRegistration();
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Errore durante la registrazione dei dati: {ex.Message}");
-            err = true;
+            Console.WriteLine($"Errore durante la registrazione dei dati: " + ex.Message);
+            errReg = true;
         }
     }
 
     // Per prevenire sql injection verifica che gli input non contengano "'" e non siano vuoti, torna true se sono validi
     public bool verifyDoctor()
     {
-        return !Nome.Contains("'") && Nome.Length > 0 && !Cognome.Contains("'") && Cognome.Length > 0 && !Email.Contains("'") && Email.Length > 0 && !Password.Contains("'") && Password.Length > 0;
+        return !NomeReg.Contains("'") && NomeReg.Length > 0 && !CognomeReg.Contains("'") && CognomeReg.Length > 0 && !EmailReg.Contains("'") 
+               && EmailReg.Length > 0 && !Reg.Contains("'") && Reg.Length > 0;
     }
 
-    private bool checkExist()
+    private async Task<bool> checkExist(string email)
     {
-        string query = $"SELECT email FROM doctor WHERE email='{Email}'";
-        DbManager db = new DbManager();
+        string query = $"SELECT email FROM doctor WHERE email='{email}'";
+        await db.OpenConnectionAsync();
         using (MySqlDataReader reader = db.ExecuteReader(query))
         {
             if (reader.Read())
             {
-                if (reader.GetString("email") != null)
-                {
-                    Console.WriteLine("\n\nEsiste\n\n");
-                    db.CloseConnection();
-                    return true;
-                }
+                await db.CloseConnectionAsync();
+                return true;
             }
         }
 
-        Console.WriteLine("\n\nNon esiste\n\n");
-        db.CloseConnection();
+        await db.CloseConnectionAsync();
+        return false;
+    }
+
+    private async Task tryLogin()
+    {
+        if (!(await checkExist(emailLog)) || !(await checkPassw(passwLog)))
+        {
+            errLogin = true;
+            return;
+        }
+
+        string query = $"SELECT doctorID FROM doctor WHERE email='{emailLog}'";
+        await db.OpenConnectionAsync();
+        using (MySqlDataReader reader = await db.ExecuteReaderAsync(query))
+        {
+            if (!reader.Read())
+            {
+                await db.CloseConnectionAsync();
+                return;
+            }
+
+            int medID = reader.GetInt32("doctorID");
+            await db.CloseConnectionAsync();
+            errLogin = false;
+            NavManager.NavigateTo($"/Anagrafica/{medID}");
+        }
+    }
+
+    //controlla se la password di un medico è uguale a quella passatagli(true)
+    private async Task<bool> checkPassw(string passw)
+    {
+        string query = $"SELECT password FROM doctor WHERE password='{passw}'";
+        await db.OpenConnectionAsync();
+        using (MySqlDataReader reader = await db.ExecuteReaderAsync(query))
+        {
+            if (reader.Read())
+            {
+                await db.CloseConnectionAsync();
+                return true;
+            }
+        }
+
+        await db.CloseConnectionAsync();
         return false;
     }
 

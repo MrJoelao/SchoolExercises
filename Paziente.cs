@@ -53,6 +53,7 @@ public class Paziente
     // Costruttore vuoto
     public Paziente()
     {
+        BirthDate= DateTime.Parse("01-01-2000");
     }
 
     public async Task saveInDB()
@@ -135,6 +136,6 @@ public class Paziente
     // Metodo ToString() per una rappresentazione leggibile dell'oggetto
     public override string ToString()
     {
-        return $"{FirstName} {Surname}, Data di nascita: {BirthDate.ToShortDateString()}";
+        return $"{FirstName} {Surname}, Nato il: {BirthDate.ToShortDateString()}";
     }
 }
