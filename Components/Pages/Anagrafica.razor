@@ -16,7 +16,7 @@
         </div>
         <div class="buttonContainer">
             <button class="defButton" @onclick="@toggleForm">AGGIUNGI</button>
-            <button class="defButton">MODIFICA</button>
+            <button class="defButton" @onclick="openModifyPatient">MODIFICA</button>
             <button class="defButton" @onclick="deleteFromDB">ELIMINA</button>
             <button class="defButtonSmall" @onclick="populator">STAMPA</button>
             <input type="text" placeholder="Ricerca" @bind-value="searchValue" @oninput="searchPatient" class="inputSmall"/>
@@ -58,23 +58,15 @@
                 <tr @onclick="() => updateLastClicked(paziente)">
                     <td>@paziente.Surname</td>
                     <td>@paziente.FirstName</td>
-                    <td>@paziente.BirthDate</td>
+                    <td>@DateOnly.FromDateTime(paziente.BirthDate)</td>
                     <td>@paziente.Telephone</td>
                     <td>@paziente.Phone1</td>
                     <td>@paziente.Phone2</td>
                     <td>@paziente.Billable</td>
-                    <td>@(paziente.Completed ? "Sì" : "No")</td>
-                    <td>@(paziente.Documented ? "Sì" : "No")</td>
+                    <td>@(paziente.Completed ? "SÌ" : "NO")</td>
+                    <td>@(paziente.Documented ? "SÌ" : "NO")</td>
                     <td>
                         <input type="checkbox"/>
-                    </td>
-                </tr>
-            }
-            @if(dbError){
-                <tr>
-                    <td colspan = "10" align="center">
-                        <svg fill="none" height="25" viewBox="0 0 24 24" width="25" xmlns="http://www.w3.org/2000/svg"><path d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill="#393a37"></path></svg>
-                        Si è verificato un errore nella lettura del database
                     </td>
                 </tr>
             }
@@ -168,7 +160,7 @@
                             </div><br/>
                             <div class="inline containerInputLarge">
                                 INDIRIZZI<br/>
-                                <input type="text" class="inputFormLarge" placeholder="Via ..."  maxlength="25"/>
+                                <input type="text" class="inputFormLarge" placeholder="Via ..." maxlength="25"/>
                             </div>
                         </div>
 
@@ -202,27 +194,27 @@
 }
 
 @code {
-    DBPopulator dbPopulator = new DBPopulator(); // Oggetto per la popolazione del database
-    DbManager db = new DbManager(); // Oggetto per la gestione del database
-    
-    private string today = DateTime.Now.Year+"-"+DateTime.Now.Month+"-"+DateTime.Now.Day;
-    [Parameter] 
-    public string tempMedID { get; set; }
+
+    private string today = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day;
+    [Parameter] public string tempMedID { get; set; }
     private int medID { get; set; }
-    
-    Paziente nuovoPaziente = new(); // Paziente temporaneo per la creazione di un nuovo paziente
-    Paziente lastClickedP = null!; // Paziente selezionato
-    List<Paziente> pazienti = new List<Paziente>(); // Lista di tutti i pazienti
-    List<Paziente> pazientiFiltrati = new List<Paziente>(); // Lista di tutti i pazienti filtrati
-    
-    private string gender = null!; // Sesso del paziente
-    private string? searchValue = string.Empty; // Valore di ricerca
-    private bool showFormErr = false; // Mostra l'errore del form
-    private bool visible = false; // Mostra il form
-    private bool dbError = false; // Errore del database
-    private int nPage=1; // Numero di pagina
-    private int patientsDisplayed = 50; // Numero di pazienti visualizzati per pagina
-    
+
+    DBPopulator dbPopulator = new DBPopulator();
+    DbManager db = new DbManager();
+
+    Paziente nuovoPaziente = new();
+    Paziente lastClickedP = null;
+    List<Paziente> pazienti = new();
+    List<Paziente> pazientiFiltrati = new();
+
+    private string gender = null!;
+    private string filePath;
+    private string searchValue = string.Empty;
+    private bool showFormErr = false;
+    private bool visible = false;
+    private int nPage = 1;
+    private int patientsDisplayed = 50;
+
     protected override async Task OnInitializedAsync()
     {
         if (tempMedID != null)
@@ -230,40 +222,29 @@
             medID = Int32.Parse(tempMedID);
         }
         else
-        {       //else di sviluppo, per non dover fare il login ogni volta
+        {
+            //else di sviluppo, per non dover fare il login ogni volta
             medID = 1;
         }
+
         //medID = Int32.Parse(tempMedID);
-        
-        try
-        {
-            await getPatientFromDB(0, patientsDisplayed);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
-            displayDbError();
-        }
+        await getPatientFromDB(0, patientsDisplayed);
     }
-    
-    public void displayDbError()
-    {
-        dbError = true;
-    }
-    
+
     public void populator()
     {
         dbPopulator.Populator(FlagPatient: true);
     }
 
-    private void toggleForm() => visible = !visible;
-    
-    // Metodo per la ricerca dei pazienti
+    private void toggleForm()
+    {
+        visible = !visible;
+        lastClickedP = null;
+    }
+
     private void searchPatient(ChangeEventArgs e)
     {
-        // Ottengo il valore della ricerca controllando che non sia null
-        searchValue = e.Value != null ? e.Value.ToString() : string.Empty;
-        
+        searchValue = e.Value.ToString();
         var searchTerms = searchValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         pazientiFiltrati = pazienti.Where(p =>
@@ -274,19 +255,16 @@
         ).ToList();
     }
 
-    public void updateLastClicked(Paziente p)
-    {
-        lastClickedP = p;
-    }
-    
-    public async Task changePage()
+    public void updateLastClicked(Paziente p) => lastClickedP = p;
+
+    public void changePage()
     {
         if (nPage > 0)
         {
-            await getPatientFromDB( patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage) ;
+            getPatientFromDB(patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage);
         }
     }
-    
+
     // Metodi con utilizzo del database
     public async Task<int?> getMinPatientID()
     {
@@ -307,17 +285,15 @@
         await db.CloseReaderAsync(reader);
         return minPID;
     }
-    
+
     public async Task getPatientFromDB(int minRow, int maxRow)
     {
         pazienti = new();
 
         var minPID = await getMinPatientID();
-        
-        //se non trovo il minimo patientID esco
         if (minPID == null)
         {
-            Console.WriteLine("Errore durante il recupero del patientID minimo");
+            Console.WriteLine("Errore durante il recupero del minimo patientID");
             return;
         }
 
@@ -332,40 +308,60 @@
                 var paziente = new Paziente().getFromDBReader(reader);
                 pazienti.Add(paziente);
             }
+
             await db.CloseReaderAsync(reader);
         }
 
         pazientiFiltrati = pazienti;
         await db.CloseConnectionAsync();
     }
-    
+
     public async Task savePatient()
     {
-        //salva il paziente
-        nuovoPaziente.Gender = (gender != "m");
-    
-        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, medID, nuovoPaziente.Locked);
-    
-        if (!paziente.checkInputs())
+        if (!checkPatientExist())
         {
-            //mostro l'errore
-            showFormErr = !showFormErr;
-            return;
+            //salva il paziente
+            nuovoPaziente.Gender = gender != "m";
+
+            Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, medID, nuovoPaziente.Locked);
+
+            if (!paziente.checkInputs())
+            {
+                //mostro l'errore
+                showFormErr = !showFormErr;
+                return;
+            }
+
+            paziente.sanitizePatient();
+
+            pazienti.Add(paziente);
+
+            await paziente.saveInDB();
+
+            pazientiFiltrati = pazienti;
+
+            //se è visibile lo tolgo
+            if (showFormErr) showFormErr = !showFormErr;
+            toggleForm();
+            nuovoPaziente = new();
         }
-
-        paziente.sanitizePatient();
-    
-        pazienti.Add(paziente);
-
-        await paziente.saveInDB();
-    
-        pazientiFiltrati = pazienti;
-    
-        //se è visibile lo tolgo
-        if (showFormErr) showFormErr = !showFormErr;
-        toggleForm();
+        else
+        {
+            
+        }
     }
-    
+
+    //ritorna true se lo trova
+    public bool checkPatientExist()
+    {
+        db.OpenConnection();
+        using (MySqlDataReader r = db.ExecuteReader($"SELECT firstname, surname FROM patient WHERE first_name={nuovoPaziente.FirstName} AND surname={nuovoPaziente.Surname}"))
+        {
+            db.CloseConnection();
+            return r.Read() && r.GetString("first_name") == nuovoPaziente.FirstName && r.GetString("surname") == nuovoPaziente.Surname;
+        }
+    }
+
     public async Task deleteFromDB()
     {
         if (lastClickedP == null)
@@ -375,26 +371,40 @@
         }
 
         string queryDeletePatient = "DELETE FROM PATIENT WHERE patientID=" + lastClickedP.PatientID;
-    
+
         await db.OpenConnectionAsync();
-    
+
         await db.MakeQueryAsync(queryDeletePatient);
-    
+
         pazienti.Remove(lastClickedP);
         pazientiFiltrati = pazienti;
-    
+
         await unLinkPatient();
-    
+
         lastClickedP = null;
-    
+
         await db.CloseConnectionAsync();
     }
-    
+
     public async Task unLinkPatient()
     {
         string queryUnlinkPatient = "UPDATE VISIT SET patientID=-1 WHERE patientID=" + lastClickedP.PatientID;
-    
+
         await db.OpenConnectionAsync();
         await db.MakeQueryAsync(queryUnlinkPatient);
     }
+
+    public void openModifyPatient()
+    {
+        nuovoPaziente.FirstName = lastClickedP.FirstName;
+        nuovoPaziente.Surname = lastClickedP.Surname;
+        nuovoPaziente.Foreigner = lastClickedP.Foreigner;
+        nuovoPaziente.BirthProvince = lastClickedP.BirthProvince;
+        nuovoPaziente.Gender = lastClickedP.Gender;
+        nuovoPaziente.BirthDate = lastClickedP.BirthDate;
+        nuovoPaziente.CAsl = lastClickedP.CAsl;
+        nuovoPaziente.CF = lastClickedP.CF;
+        toggleForm();
+    }
+
 }
