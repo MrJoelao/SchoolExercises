@@ -1,203 +1,467 @@
-@page "/Anagraficao"
-@page "/Anagraficao/{tempMedID}"
+@page "/Anagrafica"
+@page "/Anagrafica/{tempMedID}"
 @using System.ComponentModel
 @using MySqlConnector;
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
 
+<div class="container-fluid mt-5 mt-sm-0">
+    <!--top bar-->
+    <div class="container-fluid">
+        <!--pages: questa sezione deve dividersi in 2 siccome i pulsanti occupano solo metà dello spazio del container genitore-->
+        <div class="row pages">
+            <!--suddivido la riga in 2 colonne-->
+            <div class="col-md-8 col-sm-12">
+                <!--suddivido la colonna in 4, uno per ogni pulsante-->
+                <div class="row">
+                    <div class="col ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
+                        <button class="scheda selectedPage" id="btnPaziente">
+                            pazienti
+                        </button>
+                    </div>
 
-<div class="corpo">
-    <div class="toolbar">
-        <div class="slideContainer">
-            <button class="slideSelez">PAZIENTI</button>
-            <button class="slide">CLIENTI</button>
-            <button class="slide">FORNITORI</button>
-            <button class="slide">CONTATTI</button>
+                    <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
+                        <button class="scheda unselectedPage" id="btnClienti">
+                            clienti
+                        </button>
+                    </div>
+
+                    <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
+                        <button class="scheda unselectedPage" id="btnFornitori">
+                            fornitori
+                        </button>
+                    </div>
+
+                    <div class="col p-0 px-md-1 pl-sm-0 pr-sm-1">
+                        <button class="scheda unselectedPage" id="btnContatti">
+                            contatti
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!--questa colonna resterà vuota per spaziare e eventualemte rimossa per dispositivi mobili-->
+            <div class="col hidden-sm">
+
+            </div>
         </div>
-        <div class="buttonContainer">
-            <button class="defButton" @onclick="@toggleForm">AGGIUNGI</button>
-            <button class="defButton" @onclick="openModifyPatient">MODIFICA</button>
-            <button class="defButton" @onclick="deleteFromDB">ELIMINA</button>
-            <button class="defButtonSmall" @onclick="populator">STAMPA</button>
-            <input type="text" placeholder="Ricerca" @bind-value="searchValue" @oninput="searchPatient" class="inputSmall"/>
-            <div class="insNumero">
-                <div class="side">N</div>
-                <input type="number" class="number"/>
+        <!--buttons-->
+        <div class="row toolbar">
+            <!-- suddivisione in 2-2-2-1-3-1-1 della barra-->
+            <div class="col-3 col-sm-2 col-md-2 ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool" @onclick="toggleForm" id="btnAggiungi" data-toggle="modal" data-target="#exampleModalCenter">
+                    Aggiungi
+                </button>
             </div>
-            <div class="insNumero">
-                <div class="side">P</div>
-                <input type="number" min="1" class="number" @bind="nPage" @oninput="changePage"/>
+
+            <div class="col-3 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool" id="btnModifica" @onclick="openModifyPatient">
+                    Modifica
+                </button>
             </div>
-            <input type="text" placeholder="Avanzata" class="inputLarge"/>
+
+            <div class="col-3 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool" id="btnElimina" @onclick="deleteFromDB">
+                    elimina
+                </button>
+            </div>
+
+            <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool" id="btnStampa" @onclick="populator">
+                    Stampa
+                </button>
+            </div>
+
+            <div class="col-3 col-sm-2 col-md-3 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <input class="inputRicerca" id="txtRicerca" placeholder="Ricerca" @bind-value="searchValue" @oninput="searchPatient"/> <!--@bind-value="searchValue" @oninput="searchPatient"-->
+            </div>
+
+            <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <div class="col sideNum">
+                    N
+                </div>
+                <div class="col">
+                    <input class="inNum" id="inputCartella" type="number" placeholder="0"/>
+                </div>
+            </div>
+
+            <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <div class="col sideNum">
+                    P
+                </div>
+                <div class="col">
+                    <input class="inNum" id="inputPagina" type="number" placeholder="1" @bind="nPage" @oninput="changePage"min="1"/>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="list">
-        <table class="styled-table">
-            <thead>
-            <tr class="headTable">
-                <th>COGNOME</th>
-                <th>NOME</th>
-                <th>DATA DI NASCITA</th>
-                <th>TELEFONO</th>
-                <th>CELLULARE</th>
-                <th>CELLULARE 2</th>
-                <th>DA FATTURARE</th>
-                <th>TERMINATE</th>
-                <th>DOCUMENTATO</th>
-                <th>
-                    <div>Lock</div>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
+    <!-- corpo centrale della pagina -->
 
-            <!-- Qui vengono aggiunte le righe della tabella -->
+    <div class="container-fluid corpo mt-1">
+        <!-- heading della tabella -->
+        <div class="row heading">
+            <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
+            <div class="col-3 col-sm-2 cella">
+                cognome
+            </div>
+            <div class="col-2 col-sm-1 cella">
+                nome
+            </div>
+            <div class="col-2 col-sm-1 cella">
+                nascita
+            </div>
+            <div class="col-2 col-sm-1 cella">
+                telefono
+            </div>
+            <div class="col-2 col-sm-1 cella">
+                cellulare1
+            </div>
+            <div class=" d-none d-sm-block col-1 cella">
+                cellulare2
+            </div>
+            <div class=" d-none d-sm-block col-1 cella">
+                fatturare
+            </div>
+            <div class=" d-none d-sm-block col-1 cella">
+                terminato
+            </div>
+            <div class="d-none d-sm-block col-1 cella">
+                documentato
+            </div>
+            <div class="d-none d-sm-block col-1 cella lock">
+
+            </div>
+            <div class="col-1 cella">
+
+            </div>
+        </div>
+        <!-- body della tabella-->
+        <div class >
             @foreach (var paziente in pazientiFiltrati)
             {
-                <tr @onclick="() => updateLastClicked(paziente)">
-                    <td>@paziente.Surname</td>
-                    <td>@paziente.FirstName</td>
-                    <td>@DateOnly.FromDateTime(paziente.BirthDate)</td>
-                    <td>@paziente.Telephone</td>
-                    <td>@paziente.Phone1</td>
-                    <td>@paziente.Phone2</td>
-                    <td>@paziente.Billable</td>
-                    <td>@(paziente.Completed ? "SÌ" : "NO")</td>
-                    <td>@(paziente.Documented ? "SÌ" : "NO")</td>
-                    <td>
-                        <input type="checkbox"/>
-                    </td>
-                </tr>
-            }
-            @if(dbError){
-            <tr>
-                <td colspan = "10" align="center">
-                    <svg fill="none" height="25" viewBox="0 0 24 24" width="25" xmlns="http://www.w3.org/2000/svg"><path d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill="#393a37"></path></svg>
-                    Si è verificato un errore nella lettura del database
-                </td>
-            </tr>
-            }
+                <div class = "row rigo mt-1" @onclick="() => updateLastClicked(paziente)">
+                    <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
+                    <div class = "col-3 col-sm-2 cella" >
+                        @paziente.Surname
+                    </div>
+                    <div class = "col-2 col-sm-1 cella" >
+                        @paziente.FirstName
+                    </div>
+                    <div class = "col-2 col-sm-1 cella" >
+                        @DateOnly.FromDateTime(paziente.BirthDate)
+                    </div>
+                    <div class = "col-2 col-sm-1 cella" >
+                        @paziente.Telephone
+                    </div>
+                    <div class = "col-2 col-sm-1 cella" >
+                        @paziente.Phone1
+                    </div>
+                    <div class = " d-none d-sm-block col-1 cella" >
+                        @paziente.Phone2
+                    </div>
+                    <div class = " d-none d-sm-block col-1 cella" >
+                        @paziente.Billable
+                    </div>
+                    <div class = " d-none d-sm-block col-1 cella" >
+                        @(paziente.Completed ? "Si" : "No")
+                    </div>
+                    <div class = "d-none d-sm-block col-1 cella" >
+                        @(paziente.Documented ? "Si" : "No")
+                    </div>
+                    <div class = "col-1 cella" >
+                        <input type = "checkbox"/>
+                    </div>
 
-            </tbody>
-        </table>
+                    <div class = "col-1 cella" >
 
+                    </div>
+
+                </div>
+            }
+            @if (dbError)
+            {
+                <div class = "row rigo mt-1" >
+                    <div class = "col-3 col-sm-2 cella" >
+                        <svg fill = "none" height = "25" viewBox = "0 0 24 24" width = "25" xmlns = "http://www.w3.org/2000/svg" ><path d = "m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill = "#393a37" ></path></svg>
+                        Si è verificato un errore nella lettura del database
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
-
 @if (visible)
 {
-    <div class="oscuramento">
-        <!-- div contenente il pop-up per l'inserimento dei dati -->
-        <div class="Inserimento">
-            <!-- div contenente la barra superiore -->
-            <div>
-                <div class="inline buttonFormContainer">
-                    <button class="buttonFormSelected">DATI PERSONALI</button>
-                    <button class="buttonForm">FAMILIARI</button>
-                    <button class="buttonForm">CONTATTI - FATTURAZIONE</button>
-                    <button class="buttonForm">NOTE</button>
+    <!--div utilizzato per oscurare la pagina mentre il pop up viene aperto-->
+    <div class="oscuramento justify-content-center">
+    <!--contenitore popup-->
+    <div class="containerForm popUp px-4">
+    <!--parte superiore-->
+    <div class="row">
+        <!--barra pulsanti-->
+        <div class="col-9 col-sm-11 barra">
+            <div class="row">
+                <div class="col-6 col-sm-3">
+                    <button class="btnForm selectedPage">Dati personai</button>
                 </div>
-                <div class="inline">
-                    <button @onclick="@toggleForm" class="exitButton">X</button>
+                <div class="col-6 col-sm-3">
+                    <button class="btnForm unselectedPage">familiari</button>
                 </div>
-            </div>
-            <div class="containerForm">
-                <div class="forms">
-                    <!-- div colonna a sinistra -->
-                    <div class=" sx">
-                        <!-- div contenente i form principali -->
-                        <div>
-                            <div class="inline containerInput">
-                                COGNOME*<br/>
-                                <input type="text" @bind="nuovoPaziente.Surname" class="inputForm" placeholder="Poretti" maxlength="25"/>
-                            </div>
-                            <div class="inline containerInput">
-                                NOME*<br/>
-                                <input type="text" @bind="nuovoPaziente.FirstName" class="inputForm" placeholder="Giacomo" maxlength="25"/>
-                            </div><br/>
-                            <div class="inline containerInput">
-                                <div>
-                                    LUOGO DI NASCITA
-                                    <div class="inline checkbox">estero<input @bind="nuovoPaziente.Foreigner" type="checkbox" maxlength="25"></div>
-                                </div>
-                                <input type="text" class="inputForm" placeholder="Milano"/>
-                            </div>
-                            <div class="inline containerInputSmall">
-                                PROVINCIA<br/>
-                                <input type="text" @bind="nuovoPaziente.BirthProvince" class="inputForm" placeholder="Milano" maxlength="25"/>
-                            </div>
-                            <div class="inline containerInputSmall">
-                                SESSO<br/>
-                                <select type="select" @bind="gender" class="inputFormScleta" placeholder=" ">
-                                    <option value="m">Maschio</option>
-                                    <option value="f">Femmina</option>
-                                </select>
-                            </div><br/>
-                            <div class="inline containerInputSmall">
-                                DATA NASCITA<br/>
-                                <input type="date" @bind="nuovoPaziente.BirthDate" class="inputFormData" EnableMinMax="true" min="1900-01-01" max="@today"/>
-                            </div>
-                            <div class="inline containerInputSmall">
-                                CODICE ASL<br/>
-                                <input type="text" @bind="nuovoPaziente.CAsl" class="inputForm" placeholder="MI333" maxlength="5"/>
-                            </div>
-                            <div class="inline containerInput">
-                                <div>
-                                    CODICE FISCALE
-                                    <div class="inline checkbox">cont. validità<input type="checkbox" maxlength="16"></div>
-                                </div>
-                                <input type="text" class="inputForm" @bind="nuovoPaziente.CF" placeholder="PRTGCM64H07F205D"/>
-                            </div><br/>
-                            <div class="inline containerInputSmall">
-                                CATEGORIA<br/>
-                                <select type="select" class="inputFormScleta" placeholder=" ">
-                                    <option value="p">Prova</option>
-                                </select>
-                            </div>
-                            <div class="inline containerInputSmall">
-                                MEDICO<br/>
-                                <input type="text" @bind="nuovoPaziente.DoctorID" class="inputForm" placeholder="Ippocrate" maxlength="25"/>
-                            </div>
-                            <div class="inline containerInput">
-                                PROFESSIONE<br/>
-                                <select type="select" class="inputFormScleta" placeholder=" ">
-                                    <option value="p">Prova</option>
-                                </select>
-                            </div><br/>
-                            <div class="inline containerInputLarge">
-                                INDIRIZZI<br/>
-                                <input type="text" class="inputFormLarge" placeholder="Via ..." maxlength="25"/>
-                            </div>
-                        </div>
-
-                    </div><!-- div contenente le referenze -->
-                    <br/>
-                    <div class="sx">
-                        REFERENZE<br/>
-                        <div class="inline pulsanti">
-                            <button class="buttonOpzioniForm">MOTIVO</button>
-                            <button class="buttonOpzioniForm">NOMINATIVO</button>
-                            <button class="buttonOpzioniForm">NOTE</button>
-                        </div>
-                    </div>
+                <div class="col-6 col-sm-3">
+                    <button class="btnForm unselectedPage">contatti -fatturazione</button>
                 </div>
-                <!-- div colonna destra contenente i tasti di salvataggio ecc. -->
-                <div class="dx">
-                    <button class="buttonAzioniForm" @onclick="savePatient">SALVA E CHIUDI</button><br/>
-                    <button class="buttonAzioniForm">SALVA E APRI</button><br/>
-                    <button class="buttonAzioniForm" @onclick="toggleForm">ANNULLA</button><br/>
-                    <button class="buttonAzioniForm">STAMPA</button><br/>
-                    @if (showFormErr)
-                    {
-                        <div>Verificare i dati immessi</div>
-                    }
-                    <button class="buttonAzioniFormIcona">IMPORTA CLIENTE</button>
+                <div class="col-6 col-sm-3">
+                    <button class="btnForm unselectedPage">note</button>
                 </div>
             </div>
         </div>
+        <!--barra pulsanti-->
+        <div class="col-1">
+            <button class="exit" @onclick="toggleForm" >
+                X
+            </button>
+        </div>
+    </div>
+    <!--corpo centrale-->
+    <div class="row mt-1 mt-sm-2">
+        <!--parte inserimento dati-->
+        <div class="formbody col-8 col-sm-10">
+            <div class="row">
+                <div class="row">
+                    <!--prima riga-->
+                    <div class="col-12 col-sm-6">
+                        <div class="cardInput">
+                            <div class="row">
+                                cognome*
+                            </div>
+                            <div class="row">
+                                <input class="inputForm" type="text" @bind="nuovoPaziente.Surname"/>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="col-12 col-sm-6">
+                        <div class="cardInput">
+                            <div class="row">
+                                Nome*
+                            </div>
+                            <div class="row">
+                                <input class="inputForm" type="text" @bind="nuovoPaziente.FirstName"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--seconda riga-->
+                <div class="row mt-1">
+                    <div class="col-12 col-sm-6">
+                        <div class="cardInput">
+                            <div class="row">
+                                <div class="ps-0 col-6 justify-content-start">luogo nascita</div>
+                                <div class="col-6 align-content-center">
+                                    <label for="isEstero" style="font-size: 0.6rem">estero</label>
+                                    <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input class="inputForm" type="text" @bind="nuovoPaziente.BirthPlace"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="row">
+                            <div class="col">
+                                <div class="SmallcardInput">
+                                    <div class="row">
+                                        provincia
+                                    </div>
+                                    <div class="row">
+                                        <input class="inputForm" type="text" @bind="nuovoPaziente.BirthProvince"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="SmallcardInput">
+                                    <div class="row">
+                                        sesso
+                                    </div>
+                                    <div class="row">
+                                        <select type="select" class="inputForm" placeholder=" " @bind="gender">c
+                                            <option value="m">Maschio</option>
+                                            <option value="f">Femmina</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--terza riga-->
+                <div class="row mt-1">
+                    <div class="col-12 col-sm-6">
+                        <div class="row">
+                            <div class="col">
+                                <div class="SmallcardInput">
+                                    <div class="row">
+                                        data nascita
+                                    </div>
+                                    <div class="row">
+                                        <input class="inputForm data" type="date" @bind="nuovoPaziente.BirthDate"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="SmallcardInput">
+                                    <div class="row">
+                                        codice asl
+                                    </div>
+                                    <div class="row">
+                                        <input class="inputForm" type="text" @bind="nuovoPaziente.CAsl"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="cardInput">
+                            <div class="row">
+                                <div class="ps-0 col-6 justify-content-start">codice fiscale</div>
+                                <div class="col-6 align-content-center">
+                                    <label for="isEstero" style="font-size: 0.6rem">controllo validità</label>
+                                    <input type="checkbox" id="isValid"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input class="inputForm" type="text" @bind="nuovoPaziente.CF"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--quarta riga-->
+                <div class="row mt-1">
+                    <div class="col-12 col-sm-6">
+                        <div class="cardInput">
+                            <div class="row">
+                                professione
+                            </div>
+                            <div class="row">
+                                <select type="select" class="inputForm" placeholder=" ">
+                                    <!--@bind="gender"-->
+                                    <option value="p">prova</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="row">
+                            <div class="col">
+                                <div class="SmallcardInput">
+                                    <div class="row">
+                                        medico
+                                    </div>
+                                    <div class="row">
+                                        <input class="inputForm" type="text" @bind="nuovoPaziente.DoctorID"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="SmallcardInput">
+                                    <div class="row">
+                                        professione
+                                    </div>
+                                    <div class="row">
+                                        <select type="select" class="inputForm" placeholder=" ">
+                                            <!--@bind="gender"-->
+                                            <option value="p">prova</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--quinta riga-->
+                <div class="row mt-1">
+                    <div class="cardInput textarea">
+                        <div class="row">
+                            indirizzi
+                        </div>
+                        <div class="row">
+                            <textarea class="inputForm textarea"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <!--parte tasti pc-->
+        <div class="col-4 col-sm-2 SezPulsanti">
+            <div class="row mt-1">
+                <button class="formButton" @onclick="savePatient">
+                    salva
+                </button>
+            </div>
+            <div class="row mt-1">
+                <button class="formButton">
+                    salva e apri
+                </button>
+            </div>
+            <div class="row mt-1">
+                <button class="formButton">
+                    salva e chiudi
+                </button>
+            </div>
+            <div class="row mt-1">
+                <button class="formButton" @onclick="toggleForm">
+                    annulla
+                </button>
+            </div>
+            <div class="row mt-1">
+                <button class="formButton">
+                    stampa
+                </button>
+            </div>
+            @if (showFormErr)
+            {
+            <div>Verificare i dati immessi</div>
+            }
+            <div class="row mt-4">
+                <button class="formButton importIcon">
+                    importa CLiente
+                </button>
+            </div>
+        </div>
+        
+        <!--sezione in bassso-->
+        <div class="bottomForm mt-1">
+            <div class="row" style="font-weight: bold; text-transform: uppercase;">
+                <div class="col">preferenze</div>
+            </div>
+            <div class="row mt-1">
+                <div class="col">
+                    <button class="formButton">
+                        motivo
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="formButton">
+                        nominativo
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="formButton">
+                        note
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
     </div>
 }
 
@@ -220,7 +484,7 @@
     private bool showFormErr = false; // Mostra l'errore del form
     private bool visible = false; // Mostra il form
     private bool dbError = false; // Errore del database
-    private int nPage=1; // Numero di pagina
+    private int nPage = 1; // Numero di pagina
     private int patientsDisplayed = 50; // Numero di pazienti visualizzati per pagina
 
     protected override async Task OnInitializedAsync()
@@ -246,22 +510,12 @@
             displayDbError();
         }
     }
-    
-    public void displayDbError()
-    {
-        dbError = true;
-    }
 
-    public void populator()
-    {
-        dbPopulator.Populator(FlagPatient: true);
-    }
+    public void displayDbError() => dbError = true;
 
-    private void toggleForm()
-    {
-        visible = !visible;
-        lastClickedP = null;
-    }
+    public void populator() => dbPopulator.Populator(FlagPatient: true);
+
+    private void toggleForm() => visible = !visible;
 
     private void searchPatient(ChangeEventArgs e)
     {
@@ -283,10 +537,10 @@
     {
         if (nPage > 0)
         {
-            await getPatientFromDB( patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage) ;
+            await getPatientFromDB(patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage);
         }
     }
-    
+
     // Metodi con utilizzo del database
     public async Task<int?> getMinPatientID()
     {
@@ -330,6 +584,7 @@
                 var paziente = new Paziente().getFromDBReader(reader);
                 pazienti.Add(paziente);
             }
+
             await db.CloseReaderAsync(reader);
         }
 
@@ -339,47 +594,56 @@
 
     public async Task savePatient()
     {
-        if (!checkPatientExist())
+        nuovoPaziente.Gender = gender != "m";
+        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", nuovoPaziente.CF, nuovoPaziente.CAsl, nuovoPaziente.BirthDate, nuovoPaziente.BirthPlace, nuovoPaziente.Foreigner, nuovoPaziente.BirthProvince, "NO", false, false, medID, nuovoPaziente.Locked);
+
+        if (!paziente.checkInputs())
         {
-            //salva il paziente
-            nuovoPaziente.Gender = gender != "m";
+            //mostro l'errore
+            showFormErr = true;
+            return;
+        }
 
-            Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, medID, nuovoPaziente.Locked);
+        //se è visibile lo tolgo
+        showFormErr = false;
 
-            if (!paziente.checkInputs())
-            {
-                //mostro l'errore
-                showFormErr = !showFormErr;
-                return;
-            }
-
-            paziente.sanitizePatient();
-
+        paziente.sanitizePatient();
+        if (!checkPatientExist(paziente))
+        {
             pazienti.Add(paziente);
 
             await paziente.saveInDB();
 
             pazientiFiltrati = pazienti;
 
-            //se è visibile lo tolgo
-            if (showFormErr) showFormErr = !showFormErr;
-            toggleForm();
             nuovoPaziente = new();
         }
         else
         {
-            
+            db.OpenConnection();
+            await db.MakeQueryAsync($"UPDATE PATIENT SET first_name='{paziente.FirstName}', surname='{paziente.Surname}', gender={paziente.Gender}, cf='{paziente.CF}', c_asl='{paziente.CAsl}', birth_date='{paziente.BirthDate:yyyy-MM-dd}', birth_place='{paziente.BirthPlace}', birth_province='{paziente.BirthProvince}', foreigner={paziente.Foreigner} WHERE patientID={lastClickedP.PatientID}");
+            db.CloseConnection();
+            await getPatientFromDB(0, patientsDisplayed);
         }
+        lastClickedP = null;
+        toggleForm();
     }
 
     //ritorna true se lo trova
-    public bool checkPatientExist()//spoldi è maggiorenne
+    public bool checkPatientExist(Paziente p)
     {
+        if (p == null) return false;
         db.OpenConnection();
-        using (MySqlDataReader r = db.ExecuteReader($"SELECT firstname, surname FROM patient WHERE first_name={nuovoPaziente.FirstName} AND surname={nuovoPaziente.Surname}"))
+        using (MySqlDataReader r = db.ExecuteReader($"SELECT first_name, surname FROM PATIENT WHERE first_name='{p.FirstName}' AND surname='{p.Surname}'"))
         {
+            if (r.Read())
+            {
+                db.CloseConnection();
+                return true;
+            }
+
             db.CloseConnection();
-            return r.Read() && r.GetString("first_name") == nuovoPaziente.FirstName && r.GetString("surname") == nuovoPaziente.Surname;
+            return false;
         }
     }
 
@@ -417,9 +681,15 @@
 
     public void openModifyPatient()
     {
+        if (lastClickedP == null)
+        {
+            return;
+        }
+
         nuovoPaziente.FirstName = lastClickedP.FirstName;
         nuovoPaziente.Surname = lastClickedP.Surname;
         nuovoPaziente.Foreigner = lastClickedP.Foreigner;
+        nuovoPaziente.BirthPlace = lastClickedP.BirthPlace;
         nuovoPaziente.BirthProvince = lastClickedP.BirthProvince;
         nuovoPaziente.Gender = lastClickedP.Gender;
         nuovoPaziente.BirthDate = lastClickedP.BirthDate;
@@ -427,5 +697,4 @@
         nuovoPaziente.CF = lastClickedP.CF;
         toggleForm();
     }
-
 }

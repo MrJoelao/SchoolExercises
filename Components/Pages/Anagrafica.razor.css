@@ -1,204 +1,171 @@
-.toolbar{
-    width: 95%;
-    height: 5rem;
-    background-color: #3D7BD9;
-    border-radius: 10px;
-}
+/*
+--COLORI USATI OCMUNEMENTE--
+
+#3D7BD9 -> blu scuro
+#72B7FF -> blu medio         
+#DFEFFF -> blu chiaro
+
+ */
 
 
-.buttonContainer {
-    padding: 0.3rem;
-    width: 100%;
-    height: 2.5rem;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color: #72B7FF;
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-}
 
-/*per safari & google*/
-.buttonContainer::-webkit-scrollbar {
-    height: 5px;
-    background-color: #3D7BD9;
-    border-radius: 10rem;
-}
-
-/*per firefox*/
-.buttonContainer {
-    scrollbar-width: thin;
-    scrollbar-color: #3D7BD9 #fff;
-}
-
-.slideContainer{
-    width: 100%;
-    height: 2.5rem;
-}
-
-.defButton{
-    background-color: #4787CA;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
-    margin-right: 0.5rem;
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-.defButton:hover {
-    background-color: #316393;
-}
-
-.defButtonSmall{
-    background-color: #4787CA;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
-    margin-right: 0.5rem;
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-.defButtonSmall:hover {
-    background-color: #316393;
-}
-
-.inputSmall{
-    border: none;
-    border-radius: 5px;
-    background-image: url("./assets/lente.svg");
-}
-
-.inputSmall {
-    border-radius: 5px;
-    background: url('./assets/lente.svg') no-repeat right center;
-    background-size: 20px 20px;
-    width: 200px;
-    box-sizing: border-box;
-    border: none;
-    padding: 0.2rem;
-    padding-right: 1.5rem;
-    background-color: white;
-    margin-right: 0.5rem;
-}
-
-.inputSmall::placeholder {
-    color: #999;
-}
-
-.insNumero {
-    display: inline-block;
-    font-weight: bold;
-    height: 2.3rem;
-    margin-right: 0.3rem;
-    margin-left: 0.3rem;
-    display: flex;
-    flex-wrap: nowrap;
-}
-
-.side{
-    background-color: #4787CA;
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
-    color: white;
-    text-align: center;
-    height: 1.8rem;
-    padding-top: 0.1rem;
-    width:2rem;
-    display: inline-block;
-}
-
-.inline{
-    display: inline-block;
-}
-
-.number{
-    height:1.8rem;
-    margin-left: -0.4rem;
-    width: 2.5rem;
-    border: none;
-    padding-bottom: 3px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-.inputLarge {
-    border-radius: 5px;
-    background: url('./assets/lente.svg') no-repeat right center;
-    background-size: 20px 20px;
-    width: 15rem;
-    box-sizing: border-box;
-    border: none;
-    padding: 0.2rem;
-    padding-right: 1.5rem;
-    background-color: white;
-    margin-left: 0.5rem;
-}
-
-.inputLarge::placeholder {
-    color: #999;
-}
-
-.slideSelez{
-    margin-top:0.5rem;
-    font-weight: bold;
-    color: white;
-    padding-right: 2rem;
-    padding-left: 2rem;
-    padding-bottom: 0.5rem;
+/*stile applicato alla parte superiore della barra utente*/
+.pages{
+    background: #3D7BD9;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    margin-left: 1rem;
-    border: none;
-    background-color: #72B7FF;
-}
-.slide{
-    margin-top:0.5rem;
-    font-weight: bold;
-    color: black;
-    padding-right: 2rem;
-    padding-left: 2rem;
-    padding-bottom: 0.5rem;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    margin-left: 1rem;
-    border: none;
-    background-color: #DFEFFF;
-    transition: background-color 0.3s ease;
+    padding-top: 1rem;
 }
 
-.slide:hover{
-    background-color: #96beda;
-}
-
-
-.list{
-    width: 95%;
-    height: 80%;
-    border-radius: 10px;
-    background-color: #7FAFE1;
-    margin-top: 2rem;
-    display: block;
-    max-height: 85vh;
-    overflow-x: auto;
-}
-.corpo{
-    width: 100%;
+/*stile generico pulsanti scheda*/
+.scheda{
     height: 100%;
+    width:90%;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
+    border:none;
+    text-transform: uppercase;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: background-color 0.3s ease, filter 0.3s ease;
 }
 
-.oscuramento {
-    position: absolute;
+/*stile hover (lo sfondo diviene leggermente scuro*/
+.scheda:hover{
+    filter: brightness(0.8);
+}
+
+/*stile applicato alla scheda selezionata*/
+.selectedPage{
+    background-color: #72B7FF ;
+    color: white;
+}
+/*stile applicato alla scheda non selezionata*/
+.unselectedPage{
+    background-color: #DFEFFF;
+    color: black;
+}
+
+/*stile toolbar*/
+.toolbar{
+    background-color: #72B7FF;
+    border-bottom-right-radius: 0.6rem;
+    border-bottom-left-radius: 0.6rem;
+    padding: 0.3rem;
+}
+
+/*stile pulsanti toolbar*/
+.btnTool{
+    height: 100%;
+    width:100%;
+    padding: 0.5rem;
+    border-radius: 0.5vw;
+    border:none;
+    font-size: 1vw;
+    font-weight: bold;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+    background-color: #3D7BD9;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+/*stile hover (lo sfondo diviene leggermente scuro)*/
+.btnTool:hover{
+    filter: brightness(0.8);
+}
+
+/*stile pulsanti toolbar*/
+.inputRicerca{
+    background: url("./assets/lente.svg") no-repeat right;
+    height: 100%;
+    width:100%;
+    padding-right: 2.5rem;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.5vw;
+    border:none;
+    font-size: 1vw;
+    text-transform: uppercase;
+    color: black;
+    background-color: white;
+}
+
+/*stile applicato al div a lato degli spinner*/
+.sideNum{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    background-color: #3D7BD9;
+    border-top-left-radius: .4rem;
+    border-bottom-left-radius: .4rem;
+    color: white;
+    font-weight: bold;
+}
+/*stile spinner*/
+.inNum{
+    width: 100%;
+    height:100%;
+    border:none;
+    border-top-right-radius: .4rem;
+    border-bottom-right-radius: .4rem;
+}
+
+/*stile per il body effettivo della pagica contenente la tabella*/
+.centro{
+    height: 85vh;
+    background-color: #7FAFE1;
+    border-radius: 0.5rem;
+}
+
+.corpo{
+    background-color: #7FAFE1;
+    padding:1rem;
+    border-radius: 5px;
+    height: 85vh;
+    overflow-x: auto;
+}
+
+/*heading della tabella*/
+.heading{
+    background-color: #3D7BD9;
+    padding: 1rem;
+    border-radius: .4rem;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/*row tabella*/
+.rigo{
+    background-color: white;
+    padding: 1rem;
+    border-radius: .4rem;
+    color: black;
+    text-transform: uppercase;
+}
+
+/*stile singola cella*/
+.cella{
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lock{
+    background: url("./assets/lockIco.svg") no-repeat center;
+    background-size: contain;
+}
+
+/*stile per oscurare la pagina quando il pop up è aperto*/
+.oscuramento{
+    position: fixed;
     background-color: rgba(0, 0, 0, 0.17);
     width: 110%;
     height: 100%;
@@ -207,74 +174,105 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-left: 10%;
 }
 
-.Inserimento{
+/*stile per il container del pop up*/
+.popUp{
     margin-left: 10%;
-    background-color: #FFFFFF;
-    border-radius: 10px;
+    background-color: white;
+    border-radius: 0.7rem;
     padding: 1rem;
 }
 
-.buttonFormContainer{
-    border-radius: 5px;
+/*stile barra superiore form aggiunta*/
+.barra{
+    padding:0.5rem;
     background-color: #3D7BD9;
-    width: 94%;
-    height: 2rem;
-    padding: 3px;
+    border-radius: 0.3rem;
 }
-.pulsanti{
+
+/*bottone uscita form*/
+.exit{
+    background-color: #E34848;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+    border-radius: 100%;
+    border: none;
+    color: white;
+    font-weight: bold;
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.exit:hover{
+    filter: brightness(0.80);
+}
+
+
+/*sile generico pulsanti form*/
+.btnForm{
+    font-weight: bold;
+    border:none;
+    border-radius: .4rem;
+    padding: .4rem;
+    width: 100%;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+.btnForm:hover{
+    filter: brightness(0.80);
+}
+
+.containerForm{
+    max-height: 90vh;
+    max-width: 100vw;
+    overflow: auto;
+    width:60%;
+}
+
+/*stile applicato ai pulsanti dentro al form laterale*/
+.formButton{
     width:100%;
+    height:auto;
+    padding:0.5rem;
+    border:none;
+    border-radius: 10px;
+    background-color: #3D7BD9;
+    color: white;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, filter 0.3s ease;
 }
 
-.dx{
-    position: relative;
-    text-align: center;
+.formButton:hover{
+    filter: brightness(0.80);
+}
+
+/*stile sez laterale form*/
+.SezPulsanti{
     background-color: #B4D1F0;
-    border-radius:5px;
-    width:15rem;
-    padding-top:0.5rem
-}
-.buttonOpzioniForm{
-    background-color: #3D7BD9;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     border-radius: 10px;
-    width: 32%;
-    padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
-    border:none;
-    color: white;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
 }
 
-.buttonOpzioniForm:hover{
-    background-color: #3062ae;
-}
-
-.buttonAzioniForm{
-    background-color: #3D7BD9;
-    border-radius: 10px;
-    width: 95%;
-    padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
-    border:none;
-    color: white;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    margin-bottom: 0.5rem;
-}
-
-.buttonAzioniFormIcona {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    padding-top: 5rem;
-
+/* stile aggiuntivo al formbutton per assegnare l'immagine di sfondo*/
+.importIcon{
     background: url("./assets/importIcon.svg") no-repeat top center;
     background-color: #3D7BD9;
     border-radius: 10px;
-    width: 95%;
+    height: 10vh;
+    min-height: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
     padding-bottom: 0.3rem;
     border: none;
     color: white;
@@ -282,208 +280,112 @@
     transition: background-color 0.3s ease;
     margin-bottom: 0.3rem;
 }
-.iconaImport{
-    color: white;
-    background-color: black;
-    display: block;
-    width: 3rem;
-    height:3rem;
-}
-.buttonAzioniForm:hover{
-    background-color: #3062ae;
-}
 
-.buttonAzioniFormIcona:hover{
-    background-color: #3062ae;
-}
-
-.buttonForm{
+/*container dato form*/
+.cardInput{
+    width: 95%;
+    text-transform: uppercase;
     font-weight: bold;
-    color: black;
-    background-color: #DFEFFF;
-    border-radius: 5px;
-    border: none;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
-.buttonForm:hover{
-    background-color: #91a7bf;
 }
 
-.buttonFormSelected{
+/*container dato form piccolo*/
+.SmallcardInput{
+    width: 90%;
+    text-transform: uppercase;
     font-weight: bold;
-    color: white;
-    background-color: #72B7FF;
-    border-radius: 5px;
-    border: none;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
 }
 
-.buttonFormSelected:hover{
-    background-color: #4579ae;
-}
-.exitButton{
-    background-color: #E34848;
-    font-weight: bold;
-    color:white;
-    border-radius: 100%;
-    padding: 3px;
-    padding-right: 10px;
-    padding-left: 10px;
-    border:none;
-    transition: background-color 0.3s ease;
-}
-
-.exitButton:hover{
-    background-color: #a62d2d;
-}
-.forms{
-    width:100%;
-}
-.containerForm{
-    padding-right: 2rem;
-    margin-top:1.5rem;
-    display: flex;
-    flex-wrap: nowrap;
-}
-
+/*stile applicato ad ogni input del form*/
 .inputForm{
-    width: 100%;
-    border:none;
-    border-radius: 2.5px;
-}
-.inputFormData{
-    padding-right: -0.1rem;
-    width: 97%;
-    border:none;
-    border-radius: 2.5px;
-    background-color: white;
-}
-
-
-.inputFormScleta{
-    width: 100%;
-    border:none;
-    border-radius: 2.5px;
-    background-color: white;
-    padding-top:0.2rem;
-    padding-bottom: 0.2rem;
-}
-
-
-.containerInputLarge{
     width:100%;
-    font-size: 14px;
-}
-
-.inputFormLarge{
-    height:5rem;
-    border-radius: 5px;
+    height: 100%;
     border:none;
-    width:100%;
+    padding: 0.5rem;
+    border-radius: 3px;
 }
 
 .inputForm::placeholder{
-    color: #505050;
-    border-radius: 5px;
+    color: gray;
 }
 
-.inputFormSmall{
-    width: 45%;
-    border:none;
-    border-radius: 2.5px;
+/*stile aggiuntivo form input per la data*/
+.data{
+    padding: 0.3rem;
 }
 
-.containerInput{
-    width:49%;
-    font-size: 14px;
-    margin-bottom: 5px;
+/*stile aggiuntivo form input per la textarea*/
+.textarea{
+    resize: none;
+    width: 99%;
 }
 
-.containerInputSmall{
-    width:24.5%;
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-.checkbox{
-    width:40%;
-    text-align: right;
-    font-size: 11px;
-}
-
-.sx{
-    font-weight: bold;
+.formbody{
+    padding:1rem;
+    padding-left: 2rem;
+    padding-right: 0;
     background-color: #B4D1F0;
-    border-radius: 5px;
-    margin-right: 0.5rem;
+    border-radius: 10px;
+    width: 81%;
+    margin-right: 2%;
+}
+
+.bottomForm{
+    background-color: #B4D1F0;
+    border-radius: 10px;
     padding: 1rem;
 }
+/*media query custom per migliorare l'esperienza utente mobile*/
+@media (max-width: 1251px) {
+    .containerForm{
+        width: 80%;
+    }
 
-.styled-table {
-    width: 97%;
-    margin-left: 1%;
-    border-collapse: separate;
-    border-spacing: 0 0.5rem;
-    max-height: 6rem;
-    overflow-x: auto;
-}
-/*
-.styled-table {
-    width: 90%;
-    margin-left: 5%;
-    border-collapse: separate;
-    border-spacing: 0 0.5rem;
-}*/
-
-.styled-table thead {
-    background-color: #3D7BD9;
-    color: white;
 }
 
-.styled-table thead th {
-    padding: 15px;
-    border: none;
-    font-weight: bold;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-/*modifica tabella*/
-.styled-table thead th:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
+@media (max-width: 768px){
+    .btnTool{
+        font-size: .7rem;
+        border-radius: .5rem;
+    }
 
-.styled-table thead th:last-child {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
+    .formbody{
+        width: 64%;
+    }
+    .containerForm{
+        width: 100%;
+    }
 
-.styled-table tbody tr {
-    background-color: white;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-}
+    .importIcon{
+        background-position: center;
+        font-size: 0;
+    }
+    .popUp{
+        margin-left: 0;
+    }
 
-.styled-table tbody tr:hover {
-    transform: scale(1.02); 
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+    .scheda{
+        font-size: .7rem;
+        border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
+    }
 
-.styled-table tbody td {
-    padding: 15px;
-    border-top: 1px solid #f0f0f0; 
-    border-bottom: 1px solid #f0f0f0;
-}
+    .inputRicerca{
+        background: none;
+        font-size: .7rem;
+        border-radius: .5rem;
+        background-color: white;
+        padding-right: .5rem;
+    }
 
-.styled-table tbody td:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
+    .centro{
+        height: 75vh;
+    }
 
-.styled-table tbody  td:last-child {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    .exit{
+        height: 80%;
+    }
+
+    .corpo{
+        height:80vh;
+    }
 }
