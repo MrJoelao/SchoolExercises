@@ -1,4 +1,6 @@
 @page "/Anagrafica"
+@page "/Anagrafica/{tempMedID}"
+@using System.ComponentModel
 @using MySqlConnector;
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
@@ -135,7 +137,7 @@
                             </div><br/>
                             <div class="inline containerInputSmall">
                                 DATA NASCITA<br/>
-                                <input type="date" @bind="nuovoPaziente.BirthDate" class="inputFormData"/>
+                                <input type="date" @bind="nuovoPaziente.BirthDate" class="inputFormData" EnableMinMax="true" min="1900-01-01" max="@today"/>
                             </div>
                             <div class="inline containerInputSmall">
                                 CODICE ASL<br/>
@@ -203,6 +205,11 @@
     DBPopulator dbPopulator = new DBPopulator(); // Oggetto per la popolazione del database
     DbManager db = new DbManager(); // Oggetto per la gestione del database
     
+    private string today = DateTime.Now.Year+"-"+DateTime.Now.Month+"-"+DateTime.Now.Day;
+    [Parameter] 
+    public string tempMedID { get; set; }
+    private int medID { get; set; }
+    
     Paziente nuovoPaziente = new(); // Paziente temporaneo per la creazione di un nuovo paziente
     Paziente lastClickedP = null!; // Paziente selezionato
     List<Paziente> pazienti = new List<Paziente>(); // Lista di tutti i pazienti
@@ -218,6 +225,16 @@
     
     protected override async Task OnInitializedAsync()
     {
+        if (tempMedID != null)
+        {
+            medID = Int32.Parse(tempMedID);
+        }
+        else
+        {       //else di sviluppo, per non dover fare il login ogni volta
+            medID = 1;
+        }
+        //medID = Int32.Parse(tempMedID);
+        
         try
         {
             await getPatientFromDB(0, patientsDisplayed);
@@ -239,10 +256,7 @@
         dbPopulator.Populator(FlagPatient: true);
     }
 
-    private void toggleForm()
-    {
-        visible = !visible;
-    }
+    private void toggleForm() => visible = !visible;
     
     // Metodo per la ricerca dei pazienti
     private void searchPatient(ChangeEventArgs e)
@@ -269,7 +283,6 @@
     {
         if (nPage > 0)
         {
-            //Console.WriteLine(nPage);
             await getPatientFromDB( patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage) ;
         }
     }
@@ -277,7 +290,7 @@
     // Metodi con utilizzo del database
     public async Task<int?> getMinPatientID()
     {
-        string queryMinPatientID = "SELECT MIN(patientID) FROM PATIENT";
+        string queryMinPatientID = $"SELECT MIN(patientID) FROM PATIENT WHERE doctorID={medID}";
         MySqlDataReader reader;
 
         await db.OpenConnectionAsync();
@@ -308,7 +321,7 @@
             return;
         }
 
-        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID BETWEEN {minPID + minRow} AND {minPID + maxRow}";
+        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID BETWEEN {minPID + minRow} AND {minPID + maxRow} AND doctorID = {medID}";
 
         await db.OpenConnectionAsync();
 
@@ -331,7 +344,7 @@
         //salva il paziente
         nuovoPaziente.Gender = (gender != "m");
     
-        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, 1, nuovoPaziente.Locked);
+        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, medID, nuovoPaziente.Locked);
     
         if (!paziente.checkInputs())
         {
@@ -372,7 +385,7 @@
     
         await unLinkPatient();
     
-        lastClickedP = null!;
+        lastClickedP = null;
     
         await db.CloseConnectionAsync();
     }
