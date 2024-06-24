@@ -62,7 +62,7 @@
 
             <div class="col-3 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
                 <button class="btnTool" id="btnElimina" @onclick="deleteFromDB">
-                    elimina
+                    Elimina
                 </button>
             </div>
 
@@ -140,7 +140,7 @@
         <div class >
             @foreach (var paziente in pazientiFiltrati)
             {
-                <div class = "row rigo mt-1" @onclick="() => updateLastClicked(paziente)" @ondblclick="() => navigateToPatientPage(paziente)">
+                <div id="@i" class = "row rigo mt-1" @onclick="() => updateLastClicked(paziente)" @ondblclick="() => navigateToPatientPage(paziente)">
                     <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
                     <div class = "col-3 col-sm-2 cella" >
                         @paziente.Surname
@@ -176,8 +176,8 @@
                     <div class = "col-1 cella" >
 
                     </div>
-
                 </div>
+                i++;
             }
             @if (dbError)
             {
@@ -488,9 +488,11 @@
     private bool dbError = false; // Errore del database
     private int nPage = 1; // Numero di pagina
     private int patientsDisplayed = 50; // Numero di pazienti visualizzati per pagina
+    private int i;
 
     protected override async Task OnInitializedAsync()
     {
+        i = 0;
         if (tempMedID != null)
         {
             medID = Int32.Parse(tempMedID);
@@ -539,6 +541,7 @@
     {
         if (nPage > 0)
         {
+            i = 0;
             await getPatientFromDB(patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage);
         }
     }

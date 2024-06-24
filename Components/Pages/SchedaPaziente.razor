@@ -1,4 +1,6 @@
 ﻿@page "/SchedaPaziente"
+@page "/SchedaPaziente/{patID:int}"
+@using MySqlConnector
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 @inject IWebHostEnvironment env
@@ -279,7 +281,7 @@
 <!-- profilo paziente -->
 <div class="AreaPaziente inline">
     <img src="./assets/test/test.jpg" class="immaginePaziente">
-    <div class="sezione"> marco doccia</div>
+    <div class="sezione">Mat</div>
     <div class="intestazione">INFO CARTELLA</div>
     <div class="sezione" style="text-align: unset">
         <div class="sxAlign">
@@ -535,14 +537,41 @@
     private float preventivi;
     private float extras;
     private float eseguito;
-    
+
+    [Parameter] public int patID { get; set; }
+    private Paziente paziente;
 
     private bool _visibile = false;
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
     private List<IBrowserFile> allLoadedFiles = new();
     private long maxFileSize = 1024 * 1000;
+    DbManager db = new DbManager();
 
+    protected override async Task OnInitializedAsync()
+    {
+        getPatientFromDB();
+    }
+    
+    public async Task getPatientFromDB()
+    {
+        paziente = new();
+
+        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID = {patID}";
+
+        await db.OpenConnectionAsync();
+
+        using (var reader = await db.ExecuteReaderAsync(queryRangePatient))
+        {
+            while (await reader.ReadAsync())
+            {
+                paziente=paziente.getFromDBReader(reader);
+            }
+        }
+        
+        await db.CloseConnectionAsync();
+    }
+    
     private void ToggleForm()
     {
         _visibile = !_visibile;
