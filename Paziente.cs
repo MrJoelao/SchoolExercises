@@ -53,6 +53,7 @@ public class Paziente
     // Costruttore vuoto
     public Paziente()
     {
+        BirthDate= DateTime.Parse("01-01-2000");
     }
 
     public async Task saveInDB()

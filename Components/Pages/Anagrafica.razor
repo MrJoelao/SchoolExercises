@@ -129,7 +129,7 @@
                             </div><br/>
                             <div class="inline containerInputSmall">
                                 DATA NASCITA<br/>
-                                <input type="date" @bind="nuovoPaziente.BirthDate" class="inputFormData"/>
+                                <input type="date" @bind="nuovoPaziente.BirthDate" class="inputFormData" EnableMinMax="true" min="1900-01-01" max="@today"/>
                             </div>
                             <div class="inline containerInputSmall">
                                 CODICE ASL<br/>
@@ -195,6 +195,7 @@
 
 @code {
 
+    private string today = DateTime.Now.Year+"-"+DateTime.Now.Month+"-"+DateTime.Now.Day;
     [Parameter] 
     public string tempMedID { get; set; }
     private int medID { get; set; }
@@ -234,10 +235,7 @@
         dbPopulator.Populator(FlagPatient: true);
     }
 
-    private void toggleForm()
-    {
-        visible = !visible;
-    }
+    private void toggleForm() => visible = !visible;
     
     private void searchPatient(ChangeEventArgs e)
     {
