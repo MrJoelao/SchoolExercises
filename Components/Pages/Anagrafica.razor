@@ -352,7 +352,7 @@
     }
 
     //ritorna true se lo trova
-    public bool checkPatientExist()
+    public bool checkPatientExist()//spoldi è maggiorenne
     {
         db.OpenConnection();
         using (MySqlDataReader r = db.ExecuteReader($"SELECT firstname, surname FROM patient WHERE first_name={nuovoPaziente.FirstName} AND surname={nuovoPaziente.Surname}"))
