@@ -61,10 +61,18 @@
                     <td>@paziente.Phone1</td>
                     <td>@paziente.Phone2</td>
                     <td>@paziente.Billable</td>
-                    <td>@(paziente.Completed ? "SÌ" : "NO")</td>
-                    <td>@(paziente.Documented ? "SÌ" : "NO")</td>
+                    <td>@(paziente.Completed ? "Sì" : "No")</td>
+                    <td>@(paziente.Documented ? "Sì" : "No")</td>
                     <td>
                         <input type="checkbox"/>
+                    </td>
+                </tr>
+            }
+            @if(dbError){
+                <tr>
+                    <td colspan = "10" align="center">
+                        <svg fill="none" height="25" viewBox="0 0 24 24" width="25" xmlns="http://www.w3.org/2000/svg"><path d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill="#393a37"></path></svg>
+                        Si è verificato un errore nella lettura del database
                     </td>
                 </tr>
             }
@@ -192,25 +200,38 @@
 }
 
 @code {
-    DBPopulator dbPopulator = new DBPopulator();
-    DbManager db = new DbManager();
+    DBPopulator dbPopulator = new DBPopulator(); // Oggetto per la popolazione del database
+    DbManager db = new DbManager(); // Oggetto per la gestione del database
     
-    Paziente nuovoPaziente = new();
-    Paziente lastClickedP = null;
-    List<Paziente> pazienti = new();
-    List<Paziente> pazientiFiltrati = new();
+    Paziente nuovoPaziente = new(); // Paziente temporaneo per la creazione di un nuovo paziente
+    Paziente lastClickedP = null!; // Paziente selezionato
+    List<Paziente> pazienti = new List<Paziente>(); // Lista di tutti i pazienti
+    List<Paziente> pazientiFiltrati = new List<Paziente>(); // Lista di tutti i pazienti filtrati
     
-    private string gender = null!;
-    private string filePath;
-    private string searchValue = string.Empty;
-    private bool showFormErr = false;
-    private bool visible = false;
-    private int nPage=1;
-    private int patientsDisplayed = 50;
+    private string gender = null!; // Sesso del paziente
+    private string? searchValue = string.Empty; // Valore di ricerca
+    private bool showFormErr = false; // Mostra l'errore del form
+    private bool visible = false; // Mostra il form
+    private bool dbError = false; // Errore del database
+    private int nPage=1; // Numero di pagina
+    private int patientsDisplayed = 50; // Numero di pazienti visualizzati per pagina
     
     protected override async Task OnInitializedAsync()
     {
-        await getPatientFromDB(0, patientsDisplayed);
+        try
+        {
+            await getPatientFromDB(0, patientsDisplayed);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
+            displayDbError();
+        }
+    }
+    
+    public void displayDbError()
+    {
+        dbError = true;
     }
     
     public void populator()
@@ -223,9 +244,12 @@
         visible = !visible;
     }
     
+    // Metodo per la ricerca dei pazienti
     private void searchPatient(ChangeEventArgs e)
     {
-        searchValue = e.Value.ToString();
+        // Ottengo il valore della ricerca controllando che non sia null
+        searchValue = e.Value != null ? e.Value.ToString() : string.Empty;
+        
         var searchTerms = searchValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         pazientiFiltrati = pazienti.Where(p =>
@@ -241,12 +265,12 @@
         lastClickedP = p;
     }
     
-    public void changePage()
+    public async Task changePage()
     {
         if (nPage > 0)
         {
             //Console.WriteLine(nPage);
-            getPatientFromDB( patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage) ;
+            await getPatientFromDB( patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage) ;
         }
     }
     
@@ -276,9 +300,11 @@
         pazienti = new();
 
         var minPID = await getMinPatientID();
+        
+        //se non trovo il minimo patientID esco
         if (minPID == null)
         {
-            Console.WriteLine("Errore durante il recupero del minimo patientID");
+            Console.WriteLine("Errore durante il recupero del patientID minimo");
             return;
         }
 
@@ -346,7 +372,7 @@
     
         await unLinkPatient();
     
-        lastClickedP = null;
+        lastClickedP = null!;
     
         await db.CloseConnectionAsync();
     }

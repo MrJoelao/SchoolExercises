@@ -5,7 +5,7 @@ public class DbManager
 {
     public MySqlConnection Conn { get; private set; }
     
-    public DbManager(string server = "The-J-Computer", string user = "user", string password = "admin", string database = "deltadentdb", string port = "3306")
+    public DbManager(string server = "The-J-Computer", string user = "user", string password = "adminN", string database = "deltadentdb", string port = "3306")
     {
         Console.WriteLine("Attempting to open connection...");
         OpenConnection(server, user, password, database, port);
@@ -40,7 +40,7 @@ public class DbManager
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to open async connection: {e.Message}");
+            Console.WriteLine("Failed to open async connection:" + e.Message);
         }
         
     }
@@ -54,7 +54,7 @@ public class DbManager
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to close connection: {e.Message}");
+            Console.WriteLine($"Failed to close connection:" + e.Message);
         }
     }
     
@@ -67,7 +67,7 @@ public class DbManager
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to close connection: {e.Message}");
+            Console.WriteLine($"Failed to close connection:" + e.Message);
         }
     }
     
@@ -83,7 +83,7 @@ public class DbManager
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to execute query: {e.Message}");
+            Console.WriteLine($"Failed to execute query:" + e.Message);
         }
     }
     
@@ -98,7 +98,7 @@ public class DbManager
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to execute query: {e.Message}");
+            Console.WriteLine($"Failed to execute query:" + e.Message);
         }
     }
     
