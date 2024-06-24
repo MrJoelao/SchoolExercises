@@ -568,7 +568,7 @@
         {
             foreach (var f in allLoadedFiles)
             {
-                if (f.Name == name)
+                if (f.Name == name && !fileListAlreadyContains(f.Name, confirmedFiles))
                 {
                     confirmedFiles.Add(f);
                 }
@@ -585,7 +585,7 @@
                 await using FileStream fs = new(path, FileMode.Create);
                 await confirmedFiles[i].OpenReadStream(maxFileSize).CopyToAsync(fs);
 
-                Console.WriteLine($"File saved: {trustedFileName}");
+                //Console.WriteLine($"File saved: {trustedFileName}");
             }
             catch (Exception ex)
             {
@@ -596,6 +596,19 @@
         await JS.InvokeVoidAsync("setTinyImages", confirmedFiles);
         await resetVariables();
         ToggleForm();
+    }
+
+    private bool fileListAlreadyContains(string fileName, List<IBrowserFile> list)
+    {
+        foreach (var f in list)
+        {
+            if (fileName == f.Name)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private async Task resetVariables()
