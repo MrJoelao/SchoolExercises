@@ -1,4 +1,6 @@
-@page "/AnagraficaR"
+@page "/Anagrafica"
+@page "/Anagrafica/{tempMedID}"
+@using System.ComponentModel
 @using MySqlConnector;
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
@@ -52,25 +54,25 @@
             </div>
 
             <div class="col-3 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
-                <button class="btnTool" id="btnModifica">
+                <button class="btnTool" id="btnModifica" @onclick="openModifyPatient">
                     Modifica
                 </button>
             </div>
 
             <div class="col-3 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
-                <button class="btnTool" id="btnElimina">
+                <button class="btnTool" id="btnElimina" @onclick="deleteFromDB">
                     elimina
                 </button>
             </div>
 
             <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
-                <button class="btnTool" id="btnStampa">
+                <button class="btnTool" id="btnStampa" @onclick="populator">
                     Stampa
                 </button>
             </div>
 
             <div class="col-3 col-sm-2 col-md-3 p-0 px-md-1 pl-sm-0 pr-sm-1">
-                <input class="inputRicerca" id="txtRicerca" placeholder="Ricerca"/> <!--@bind-value="searchValue" @oninput="searchPatient"-->
+                <input class="inputRicerca" id="txtRicerca" placeholder="Ricerca" @bind-value="searchValue" @oninput="searchPatient"/> <!--@bind-value="searchValue" @oninput="searchPatient"-->
             </div>
 
             <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
@@ -87,7 +89,7 @@
                     P
                 </div>
                 <div class="col">
-                    <input class="inNum" id="inputPagina" type="number" placeholder="0"/>
+                    <input class="inNum" id="inputPagina" type="number" placeholder="1" @bind="nPage" @oninput="changePage"min="1"/>
                 </div>
             </div>
         </div>
@@ -134,46 +136,57 @@
             </div>
         </div>
         <!-- body della tabella-->
-        <div class>
-            <div class="row rigo mt-1">
-                <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
-                <div class="col-3 col-sm-2 cella">
-                    cognome
-                </div>
-                <div class="col-2 col-sm-1 cella">
-                    nome
-                </div>
-                <div class="col-2 col-sm-1 cella">
-                    nascita
-                </div>
-                <div class="col-2 col-sm-1 cella">
-                    età
-                </div>
-                <div class="col-2 col-sm-1 cella">
-                    telefono
-                </div>
-                <div class=" d-none d-sm-block col-1 cella">
-                    telefono2
-                </div>
-                <div class=" d-none d-sm-block col-1 cella">
-                    fatturare
-                </div>
-                <div class=" d-none d-sm-block col-1 cella">
-                    terminato
-                </div>
-                <div class="d-none d-sm-block col-1 cella">
-                    documentato
-                </div>
-                <div class="col-1 cella">
-                    <input type="checkbox"/>
-                </div>
+        <div class >
+            @foreach (var paziente in pazientiFiltrati)
+            {
+                <div class = "row rigo mt-1" @onclick="() => updateLastClicked(paziente)">
+                    <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
+                    <div class = "col-3 col-sm-2 cella" >
+                        @paziente.Surname
+                    </div>
+                    <div class = "col-2 col-sm-1 cella" >
+                        @paziente.FirstName
+                    </div>
+                    <div class = "col-2 col-sm-1 cella" >
+                        @DateOnly.FromDateTime(paziente.BirthDate)
+                    </div>
+                    <div class = "col-2 col-sm-1 cella" >
+                        @paziente.Telephone
+                    </div>
+                    <div class = "col-2 col-sm-1 cella" >
+                        @paziente.Phone1
+                    </div>
+                    <div class = " d-none d-sm-block col-1 cella" >
+                        @paziente.Phone2
+                    </div>
+                    <div class = " d-none d-sm-block col-1 cella" >
+                        @paziente.Billable
+                    </div>
+                    <div class = " d-none d-sm-block col-1 cella" >
+                        @(paziente.Completed ? "Si" : "No")
+                    </div>
+                    <div class = "d-none d-sm-block col-1 cella" >
+                        @(paziente.Documented ? "Si" : "No")
+                    </div>
+                    <div class = "col-1 cella" >
+                        <input type = "checkbox"/>
+                    </div>
 
-                <div class="col-1 cella">
+                    <div class = "col-1 cella" >
+
+                    </div>
 
                 </div>
-
-            </div>
-
+            }
+            @if (dbError)
+            {
+                <div class = "row rigo mt-1" >
+                    <div class = "col-3 col-sm-2 cella" >
+                        <svg fill = "none" height = "25" viewBox = "0 0 24 24" width = "25" xmlns = "http://www.w3.org/2000/svg" ><path d = "m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill = "#393a37" ></path></svg>
+                        Si è verificato un errore nella lettura del database
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -205,7 +218,7 @@
         </div>
         <!--barra pulsanti-->
         <div class="col-1">
-            <button class="exit">
+            <button class="exit" @onclick="toggleForm" >
                 X
             </button>
         </div>
@@ -223,7 +236,7 @@
                                 cognome*
                             </div>
                             <div class="row">
-                                <input class="inputForm" type="text"/>
+                                <input class="inputForm" type="text" @bind="nuovoPaziente.Surname"/>
                             </div>
                         </div>
                     </div>
@@ -234,7 +247,7 @@
                                 Nome*
                             </div>
                             <div class="row">
-                                <input class="inputForm" type="text"/>
+                                <input class="inputForm" type="text" @bind="nuovoPaziente.FirstName"/>
                             </div>
                         </div>
                     </div>
@@ -248,11 +261,11 @@
                                 <div class="ps-0 col-6 justify-content-start">luogo nascita</div>
                                 <div class="col-6 align-content-center">
                                     <label for="isEstero" style="font-size: 0.6rem">estero</label>
-                                    <input type="checkbox" id="isEstero"/>
+                                    <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner"/>
                                 </div>
                             </div>
                             <div class="row">
-                                <input class="inputForm" type="text"/>
+                                <input class="inputForm" type="text" @bind="nuovoPaziente.BirthPlace"/>
                             </div>
                         </div>
                     </div>
@@ -264,7 +277,7 @@
                                         provincia
                                     </div>
                                     <div class="row">
-                                        <input class="inputForm" type="text"/>
+                                        <input class="inputForm" type="text" @bind="nuovoPaziente.BirthProvince"/>
                                     </div>
                                 </div>
                             </div>
@@ -274,8 +287,7 @@
                                         sesso
                                     </div>
                                     <div class="row">
-                                        <select type="select" class="inputForm" placeholder=" ">
-                                            <!--@bind="gender"-->
+                                        <select type="select" class="inputForm" placeholder=" " @bind="gender">c
                                             <option value="m">Maschio</option>
                                             <option value="f">Femmina</option>
                                         </select>
@@ -296,7 +308,7 @@
                                         data nascita
                                     </div>
                                     <div class="row">
-                                        <input class="inputForm data" type="date"/>
+                                        <input class="inputForm data" type="date" @bind="nuovoPaziente.BirthDate"/>
                                     </div>
                                 </div>
                             </div>
@@ -306,7 +318,7 @@
                                         codice asl
                                     </div>
                                     <div class="row">
-                                        <input class="inputForm" type="text"/>
+                                        <input class="inputForm" type="text" @bind="nuovoPaziente.CAsl"/>
                                     </div>
                                 </div>
                             </div>
@@ -318,11 +330,11 @@
                                 <div class="ps-0 col-6 justify-content-start">codice fiscale</div>
                                 <div class="col-6 align-content-center">
                                     <label for="isEstero" style="font-size: 0.6rem">controllo validità</label>
-                                    <input type="checkbox" id="isEstero"/>
+                                    <input type="checkbox" id="isValid"/>
                                 </div>
                             </div>
                             <div class="row">
-                                <input class="inputForm" type="text"/>
+                                <input class="inputForm" type="text" @bind="nuovoPaziente.CF"/>
                             </div>
                         </div>
                     </div>
@@ -351,7 +363,7 @@
                                         medico
                                     </div>
                                     <div class="row">
-                                        <input class="inputForm" type="text"/>
+                                        <input class="inputForm" type="text" @bind="nuovoPaziente.DoctorID"/>
                                     </div>
                                 </div>
                             </div>
@@ -390,7 +402,7 @@
         <!--parte tasti pc-->
         <div class="col-4 col-sm-2 SezPulsanti">
             <div class="row mt-1">
-                <button class="formButton">
+                <button class="formButton" @onclick="savePatient">
                     salva
                 </button>
             </div>
@@ -405,7 +417,7 @@
                 </button>
             </div>
             <div class="row mt-1">
-                <button class="formButton">
+                <button class="formButton" @onclick="toggleForm">
                     annulla
                 </button>
             </div>
@@ -414,6 +426,10 @@
                     stampa
                 </button>
             </div>
+            @if (showFormErr)
+            {
+            <div>Verificare i dati immessi</div>
+            }
             <div class="row mt-4">
                 <button class="formButton importIcon">
                     importa CLiente
@@ -450,64 +466,71 @@
 }
 
 @code {
-    private bool visible = false;
 
-    private void toggleForm()
+    private string today = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day;
+    [Parameter] public string tempMedID { get; set; }
+    private int medID { get; set; }
+
+    DBPopulator dbPopulator = new DBPopulator(); // Oggetto per la popolazione del database
+    DbManager db = new DbManager(); // Oggetto per la gestione del database
+
+    Paziente nuovoPaziente = new(); // Paziente temporaneo per la creazione di un nuovo paziente
+    Paziente lastClickedP = null!; // Paziente selezionato
+    List<Paziente> pazienti = new List<Paziente>(); // Lista di tutti i pazienti
+    List<Paziente> pazientiFiltrati = new List<Paziente>(); // Lista di tutti i pazienti filtrati
+
+    private string gender = null!; // Sesso del paziente
+    private string? searchValue = string.Empty; // Valore di ricerca
+    private bool showFormErr = false; // Mostra l'errore del form
+    private bool visible = false; // Mostra il form
+    private bool dbError = false; // Errore del database
+    private int nPage=1; // Numero di pagina
+    private int patientsDisplayed = 50; // Numero di pazienti visualizzati per pagina
+
+    protected override async Task OnInitializedAsync()
     {
-        visible = !visible;
-    }
-    /*
-    private string filePath;
+        if (tempMedID != null)
+        {
+            medID = Int32.Parse(tempMedID);
+        }
+        else
+        {
+            //else di sviluppo, per non dover fare il login ogni volta
+            medID = 1;
+        }
 
-    string searchValue = string.Empty;
-
-
-    Paziente nuovoPaziente = new();
-    List<Paziente> pazienti = new();
-    List<Paziente> pazientiFiltrati = new();
-
-    string gender = null!;
-    private bool showFormErr = false;
-    Paziente lastClickedP = null;
-
-    protected override void OnInitialized()
-    {
-        getAllFromDB();
-    }
-    */
-
-    /*
-    private void getAllFromDB()
-    {
-        DbManager db = new DbManager();
-        string query = "SELECT * FROM PATIENT";
-
+        //medID = Int32.Parse(tempMedID);
         try
         {
-            using (MySqlDataReader reader = db.ExecuteReader(query))
-            {
-                while (reader.Read())
-                {
-                    Paziente paziente = new Paziente().getFromDBReader(reader);
-                    pazienti.Add(paziente);
-
-                }
-            }
+            await getPatientFromDB(0, patientsDisplayed);
         }
         catch (Exception e)
         {
             Console.WriteLine("Errore durante il recupero dei pazienti: " + e.Message);
-            throw;
+            displayDbError();
         }
+    }
+    
+    public void displayDbError()
+    {
+        dbError = true;
+    }
 
-        pazientiFiltrati = pazienti;
-        db.CloseConnection();
+    public void populator()
+    {
+        dbPopulator.Populator(FlagPatient: true);
+    }
+
+    private void toggleForm()
+    {
+        visible = !visible;
+        lastClickedP = null;
     }
 
     private void searchPatient(ChangeEventArgs e)
     {
-
-        searchValue = e.Value.ToString();
+        // Ottengo il valore della ricerca controllando che non sia null
+        searchValue = e.Value != null ? e.Value.ToString() : string.Empty;
         var searchTerms = searchValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         pazientiFiltrati = pazienti.Where(p =>
@@ -518,52 +541,164 @@
         ).ToList();
     }
 
-    public void salvaPaziente()
+    public void updateLastClicked(Paziente p) => lastClickedP = p;
+
+    public async Task changePage()
     {
-        nuovoPaziente.Gender = (gender == "m" ? false : true);
-        if (checkInputs())
+        if (nPage > 0)
+        {
+            await getPatientFromDB( patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage) ;
+        }
+    }
+    
+    // Metodi con utilizzo del database
+    public async Task<int?> getMinPatientID()
+    {
+        string queryMinPatientID = $"SELECT MIN(patientID) FROM PATIENT WHERE doctorID={medID}";
+        MySqlDataReader reader;
+
+        await db.OpenConnectionAsync();
+        reader = await db.ExecuteReaderAsync(queryMinPatientID);
+
+        if (!await reader.ReadAsync())
+        {
+            await db.CloseConnectionAsync();
+            return null;
+        }
+
+        int minPID = reader.GetInt32("MIN(patientID)");
+        await db.CloseConnectionAsync();
+        await db.CloseReaderAsync(reader);
+        return minPID;
+    }
+
+    public async Task getPatientFromDB(int minRow, int maxRow)
+    {
+        pazienti = new();
+
+        var minPID = await getMinPatientID();
+        if (minPID == null)
+        {
+            Console.WriteLine("Errore durante il recupero del patientID minimo");
+            return;
+        }
+
+        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID BETWEEN {minPID + minRow} AND {minPID + maxRow} AND doctorID = {medID}";
+
+        await db.OpenConnectionAsync();
+
+        using (var reader = await db.ExecuteReaderAsync(queryRangePatient))
+        {
+            while (await reader.ReadAsync())
+            {
+                var paziente = new Paziente().getFromDBReader(reader);
+                pazienti.Add(paziente);
+            }
+            await db.CloseReaderAsync(reader);
+        }
+
+        pazientiFiltrati = pazienti;
+        await db.CloseConnectionAsync();
+    }
+
+    public async Task savePatient()
+    {
+        if (!await checkPatientExist())
         {
             //salva il paziente
-            Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, (gender == "m" ? false : true), "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, 1, nuovoPaziente.Locked);
+            nuovoPaziente.Gender = gender != "m";
+
+            Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", nuovoPaziente.CF, nuovoPaziente.CAsl, nuovoPaziente.BirthDate, nuovoPaziente.BirthPlace, nuovoPaziente.Foreigner, nuovoPaziente.BirthProvince, "Prova", false, false, medID, nuovoPaziente.Locked);
+
+            if (!paziente.checkInputs())
+            {
+                //mostro l'errore
+                showFormErr = !showFormErr;
+                return;
+            }
+
+            paziente.sanitizePatient();
 
             pazienti.Add(paziente);
 
-            paziente.SaveInDB();
+            await paziente.saveInDB();
 
             pazientiFiltrati = pazienti;
 
             //se è visibile lo tolgo
             if (showFormErr) showFormErr = !showFormErr;
             toggleForm();
+            nuovoPaziente = new();
         }
         else
         {
-            //mostro l'errore
-            showFormErr = !showFormErr;
+            
         }
     }
 
-    public bool checkInputs()
+    //ritorna true se lo trova
+    public async Task<bool> checkPatientExist()//spoldi è maggiorenne
     {
-        return true;
-    }
-
-    public void updateLastClicked(Paziente p)
-    {
-        lastClickedP = p;
-    }
-
-    public void deleteFromDB()
-    {
-        if (lastClickedP!=null)
+        try
         {
-            string query = $"DELETE FROM PATIENT WHERE patientID=" + lastClickedP.PatientID;
-            DbManager db = new DbManager();
-            db.MakeQuery(query);
-            pazienti.Remove(lastClickedP);
-            lastClickedP = null;
-            pazientiFiltrati = pazienti;
+            await db.OpenConnectionAsync();
+            using (MySqlDataReader r = await db.ExecuteReaderAsync($"SELECT first_name, surname FROM patient WHERE first_name={nuovoPaziente.FirstName} AND surname={nuovoPaziente.Surname}"))
+            {
+                await db.CloseConnectionAsync();
+                return r.Read() && r.GetString("first_name") == nuovoPaziente.FirstName && r.GetString("surname") == nuovoPaziente.Surname;
+            }
         }
+        catch (Exception e)
+        {
+            Console.WriteLine("Si è verficato un errore nella verifica dell'esistenza del paziente" + e);
+            return false;
+        }
+        
     }
-    */
+
+    public async Task deleteFromDB()
+    {
+        if (lastClickedP == null)
+        {
+            Console.WriteLine("Nessun paziente selezionato");
+            return;
+        }
+
+        string queryDeletePatient = "DELETE FROM PATIENT WHERE patientID=" + lastClickedP.PatientID;
+
+        await db.OpenConnectionAsync();
+
+        await db.MakeQueryAsync(queryDeletePatient);
+
+        pazienti.Remove(lastClickedP);
+        pazientiFiltrati = pazienti;
+
+        await unLinkPatient();
+
+        lastClickedP = null;
+
+        await db.CloseConnectionAsync();
+    }
+
+    public async Task unLinkPatient()
+    {
+        string queryUnlinkPatient = "UPDATE VISIT SET patientID=-1 WHERE patientID=" + lastClickedP.PatientID;
+
+        await db.OpenConnectionAsync();
+        await db.MakeQueryAsync(queryUnlinkPatient);
+    }
+
+    public void openModifyPatient()
+    {
+        nuovoPaziente.FirstName = lastClickedP.FirstName;
+        nuovoPaziente.Surname = lastClickedP.Surname;
+        nuovoPaziente.Foreigner = lastClickedP.Foreigner;
+        nuovoPaziente.BirthProvince = lastClickedP.BirthProvince;
+        nuovoPaziente.Gender = lastClickedP.Gender;
+        nuovoPaziente.BirthDate = lastClickedP.BirthDate;
+        nuovoPaziente.CAsl = lastClickedP.CAsl;
+        nuovoPaziente.CF = lastClickedP.CF;
+        toggleForm();
+    }
+
 }
