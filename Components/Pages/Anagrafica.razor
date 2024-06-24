@@ -217,8 +217,16 @@
     
     protected override async Task OnInitializedAsync()
     {
+        if (tempMedID != null)
+        {
+            medID = Int32.Parse(tempMedID);
+        }
+        else
+        {       //else di sviluppo, per non dover fare il login ogni volta
+            medID = 1;
+        }
+        //medID = Int32.Parse(tempMedID);
         await getPatientFromDB(0, patientsDisplayed);
-        medID = Int32.Parse(tempMedID);
     }
     
     public void populator()
@@ -260,7 +268,7 @@
     // Metodi con utilizzo del database
     public async Task<int?> getMinPatientID()
     {
-        string queryMinPatientID = "SELECT MIN(patientID) FROM PATIENT";
+        string queryMinPatientID = $"SELECT MIN(patientID) FROM PATIENT WHERE doctorID={medID}";
         MySqlDataReader reader;
 
         await db.OpenConnectionAsync();
@@ -289,7 +297,7 @@
             return;
         }
 
-        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID BETWEEN {minPID + minRow} AND {minPID + maxRow}";
+        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID BETWEEN {minPID + minRow} AND {minPID + maxRow} AND doctorID = {medID}";
 
         await db.OpenConnectionAsync();
 
@@ -312,7 +320,7 @@
         //salva il paziente
         nuovoPaziente.Gender = (gender != "m");
     
-        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, 1, nuovoPaziente.Locked);
+        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", "0000000000000000", "0000", nuovoPaziente.BirthDate, "Prova", nuovoPaziente.Foreigner, "Prova", "Prova", false, false, medID, nuovoPaziente.Locked);
     
         if (!paziente.checkInputs())
         {
