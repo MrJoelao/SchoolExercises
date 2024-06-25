@@ -23,6 +23,5 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-//Paziente nuovo=Paziente.caricaPaziente("./prova.txt");
 
 app.Run();
