@@ -151,6 +151,12 @@
     text-transform: uppercase;
 }
 
+/*rigo selezionato*/
+.rigoSelected{
+    border: solid 3px #0a58ca;
+    outline: none;
+}
+
 /*stile singola cella*/
 .cella{
     text-align: center;
