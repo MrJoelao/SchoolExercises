@@ -1,6 +1,5 @@
 ﻿@page "/SchedaPaziente"
 @page "/SchedaPaziente/{patID:int}"
-@using MySqlConnector
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 @inject IWebHostEnvironment env
@@ -280,7 +279,7 @@
 }
 <!-- profilo paziente -->
 <div class="AreaPaziente inline">
-    <img src="./assets/test/test.jpg" class="immaginePaziente">
+    <img src="./assets/test/test.jpg" class="immaginePaziente" alt="">
     <div class="sezione">@paziente.FirstName @paziente.Surname</div>
     <div class="intestazione">INFO CARTELLA</div>
     <div class="sezione" style="text-align: unset">
@@ -537,6 +536,8 @@
     private float preventivi;
     private float extras;
     private float eseguito;
+    
+    private readonly string _directory = "uploads";
 
     [Parameter] public int patID { get; set; }
     private Paziente paziente;
@@ -551,6 +552,16 @@
     protected override async Task OnInitializedAsync()
     {
         getPatientFromDB();
+        string imagesPath = Path.Combine(env.ContentRootPath, _directory);
+        EnsureDirectoryeExists(imagesPath);
+    }
+    
+    public void EnsureDirectoryeExists(string path)
+    {
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
     }
     
     public async Task getPatientFromDB()

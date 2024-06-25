@@ -35,7 +35,7 @@
 <div class="mainBody">
     <div class="bigDiv">
         <div>
-            <img src="@imgSrc"/>
+            <img src="@_imgSrc"/>
         </div>
     </div>
     <!-- Menù a destra -->
@@ -101,12 +101,23 @@
 
 @code {
 
-    private string imgSrc;
+    private string _imgSrc;
+    private readonly string _directory = "tempImg";
+    
     
     protected override async Task OnInitializedAsync()
     {
-        imgSrc = Directory.GetFiles(Path.Combine(env.ContentRootPath,"tempImg"), "*.png")[0];
-        Console.WriteLine(imgSrc);
+        _imgSrc = Directory.GetFiles(Path.Combine(env.ContentRootPath, _directory), "*.png")[0];
+        EnsureDirectoryeExists(_imgSrc);
+        Console.WriteLine(_imgSrc);
+    }
+    
+    public void EnsureDirectoryeExists(string path)
+    {
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
     }
     
 }
