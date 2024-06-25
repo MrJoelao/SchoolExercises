@@ -18,6 +18,7 @@
     border-radius: 0.4vw;
     margin: auto;
     width: 50%;
+    font-size: 1vw;
     aspect-ratio: 1/0.8;
     background-color: white;
 }
@@ -89,10 +90,29 @@
 .inputLogin{
     margin-top: 0.5vh;
     width: 80%;
+    height: auto;
     padding: 0.4vw;
     padding-left: 2vw;
     border-radius: 1vw;
     border: none;
+}
+
+.loginbtn{
+    width: 50%;
+    padding: 0.5vw;
+    color: white;
+    font-weight: bold;
+    background-color: #1C96E0;
+    border:none;
+    border-radius: 1vw;
+    font-size: 1vw;
+    margin-top: 4vh;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.loginbtn:hover{
+    transform: rotate(3deg);
+    filter: brightness(85%);
 }
 
 /*stile aggiuntivo per applicare l'icona della mail al form*/
@@ -109,4 +129,9 @@
     background-color: #EBEBEB;
     background-position:  0.4vw;
     background-size: 1.4vw auto;
+}
+
+.loginSide{
+    height: 100%;
+    display: revert;
 }
