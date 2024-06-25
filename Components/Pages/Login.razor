@@ -9,6 +9,7 @@
 <PageTitle>Login</PageTitle>
 <div class="login-page mainSection">
     <div class="headerRow">
+        <!-- Parte sinistra della finestra -->
         <div class="brandingGroup">
             <img class="coverImage" src="./assets/loginAssets/sfondoBlu.png" alt="alt text"/>
             <div class="titleContent">
@@ -16,10 +17,11 @@
                     <h1 class="mainTitle">DeltaDent Web</h1>
                     <h3 class="mainSubtitle">La tua scelta per un futuro web</h3>
                 </div>
-                <button class="registerButton" @onclick="ButtonRegistration">Registrati</button>
+                <button class="registerButton" @onclick="ToggleRegistration">Registrati</button>
             </div>
             <img class="headerIcon" src="./assets/loginAssets/dottore.svg" alt="alt text"/>
         </div>
+        <!-- Parte destra della finestra -->
         <div class="loginGroup">
             <div class="backgroundRectangle"></div>
             <div class="loginContent">
@@ -64,7 +66,7 @@
             <span>Email</span>
         </label>
         <label>
-            <input @bind="Reg" placeholder=" " type="password" class="input" maxlength="100">
+            <input @bind="PasswReg" placeholder=" " type="password" class="input" maxlength="100">
             <span>Password</span>
         </label>
         <label>
@@ -81,46 +83,46 @@
 
 @code {
 
-    private DbManager db = new DbManager();
-    private bool RegForm = false;
-    private bool errReg = false;
-    private bool errLogin = false;
-    private string NomeReg { get; set; }
-    private string CognomeReg { get; set; }
-    private string EmailReg { get; set; }
-    private string Reg { get; set; }
-    private string ConfermaPasswordReg { get; set; }
-    private string emailLog { get; set; }
-    private string passwLog { get; set; }
+    private DbManager db = new DbManager();     // Oggetto utilizzato globalmente nella pagina per interrogare il DB
+    private bool RegForm = false;       // Bool per mostrare il form di registrazione
+    private bool errReg = false;        // Bool per mostrare un errore nel form di registrazione
+    private bool errLogin = false;      // Bool per mostrare un errore nel login
+    private string NomeReg { get; set; }        // Stringa per salvare il nome del medico registrante
+    private string CognomeReg { get; set; }     // Stringa per salvare il cognome del medico registrante
+    private string EmailReg { get; set; }       // Stringa per salvare la mail del medico registrante
+    private string PasswReg { get; set; }        // Stringa per salvare la password del medico registrante
+    private string ConfermaPasswordReg { get; set; }        // Stringa per verificare il corretto inserimento dellap pssword
+    private string emailLog { get; set; }       // Stringa per salvare l'email del medico loggante
+    private string passwLog { get; set; }       // Stringa per salvare la password del medico loggante
 
-    private void ButtonRegistration()
-    {
-        RegForm = !RegForm;
-    }
+    private void ToggleRegistration() => RegForm = !RegForm;
     
+    // Funzione per resettare i campi del form di registrazione
     private void resetTextLogin()
     {
-        // Reset dei campi del form dopo la registrazione
         NomeReg = string.Empty;
         CognomeReg = string.Empty;
         EmailReg = string.Empty;
-        Reg = string.Empty;
+        PasswReg = string.Empty;
         ConfermaPasswordReg = string.Empty;
     }
 
+    // Funzione per gestire la registrazione di un nuovo medico
     private async Task HandleRegistration()
     {
         try
         {
-            if (Reg != ConfermaPasswordReg || await checkExist(EmailReg) || !verifyDoctor())
+            // Verifica dei dati immessi
+            if (PasswReg != ConfermaPasswordReg || await checkExist(EmailReg) || !verifyDoctor())
             {
+                // Mostro l'errore
                 errReg = true;
                 return;
             }
-
+            // Lo tolgo
             errReg = false;
 
-            var query = $"INSERT INTO doctor (first_name, surname, email, password) VALUES ('{NomeReg}', '{CognomeReg}', '{EmailReg}', '{Reg}')";
+            var query = $"INSERT INTO doctor (first_name, surname, email, password) VALUES ('{NomeReg}', '{CognomeReg}', '{EmailReg}', '{PasswReg}')";
             await db.OpenConnectionAsync();
             await db.MakeQueryAsync(query);
             await db.CloseConnectionAsync();
@@ -128,22 +130,23 @@
             resetTextLogin();
 
             //Console.WriteLine("Dati inseriti correttamente.");
-            ButtonRegistration();
+            ToggleRegistration();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Errore durante la registrazione dei dati: " + ex.Message);
-            errReg = true;
+            errReg = true;  // Mostro l'errore
         }
     }
 
-    // Per prevenire sql injection verifica che gli input non contengano "'" e non siano vuoti, torna true se sono validi
+    // Funzione per prevenire sql injection: verifica che gli input non contengano "'" e non siano vuoti, torna true se sono validi
     public bool verifyDoctor()
     {
         return !NomeReg.Contains("'") && NomeReg.Length > 0 && !CognomeReg.Contains("'") && CognomeReg.Length > 0 && !EmailReg.Contains("'") 
-               && EmailReg.Length > 0 && !Reg.Contains("'") && Reg.Length > 0;
+               && EmailReg.Length > 0 && !PasswReg.Contains("'") && PasswReg.Length > 0;
     }
 
+    // Funzione per verificare se un dottore è già presente nel DB in base all'email
     private async Task<bool> checkExist(string email)
     {
         string query = $"SELECT email FROM doctor WHERE email='{email}'";
@@ -151,7 +154,7 @@
         using (MySqlDataReader reader = db.ExecuteReader(query))
         {
             if (reader.Read())
-            {
+            {   // Se c'è da leggere allora è presente
                 await db.CloseConnectionAsync();
                 return true;
             }
@@ -161,6 +164,7 @@
         return false;
     }
 
+    // Funzione che verifica se email e password corrispondono a quelle registrate nel DB, e permette o meno l'ingresso nel resto del sito
     private async Task tryLogin()
     {
         if (!(await checkExist(emailLog)) || !(await checkPassw(passwLog)))
@@ -174,7 +178,7 @@
         using (MySqlDataReader reader = await db.ExecuteReaderAsync(query))
         {
             if (!reader.Read())
-            {
+            {   // Se c'è da leggere allora non è presente
                 await db.CloseConnectionAsync();
                 return;
             }
@@ -186,7 +190,7 @@
         }
     }
 
-    //controlla se la password di un medico è uguale a quella passatagli(true)
+    //Funzione che controlla se la password di un medico è uguale a quella passatagli
     private async Task<bool> checkPassw(string passw)
     {
         string query = $"SELECT password FROM doctor WHERE password='{passw}'";
@@ -194,7 +198,7 @@
         using (MySqlDataReader reader = await db.ExecuteReaderAsync(query))
         {
             if (reader.Read())
-            {
+            {   // Se c'è da leggere allora è presente
                 await db.CloseConnectionAsync();
                 return true;
             }
