@@ -102,42 +102,41 @@
 
     protected override async Task OnInitializedAsync()
     {
-        readNavFile(path);
+        EnsureFileExists(path);
+        string content = ReadFileContent(path);
+        buttons = ParseButtons(content);
     }
 
-    //legge i primi 9 caratteri e verifica se sono il carattere '1'
-    public void readNavFile(string path)
+    public void EnsureFileExists(string path)
+    {
+        if (!File.Exists(path))
+        {
+            // Crea il file e popola tutti i valori a true
+            string content = new string('1', 9);
+            File.WriteAllText(path, content);
+        }
+    }
+
+    public string ReadFileContent(string path)
     {
         try
         {
-            string s = File.ReadAllText(path);
-
-            for (int i = 0; i < buttons.Length; i++)
-            {
-                if (s[i] == '1')
-                {
-                    buttons[i] = true;
-                }
-                else
-                {
-                    buttons[i] = false;
-                }
-            }
-
-            /*foreach (bool b in buttons)
-            {
-                Console.WriteLine(b);
-            }*/
+            return File.ReadAllText(path);
         }
         catch (Exception e)
         {
-            //metto a false tutti i pulsanti per sicurezza
-            for (int i = 0; i < buttons.Length; i++)
-            {
-                buttons[i] = false;
-            }
-
             Console.WriteLine("Errore durante la lettura del file: " + e.Message);
+            return new string('1', 9); // In caso di errore, restituisce una stringa con tutti i valori a true
         }
+    }
+
+    public bool[] ParseButtons(string content)
+    {
+        bool[] buttons = new bool[9];
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i] = content[i] == '1';
+        }
+        return buttons;
     }
 }
