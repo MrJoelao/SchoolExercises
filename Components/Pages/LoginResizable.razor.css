@@ -1,0 +1,36 @@
+/*stile applicato per dare uno stile allo sfondo della pagina*/
+.bg{
+    background: url("./assets/loginAssets/sfondo.svg") no-repeat left;
+    background-color: #BADEFD;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+
+/*stile container login form*/
+.loginForm{
+    width: 50%;
+    height: auto;
+    background-color: white;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+/*stile gruppo register*/
+.card{
+    width: 100%;
+}
+
+.registerTitle{
+    font: 800 2.5rem/1.47 "Mplus 1p", Helvetica, Arial, serif; 
+    color: white;
+}
+
+.registerParagraph{
+    color: white;
+    font-weight: bold;
+}
