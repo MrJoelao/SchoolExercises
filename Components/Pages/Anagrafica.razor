@@ -1,7 +1,8 @@
 @page "/Anagrafica"
-@page "/Anagrafica/{tempMedID:int}"
+@page "/Anagrafica/{medID:int}"
 @using System.ComponentModel
 @using MySqlConnector;
+@inject IJSRuntime JS
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
 @inject NavigationManager NavManager
@@ -90,7 +91,7 @@
                     P
                 </div>
                 <div class="col">
-                    <input class="inNum" id="inputPagina" type="number" placeholder="1" @bind="nPage" @oninput="changePage"min="1"/>
+                    <input class="inNum" id="inputPagina" type="number" placeholder="1" @bind="nPage" @oninput="changePage" min="1"/>
                 </div>
             </div>
         </div>
@@ -138,9 +139,10 @@
         </div>
         <!-- body della tabella-->
         <div class>
+            @{ int i = 0 ; }
             @foreach (var paziente in pazientiFiltrati)
             {
-                <div id="@i" class="row rigo mt-1" @onclick="() => updateLastClicked(paziente)">
+                <div id="row-@i" class="row rigo mt-1" @onclick="() => updateLastClicked(paziente)">
                     <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
                     <div class="col-3 col-sm-2 cella">
                         @paziente.Surname
@@ -469,8 +471,23 @@
     </div>
 }
 <script>
+
+    function setEventListeners(){
+        document.querySelectorAll('.row.rigo').forEach(row => {
+            row.addEventListener('click', function () {
+                let patientId = this.getAttribute('id')
+                setClicked(patientId)
+            })
+        })
+    }
     
-    
+    function setClicked(id){
+        console.log(id)
+        document.querySelectorAll('.row.rigo').forEach(row => {
+            row.classList.remove('rigoSelected')
+        })
+        document.getElementById(id).classList.add("rigoSelected")
+    }
     
 </script>
 
@@ -494,11 +511,10 @@
     private bool dbError = false; // Errore del database
     private int nPage = 1; // Numero di pagina
     private int patientsDisplayed = 50; // Numero di pazienti visualizzati per pagina
-    private int i;
+    private bool eventListenerSet = false;
 
     protected override async Task OnInitializedAsync()
     {
-        i = 0;
         if (medID <= 0 || medID == null)
         {
             medID = 1;
@@ -538,14 +554,14 @@
     public void updateLastClicked(Paziente p)
     {
         lastClickedP = p;
-        
+        setEventListener();
     }
 
     public async Task changePage()
     {
         if (nPage > 0)
         {
-            i = 0;
+            eventListenerSet = false;
             await getPatientFromDB(patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage);
         }
     }
@@ -573,12 +589,17 @@
 
     public async Task getPatientFromDB(int minRow, int maxRow)
     {
+        if (minRow > maxRow)
+        {
+            (minRow, maxRow) = (maxRow, minRow);
+        }
         pazienti = new();
 
         var minPID = await getMinPatientID();
         if (minPID == null)
         {
             Console.WriteLine("Errore durante il recupero del patientID minimo");
+            displayDbError();
             return;
         }
 
@@ -593,7 +614,6 @@
                 var paziente = new Paziente().getFromDBReader(reader);
                 pazienti.Add(paziente);
             }
-
             await db.CloseReaderAsync(reader);
         }
 
@@ -696,15 +716,7 @@
             return;
         }
 
-        nuovoPaziente.FirstName = lastClickedP.FirstName;
-        nuovoPaziente.Surname = lastClickedP.Surname;
-        nuovoPaziente.Foreigner = lastClickedP.Foreigner;
-        nuovoPaziente.BirthPlace = lastClickedP.BirthPlace;
-        nuovoPaziente.BirthProvince = lastClickedP.BirthProvince;
-        nuovoPaziente.Gender = lastClickedP.Gender;
-        nuovoPaziente.BirthDate = lastClickedP.BirthDate;
-        nuovoPaziente.CAsl = lastClickedP.CAsl;
-        nuovoPaziente.CF = lastClickedP.CF;
+        nuovoPaziente = lastClickedP;
         toggleForm();
     }
 
@@ -713,6 +725,15 @@
         if (p != null)
         {
             NavManager.NavigateTo($"/SchedaPaziente/{p.PatientID}");
+        }
+    }
+
+    private async void setEventListener()
+    {
+        if (!eventListenerSet)
+        {
+            await JS.InvokeVoidAsync("setEventListeners");
+            eventListenerSet = true;
         }
     }
 
