@@ -30,10 +30,10 @@
                     <h3 class="welcomeSubtitle">Benvenuto</h3>
                 </div>
                 <div class="emailBox">
-                    <input type="email" @bind="emailLog" class="BoxRow imageEmail" placeholder=" "/>
+                    <input type="email" @bind="emailLog" class="BoxRow imageEmail" maxlength="100"/>
                 </div>
                 <div class="passwordBox">
-                    <input type="password" @bind="passwLog" class="BoxRow imagePassword" placeholder=" "/>
+                    <input type="password" @bind="passwLog" class="BoxRow imagePassword" maxlength="100"/>
                 </div>
                 <button class="loginButton" @onclick="tryLogin">Login</button>
                 <h5 class="forgotPassword">Password dimenticata</h5>
