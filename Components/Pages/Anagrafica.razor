@@ -82,7 +82,7 @@
                     N
                 </div>
                 <div class="col">
-                    <input class="inNum" id="inputCartella" type="number" min="0" @bind="@patientsDisplayed"/>
+                    <div class="inNum col">@pazientiFiltrati.Count</div>
                 </div>
             </div>
             <!-- Input per selezionare le pagine -->
@@ -267,7 +267,7 @@
                             <div class="ps-0 col-6 justify-content-start">luogo nascita</div>
                             <div class="col-6 align-content-center">
                                 <label for="isEstero" style="font-size: 0.6rem">estero</label>
-                                <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner"  maxlength="25"/>
+                                <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner" maxlength="25"/>
                             </div>
                         </div>
                         <div class="row">
@@ -716,7 +716,7 @@
 
         await db.CloseConnectionAsync();
         await unLinkPatient();
-        
+
         putDeleteAnimation();
         Thread.Sleep(500);
         popDeleteAnimation();
@@ -733,7 +733,6 @@
     public async Task unLinkPatient()
     {
         string queryUnlinkPatient = "UPDATE VISIT SET patientID=-1 WHERE patientID=" + lastClickedP.PatientID;
-
         await db.OpenConnectionAsync();
         await db.MakeQueryAsync(queryUnlinkPatient);
     }
@@ -742,7 +741,6 @@
     public void openModifyPatient()
     {
         if (lastClickedP == null) return;
-
         nuovoPaziente = lastClickedP;
         toggleForm();
     }
