@@ -152,7 +152,7 @@
     text-transform: uppercase;
 }
 /*rigo selezionato*/
-.rigo_selected{
+.rigoSelected{
     border: solid 3px #0a58ca;
     outline: none; 
 }
