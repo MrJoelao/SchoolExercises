@@ -1,5 +1,5 @@
 @page "/Anagrafica"
-@page "/Anagrafica/{tempMedID}"
+@page "/Anagrafica/{tempMedID:int}"
 @using System.ComponentModel
 @using MySqlConnector;
 <PageTitle>Anagrafica</PageTitle>
@@ -137,53 +137,54 @@
             </div>
         </div>
         <!-- body della tabella-->
-        <div class >
+        <div class>
             @foreach (var paziente in pazientiFiltrati)
             {
-                <div id="@i" class = "row rigo mt-1" @onclick="() => updateLastClicked(paziente)" @ondblclick="() => navigateToPatientPage(paziente)">
+                <div id="@i" class="row rigo mt-1" @onclick="() => updateLastClicked(paziente)">
                     <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
-                    <div class = "col-3 col-sm-2 cella" >
+                    <div class="col-3 col-sm-2 cella">
                         @paziente.Surname
                     </div>
-                    <div class = "col-2 col-sm-1 cella" >
+                    <div class="col-2 col-sm-1 cella">
                         @paziente.FirstName
                     </div>
-                    <div class = "col-2 col-sm-1 cella" >
+                    <div class="col-2 col-sm-1 cella">
                         @DateOnly.FromDateTime(paziente.BirthDate)
                     </div>
-                    <div class = "col-2 col-sm-1 cella" >
+                    <div class="col-2 col-sm-1 cella">
                         @paziente.Telephone
                     </div>
-                    <div class = "col-2 col-sm-1 cella" >
+                    <div class="col-2 col-sm-1 cella">
                         @paziente.Phone1
                     </div>
-                    <div class = " d-none d-sm-block col-1 cella" >
+                    <div class=" d-none d-sm-block col-1 cella">
                         @paziente.Phone2
                     </div>
-                    <div class = " d-none d-sm-block col-1 cella" >
+                    <div class=" d-none d-sm-block col-1 cella">
                         @paziente.Billable
                     </div>
-                    <div class = " d-none d-sm-block col-1 cella" >
+                    <div class=" d-none d-sm-block col-1 cella">
                         @(paziente.Completed ? "Si" : "No")
                     </div>
-                    <div class = "d-none d-sm-block col-1 cella" >
+                    <div class="d-none d-sm-block col-1 cella">
                         @(paziente.Documented ? "Si" : "No")
                     </div>
-                    <div class = "col-1 cella" >
-                        <input type = "checkbox"/>
+                    <div class="col-1 cella">
+                        <input type="checkbox"/>
                     </div>
-
-                    <div class = "col-1 cella" >
-
+                    <div class="col-1 cella">
+                        <button @onclick="() => navigateToPatientPage(paziente)"></button>
                     </div>
                 </div>
                 i++;
             }
             @if (dbError)
             {
-                <div class = "row rigo mt-1" >
-                    <div class = "col-3 col-sm-2 cella" >
-                        <svg fill = "none" height = "25" viewBox = "0 0 24 24" width = "25" xmlns = "http://www.w3.org/2000/svg" ><path d = "m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill = "#393a37" ></path></svg>
+                <div class="row rigo mt-1">
+                    <div class="col-3 col-sm-2 cella">
+                        <svg fill="none" height="25" viewBox="0 0 24 24" width="25" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill="#393a37"></path>
+                        </svg>
                         Si è verificato un errore nella lettura del database
                     </div>
                 </div>
@@ -220,258 +221,263 @@
         </div>
         <!--barra pulsanti-->
         <div class="col-1">
-            <button class="exit" @onclick="toggleForm" >
+            <button class="exit" @onclick="toggleForm">
                 X
             </button>
         </div>
     </div>
     <!--corpo centrale-->
     <div class="row mt-1 mt-sm-2">
-        <!--parte inserimento dati-->
-        <div class="formbody col-8 col-sm-10">
+    <!--parte inserimento dati-->
+    <div class="formbody col-8 col-sm-10">
+        <div class="row">
             <div class="row">
-                <div class="row">
-                    <!--prima riga-->
-                    <div class="col-12 col-sm-6">
-                        <div class="cardInput">
-                            <div class="row">
-                                cognome*
-                            </div>
-                            <div class="row">
-                                <input class="inputForm" type="text" @bind="nuovoPaziente.Surname"/>
-                            </div>
+                <!--prima riga-->
+                <div class="col-12 col-sm-6">
+                    <div class="cardInput">
+                        <div class="row">
+                            cognome*
                         </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6">
-                        <div class="cardInput">
-                            <div class="row">
-                                Nome*
-                            </div>
-                            <div class="row">
-                                <input class="inputForm" type="text" @bind="nuovoPaziente.FirstName"/>
-                            </div>
+                        <div class="row">
+                            <input class="inputForm" type="text" @bind="nuovoPaziente.Surname"/>
                         </div>
                     </div>
                 </div>
 
-                <!--seconda riga-->
-                <div class="row mt-1">
-                    <div class="col-12 col-sm-6">
-                        <div class="cardInput">
-                            <div class="row">
-                                <div class="ps-0 col-6 justify-content-start">luogo nascita</div>
-                                <div class="col-6 align-content-center">
-                                    <label for="isEstero" style="font-size: 0.6rem">estero</label>
-                                    <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <input class="inputForm" type="text" @bind="nuovoPaziente.BirthPlace"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
+                <div class="col-12 col-sm-6">
+                    <div class="cardInput">
                         <div class="row">
-                            <div class="col">
-                                <div class="SmallcardInput">
-                                    <div class="row">
-                                        provincia
-                                    </div>
-                                    <div class="row">
-                                        <input class="inputForm" type="text" @bind="nuovoPaziente.BirthProvince"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="SmallcardInput">
-                                    <div class="row">
-                                        sesso
-                                    </div>
-                                    <div class="row">
-                                        <select type="select" class="inputForm" placeholder=" " @bind="gender">c
-                                            <option value="m">Maschio</option>
-                                            <option value="f">Femmina</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            Nome*
+                        </div>
+                        <div class="row">
+                            <input class="inputForm" type="text" @bind="nuovoPaziente.FirstName"/>
                         </div>
                     </div>
                 </div>
-
-                <!--terza riga-->
-                <div class="row mt-1">
-                    <div class="col-12 col-sm-6">
-                        <div class="row">
-                            <div class="col">
-                                <div class="SmallcardInput">
-                                    <div class="row">
-                                        data nascita
-                                    </div>
-                                    <div class="row">
-                                        <input class="inputForm data" type="date" @bind="nuovoPaziente.BirthDate"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="SmallcardInput">
-                                    <div class="row">
-                                        codice asl
-                                    </div>
-                                    <div class="row">
-                                        <input class="inputForm" type="text" @bind="nuovoPaziente.CAsl"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <div class="cardInput">
-                            <div class="row">
-                                <div class="ps-0 col-6 justify-content-start">codice fiscale</div>
-                                <div class="col-6 align-content-center">
-                                    <label for="isEstero" style="font-size: 0.6rem">controllo validità</label>
-                                    <input type="checkbox" id="isValid"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <input class="inputForm" type="text" @bind="nuovoPaziente.CF"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--quarta riga-->
-                <div class="row mt-1">
-                    <div class="col-12 col-sm-6">
-                        <div class="cardInput">
-                            <div class="row">
-                                professione
-                            </div>
-                            <div class="row">
-                                <select type="select" class="inputForm" placeholder=" ">
-                                    <!--@bind="gender"-->
-                                    <option value="p">prova</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <div class="row">
-                            <div class="col">
-                                <div class="SmallcardInput">
-                                    <div class="row">
-                                        medico
-                                    </div>
-                                    <div class="row">
-                                        <input class="inputForm" type="text" @bind="nuovoPaziente.DoctorID"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="SmallcardInput">
-                                    <div class="row">
-                                        professione
-                                    </div>
-                                    <div class="row">
-                                        <select type="select" class="inputForm" placeholder=" ">
-                                            <!--@bind="gender"-->
-                                            <option value="p">prova</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--quinta riga-->
-                <div class="row mt-1">
-                    <div class="cardInput textarea">
-                        <div class="row">
-                            indirizzi
-                        </div>
-                        <div class="row">
-                            <textarea class="inputForm textarea"></textarea>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
-            
+
+            <!--seconda riga-->
+            <div class="row mt-1">
+                <div class="col-12 col-sm-6">
+                    <div class="cardInput">
+                        <div class="row">
+                            <div class="ps-0 col-6 justify-content-start">luogo nascita</div>
+                            <div class="col-6 align-content-center">
+                                <label for="isEstero" style="font-size: 0.6rem">estero</label>
+                                <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input class="inputForm" type="text" @bind="nuovoPaziente.BirthPlace"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="row">
+                        <div class="col">
+                            <div class="SmallcardInput">
+                                <div class="row">
+                                    provincia
+                                </div>
+                                <div class="row">
+                                    <input class="inputForm" type="text" @bind="nuovoPaziente.BirthProvince"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="SmallcardInput">
+                                <div class="row">
+                                    sesso
+                                </div>
+                                <div class="row">
+                                    <select type="select" class="inputForm" placeholder=" " @bind="gender">
+                                        c
+                                        <option value="m">Maschio</option>
+                                        <option value="f">Femmina</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--terza riga-->
+            <div class="row mt-1">
+                <div class="col-12 col-sm-6">
+                    <div class="row">
+                        <div class="col">
+                            <div class="SmallcardInput">
+                                <div class="row">
+                                    data nascita
+                                </div>
+                                <div class="row">
+                                    <input class="inputForm data" type="date" @bind="nuovoPaziente.BirthDate" min="01-01-1900" max="@today"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="SmallcardInput">
+                                <div class="row">
+                                    codice asl
+                                </div>
+                                <div class="row">
+                                    <input class="inputForm" type="text" @bind="nuovoPaziente.CAsl"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="cardInput">
+                        <div class="row">
+                            <div class="ps-0 col-6 justify-content-start">codice fiscale</div>
+                            <div class="col-6 align-content-center">
+                                <label for="isEstero" style="font-size: 0.6rem">controllo validità</label>
+                                <input type="checkbox" id="isValid"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input class="inputForm" type="text" @bind="nuovoPaziente.CF"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--quarta riga-->
+            <div class="row mt-1">
+                <div class="col-12 col-sm-6">
+                    <div class="cardInput">
+                        <div class="row">
+                            professione
+                        </div>
+                        <div class="row">
+                            <select type="select" class="inputForm" placeholder=" ">
+                                <!--@bind="gender"-->
+                                <option value="p">prova</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="row">
+                        <div class="col">
+                            <div class="SmallcardInput">
+                                <div class="row">
+                                    medico
+                                </div>
+                                <div class="row">
+                                    <input class="inputForm" type="text" @bind="nuovoPaziente.DoctorID"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="SmallcardInput">
+                                <div class="row">
+                                    professione
+                                </div>
+                                <div class="row">
+                                    <select type="select" class="inputForm" placeholder=" ">
+                                        <!--@bind="gender"-->
+                                        <option value="p">prova</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--quinta riga-->
+            <div class="row mt-1">
+                <div class="cardInput textarea">
+                    <div class="row">
+                        indirizzi
+                    </div>
+                    <div class="row">
+                        <textarea class="inputForm textarea"></textarea>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        
-        <!--parte tasti pc-->
-        <div class="col-4 col-sm-2 SezPulsanti">
-            <div class="row mt-1">
-                <button class="formButton" @onclick="savePatient">
-                    salva
-                </button>
-            </div>
-            <div class="row mt-1">
-                <button class="formButton">
-                    salva e apri
-                </button>
-            </div>
-            <div class="row mt-1">
-                <button class="formButton">
-                    salva e chiudi
-                </button>
-            </div>
-            <div class="row mt-1">
-                <button class="formButton" @onclick="toggleForm">
-                    annulla
-                </button>
-            </div>
-            <div class="row mt-1">
-                <button class="formButton">
-                    stampa
-                </button>
-            </div>
-            @if (showFormErr)
-            {
+
+    </div>
+
+    <!--parte tasti pc-->
+    <div class="col-4 col-sm-2 SezPulsanti">
+        <div class="row mt-1">
+            <button class="formButton" @onclick="savePatient">
+                salva
+            </button>
+        </div>
+        <div class="row mt-1">
+            <button class="formButton">
+                salva e apri
+            </button>
+        </div>
+        <div class="row mt-1">
+            <button class="formButton">
+                salva e chiudi
+            </button>
+        </div>
+        <div class="row mt-1">
+            <button class="formButton" @onclick="toggleForm">
+                annulla
+            </button>
+        </div>
+        <div class="row mt-1">
+            <button class="formButton">
+                stampa
+            </button>
+        </div>
+        @if (showFormErr)
+        {
             <div>Verificare i dati immessi</div>
-            }
-            <div class="row mt-4">
-                <button class="formButton importIcon">
-                    importa CLiente
+        }
+        <div class="row mt-4">
+            <button class="formButton importIcon">
+                importa CLiente
+            </button>
+        </div>
+    </div>
+
+    <!--sezione in bassso-->
+    <div class="bottomForm mt-1">
+        <div class="row" style="font-weight: bold; text-transform: uppercase;">
+            <div class="col">preferenze</div>
+        </div>
+        <div class="row mt-1">
+            <div class="col">
+                <button class="formButton">
+                    motivo
+                </button>
+            </div>
+            <div class="col">
+                <button class="formButton">
+                    nominativo
+                </button>
+            </div>
+            <div class="col">
+                <button class="formButton">
+                    note
                 </button>
             </div>
         </div>
-        
-        <!--sezione in bassso-->
-        <div class="bottomForm mt-1">
-            <div class="row" style="font-weight: bold; text-transform: uppercase;">
-                <div class="col">preferenze</div>
-            </div>
-            <div class="row mt-1">
-                <div class="col">
-                    <button class="formButton">
-                        motivo
-                    </button>
-                </div>
-                <div class="col">
-                    <button class="formButton">
-                        nominativo
-                    </button>
-                </div>
-                <div class="col">
-                    <button class="formButton">
-                        note
-                    </button>
-                </div>
-            </div>
-        </div>
+    </div>
     </div>
     </div>
     </div>
 }
+<script>
+    
+    
+    
+</script>
 
 @code {
 
     private string today = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day;
-    [Parameter] public string tempMedID { get; set; }
-    private int medID { get; set; }
+    [Parameter] public int medID { get; set; }
 
     DBPopulator dbPopulator = new DBPopulator(); // Oggetto per la popolazione del database
     DbManager db = new DbManager(); // Oggetto per la gestione del database
@@ -493,17 +499,11 @@
     protected override async Task OnInitializedAsync()
     {
         i = 0;
-        if (tempMedID != null)
+        if (medID <= 0 || medID == null)
         {
-            medID = Int32.Parse(tempMedID);
-        }
-        else
-        {
-            //else di sviluppo, per non dover fare il login ogni volta
             medID = 1;
         }
 
-        //medID = Int32.Parse(tempMedID);
         try
         {
             await getPatientFromDB(0, patientsDisplayed);
@@ -535,7 +535,11 @@
         ).ToList();
     }
 
-    public void updateLastClicked(Paziente p) => lastClickedP = p;
+    public void updateLastClicked(Paziente p)
+    {
+        lastClickedP = p;
+        
+    }
 
     public async Task changePage()
     {

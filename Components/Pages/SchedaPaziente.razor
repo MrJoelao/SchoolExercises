@@ -281,7 +281,7 @@
 <!-- profilo paziente -->
 <div class="AreaPaziente inline">
     <img src="./assets/test/test.jpg" class="immaginePaziente">
-    <div class="sezione">Mat</div>
+    <div class="sezione">@paziente.FirstName @paziente.Surname</div>
     <div class="intestazione">INFO CARTELLA</div>
     <div class="sezione" style="text-align: unset">
         <div class="sxAlign">
@@ -545,9 +545,9 @@
     [Inject] private IJSRuntime JSRuntime { get; set; }
     private InputFile? inputFile;
     private List<IBrowserFile> allLoadedFiles = new();
-    private long maxFileSize = 1024 * 1000;
+    private long maxFileSize = 1024 * 1024;
     DbManager db = new DbManager();
-
+    
     protected override async Task OnInitializedAsync()
     {
         getPatientFromDB();
