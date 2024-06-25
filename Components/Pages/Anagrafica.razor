@@ -85,7 +85,7 @@
                     <input class="inNum" id="inputCartella" type="number" placeholder="0"/>
                 </div>
             </div>
-
+            <!-- Input per selezionare le pagine -->
             <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
                 <div class="col sideNum">
                     P
@@ -139,7 +139,8 @@
         </div>
         <!-- body della tabella-->
         <div class>
-            @{ int i = 0 ; }
+            <!-- foreach per generare una riga per ogni paziente -->
+            @{ int i = 0; }
             @foreach (var paziente in pazientiFiltrati)
             {
                 <div id="row-@i" class="row rigo mt-1" @onclick="() => updateLastClicked(paziente)">
@@ -180,7 +181,7 @@
                 </div>
                 i++;
             }
-            @if (dbError)
+            @if (dbError) // Div per informare l'utente dell'errore nel DB
             {
                 <div class="row rigo mt-1">
                     <div class="col-12 cella">
@@ -208,13 +209,13 @@
         <div class="col-9 col-sm-11 barra">
             <div class="row">
                 <div class="col-6 col-sm-3">
-                    <button class="btnForm selectedPage">Dati personai</button>
+                    <button class="btnForm selectedPage">Dati personali</button>
                 </div>
                 <div class="col-6 col-sm-3">
                     <button class="btnForm unselectedPage">familiari</button>
                 </div>
                 <div class="col-6 col-sm-3">
-                    <button class="btnForm unselectedPage">contatti -fatturazione</button>
+                    <button class="btnForm unselectedPage">contatti - fatturazione</button>
                 </div>
                 <div class="col-6 col-sm-3">
                     <button class="btnForm unselectedPage">note</button>
@@ -241,7 +242,7 @@
                             cognome*
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="nuovoPaziente.Surname"/>
+                            <input class="inputForm" type="text" @bind="nuovoPaziente.Surname" maxlength="25"/>
                         </div>
                     </div>
                 </div>
@@ -252,7 +253,7 @@
                             Nome*
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="nuovoPaziente.FirstName"/>
+                            <input class="inputForm" type="text" @bind="nuovoPaziente.FirstName" maxlength="25"/>
                         </div>
                     </div>
                 </div>
@@ -266,7 +267,7 @@
                             <div class="ps-0 col-6 justify-content-start">luogo nascita</div>
                             <div class="col-6 align-content-center">
                                 <label for="isEstero" style="font-size: 0.6rem">estero</label>
-                                <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner"/>
+                                <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner"  maxlength="25"/>
                             </div>
                         </div>
                         <div class="row">
@@ -282,7 +283,7 @@
                                     provincia
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm" type="text" @bind="nuovoPaziente.BirthProvince"/>
+                                    <input class="inputForm" type="text" @bind="nuovoPaziente.BirthProvince" maxlength="25"/>
                                 </div>
                             </div>
                         </div>
@@ -292,7 +293,7 @@
                                     sesso
                                 </div>
                                 <div class="row">
-                                    <select type="select" class="inputForm" placeholder=" " @bind="gender">
+                                    <select type="select" class="inputForm" @bind="gender">
                                         c
                                         <option value="m">Maschio</option>
                                         <option value="f">Femmina</option>
@@ -314,7 +315,7 @@
                                     data nascita
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm data" type="date" @bind="nuovoPaziente.BirthDate" min="01-01-1900" max="@today"/>
+                                    <input class="inputForm data" type="date" @bind="nuovoPaziente.BirthDate" EnableMinMax="true" min="1900-01-01" max="@today"/>
                                 </div>
                             </div>
                         </div>
@@ -324,7 +325,7 @@
                                     codice asl
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm" type="text" @bind="nuovoPaziente.CAsl"/>
+                                    <input class="inputForm" type="text" @bind="nuovoPaziente.CAsl" maxlength="5"/>
                                 </div>
                             </div>
                         </div>
@@ -340,7 +341,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="nuovoPaziente.CF"/>
+                            <input class="inputForm" type="text" @bind="nuovoPaziente.CF" maxlength="16"/>
                         </div>
                     </div>
                 </div>
@@ -354,7 +355,7 @@
                             professione
                         </div>
                         <div class="row">
-                            <select type="select" class="inputForm" placeholder=" ">
+                            <select type="select" class="inputForm">
                                 <!--@bind="gender"-->
                                 <option value="p">prova</option>
                             </select>
@@ -369,7 +370,7 @@
                                     medico
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm" type="text" @bind="nuovoPaziente.DoctorID"/>
+                                    <input class="inputForm" type="text"/>
                                 </div>
                             </div>
                         </div>
@@ -396,7 +397,7 @@
                         indirizzi
                     </div>
                     <div class="row">
-                        <textarea class="inputForm textarea"></textarea>
+                        <textarea class="inputForm textarea" maxlength="100"></textarea>
                     </div>
                 </div>
             </div>
@@ -472,29 +473,29 @@
 }
 <script>
 
+    // Funzione per agganciare ad ogni riga della tabella un eventListener del click e chiamare setClicked()
     function setEventListeners(){
         document.querySelectorAll('.row.rigo').forEach(row => {
             row.addEventListener('click', function () {
-                let patientId = this.getAttribute('id')
-                setClicked(patientId)
+                setClicked(this.getAttribute('id'))
             })
         })
     }
     
+    // Funzione per mostrare all'utente il paziente selezionato manipolando la classe css 'rigoSelected'
     function setClicked(id){
-        console.log(id)
         document.querySelectorAll('.row.rigo').forEach(row => {
             row.classList.remove('rigoSelected')
         })
-        document.getElementById(id).classList.add("rigoSelected")
+        document.getElementById(id).classList.add('rigoSelected')
     }
     
 </script>
 
 @code {
 
-    private string today = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day;
-    [Parameter] public int medID { get; set; }
+    private string today = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day; // Data odierna per settare il max nel form della data
+    [Parameter] public int medID { get; set; } //Id del medico su cui basare le richieste al database
 
     DBPopulator dbPopulator = new DBPopulator(); // Oggetto per la popolazione del database
     DbManager db = new DbManager(); // Oggetto per la gestione del database
@@ -511,10 +512,12 @@
     private bool dbError = false; // Errore del database
     private int nPage = 1; // Numero di pagina
     private int patientsDisplayed = 50; // Numero di pazienti visualizzati per pagina
-    private bool eventListenerSet = false;
 
+    // Funzione eseguita automaticamente al caricamento della pagina
+    // Tenta di caricare i primi 50 pazienti del medico loggato, mostra un errore in caso di eccezione
     protected override async Task OnInitializedAsync()
     {
+        // Imposta l'id del medico a 1 per facilità di sviluppo
         if (medID <= 0 || medID == null)
         {
             medID = 1;
@@ -522,7 +525,7 @@
 
         try
         {
-            await getPatientFromDB(0, patientsDisplayed);
+            await getPatientFromDB(0, patientsDisplayed); // I primi 50
         }
         catch (Exception e)
         {
@@ -531,12 +534,19 @@
         }
     }
 
+    // Chiamata alla funzione JS per impostare gli eventListener al click
+    protected override async Task OnAfterRenderAsync(bool firstRender) => await JS.InvokeVoidAsync("setEventListeners");
+
     public void displayDbError() => dbError = true;
 
-    public void populator() => dbPopulator.Populator(FlagPatient: true);
+    public void populator() => dbPopulator.Populator(FlagPatient: true); // Popola il database di pazienti     
 
     private void toggleForm() => visible = !visible;
 
+    // Funzione per tenere traccia dell'ultimo paziente cliccato(associato al div)
+    public void updateLastClicked(Paziente p) => lastClickedP = p;
+
+    // Funzione per ricercare un paziente in base a nome e cognome tra quelli caricati
     private void searchPatient(ChangeEventArgs e)
     {
         // Ottengo il valore della ricerca controllando che non sia null
@@ -551,22 +561,16 @@
         ).ToList();
     }
 
-    public void updateLastClicked(Paziente p)
-    {
-        lastClickedP = p;
-        setEventListener();
-    }
-
+    // Funzione per caricare la 50ina selezionata di pazienti
     public async Task changePage()
     {
         if (nPage > 0)
         {
-            eventListenerSet = false;
             await getPatientFromDB(patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage);
         }
     }
 
-    // Metodi con utilizzo del database
+    // Funzione per trovare il paziente del medico loggato con l'ID minore
     public async Task<int?> getMinPatientID()
     {
         string queryMinPatientID = $"SELECT MIN(patientID) FROM PATIENT WHERE doctorID={medID}";
@@ -578,7 +582,7 @@
         if (!await reader.ReadAsync())
         {
             await db.CloseConnectionAsync();
-            return null;
+            return null; // In caso di errore ritorno null
         }
 
         int minPID = reader.GetInt32("MIN(patientID)");
@@ -587,12 +591,14 @@
         return minPID;
     }
 
+    // Funzione per richiedere al DB un certo range di pazienti in base all'ID
     public async Task getPatientFromDB(int minRow, int maxRow)
     {
         if (minRow > maxRow)
         {
             (minRow, maxRow) = (maxRow, minRow);
         }
+
         pazienti = new();
 
         var minPID = await getMinPatientID();
@@ -614,6 +620,7 @@
                 var paziente = new Paziente().getFromDBReader(reader);
                 pazienti.Add(paziente);
             }
+
             await db.CloseReaderAsync(reader);
         }
 
@@ -621,6 +628,7 @@
         await db.CloseConnectionAsync();
     }
 
+    // Funzione per salvare nel DB un nuovo paziente
     public async Task savePatient()
     {
         nuovoPaziente.Gender = gender != "m";
@@ -628,17 +636,18 @@
 
         if (!paziente.checkInputs())
         {
-            //mostro l'errore
+            // Mostro l'errore
             showFormErr = true;
             return;
         }
 
-        //se è visibile lo tolgo
+        // Lo tolgo
         showFormErr = false;
 
         paziente.sanitizePatient();
         if (!checkPatientExist(paziente))
         {
+            // Se non esiste lo aggiungo
             pazienti.Add(paziente);
 
             await paziente.saveInDB();
@@ -649,17 +658,18 @@
         }
         else
         {
+            // Se esiste lo modifico
             db.OpenConnection();
             await db.MakeQueryAsync($"UPDATE PATIENT SET first_name='{paziente.FirstName}', surname='{paziente.Surname}', gender={paziente.Gender}, cf='{paziente.CF}', c_asl='{paziente.CAsl}', birth_date='{paziente.BirthDate:yyyy-MM-dd}', birth_place='{paziente.BirthPlace}', birth_province='{paziente.BirthProvince}', foreigner={paziente.Foreigner} WHERE patientID={lastClickedP.PatientID}");
             db.CloseConnection();
-            await getPatientFromDB(0, patientsDisplayed);
+            await getPatientFromDB(0, patientsDisplayed); // Ricarico i pazienti per mostrare i nuovi dati
         }
 
         lastClickedP = null;
         toggleForm();
     }
 
-    //ritorna true se lo trova
+    // Funzione che cerca nel DB se esiste già il paziente passatogli basandosi su nome e cognome
     public bool checkPatientExist(Paziente p)
     {
         if (p == null) return false;
@@ -668,6 +678,7 @@
         {
             if (r.Read())
             {
+                // Se c'è qualcosa da leggere allora è presente
                 db.CloseConnection();
                 return true;
             }
@@ -677,6 +688,7 @@
         }
     }
 
+    // Funzione per eliminare dal DB il paziente selezionato
     public async Task deleteFromDB()
     {
         if (lastClickedP == null)
@@ -691,7 +703,7 @@
 
         await db.MakeQueryAsync(queryDeletePatient);
 
-        pazienti.Remove(lastClickedP);
+        pazienti.Remove(lastClickedP); // Aggiorno la lista visualizzata
         pazientiFiltrati = pazienti;
 
         await unLinkPatient();
@@ -701,6 +713,7 @@
         await db.CloseConnectionAsync();
     }
 
+    // Funzione per scollegare tutti i riferimenti nel DB dal paziente eliminato settando a -1 l'ID
     public async Task unLinkPatient()
     {
         string queryUnlinkPatient = "UPDATE VISIT SET patientID=-1 WHERE patientID=" + lastClickedP.PatientID;
@@ -709,6 +722,7 @@
         await db.MakeQueryAsync(queryUnlinkPatient);
     }
 
+    // Funzione per aprire il form di compilazione ma con le informazioni del paziente selezionato
     public void openModifyPatient()
     {
         if (lastClickedP == null)
@@ -720,20 +734,12 @@
         toggleForm();
     }
 
+    // Funzione per reindirizzare l'utente sulla pagina personale del paziente passando alla pagina il suo ID
     private void navigateToPatientPage(Paziente p)
     {
         if (p != null)
         {
             NavManager.NavigateTo($"/SchedaPaziente/{p.PatientID}");
-        }
-    }
-
-    private async void setEventListener()
-    {
-        if (!eventListenerSet)
-        {
-            await JS.InvokeVoidAsync("setEventListeners");
-            eventListenerSet = true;
         }
     }
 
