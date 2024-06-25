@@ -553,15 +553,6 @@
     {
         getPatientFromDB();
         string imagesPath = Path.Combine(env.ContentRootPath, _directory);
-        EnsureDirectoryeExists(imagesPath);
-    }
-    
-    public void EnsureDirectoryeExists(string path)
-    {
-        if (!Directory.Exists(path))
-        {
-            Directory.CreateDirectory(path);
-        }
     }
     
     public async Task getPatientFromDB()

@@ -108,16 +108,7 @@
     protected override async Task OnInitializedAsync()
     {
         _imgSrc = Directory.GetFiles(Path.Combine(env.ContentRootPath, _directory), "*.png")[0];
-        EnsureDirectoryeExists(_imgSrc);
         Console.WriteLine(_imgSrc);
-    }
-    
-    public void EnsureDirectoryeExists(string path)
-    {
-        if (!Directory.Exists(path))
-        {
-            Directory.CreateDirectory(path);
-        }
     }
     
 }
