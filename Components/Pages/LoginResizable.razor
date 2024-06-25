@@ -5,34 +5,52 @@
 @rendermode InteractiveServer
 
 <!--sfondo-->
-<div class="bg">
+<div class="bg align-items-center">
     <!--stile per la forma del form-->
-    <div class="loginForm">
+    <div class="loginForm align-content-center">
         <!--sezione del register-->
-        <div class="col-7">
-            <!--effettivo form register-->
-            <div class="col-8 align-content-center">
+        <div class="col-7 fadeBlu">
+            <div class="col-12 align-content-center padd doctorImg">
                 <div class="card">
-                    <div class="row registerTitle">
-                        <h3>DeltaDent Web</h3>
+                    <div>
+                        <h3 class="registerTitle">DeltaDent Web</h3>
                     </div>
-                    <div class="row">
-                        <p>La tua scelta per un futuro web</p>
+                    <div>
+                        <p class="registerParagraph">La tua scelta per un futuro web</p>
                     </div>
-                    <div class="row">
-                        <button>
+                    <div>
+                        <button class="registerButton">
                             registrati
                         </button>
                     </div>
                 </div>
             </div>
-            <!--immagine dottore-->
-            <div class="col-4">
-            </div>
         </div>
         <!--sezione del login-->
-        <div class="col-5">
-
+        <div class="col-5 loginSide">
+            <div class="card text-center align-content-center">
+                <div>
+                    <h3 class="registerTitle" style="color: #2D2D2D">
+                        Ciao!
+                    </h3>
+                </div>
+                <!--sottotitolo-->
+                <div>
+                    <p class="registerParagraph" style="color: #2D2D2D">benvenuto</p>
+                </div>
+                <!--form mail-->
+                <div>
+                    <input class="inputLogin mail" type="text"/>
+                </div>
+                <!--form password-->
+                <div>
+                    <input class="inputLogin password" type="password"/>
+                </div>
+                <!--pulsante-->
+                <div>
+                    <button class="loginbtn">Login</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -40,6 +58,5 @@
 
 @code{
 
-    
 
 }

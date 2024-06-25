@@ -143,7 +143,7 @@
 }
 
 /*row tabella*/
-.rigo{
+.rigo {
     background-color: white;
     padding: 1rem;
     border-radius: .4rem;
@@ -151,12 +151,75 @@
     text-transform: uppercase;
 }
 
+
 /*rigo selezionato*/
-.rigoSelected{
-    border: solid 3px #0a58ca;
+.rigoSelected {
+    background-color: #ddecff;
     outline: none;
+    animation: fadeIn 0.5s linear forwards;
 }
 
+/*animazione in ingresso della selezione*/
+@keyframes fadeIn {
+    0% {
+        background-color: white;
+    }
+
+    25% {
+        background-color: #f3f7ff;
+        scale:1.001;
+    }
+
+    50% {
+        background-color: #deedff;
+        scale: 1.002;
+    }
+
+    75% {
+        background-color: #dbecff;
+        scale: 1.001;
+    }
+    
+    100% {
+        background-color: #ddecff;
+        scale: 1;
+    }
+}
+
+/*rigo selezionato*/
+.rigoDeleted {
+    background-color: #ddecff;
+    outline: none;
+    animation: delete 0.5s linear forwards;
+    scale: 0;
+}
+
+
+@keyframes delete {
+    0% {
+        background-color: white;
+    }
+
+    25% {
+        background-color: #f3f7ff;
+        scale:0.9;
+    }
+
+    50% {
+        background-color: #deedff;
+        scale: 0.7;
+    }
+
+    75% {
+        background-color: #dbecff;
+        scale: 0.5;
+    }
+
+    100% {
+        background-color: #ddecff;
+        scale: 0.3;
+    }
+}
 /*stile singola cella*/
 .cella{
     text-align: center;

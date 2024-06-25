@@ -9,28 +9,104 @@
     left: 0;
     top: 0;
     overflow: hidden;
+    display: flex;
 }
 
 /*stile container login form*/
 .loginForm{
+    display: flex;
+    border-radius: 0.4vw;
+    margin: auto;
     width: 50%;
-    height: auto;
+    aspect-ratio: 1/0.8;
     background-color: white;
-    margin-top: 5%;
-    margin-bottom: 5%;
 }
 
 /*stile gruppo register*/
 .card{
     width: 100%;
+    border:none;
+    background-color: rgba(12, 65, 40, 0);
 }
 
+/*stile per il titolo registrazione*/
 .registerTitle{
     font: 800 2.5rem/1.47 "Mplus 1p", Helvetica, Arial, serif; 
     color: white;
+    font-size: 2.5vw;
 }
 
+/*stile per il sottotitolo registrazione*/
 .registerParagraph{
     color: white;
     font-weight: bold;
+    font-size: 1vw;
+}
+
+/*bottone per la registrazione*/
+.registerButton{
+    width: 30%;
+    padding: 0.5vw;
+    color: black;
+    font-weight: bold;
+    background-color: white;
+    border:none;
+    border-radius: 1vw;
+    font-size: 1vw;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.registerButton:hover{
+    transform: rotate(3deg);
+    filter: brightness(85%);
+}
+
+/*stile per applicare un fade alla sezione della registrazione*/
+.fadeBlu{
+    background: linear-gradient(to bottom, #009AF0, #0060F0);
+    border-top-left-radius: 0.4vw;
+    border-bottom-left-radius: 0.4vw;
+    height: 100%;
+    display: flex;
+    align-content: center;
+}
+
+/*stile aggiuntivo per applicare un immagine decorativa sez registrazione*/
+.doctorImg{
+    background: url("assets/loginAssets/dottore.svg") no-repeat;
+    background-position: bottom right;
+    background-size: 50% auto;
+    width: 100%;
+    height: 95%;
+    margin-bottom: 5%;
+}
+
+.padd{
+    padding: 1.4vw;
+}
+
+/*stile generico per gli input del form*/
+.inputLogin{
+    margin-top: 0.5vh;
+    width: 80%;
+    padding: 0.4vw;
+    padding-left: 2vw;
+    border-radius: 1vw;
+    border: none;
+}
+
+/*stile aggiuntivo per applicare l'icona della mail al form*/
+.mail{
+    background: url("./assets/loginAssets/emailIcon.svg") no-repeat;
+    background-color: #EBEBEB;
+    background-position:  0.4vw;
+    background-size: 1.4vw auto;
+}
+
+/*stile aggiuntivo per applicare l'icona della password al form*/
+.password{
+    background: url("./assets/loginAssets/passwordIcon.svg") no-repeat;
+    background-color: #EBEBEB;
+    background-position:  0.4vw;
+    background-size: 1.4vw auto;
 }
