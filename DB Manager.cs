@@ -35,7 +35,6 @@ public class DbManager
         try
         {
             connStr ??= _configuration.GetConnectionString("MySqlConnection");
-            Console.WriteLine(connStr);
             Conn = new MySqlConnection(connStr);
             await Conn.OpenAsync();
             
