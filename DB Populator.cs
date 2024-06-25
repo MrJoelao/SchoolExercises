@@ -7,13 +7,7 @@ class DBPopulator
     public void Populator(bool FlagDoctor = false, bool FlagPatient = false, bool FlagVisit = false, bool FlagRecords = false)
     {
         // Istanziare il gestore del database
-        var dbManager = new DbManager(
-            server: "The-J-Computer",
-            user: "user",
-            password: "admin",
-            database: "deltadentdb",
-            port: "3306"
-        );
+        var dbManager = new DbManager();
 
         // Generazione dei dati casuali usando Bogus
         var faker = new Faker();
