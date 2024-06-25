@@ -567,7 +567,7 @@
         {
             while (await reader.ReadAsync())
             {
-                paziente=paziente.getFromDBReader(reader);
+                paziente=Paziente.getFromDBReader(reader);
             }
         }
         

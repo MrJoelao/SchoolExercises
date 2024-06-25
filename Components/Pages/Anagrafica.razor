@@ -473,21 +473,32 @@
 }
 <script>
 
+    var id;
+
     // Funzione per agganciare ad ogni riga della tabella un eventListener del click e chiamare setClicked()
     function setEventListeners(){
         document.querySelectorAll('.row.rigo').forEach(row => {
             row.addEventListener('click', function () {
-                setClicked(this.getAttribute('id'))
+                id = this.getAttribute('id')
+                setClicked()
             })
         })
     }
     
     // Funzione per mostrare all'utente il paziente selezionato manipolando la classe css 'rigoSelected'
-    function setClicked(id){
+    function setClicked(){
         document.querySelectorAll('.row.rigo').forEach(row => {
             row.classList.remove('rigoSelected')
         })
         document.getElementById(id).classList.add('rigoSelected')
+    }
+    
+    function putdelAnim(){
+        document.getElementById(id).classList.add('rigoDeleted')
+    }
+    
+    function popdelAnim(){
+        document.getElementById(id).classList.remove('rigoDeleted')
     }
     
 </script>
@@ -617,7 +628,7 @@
         {
             while (await reader.ReadAsync())
             {
-                var paziente = new Paziente().getFromDBReader(reader);
+                var paziente = Paziente.getFromDBReader(reader);
                 pazienti.Add(paziente);
             }
 
@@ -703,15 +714,20 @@
 
         await db.MakeQueryAsync(queryDeletePatient);
 
+        await db.CloseConnectionAsync();
+        await unLinkPatient();
+        
+        putDeleteAnimation();
+        Thread.Sleep(500);
+        popDeleteAnimation();
         pazienti.Remove(lastClickedP); // Aggiorno la lista visualizzata
         pazientiFiltrati = pazienti;
 
-        await unLinkPatient();
-
         lastClickedP = null;
-
-        await db.CloseConnectionAsync();
     }
+
+    public void putDeleteAnimation() => JS.InvokeVoidAsync("putDelAnim");
+    public void popDeleteAnimation() => JS.InvokeVoidAsync("popDelAnim");
 
     // Funzione per scollegare tutti i riferimenti nel DB dal paziente eliminato settando a -1 l'ID
     public async Task unLinkPatient()
@@ -725,10 +741,7 @@
     // Funzione per aprire il form di compilazione ma con le informazioni del paziente selezionato
     public void openModifyPatient()
     {
-        if (lastClickedP == null)
-        {
-            return;
-        }
+        if (lastClickedP == null) return;
 
         nuovoPaziente = lastClickedP;
         toggleForm();

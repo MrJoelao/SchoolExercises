@@ -78,7 +78,7 @@ public class Paziente
         await db.CloseConnectionAsync();
     }
 
-    public Paziente getFromDBReader(MySqlDataReader reader)
+    public static Paziente getFromDBReader(MySqlDataReader reader)
     {
         Paziente paziente = new Paziente();
         paziente.PatientID = reader.GetInt32("patientID");
