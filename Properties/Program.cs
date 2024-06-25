@@ -1,5 +1,9 @@
 using Delta_Dent.Components;
 
+
+string directoryTempImg = "tempImg";
+string directoryUploads = "uploads";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,6 +27,16 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-//Paziente nuovo=Paziente.caricaPaziente("./prova.txt");
+
+if (!Directory.Exists(directoryTempImg))
+{
+    Directory.CreateDirectory(directoryTempImg);
+}
+
+if (!Directory.Exists(directoryUploads))
+{
+    Directory.CreateDirectory(directoryUploads);
+}
+
 
 app.Run();

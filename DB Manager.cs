@@ -1,21 +1,23 @@
 namespace Delta_Dent;
 using MySqlConnector;
+using Microsoft.Extensions.Configuration;
 
 public class DbManager
 {
     public MySqlConnection Conn { get; private set; }
+    private readonly IConfiguration _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
     
-    public DbManager(string server = "The-J-Computer", string user = "user", string password = "admin", string database = "deltadentdb", string port = "3306")
+    public DbManager(string connStr = null)
     {
         Console.WriteLine("Attempting to open connection...");
-        OpenConnection(server, user, password, database, port);
+        OpenConnection(connStr);
     }
     
-    public void OpenConnection(string server = "The-J-Computer", string user = "user", string password = "admin", string database = "deltadentdb", string port = "3306")
+    public void OpenConnection(string connStr = null)
     {
         try
         {
-            string connStr = $"server={server};user={user};database={database};port={port};password={password}";
+            connStr ??= _configuration.GetConnectionString("MySqlConnection");
             Conn = new MySqlConnection(connStr);
             Conn.Open(); 
             
@@ -28,11 +30,11 @@ public class DbManager
         
     }
     
-    public async Task OpenConnectionAsync(string server = "The-J-Computer", string user = "user", string password = "admin", string database = "deltadentdb", string port = "3306")
+    public async Task OpenConnectionAsync(string connStr = null)
     {
         try
         {
-            string connStr = $"server={server};user={user};database={database};port={port};password={password}";
+            connStr ??= _configuration.GetConnectionString("MySqlConnection");
             Conn = new MySqlConnection(connStr);
             await Conn.OpenAsync();
             
