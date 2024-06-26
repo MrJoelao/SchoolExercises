@@ -515,6 +515,7 @@
     Paziente lastClickedP = null!; // Paziente selezionato
     List<Paziente> pazienti = new List<Paziente>(); // Lista di tutti i pazienti
     List<Paziente> pazientiFiltrati = new List<Paziente>(); // Lista di tutti i pazienti filtrati
+    private int nPatient = 50;
 
     private string gender = null!; // Sesso del paziente
     private string? searchValue = string.Empty; // Valore di ricerca
@@ -536,7 +537,7 @@
 
         try
         {
-            await getPatientFromDB(0, patientsDisplayed); // I primi 50
+            await getPatientFromDB(); // I primi 50
         }
         catch (Exception e)
         {
@@ -577,50 +578,18 @@
     {
         if (nPage > 0)
         {
-            await getPatientFromDB(patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage);
+            await getPatientFromDB();
         }
-    }
-
-    // Funzione per trovare il paziente del medico loggato con l'ID minore
-    public async Task<int?> getMinPatientID()
-    {
-        string queryMinPatientID = $"SELECT MIN(patientID) FROM PATIENT WHERE doctorID={medID}";
-        MySqlDataReader reader;
-
-        await db.OpenConnectionAsync();
-        reader = await db.ExecuteReaderAsync(queryMinPatientID);
-
-        if (!await reader.ReadAsync())
-        {
-            await db.CloseConnectionAsync();
-            return null; // In caso di errore ritorno null
-        }
-
-        int minPID = reader.GetInt32("MIN(patientID)");
-        await db.CloseConnectionAsync();
-        await db.CloseReaderAsync(reader);
-        return minPID;
+        Console.WriteLine(nPage);
     }
 
     // Funzione per richiedere al DB un certo range di pazienti in base all'ID
-    public async Task getPatientFromDB(int minRow, int maxRow)
+    public async Task getPatientFromDB()
     {
-        if (minRow > maxRow)
-        {
-            (minRow, maxRow) = (maxRow, minRow);
-        }
-
         pazienti = new();
+        int offset = (nPage - 1) *50;
 
-        var minPID = await getMinPatientID();
-        if (minPID == null)
-        {
-            Console.WriteLine("Errore durante il recupero del patientID minimo");
-            displayDbError();
-            return;
-        }
-
-        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID BETWEEN {minPID + minRow} AND {minPID + maxRow} AND doctorID = {medID}";
+        var queryRangePatient = $"SELECT * FROM PATIENT LIMIT {nPatient} OFFSET {offset}";
 
         await db.OpenConnectionAsync();
 
@@ -673,7 +642,7 @@
             db.OpenConnection();
             await db.MakeQueryAsync($"UPDATE PATIENT SET first_name='{paziente.FirstName}', surname='{paziente.Surname}', gender={paziente.Gender}, cf='{paziente.CF}', c_asl='{paziente.CAsl}', birth_date='{paziente.BirthDate:yyyy-MM-dd}', birth_place='{paziente.BirthPlace}', birth_province='{paziente.BirthProvince}', foreigner={paziente.Foreigner} WHERE patientID={lastClickedP.PatientID}");
             db.CloseConnection();
-            await getPatientFromDB(0, patientsDisplayed); // Ricarico i pazienti per mostrare i nuovi dati
+            await getPatientFromDB(); // Ricarico i pazienti per mostrare i nuovi dati
         }
 
         lastClickedP = null;
