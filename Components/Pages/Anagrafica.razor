@@ -82,7 +82,7 @@
                     N
                 </div>
                 <div class="col">
-                    <input class="inNum" id="inputCartella" type="number" placeholder="0"/>
+                    <div class="inNum col">@pazientiFiltrati.Count</div>
                 </div>
             </div>
             <!-- Input per selezionare le pagine -->
@@ -239,7 +239,7 @@
                 <div class="col-12 col-sm-6">
                     <div class="cardInput">
                         <div class="row">
-                            cognome*
+                            Cognome*
                         </div>
                         <div class="row">
                             <input class="inputForm" type="text" @bind="nuovoPaziente.Surname" maxlength="25"/>
@@ -267,7 +267,7 @@
                             <div class="ps-0 col-6 justify-content-start">luogo nascita</div>
                             <div class="col-6 align-content-center">
                                 <label for="isEstero" style="font-size: 0.6rem">estero</label>
-                                <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner"  maxlength="25"/>
+                                <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner" maxlength="25"/>
                             </div>
                         </div>
                         <div class="row">
@@ -439,7 +439,7 @@
         }
         <div class="row mt-4">
             <button class="formButton importIcon">
-                importa CLiente
+                importa Cliente
             </button>
         </div>
     </div>
@@ -473,21 +473,32 @@
 }
 <script>
 
+    var id;
+
     // Funzione per agganciare ad ogni riga della tabella un eventListener del click e chiamare setClicked()
     function setEventListeners(){
         document.querySelectorAll('.row.rigo').forEach(row => {
             row.addEventListener('click', function () {
-                setClicked(this.getAttribute('id'))
+                id = this.getAttribute('id')
+                setClicked()
             })
         })
     }
     
     // Funzione per mostrare all'utente il paziente selezionato manipolando la classe css 'rigoSelected'
-    function setClicked(id){
+    function setClicked(){
         document.querySelectorAll('.row.rigo').forEach(row => {
             row.classList.remove('rigoSelected')
         })
         document.getElementById(id).classList.add('rigoSelected')
+    }
+    
+    function putdelAnim(){
+        document.getElementById(id).classList.add('rigoDeleted')
+    }
+    
+    function popdelAnim(){
+        document.getElementById(id).classList.remove('rigoDeleted')
     }
     
 </script>
@@ -504,6 +515,7 @@
     Paziente lastClickedP = null!; // Paziente selezionato
     List<Paziente> pazienti = new List<Paziente>(); // Lista di tutti i pazienti
     List<Paziente> pazientiFiltrati = new List<Paziente>(); // Lista di tutti i pazienti filtrati
+    private int nPatient = 50;
 
     private string gender = null!; // Sesso del paziente
     private string? searchValue = string.Empty; // Valore di ricerca
@@ -525,7 +537,7 @@
 
         try
         {
-            await getPatientFromDB(0, patientsDisplayed); // I primi 50
+            await getPatientFromDB(); // I primi 50
         }
         catch (Exception e)
         {
@@ -566,50 +578,18 @@
     {
         if (nPage > 0)
         {
-            await getPatientFromDB(patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage);
+            await getPatientFromDB();
         }
-    }
-
-    // Funzione per trovare il paziente del medico loggato con l'ID minore
-    public async Task<int?> getMinPatientID()
-    {
-        string queryMinPatientID = $"SELECT MIN(patientID) FROM PATIENT WHERE doctorID={medID}";
-        MySqlDataReader reader;
-
-        await db.OpenConnectionAsync();
-        reader = await db.ExecuteReaderAsync(queryMinPatientID);
-
-        if (!await reader.ReadAsync())
-        {
-            await db.CloseConnectionAsync();
-            return null; // In caso di errore ritorno null
-        }
-
-        int minPID = reader.GetInt32("MIN(patientID)");
-        await db.CloseConnectionAsync();
-        await db.CloseReaderAsync(reader);
-        return minPID;
+        Console.WriteLine(nPage);
     }
 
     // Funzione per richiedere al DB un certo range di pazienti in base all'ID
-    public async Task getPatientFromDB(int minRow, int maxRow)
+    public async Task getPatientFromDB()
     {
-        if (minRow > maxRow)
-        {
-            (minRow, maxRow) = (maxRow, minRow);
-        }
-
         pazienti = new();
+        int offset = (nPage - 1) *50;
 
-        var minPID = await getMinPatientID();
-        if (minPID == null)
-        {
-            Console.WriteLine("Errore durante il recupero del patientID minimo");
-            displayDbError();
-            return;
-        }
-
-        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID BETWEEN {minPID + minRow} AND {minPID + maxRow} AND doctorID = {medID}";
+        var queryRangePatient = $"SELECT * FROM PATIENT LIMIT {nPatient} OFFSET {offset}";
 
         await db.OpenConnectionAsync();
 
@@ -617,7 +597,7 @@
         {
             while (await reader.ReadAsync())
             {
-                var paziente = new Paziente().getFromDBReader(reader);
+                var paziente = Paziente.getFromDBReader(reader);
                 pazienti.Add(paziente);
             }
 
@@ -662,7 +642,7 @@
             db.OpenConnection();
             await db.MakeQueryAsync($"UPDATE PATIENT SET first_name='{paziente.FirstName}', surname='{paziente.Surname}', gender={paziente.Gender}, cf='{paziente.CF}', c_asl='{paziente.CAsl}', birth_date='{paziente.BirthDate:yyyy-MM-dd}', birth_place='{paziente.BirthPlace}', birth_province='{paziente.BirthProvince}', foreigner={paziente.Foreigner} WHERE patientID={lastClickedP.PatientID}");
             db.CloseConnection();
-            await getPatientFromDB(0, patientsDisplayed); // Ricarico i pazienti per mostrare i nuovi dati
+            await getPatientFromDB(); // Ricarico i pazienti per mostrare i nuovi dati
         }
 
         lastClickedP = null;
@@ -703,21 +683,25 @@
 
         await db.MakeQueryAsync(queryDeletePatient);
 
+        await db.CloseConnectionAsync();
+        await unLinkPatient();
+
+        putDeleteAnimation();
+        Thread.Sleep(500);
+        popDeleteAnimation();
         pazienti.Remove(lastClickedP); // Aggiorno la lista visualizzata
         pazientiFiltrati = pazienti;
 
-        await unLinkPatient();
-
         lastClickedP = null;
-
-        await db.CloseConnectionAsync();
     }
+
+    public void putDeleteAnimation() => JS.InvokeVoidAsync("putDelAnim");
+    public void popDeleteAnimation() => JS.InvokeVoidAsync("popDelAnim");
 
     // Funzione per scollegare tutti i riferimenti nel DB dal paziente eliminato settando a -1 l'ID
     public async Task unLinkPatient()
     {
         string queryUnlinkPatient = "UPDATE VISIT SET patientID=-1 WHERE patientID=" + lastClickedP.PatientID;
-
         await db.OpenConnectionAsync();
         await db.MakeQueryAsync(queryUnlinkPatient);
     }
@@ -725,11 +709,7 @@
     // Funzione per aprire il form di compilazione ma con le informazioni del paziente selezionato
     public void openModifyPatient()
     {
-        if (lastClickedP == null)
-        {
-            return;
-        }
-
+        if (lastClickedP == null) return;
         nuovoPaziente = lastClickedP;
         toggleForm();
     }
