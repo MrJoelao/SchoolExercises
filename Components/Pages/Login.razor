@@ -35,7 +35,7 @@
                 <div class="passwordBox">
                     <input type="password" @bind="passwLog" class="BoxRow imagePassword" maxlength="100"/>
                 </div>
-                <button class="loginButton" @onclick="tryLogin">Login</button>
+                <button class="loginButton" @onclick="TryLogin">Login</button>
                 <h5 class="forgotPassword">Password dimenticata</h5>
                 @if (errLogin)
                 {
@@ -53,24 +53,24 @@
         <p class="message">Registrati subito per avere accesso a DeltaDent Web</p>
         <div class="flex">
             <label>
-                <input @bind="NomeReg" placeholder=" " type="text" class="input" maxlength="25">
+                <input @bind="NomeReg" placeholder="Nome" type="text" class="input" maxlength="25">
                 <span>Nome</span>
             </label>
             <label>
-                <input @bind="CognomeReg" placeholder=" " type="text" class="input" maxlength="25">
+                <input @bind="CognomeReg" placeholder="Cognome" type="text" class="input" maxlength="25">
                 <span>Cognome</span>
             </label>
         </div>
         <label>
-            <input @bind="EmailReg" placeholder=" " type="email" class="input" maxlength="100">
+            <input @bind="EmailReg" placeholder="Email" type="email" class="input" maxlength="100">
             <span>Email</span>
         </label>
         <label>
-            <input @bind="PasswReg" placeholder=" " type="password" class="input" maxlength="100">
+            <input @bind="PasswReg" placeholder="Password" type="password" class="input" maxlength="100">
             <span>Password</span>
         </label>
         <label>
-            <input @bind="ConfermaPasswordReg" placeholder=" " type="password" class="input" maxlength="100">
+            <input @bind="ConfermaPasswordReg" placeholder="Conferma Password" type="password" class="input" maxlength="100">
             <span>Conferma password</span>
         </label>
         @if (errReg)
@@ -113,16 +113,17 @@
         try
         {
             // Verifica dei dati immessi
-            if (PasswReg != ConfermaPasswordReg || await checkExist(EmailReg) || !verifyDoctor())
+            if (PasswReg != ConfermaPasswordReg || await checkExist(EmailReg) || NomeReg == string.Empty || CognomeReg == string.Empty || EmailReg == string.Empty || PasswReg == string.Empty || ConfermaPasswordReg == string.Empty)
             {
                 // Mostro l'errore
                 errReg = true;
+                Console.WriteLine("Errore nei dati immessi");
                 return;
             }
             // Lo tolgo
             errReg = false;
 
-            var query = $"INSERT INTO doctor (first_name, surname, email, password) VALUES ('{NomeReg}', '{CognomeReg}', '{EmailReg}', '{PasswReg}')";
+            var query = $"INSERT INTO DOCTOR (first_name, surname, email, password) VALUES ('{NomeReg}', '{CognomeReg}', '{EmailReg}', SHA2('{PasswReg}', 256))";
             await db.OpenConnectionAsync();
             await db.MakeQueryAsync(query);
             await db.CloseConnectionAsync();
@@ -139,17 +140,10 @@
         }
     }
 
-    // Funzione per prevenire sql injection: verifica che gli input non contengano "'" e non siano vuoti, torna true se sono validi
-    public bool verifyDoctor()
-    {
-        return !NomeReg.Contains("'") && NomeReg.Length > 0 && !CognomeReg.Contains("'") && CognomeReg.Length > 0 && !EmailReg.Contains("'") 
-               && EmailReg.Length > 0 && !PasswReg.Contains("'") && PasswReg.Length > 0;
-    }
-
     // Funzione per verificare se un dottore è già presente nel DB in base all'email
     private async Task<bool> checkExist(string email)
     {
-        string query = $"SELECT email FROM doctor WHERE email='{email}'";
+        string query = $"SELECT email FROM DOCTOR WHERE email='{email}'";
         await db.OpenConnectionAsync();
         using (MySqlDataReader reader = db.ExecuteReader(query))
         {
@@ -165,7 +159,7 @@
     }
 
     // Funzione che verifica se email e password corrispondono a quelle registrate nel DB, e permette o meno l'ingresso nel resto del sito
-    private async Task tryLogin()
+    private async Task TryLogin()
     {
         if (!(await checkExist(emailLog)) || !(await checkPassw(passwLog)))
         {
@@ -173,13 +167,14 @@
             return;
         }
 
-        string query = $"SELECT doctorID FROM doctor WHERE email='{emailLog}'";
+        string query = $"SELECT doctorID FROM DOCTOR WHERE email='{emailLog}'";
         await db.OpenConnectionAsync();
         using (MySqlDataReader reader = await db.ExecuteReaderAsync(query))
         {
             if (!reader.Read())
-            {   // Se c'è da leggere allora non è presente
+            {   // Se non c'è da leggere allora non è presente
                 await db.CloseConnectionAsync();
+                errLogin = true;
                 return;
             }
 
@@ -193,12 +188,12 @@
     //Funzione che controlla se la password di un medico è uguale a quella passatagli
     private async Task<bool> checkPassw(string passw)
     {
-        string query = $"SELECT password FROM doctor WHERE password='{passw}'";
+        string query = $"SELECT password FROM DOCTOR WHERE password= SHA2('{passw}', 256)";
         await db.OpenConnectionAsync();
         using (MySqlDataReader reader = await db.ExecuteReaderAsync(query))
         {
             if (reader.Read())
-            {   // Se c'è da leggere allora è presente
+            {   // Se non c'è da leggere allora non è presente
                 await db.CloseConnectionAsync();
                 return true;
             }
