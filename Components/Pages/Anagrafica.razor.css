@@ -505,19 +505,19 @@
         height: 100%;
         background:  #3D7BD9 url("./assets/anagrafica/add.svg") no-repeat;
         background-position:center;
-        background-size: 50%;
+        background-size: 20%;
     }
     .modifica{
         height: 100%;
         background:  #3D7BD9 url("./assets/anagrafica/edit.svg") no-repeat;
         background-position:center;
-        background-size: 50%;
+        background-size: 20%;
     }
     .elimina{
         height: 100%;
         background:  #3D7BD9 url("./assets/anagrafica/del.svg") no-repeat;
         background-position:center;
-        background-size: 40%;
+        background-size: 15%;
     }
 
     .aggiungi::before{

@@ -91,7 +91,7 @@
                     P
                 </div>
                 <div class="col">
-                    <input class="inNum" id="inputPagina" type="text" placeholder="1" @bind="nPage" @oninput="changePage" min="1"/>
+                    <input class="inNum" id="inputPagina" type="text" placeholder="@nPage" @bind="nPage" @oninput="changePage" />
                 </div>
             </div>
             <!-- Input per navigare tra le pagine -->
@@ -155,7 +155,7 @@
             <!-- foreach per generare una riga per ogni paziente -->
             @{ int i = 0; }
             @foreach (var paziente in pazientiFiltrati)
-            {
+            {   
                 <div id="row-@i" class="row rigo mt-1" @onclick="() => updateLastClicked(paziente)">
                     <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
                     <div class="col-6 col-sm-2 cella">
@@ -616,7 +616,7 @@
     {
         pazienti = new();
         int offset = (nPage - 1) *50;
-
+        Console.WriteLine("offset:"+offset);
         var queryRangePatient = $"SELECT * FROM PATIENT LIMIT {nPatient} OFFSET {offset}";
 
         await db.OpenConnectionAsync();
