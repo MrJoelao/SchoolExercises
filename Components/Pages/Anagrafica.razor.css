@@ -84,10 +84,7 @@
     background: url("./assets/lente.svg") no-repeat right;
     height: 100%;
     width:100%;
-    padding-right: 2.5rem;
-    padding-top: 0.5rem;
-    padding-left: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding: 0.5rem 2.5rem 0.5rem 0.5rem;
     border-radius: 0.5vw;
     border:none;
     font-size: 1vw;
@@ -326,9 +323,7 @@
 /*stile sez laterale form*/
 .SezPulsanti{
     background-color: #B4D1F0;
-    padding: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 0.5rem 1rem;
     border-radius: 10px;
 }
 
@@ -389,9 +384,7 @@
 }
 
 .formbody{
-    padding:1rem;
-    padding-left: 2rem;
-    padding-right: 0;
+    padding: 1rem 0 1rem 2rem;
     background-color: #B4D1F0;
     border-radius: 10px;
     width: 81%;
