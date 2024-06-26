@@ -10,10 +10,8 @@ CREATE TABLE DOCTOR
     gender     BOOLEAN,
     birth_date DATE,
     email      VARCHAR(100),
-    password   VARCHAR(100),
+    password   char(64),
     telephone  VARCHAR(13),
-    phone_1    VARCHAR(13),
-    phone_2    VARCHAR(13),
     address    VARCHAR(50)
 );
 
@@ -78,17 +76,4 @@ CREATE TABLE RECORDS
     FOREIGN KEY (patientID) REFERENCES PATIENT (patientID)
 );
 
--- Creazione della tabella degli ID
-CREATE TABLE ID
-(
-    patientID INT,
-    visitID INT,
-    doctorID INT,
-    recordID INT,
-    FOREIGN KEY (patientID) REFERENCES PATIENT (patientID),
-    FOREIGN KEY (doctorID) REFERENCES DOCTOR (doctorID),
-    FOREIGN KEY (visitID) REFERENCES VISIT (visitID),
-    FOREIGN KEY (recordID) REFERENCES RECORDS (recordID)
-);
-
-INSERT INTO DOCTOR (first_name, surname, gender, birth_date, email, password, telephone, phone_1, phone_2, address) VALUES ('defaultName', 'defaultSurname', 1, '2000-01-01', 'default@default.com', 'default', '0000000000', '0000000000', '0000000000', 'defaultAddress');
+INSERT INTO DOCTOR (first_name, surname, gender, birth_date, email, password, telephone, phone_1, phone_2, address) VALUES ('defaultName', 'defaultSurname', 1, '2000-01-01', 'default@default.com', SHA2('default', 256), '0000000000', 'defaultAddress');
