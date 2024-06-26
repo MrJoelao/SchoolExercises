@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    
+
     @if (visible)
     {
         <div class="oscuramento">
@@ -82,7 +82,11 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                    <p class="LoginParagraph">Sesso</p>
+                        <p class="LoginParagraph">Sesso</p>
+                        <select type="select" class="inputRegister">
+                            <option value="m">Maschio</option>
+                            <option value="f">Femmina</option>
+                        </select>
                     </div>
                     <div class="col">
                         <p class="LoginParagraph">telefono</p>
@@ -114,12 +118,12 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button class="formbtn annulla"  @onclick="toggleForm">
+                        <button class="formbtn annulla" @onclick="toggleForm">
                             annulla
                         </button>
                     </div>
                     <div class="col">
-                        <button class="formbtn conferma"  @onclick="toggleForm">
+                        <button class="formbtn conferma" @onclick="toggleForm">
                             conferma
                         </button>
                     </div>
