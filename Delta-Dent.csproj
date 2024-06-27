@@ -11,6 +11,18 @@
     <ItemGroup>
       <None Include="wwwroot\assets\loginAssets\dottore.svg" />
       <None Remove="prova.txt" />
+      <None Include="wwwroot\tempImg\.gitkeep" />
+      <None Include="wwwroot\uploads\.gitkeep" />
+      <None Include="wwwroot\uploads\Frontale Sorriso.png" />
+      <None Include="wwwroot\uploads\Frontale.png" />
+      <None Include="wwwroot\uploads\Laterale.png" />
+      <None Include="wwwroot\uploads\Occl. DX.png" />
+      <None Include="wwwroot\uploads\Occl. Frontale.png" />
+      <None Include="wwwroot\uploads\Occl. Superiore.png" />
+      <None Include="wwwroot\uploads\Occl. SX.png" />
+      <None Include="wwwroot\uploads\RX Frontale PA.png" />
+      <None Include="wwwroot\uploads\RX Laterale.png" />
+      <None Include="wwwroot\uploads\RX Panoramica.png" />
     </ItemGroup>
 
     <ItemGroup>
@@ -20,6 +32,10 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="MySqlConnector" Version="2.3.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="uploads\" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,166 @@
+@page "/SchedaPazienteR"
+@page "/SchedaPaziente/{patID:int}"
+@rendermode InteractiveServer
+@inject IJSRuntime JS
+@inject IWebHostEnvironment env
+
+
+
+
+@code {
+    private int numeroCartella;
+    private string etaPaziente;
+    private string rischio;
+    private string esame;
+    private string visita;
+    private int mad;
+    private string dataTrattamento;
+    private int anamanesi;
+    private string prima;
+    private string paradonto;
+    private string specialistica;
+    private int prescrizioni;
+    private int pianiTrattamenti;
+    private int incontri;
+    private int referti;
+    private int presentazioni;
+    private float fatturato;
+    private float preventivi;
+    private float extras;
+    private float eseguito;
+
+    private readonly string _directory = "uploads";
+
+    [Parameter] public int patID { get; set; }
+    private Patient paziente;
+
+    private bool _visibile = false;
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+    private InputFile? inputFile;
+    private List<IBrowserFile> allLoadedFiles = new();
+    private long maxFileSize = 1024 * 1024;
+    DbManager db = new DbManager();
+
+    protected override async Task OnInitializedAsync()
+    {
+        getPatientFromDB();
+        string imagesPath = Path.Combine(env.ContentRootPath, _directory);
+    }
+
+    public async Task getPatientFromDB()
+    {
+        paziente = new();
+
+        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID = {patID}";
+
+        await db.OpenConnectionAsync();
+
+        using (var reader = await db.ExecuteReaderAsync(queryRangePatient))
+        {
+            while (await reader.ReadAsync())
+            {
+                paziente = Patient.GetFromDbReader(reader);
+            }
+        }
+
+        await db.CloseConnectionAsync();
+    }
+
+    private void ToggleForm()
+    {
+        _visibile = !_visibile;
+    }
+
+    private async Task OpenFilePicker()
+        => await JSRuntime.InvokeVoidAsync("HTMLElement.prototype.click.call", inputFile!.Element);
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        allLoadedFiles.AddRange(e.GetMultipleFiles(11).ToList());
+        if (inputFile != null)
+        {
+            await JSRuntime.InvokeVoidAsync("previewImage", inputFile.Element, "divAnteprima");
+        }
+    }
+
+    private async Task SaveFiles()
+    {
+        string[] toUploadFilesNames = await JS.InvokeAsync<string[]>("getToUploadFiles", allLoadedFiles);
+
+        List<IBrowserFile> confirmedFiles = new();
+        foreach (var name in toUploadFilesNames)
+        {
+            foreach (var f in allLoadedFiles)
+            {
+                if (f.Name == name && !fileListAlreadyContains(f.Name, confirmedFiles))
+                {
+                    confirmedFiles.Add(f);
+                }
+            }
+        }
+
+        for (int i = 0; i < confirmedFiles.Count(); i++)
+        {
+            try
+            {
+                var trustedFileName = await JS.InvokeAsync<string>("getDivName", confirmedFiles[i].Name) + ".png";
+                var path = Path.Combine(env.ContentRootPath, "uploads", trustedFileName);
+
+                await using FileStream fs = new(path, FileMode.Create);
+                await confirmedFiles[i].OpenReadStream(maxFileSize).CopyToAsync(fs);
+
+            //Console.WriteLine($"File saved: {trustedFileName}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving file: {ex.Message}");
+            }
+        }
+
+        await JS.InvokeVoidAsync("setTinyImages", confirmedFiles);
+        await resetVariables();
+        ToggleForm();
+    }
+
+    private bool fileListAlreadyContains(string fileName, List<IBrowserFile> list)
+    {
+        foreach (var f in list)
+        {
+            if (fileName == f.Name)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private async Task resetVariables()
+    {
+        inputFile = null;
+        allLoadedFiles = new();
+        await JS.InvokeVoidAsync("resetVariables");
+    }
+
+    [JSInvokable]
+    public static Task moveImg(string name)
+    {
+        //Console.WriteLine("\n\n\n"+name+"\n\n\n");
+        string startPath = Path.Combine(Path.GetFullPath("."), "uploads", name);
+        string endPath = Path.Combine(Path.GetFullPath("."), "tempImg", name);
+        //Console.WriteLine("\n\n\n\n"+path+"n\n\n\n");
+
+        try
+        {
+            File.Move(startPath, endPath);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+
+        return Task.CompletedTask;
+    }
+
+}

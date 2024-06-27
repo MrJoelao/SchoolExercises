@@ -60,6 +60,7 @@
             <div class="inline seconda">
                 <button class="fileButton" @onclick="OpenFilePicker"> </button>
                 <InputFile style="display: none" @ref="inputFile" OnChange="OnInputFileChange" multiple="true" accept="image/*"/>
+                
                 <script>
                         
                     let clickedImg=null
@@ -154,7 +155,7 @@
                     }
 
                     window.changePage = (name) => {
-                        DotNet.invokeMethodAsync('Delta-Dent', 'moveImg', name)
+                        DotNet.invokeMethodAsync('Delta-Dent', 'MoveImg', name)
                             .then(result => {
                                 //console.log(result)
                                 if (result!=null){
@@ -555,14 +556,12 @@
         string imagesPath = Path.Combine(env.ContentRootPath, _directory);
     }
     
+    //carica il paziente dal databese -> non quello che sto cercando per il file
     public async Task getPatientFromDB()
     {
         paziente = new();
-
         var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID = {patID}";
-
         await db.OpenConnectionAsync();
-
         using (var reader = await db.ExecuteReaderAsync(queryRangePatient))
         {
             while (await reader.ReadAsync())
@@ -570,17 +569,17 @@
                 paziente=Patient.GetFromDbReader(reader);
             }
         }
-        
         await db.CloseConnectionAsync();
     }
     
+    //fa diventare visibile o meno il form -> non quello che sto cercando
     private void ToggleForm()
     {
         _visibile = !_visibile;
     }
-
-    private async Task OpenFilePicker()
-        => await JSRuntime.InvokeVoidAsync("HTMLElement.prototype.click.call", inputFile!.Element);
+    
+    //apre il selettore di file -> non quello che sto cercando
+    private async Task OpenFilePicker() => await JSRuntime.InvokeVoidAsync("HTMLElement.prototype.click.call", inputFile!.Element);
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
@@ -651,7 +650,7 @@
     }
 
     [JSInvokable]
-    public static Task moveImg(string name)
+    public static Task MoveImg(string name)
     {
         //Console.WriteLine("\n\n\n"+name+"\n\n\n");
         string startPath = Path.Combine(Path.GetFullPath("."), "uploads", name);
