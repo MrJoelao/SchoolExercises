@@ -49,21 +49,21 @@
         <!--buttons-->
         <div class="row toolbar">
             <!-- suddivisione in 2-2-2-1-3-1-1 della barra-->
-            <div class="col-3 col-sm-2 col-md-2 ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
-                <button class="btnTool" @onclick="toggleForm" id="btnAggiungi" data-toggle="modal" data-target="#exampleModalCenter">
-                    Aggiungi
+            <div class="col-2 col-sm-2 col-md-2 ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool aggiungi" @onclick="toggleForm" id="btnAggiungi" data-toggle="modal" data-target="#exampleModalCenter">
+                    
                 </button>
             </div>
 
-            <div class="col-3 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
-                <button class="btnTool" id="btnModifica" @onclick="openModifyPatient">
-                    Modifica
+            <div class="col-2 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool modifica" id="btnModifica" @onclick="openModifyPatient">
+                    
                 </button>
             </div>
 
-            <div class="col-3 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
-                <button class="btnTool" id="btnElimina" @onclick="deleteFromDB">
-                    Elimina
+            <div class="col-2 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool elimina" id="btnElimina" @onclick="deleteFromDB">
+                    
                 </button>
             </div>
 
@@ -73,7 +73,7 @@
                 </button>
             </div>
 
-            <div class="col-3 col-sm-2 col-md-3 p-0 px-md-1 pl-sm-0 pr-sm-1">
+            <div class="col-4 col-sm-1 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
                 <input class="inputRicerca" id="txtRicerca" placeholder="Ricerca" @bind-value="searchValue" @oninput="searchPatient"/> <!--@bind-value="searchValue" @oninput="searchPatient"-->
             </div>
 
@@ -91,7 +91,20 @@
                     P
                 </div>
                 <div class="col">
-                    <input class="inNum" id="inputPagina" type="number" placeholder="1" @bind="nPage" @oninput="changePage" min="1"/>
+                    <input class="inNum" id="inputPagina" type="text" placeholder="@nPage" @bind="nPage" @oninput="changePage" />
+                </div>
+            </div>
+            <!-- Input per navigare tra le pagine -->
+            <div class="col-2 d-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <div class="col">
+                    <button class="navsx sxArrow" @onclick="decPagina">
+                        
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="nav dxArrow" @onclick="incPagina">
+
+                    </button>
                 </div>
             </div>
         </div>
@@ -99,23 +112,23 @@
 
     <!-- corpo centrale della pagina -->
 
-    <div class="container-fluid corpo mt-1">
+    <div class="container-fluid corpo mt-1 px-5">
         <!-- heading della tabella -->
         <div class="row heading">
             <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
-            <div class="col-3 col-sm-2 cella">
+            <div class="col-6 col-sm-2 cella">
                 cognome
             </div>
-            <div class="col-2 col-sm-1 cella">
+            <div class="col-6 col-sm-1 cella">
                 nome
             </div>
-            <div class="col-2 col-sm-1 cella">
+            <div class="col-6 col-sm-1 cella">
                 nascita
             </div>
-            <div class="col-2 col-sm-1 cella">
+            <div class="col-6 col-sm-1 cella">
                 telefono
             </div>
-            <div class="col-2 col-sm-1 cella">
+            <div class=" d-none d-sm-block col-4 col-sm-1 cella">
                 cellulare1
             </div>
             <div class=" d-none d-sm-block col-1 cella">
@@ -133,7 +146,7 @@
             <div class="d-none d-sm-block col-1 cella lock">
 
             </div>
-            <div class="col-1 cella">
+            <div class="d-none d-sm-block col-1 cella">
 
             </div>
         </div>
@@ -142,22 +155,22 @@
             <!-- foreach per generare una riga per ogni paziente -->
             @{ int i = 0; }
             @foreach (var paziente in pazientiFiltrati)
-            {
+            {   
                 <div id="row-@i" class="row rigo mt-1" @onclick="() => updateLastClicked(paziente)">
                     <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
-                    <div class="col-3 col-sm-2 cella">
+                    <div class="col-6 col-sm-2 cella">
                         @paziente.Surname
                     </div>
-                    <div class="col-2 col-sm-1 cella">
+                    <div class="col-6 col-sm-1 cella">
                         @paziente.FirstName
                     </div>
-                    <div class="col-2 col-sm-1 cella">
+                    <div class="col-6 col-sm-1 cella">
                         @DateOnly.FromDateTime(paziente.BirthDate)
                     </div>
-                    <div class="col-2 col-sm-1 cella">
+                    <div class="col-6 col-sm-1 cella">
                         @paziente.Telephone
                     </div>
-                    <div class="col-2 col-sm-1 cella">
+                    <div class=" d-none d-sm-block col-4 col-sm-1 cella">
                         @paziente.Phone1
                     </div>
                     <div class=" d-none d-sm-block col-1 cella">
@@ -172,10 +185,13 @@
                     <div class="d-none d-sm-block col-1 cella">
                         @(paziente.Documented ? "Si" : "No")
                     </div>
-                    <div class="col-1 cella">
+                    <div class="d-none d-sm-block col-1 cella">
                         <input type="checkbox"/>
                     </div>
-                    <div class="col-1 cella">
+                    <div class="d-block d-sm-none col-3">
+                        
+                    </div>
+                    <div class="col-6 col-sm-1 cella">
                         <button class="openPatient" @onclick="() => navigateToPatientPage(paziente)"></button>
                     </div>
                 </div>
@@ -242,7 +258,7 @@
                             Cognome*
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="nuovoPaziente.Surname" maxlength="25"/>
+                            <input class="inputForm" type="text" @bind="_nuovoPatient.Surname" maxlength="25"/>
                         </div>
                     </div>
                 </div>
@@ -253,7 +269,7 @@
                             Nome*
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="nuovoPaziente.FirstName" maxlength="25"/>
+                            <input class="inputForm" type="text" @bind="_nuovoPatient.FirstName" maxlength="25"/>
                         </div>
                     </div>
                 </div>
@@ -267,11 +283,11 @@
                             <div class="ps-0 col-6 justify-content-start">luogo nascita</div>
                             <div class="col-6 align-content-center">
                                 <label for="isEstero" style="font-size: 0.6rem">estero</label>
-                                <input type="checkbox" id="isEstero" @bind="nuovoPaziente.Foreigner" maxlength="25"/>
+                                <input type="checkbox" id="isEstero" @bind="_nuovoPatient.Foreigner" maxlength="25"/>
                             </div>
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="nuovoPaziente.BirthPlace"/>
+                            <input class="inputForm" type="text" @bind="_nuovoPatient.BirthPlace"/>
                         </div>
                     </div>
                 </div>
@@ -283,7 +299,7 @@
                                     provincia
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm" type="text" @bind="nuovoPaziente.BirthProvince" maxlength="25"/>
+                                    <input class="inputForm" type="text" @bind="_nuovoPatient.BirthProvince" maxlength="25"/>
                                 </div>
                             </div>
                         </div>
@@ -294,7 +310,6 @@
                                 </div>
                                 <div class="row">
                                     <select type="select" class="inputForm" @bind="gender">
-                                        c
                                         <option value="m">Maschio</option>
                                         <option value="f">Femmina</option>
                                     </select>
@@ -315,7 +330,7 @@
                                     data nascita
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm data" type="date" @bind="nuovoPaziente.BirthDate" EnableMinMax="true" min="1900-01-01" max="@today"/>
+                                    <input class="inputForm data" type="date" @bind="_nuovoPatient.BirthDate" EnableMinMax="true" min="1900-01-01" max="@today"/>
                                 </div>
                             </div>
                         </div>
@@ -325,7 +340,7 @@
                                     codice asl
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm" type="text" @bind="nuovoPaziente.CAsl" maxlength="5"/>
+                                    <input class="inputForm" type="text" @bind="_nuovoPatient.CAsl" maxlength="5"/>
                                 </div>
                             </div>
                         </div>
@@ -341,7 +356,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="nuovoPaziente.CF" maxlength="16"/>
+                            <input class="inputForm" type="text" @bind="_nuovoPatient.CF" maxlength="16"/>
                         </div>
                     </div>
                 </div>
@@ -484,7 +499,7 @@
             })
         })
     }
-    
+
     // Funzione per mostrare all'utente il paziente selezionato manipolando la classe css 'rigoSelected'
     function setClicked(){
         document.querySelectorAll('.row.rigo').forEach(row => {
@@ -492,15 +507,15 @@
         })
         document.getElementById(id).classList.add('rigoSelected')
     }
-    
+
     function putdelAnim(){
         document.getElementById(id).classList.add('rigoDeleted')
     }
-    
+
     function popdelAnim(){
         document.getElementById(id).classList.remove('rigoDeleted')
     }
-    
+
 </script>
 
 @code {
@@ -511,10 +526,11 @@
     DBPopulator dbPopulator = new DBPopulator(); // Oggetto per la popolazione del database
     DbManager db = new DbManager(); // Oggetto per la gestione del database
 
-    Paziente nuovoPaziente = new(); // Paziente temporaneo per la creazione di un nuovo paziente
-    Paziente lastClickedP = null!; // Paziente selezionato
-    List<Paziente> pazienti = new List<Paziente>(); // Lista di tutti i pazienti
-    List<Paziente> pazientiFiltrati = new List<Paziente>(); // Lista di tutti i pazienti filtrati
+    Patient _nuovoPatient = new(); // Paziente temporaneo per la creazione di un nuovo paziente
+    Patient lastClickedP = null!; // Paziente selezionato
+    List<Patient> pazienti = new List<Patient>(); // Lista di tutti i pazienti
+    List<Patient> pazientiFiltrati = new List<Patient>(); // Lista di tutti i pazienti filtrati
+    private int nPatient = 50;
 
     private string gender = null!; // Sesso del paziente
     private string? searchValue = string.Empty; // Valore di ricerca
@@ -524,6 +540,19 @@
     private int nPage = 1; // Numero di pagina
     private int patientsDisplayed = 50; // Numero di pazienti visualizzati per pagina
 
+    public void incPagina()
+    {
+        ++nPage;
+        getPatientFromDB();
+        Console.WriteLine(nPage);
+    }
+
+    public void decPagina()
+    {
+        if (nPage > 1) --nPage;
+        getPatientFromDB();
+        Console.WriteLine(nPage);
+    }
     // Funzione eseguita automaticamente al caricamento della pagina
     // Tenta di caricare i primi 50 pazienti del medico loggato, mostra un errore in caso di eccezione
     protected override async Task OnInitializedAsync()
@@ -536,7 +565,7 @@
 
         try
         {
-            await getPatientFromDB(0, patientsDisplayed); // I primi 50
+            await getPatientFromDB(); // I primi 50
         }
         catch (Exception e)
         {
@@ -550,12 +579,12 @@
 
     public void displayDbError() => dbError = true;
 
-    public void populator() => dbPopulator.Populator(FlagPatient: true); // Popola il database di pazienti     
+    public void populator() => dbPopulator.Populator(FlagPatient: true); // Popola il database di pazienti
 
     private void toggleForm() => visible = !visible;
 
     // Funzione per tenere traccia dell'ultimo paziente cliccato(associato al div)
-    public void updateLastClicked(Paziente p) => lastClickedP = p;
+    public void updateLastClicked(Patient p) => lastClickedP = p;
 
     // Funzione per ricercare un paziente in base a nome e cognome tra quelli caricati
     private void searchPatient(ChangeEventArgs e)
@@ -577,50 +606,18 @@
     {
         if (nPage > 0)
         {
-            await getPatientFromDB(patientsDisplayed * nPage - patientsDisplayed, patientsDisplayed * nPage);
+            await getPatientFromDB();
         }
-    }
-
-    // Funzione per trovare il paziente del medico loggato con l'ID minore
-    public async Task<int?> getMinPatientID()
-    {
-        string queryMinPatientID = $"SELECT MIN(patientID) FROM PATIENT WHERE doctorID={medID}";
-        MySqlDataReader reader;
-
-        await db.OpenConnectionAsync();
-        reader = await db.ExecuteReaderAsync(queryMinPatientID);
-
-        if (!await reader.ReadAsync())
-        {
-            await db.CloseConnectionAsync();
-            return null; // In caso di errore ritorno null
-        }
-
-        int minPID = reader.GetInt32("MIN(patientID)");
-        await db.CloseConnectionAsync();
-        await db.CloseReaderAsync(reader);
-        return minPID;
+        Console.WriteLine(nPage);
     }
 
     // Funzione per richiedere al DB un certo range di pazienti in base all'ID
-    public async Task getPatientFromDB(int minRow, int maxRow)
+    public async Task getPatientFromDB()
     {
-        if (minRow > maxRow)
-        {
-            (minRow, maxRow) = (maxRow, minRow);
-        }
-
         pazienti = new();
-
-        var minPID = await getMinPatientID();
-        if (minPID == null)
-        {
-            Console.WriteLine("Errore durante il recupero del patientID minimo");
-            displayDbError();
-            return;
-        }
-
-        var queryRangePatient = $"SELECT * FROM PATIENT WHERE patientID BETWEEN {minPID + minRow} AND {minPID + maxRow} AND doctorID = {medID}";
+        int offset = (nPage - 1) *50;
+        Console.WriteLine("offset:"+offset);
+        var queryRangePatient = $"SELECT * FROM PATIENT LIMIT {nPatient} OFFSET {offset}";
 
         await db.OpenConnectionAsync();
 
@@ -628,7 +625,7 @@
         {
             while (await reader.ReadAsync())
             {
-                var paziente = Paziente.getFromDBReader(reader);
+                var paziente = Patient.GetFromDbReader(reader);
                 pazienti.Add(paziente);
             }
 
@@ -642,10 +639,10 @@
     // Funzione per salvare nel DB un nuovo paziente
     public async Task savePatient()
     {
-        nuovoPaziente.Gender = gender != "m";
-        Paziente paziente = new Paziente(nuovoPaziente.FirstName, nuovoPaziente.Surname, nuovoPaziente.Gender, "0000000000", "0000000000", "0000000000", nuovoPaziente.CF, nuovoPaziente.CAsl, nuovoPaziente.BirthDate, nuovoPaziente.BirthPlace, nuovoPaziente.Foreigner, nuovoPaziente.BirthProvince, "NO", false, false, medID, nuovoPaziente.Locked);
+        _nuovoPatient.Gender = gender != "m";
+        Patient patient = new Patient(_nuovoPatient.FirstName, _nuovoPatient.Surname, _nuovoPatient.Gender, "0000000000", "0000000000", "0000000000", _nuovoPatient.CF, _nuovoPatient.CAsl, _nuovoPatient.BirthDate, _nuovoPatient.BirthPlace, _nuovoPatient.Foreigner, _nuovoPatient.BirthProvince, "NO", false, false, medID, _nuovoPatient.Locked);
 
-        if (!paziente.checkInputs())
+        if (!patient.CheckInputs())
         {
             // Mostro l'errore
             showFormErr = true;
@@ -655,25 +652,25 @@
         // Lo tolgo
         showFormErr = false;
 
-        paziente.sanitizePatient();
-        if (!checkPatientExist(paziente))
+        patient.SanitizePatient();
+        if (!checkPatientExist(patient))
         {
             // Se non esiste lo aggiungo
-            pazienti.Add(paziente);
+            pazienti.Add(patient);
 
-            await paziente.saveInDB();
+            await patient.saveInDB();
 
             pazientiFiltrati = pazienti;
 
-            nuovoPaziente = new();
+            _nuovoPatient = new();
         }
         else
         {
             // Se esiste lo modifico
             db.OpenConnection();
-            await db.MakeQueryAsync($"UPDATE PATIENT SET first_name='{paziente.FirstName}', surname='{paziente.Surname}', gender={paziente.Gender}, cf='{paziente.CF}', c_asl='{paziente.CAsl}', birth_date='{paziente.BirthDate:yyyy-MM-dd}', birth_place='{paziente.BirthPlace}', birth_province='{paziente.BirthProvince}', foreigner={paziente.Foreigner} WHERE patientID={lastClickedP.PatientID}");
+            await db.MakeQueryAsync($"UPDATE PATIENT SET first_name='{patient.FirstName}', surname='{patient.Surname}', gender={patient.Gender}, cf='{patient.CF}', c_asl='{patient.CAsl}', birth_date='{patient.BirthDate:yyyy-MM-dd}', birth_place='{patient.BirthPlace}', birth_province='{patient.BirthProvince}', foreigner={patient.Foreigner} WHERE patientID={lastClickedP.PatientID}");
             db.CloseConnection();
-            await getPatientFromDB(0, patientsDisplayed); // Ricarico i pazienti per mostrare i nuovi dati
+            await getPatientFromDB(); // Ricarico i pazienti per mostrare i nuovi dati
         }
 
         lastClickedP = null;
@@ -681,7 +678,7 @@
     }
 
     // Funzione che cerca nel DB se esiste già il paziente passatogli basandosi su nome e cognome
-    public bool checkPatientExist(Paziente p)
+    public bool checkPatientExist(Patient p)
     {
         if (p == null) return false;
         db.OpenConnection();
@@ -741,12 +738,12 @@
     public void openModifyPatient()
     {
         if (lastClickedP == null) return;
-        nuovoPaziente = lastClickedP;
+        _nuovoPatient = lastClickedP;
         toggleForm();
     }
 
     // Funzione per reindirizzare l'utente sulla pagina personale del paziente passando alla pagina il suo ID
-    private void navigateToPatientPage(Paziente p)
+    private void navigateToPatientPage(Patient p)
     {
         if (p != null)
         {

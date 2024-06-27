@@ -19,7 +19,7 @@
                         <p class="registerParagraph">La tua scelta per un futuro web</p>
                     </div>
                     <div>
-                        <button class="registerButton">
+                        <button class="registerButton" @onclick="toggleForm">
                             registrati
                         </button>
                     </div>
@@ -46,22 +46,95 @@
                 <div>
                     <input class="inputLogin password" type="password" placeholder="password"/>
                 </div>
-                <!--pulsante-->
+                <!--pulsante login-->
                 <div>
                     <button class="loginbtn">Login</button>
+                </div>
+                <!--pulsante registrati -->
+                <div class="registerMob pt-1">
+                    <p class="registerParagraph" style="color: #2D2D2D">oppure</p>
+                    <button class="registerButtonMob" @onclick="toggleForm">
+                        registrati
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!--form per mobile-->
-    <div class="mobileForm lign-content-center">
-        
-    </div>
+
+    @if (visible)
+    {
+        <div class="oscuramento">
+            <div class="registerForm text-center">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="registerTitle resize" style="color: #1a1e21">Registrazione</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">nome</p>
+                        <input class="inputRegister" type="text" placeholder="mario"/>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">cognome</p>
+                        <input class="inputRegister" type="text" placeholder="rossi"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">Sesso</p>
+                        <select type="select" class="inputRegister">
+                            <option value="m">Maschio</option>
+                            <option value="f">Femmina</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">telefono</p>
+                        <input class="inputRegister" type="tel" placeholder="3131228124"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">email</p>
+                        <input class="inputRegister" type="text" placeholder="mario.rossi@myEmail.com"/>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">password</p>
+                        <input class="inputRegister" type="password" placeholder="password"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">indirizzo</p>
+                        <input class="inputRegister" type="text" placeholder="via cavour"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="errorMessage mt-1">
+                            errore di prova
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="formbtn annulla" @onclick="toggleForm">
+                            annulla
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button class="formbtn conferma" @onclick="toggleForm">
+                            conferma
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
-
 @code{
-
+    private bool visible;
+    private void toggleForm() => visible = !visible;
 
 }

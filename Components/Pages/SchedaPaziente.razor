@@ -540,7 +540,7 @@
     private readonly string _directory = "uploads";
 
     [Parameter] public int patID { get; set; }
-    private Paziente paziente;
+    private Patient paziente;
 
     private bool _visibile = false;
     [Inject] private IJSRuntime JSRuntime { get; set; }
@@ -567,7 +567,7 @@
         {
             while (await reader.ReadAsync())
             {
-                paziente=Paziente.getFromDBReader(reader);
+                paziente=Patient.GetFromDbReader(reader);
             }
         }
         

@@ -44,6 +44,25 @@
     font-size: 1vw;
 }
 
+/*stile per il form registrazione*/
+.LoginParagraph{
+    text-transform: capitalize;
+    text-align: left;
+    color: #343b49;
+    font-weight: bold;
+    font-size: 1vw;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+/*stile applicato agli inpit del form registrazione*/
+.inputRegister{
+    border: solid 2px #e8e8e8;
+    width: 100%;
+    border-radius: 0.2vw;
+    padding: 0.5rem;
+}
+
 /*bottone per la registrazione*/
 .registerButton{
     width: 30%;
@@ -91,8 +110,7 @@
     margin-top: 0.5vh;
     width: 60%;
     height: auto;
-    padding: 0.4vw;
-    padding-left: 2vw;
+    padding: 0.4vw 0.4vw 0.4vw 2vw;
     border-radius: 1vw;
     border: none;
 }
@@ -140,6 +158,85 @@
     display: revert;
 }
 
+.registerMob{
+    display: none;
+}
+
+/*stile pulsante specifico mobile*/
+.registerButtonMob{
+    font-size: 3vw;
+    width: 40%;
+    padding: 0.5vw;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #5184d6;
+    border:none;
+    border-radius: 1vw;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.registerButtonMob:hover{
+    transform: rotate(3deg);
+    filter: brightness(85%);
+}
+
+.registerForm{
+    background-color: white;
+    border-radius: 0.4vw;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding: 1.5vw;
+}
+/*stile per oscurare la pagina quando il pop up è aperto*/
+.oscuramento{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.17);
+    width: 110%;
+    height: 100%;
+    top: 0;
+    left: -10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10%;
+}
+
+
+.formbtn{
+    width: 100%;
+    border-radius: 0.3vw;
+    border: none;
+    padding: 0.3rem;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: filter 0.3s;
+    margin-top: 1rem;
+}
+
+.formbtn:hover{
+    filter: brightness(0.8);
+}
+
+.annulla{
+    background-color: #ff4f39;
+}
+
+.conferma{
+    background-color: #1C96E0;
+}
+
+.resize {
+    font-size: 1.5vw;
+}
+
+.errorMessage{
+    color: #ff4f39;
+    font-weight: bold;
+    font-size: 1vw;
+}
+
 /*supporto tablet*/    
 @media (max-width: 1025px){
     .loginForm{
@@ -167,6 +264,7 @@
     .inputLogin{
         font-size: 1.7vw;
     }
+    
 }
 
 /*supporto tablet mini*/
@@ -184,6 +282,14 @@
         font-size: 2vw;
     }
     
+    .resize{
+        font-size: 2vw;
+    }
+    
+    .LoginParagraph{
+        font-size: 1.5vw;
+    }
+    
     .registerButton{
         font-size: 2vw;
         width: 40%;
@@ -193,14 +299,27 @@
         font-size: 2vw;
     }
     
+    .formbtn{
+        font-size: 1.5vw;
+        border-radius: 0.8vw;
+    }
+    
     .inputLogin{
         font-size: 2vw;
     }
+
+    .registerForm{
+        border-radius: 2.8vw;
+        width: 63%;
+    }
     
+    .errorMessage{
+        font-size: 1.5vw;
+    }
 }
 
 /*supporto mobile*/
-@media (max-width: 485px){
+@media (max-width: 592px){
 
     .fadeBlu{
         display: none;
@@ -219,17 +338,44 @@
     .registerParagraph{
         font-size: 3vw;
     }
+    
+    .LoginParagraph{
+        font-size: 2vw;
+    }
 
     .registerButton{
         font-size: 3vw;
         width: 40%;
     }
-
+    
+    .inputRegister{
+        font-size: 2vw;
+    }
+    
     .loginbtn{
         font-size: 3vw;
     }
 
     .inputLogin{
         font-size: 3vw;
+    }
+
+    .registerMob{
+        display: block;
+        font-size: 1.5vw;
+    }
+    
+    .formbtn{
+        font-size: 2vw;
+        border-radius: 1.6vw;
+    }
+    
+    .registerForm{
+        border-radius: 3.2vw;
+        width: 70%;
+    }
+    
+    .errorMessage{
+        font-size: 2vw;
     }
 }

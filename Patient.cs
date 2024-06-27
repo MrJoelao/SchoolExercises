@@ -1,9 +1,8 @@
-﻿using System.Data;
-using MySqlConnector;
+﻿using MySqlConnector;
 
 namespace Delta_Dent;
 
-public class Paziente
+public class Patient
 {
     public string FirstName { get; set; }
     public string Surname { get; set; }
@@ -27,7 +26,7 @@ public class Paziente
     public int PatientID { get; set; }
 
     // Costruttore con parametri
-    public Paziente(string firstName, string surname, bool gender, string telephone, string phone1, string phone2,
+    public Patient(string firstName, string surname, bool gender, string telephone, string phone1, string phone2,
         string cf, string cAsl, DateTime birthDate, string birthPlace, bool foreinger, string birthProvince, string billable,
         bool completed, bool documented, int doctorID, bool locked)
     {
@@ -51,7 +50,7 @@ public class Paziente
     }
 
     // Costruttore vuoto
-    public Paziente()
+    public Patient()
     {
         BirthDate= DateTime.Parse("01-01-2000");
     }
@@ -78,33 +77,33 @@ public class Paziente
         await db.CloseConnectionAsync();
     }
 
-    public static Paziente getFromDBReader(MySqlDataReader reader)
+    public static Patient GetFromDbReader(MySqlDataReader reader)
     {
-        Paziente paziente = new Paziente();
-        paziente.PatientID = reader.GetInt32("patientID");
-        paziente.DoctorID = reader.GetInt32("doctorID");
-        paziente.FirstName = reader.GetString("first_name");
-        paziente.Surname = reader.GetString("surname");
-        paziente.Gender = reader.GetBoolean("gender");
-        paziente.Telephone = reader.GetString("telephone");
-        paziente.Phone1 = reader.GetString("phone_1");
-        paziente.Phone2 = reader.GetString("phone_2");
-        paziente.CF = reader.GetString("cf");
-        paziente.CAsl = reader.GetString("c_asl");
-        paziente.BirthDate = reader.GetDateTime("birth_date");
-        paziente.BirthPlace = reader.GetString("birth_place");
-        paziente.BirthProvince = reader.GetString("birth_province");
-        paziente.Foreigner = reader.GetBoolean("foreigner");
-        paziente.Billable = reader.GetString("billable");
-        paziente.Completed = reader.GetBoolean("completed");
-        paziente.Documented = reader.GetBoolean("documented");
-        paziente.Locked = reader.GetBoolean("locked");
+        Patient patient = new Patient();
+        patient.PatientID = reader.GetInt32("patientID");
+        patient.DoctorID = reader.GetInt32("doctorID");
+        patient.FirstName = reader.GetString("first_name");
+        patient.Surname = reader.GetString("surname");
+        patient.Gender = reader.GetBoolean("gender");
+        patient.Telephone = reader.GetString("telephone");
+        patient.Phone1 = reader.GetString("phone_1");
+        patient.Phone2 = reader.GetString("phone_2");
+        patient.CF = reader.GetString("cf");
+        patient.CAsl = reader.GetString("c_asl");
+        patient.BirthDate = reader.GetDateTime("birth_date");
+        patient.BirthPlace = reader.GetString("birth_place");
+        patient.BirthProvince = reader.GetString("birth_province");
+        patient.Foreigner = reader.GetBoolean("foreigner");
+        patient.Billable = reader.GetString("billable");
+        patient.Completed = reader.GetBoolean("completed");
+        patient.Documented = reader.GetBoolean("documented");
+        patient.Locked = reader.GetBoolean("locked");
         
-        return paziente;
+        return patient;
     }
     
     //controlla se i campi sono vuoti
-    public bool checkInputs() {
+    public bool CheckInputs() {
         // Controlla se uno qualsiasi dei campi è vuoto o nullo
         return !string.IsNullOrEmpty(FirstName) &&
                !string.IsNullOrEmpty(Surname) &&
@@ -118,7 +117,7 @@ public class Paziente
                !string.IsNullOrEmpty(Billable);
     }
     
-    public void sanitizePatient()
+    public void SanitizePatient()
     {
         // Per prevenire sql injection
         FirstName = FirstName.Replace("'", "''");
