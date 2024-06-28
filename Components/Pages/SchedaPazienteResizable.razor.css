@@ -1,0 +1,282 @@
+/*stile default pulsanti top bar*/
+.utilButton{
+    background-color: #7FAFE1;
+    border:none;
+    border-radius: 0.4vw;
+    height:4vw;
+    width: 4vw;
+    transition: filter 0.3s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+}
+
+.utilButton:hover{
+    filter: brightness(0.80);
+}
+
+/*stile applicato alla barra dei pulsanti*/
+.buttonContainer{
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5vw;
+    max-width: 80vw;
+    overflow-x: auto;
+    margin-bottom: 2vh;
+}
+
+.body{
+    height: 85vh;
+}
+
+
+/*container zona paziente*/
+.patientInfo[b-g4vpz0jpe1] {
+    width: 100%;
+    height: 87vh;
+    font-size: 0.8vw;
+    overflow-x: hidden;
+    border-radius: 0.4vw;
+    background-color: #7FAFE1;
+}
+
+/*sezione */
+.section{
+    background-color: #7FAFE1;
+    border-radius: 0.5vw;
+    padding: 1rem;
+    color: white;
+    font-size: 0.8vw;
+    font-weight: bold;
+    text-transform: uppercase;
+    max-width: 90vw;
+    overflow-x: auto;
+}
+
+/*stile applicato ad ogni input del form*/
+.inputForm{
+    width:100%;
+    min-width: 10rem;
+    height: 100%;
+    border:none;
+    padding: 0.5rem;
+    border-radius: 3px;
+}
+
+/*stile applicato ai tasti rapidi*/
+.toolButtons{
+    padding-top: 0.6vw;
+    padding-bottom: 0.6vw;
+    background-color: #3D7BD9;
+    height: 4vh;
+    aspect-ratio: 1/1;
+    border:none;
+    border-radius: 5px;
+    transition: filte .3s;
+}
+
+.toolButtons:hover{
+    filter: brightness(0.8);
+}
+
+.testo{
+    margin-top: revert;
+    min-width: 8rem;
+}
+/*mascondo la checkbox originale*/
+.checkbox-container input {
+    position: fixed;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/*stile checkbox finta*/
+.checkmark{
+    height: 4vh;
+    aspect-ratio: 1/1;
+    background-color: #515151;
+    border-radius: 5px;
+    border: none;
+    display: inline-block;
+    margin-top: 13%;
+}
+
+/*stile checkbox finta selezionata */
+.checkbox-container input:checked + .checkmark {
+    background: #515151 url("./assets/paziente/check.svg") no-repeat center;
+    border: solid 1px rgb(61, 123, 217);
+    animation: check 0.5s;
+    border: solid 1px;
+}
+
+/*animazione checkbox falsa*/
+@keyframes check {
+    0% {
+        border: solid 1px rgba(61, 123, 217, 0.23);
+        background-position: -3px;
+    }
+
+    25% {
+        border: solid 1px rgba(61, 123, 217, 0.47);
+        background-position: center;
+    }
+
+    50% {
+        border: solid 1px rgba(61, 123, 217, 0.73);
+        background-position: +3px;
+    }
+
+    75% {
+        border: solid 1px rgba(61, 123, 217, 0.85);
+        background-position: +1px;
+    }
+
+    100% {
+        border: solid 1px rgb(61, 123, 217);
+        background-position: center;
+    }
+}
+
+/*stili icone pulsanti*/
+.add{
+    background: url("./assets/paziente/add.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+.edit{
+    background: url("./assets/paziente/edit.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+.bin{
+    background: url("./assets/paziente/bin.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+.lock{
+    background: url("./assets/paziente/lock.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+.notify{
+    background: url("./assets/paziente/notify.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+
+.pin{
+    background: url("./assets/paziente/pin.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+.save{
+    background: url("./assets/paziente/save.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+
+.stamp{
+    background: url("./assets/paziente/stamp.svg") no-repeat center;
+    background-color: #3D7BD9;
+}
+
+/*stile immagine paziente*/
+.patientImg{
+    width: 60%;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    border: solid 2px #3D7BD9;
+}
+
+/*sitle applicato ad ogni riquadro del paziente*/
+.content-paziente{
+    background-color: #3D7BD9;
+    border-radius: 0.4vw;
+    transition: transform 0.3s;
+    padding: 1vw;
+    font-weight: bold;
+    text-overflow: fade;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    transform: perspective(200px);
+    width: 85%;
+    margin-left: 7.5%;
+}
+
+.content-paziente:hover{
+    transform: perspective(200px) translateZ(10px);
+}
+
+.titoloSezione{
+    font-size: 0.9vw;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    margin-left: 9%;
+}
+
+/*media queary per rendere la pagina resizable*/
+@media (max-width: 1700px) {
+    .buttonContainer{
+        max-width: 75vw;
+    }
+    
+    .section{
+        max-width: 90vw;
+    }
+}
+
+@media (max-width: 1100px) {
+    .buttonContainer{
+        max-width: 70vw;
+    }
+
+    .section{
+        max-width: 84vw;
+    }
+}
+
+@media (max-width: 969px){
+
+    .section{
+        max-width: 70vw;
+    }
+
+}
+
+@media (max-width: 920px) {
+    .buttonContainer{
+        max-width: 68vw;
+    }
+
+    .section{
+        max-width: 60vw;
+    }
+}
+
+@media (max-width: 700px) {
+    .buttonContainer{
+        max-width: 55vw;
+    }
+
+    .section{
+        max-width: 55vw;
+    }
+}
+
+@media (max-width: 635px) {
+    .buttonContainer{
+        max-width: 80vw;
+    }
+
+    .section{
+        max-width: 80vw;
+    }
+    
+    .utilButton{
+        height: 8vw;
+        width: 8vw;
+    }
+}

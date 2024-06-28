@@ -1,4 +1,4 @@
-﻿.inline{
+.inline{
     display: inline-block;
 }
 
@@ -20,6 +20,7 @@
     background-color: #7FAFE1;
     border-radius: 10px;
     overflow-y: auto;
+
 }
 
 .AreaCentrale{position: absolute;
@@ -382,7 +383,7 @@
     height: auto;
     margin-bottom: 0.3rem;
     display: flex;
-    
+
 }
 
 .spazioTesto{
@@ -488,11 +489,11 @@
     font-weight: bold;
 }
 
-.utilButton{
+.toolButtons{
     padding-top: 0.6rem;
     padding-bottom: 0.6rem;
     background-color: #3D7BD9;
-    height: 2rem;
+    height: 100%;
     aspect-ratio: 1/1;
     border:none;
     border-radius: 5px;
