@@ -1,8 +1,8 @@
-@page "/loginR"
-@using System.ComponentModel
-@using MySqlConnector;
-<PageTitle>Anagrafica</PageTitle>
+@page "/"
+@page "/Login"
+
 @rendermode InteractiveServer
+@inject NavigationManager NavManager
 
 <!--sfondo-->
 <div class="bg align-items-center">
@@ -19,7 +19,7 @@
                         <p class="registerParagraph">La tua scelta per un futuro web</p>
                     </div>
                     <div>
-                        <button class="registerButton" @onclick="toggleForm">
+                        <button class="registerButton" @onclick="ToggleForm">
                             registrati
                         </button>
                     </div>
@@ -40,28 +40,32 @@
                 </div>
                 <!--form mail-->
                 <div>
-                    <input class="inputLogin mail" type="text" placeholder="mail"/>
+                    <input @bind="_loggingEmail" class="inputLogin mail" type="text" placeholder="Mail"/>
                 </div>
                 <!--form password-->
                 <div>
-                    <input class="inputLogin password" type="password" placeholder="password"/>
+                    <input @bind="_loggingPassword" class="inputLogin password" type="password" placeholder="Password"/>
                 </div>
                 <!--pulsante login-->
                 <div>
-                    <button class="loginbtn">Login</button>
+                    <button @onclick="TryLogin" class="loginbtn">Login</button>
                 </div>
                 <!--pulsante registrati -->
                 <div class="registerMob pt-1">
                     <p class="registerParagraph" style="color: #2D2D2D">oppure</p>
-                    <button class="registerButtonMob" @onclick="toggleForm">
+                    <button class="registerButtonMob" @onclick="ToggleForm">
                         registrati
                     </button>
                 </div>
+                @if (_errLogin)
+                {
+                <h5 class="errorMessage">Email e/o password errata</h5>
+                }
             </div>
         </div>
     </div>
 
-    @if (visible)
+    @if (_visible)
     {
         <div class="oscuramento">
             <div class="registerForm text-center">
@@ -73,57 +77,64 @@
                 <div class="row">
                     <div class="col">
                         <p class="LoginParagraph">nome</p>
-                        <input class="inputRegister" type="text" placeholder="mario"/>
+                        <input @bind="_registerName" class="inputRegister" type="text" placeholder="Name"/>
                     </div>
                     <div class="col">
                         <p class="LoginParagraph">cognome</p>
-                        <input class="inputRegister" type="text" placeholder="rossi"/>
+                        <input @bind="_registerSurname" class="inputRegister" type="text" placeholder="Surname"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <p class="LoginParagraph">Sesso</p>
-                        <select type="select" class="inputRegister">
+                        <select @bind="_genderString" type="select" class="inputRegister">
                             <option value="m">Maschio</option>
                             <option value="f">Femmina</option>
                         </select>
                     </div>
                     <div class="col">
                         <p class="LoginParagraph">telefono</p>
-                        <input class="inputRegister" type="tel" placeholder="3131228124"/>
+                        <input @bind="_telephoneDoctor" class="inputRegister" type="tel" placeholder="Telephone"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <p class="LoginParagraph">email</p>
-                        <input class="inputRegister" type="text" placeholder="mario.rossi@myEmail.com"/>
+                        <input @bind="_registerEmail" class="inputRegister" type="text" placeholder="Email"/>
                     </div>
                     <div class="col">
                         <p class="LoginParagraph">password</p>
-                        <input class="inputRegister" type="password" placeholder="password"/>
+                        <input @bind="_registerPassword" class="inputRegister" type="password" placeholder="Password"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <p class="LoginParagraph">indirizzo</p>
-                        <input class="inputRegister" type="text" placeholder="via cavour"/>
+                        <input @bind="_address" class="inputRegister" type="text" placeholder="Adress"/>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">Data di nascita</p>
+                        <input @bind="_birthdate" class="inputRegister" type="date" placeholder="Adress"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
+                    @if (_errReg)
+                    {
                         <p class="errorMessage mt-1">
-                            errore di prova
+                            Si è verificato un errore, verificare i dati immessi
                         </p>
+                    }
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button class="formbtn annulla" @onclick="toggleForm">
+                        <button class="formbtn annulla" @onclick="ToggleForm">
                             annulla
                         </button>
                     </div>
                     <div class="col">
-                        <button class="formbtn conferma" @onclick="toggleForm">
+                        <button class="formbtn conferma" @onclick="HandleRegistration">
                             conferma
                         </button>
                     </div>
@@ -134,7 +145,90 @@
 </div>
 
 @code{
-    private bool visible;
-    private void toggleForm() => visible = !visible;
+    private bool _visible;
+    private void ToggleForm() => _visible = !_visible;
 
+    private DbManager db = new DbManager();     // Oggetto utilizzato globalmente nella pagina per interrogare il DB
+    private bool _errReg = false;        // Bool per mostrare un errore nel form di registrazione
+    private bool _errLogin = false;      // Bool per mostrare un errore nel login
+
+    private string? _registerName;        // Stringa per salvare il nome del medico registrante
+    private string? _registerSurname;     // Stringa per salvare il cognome del medico registrante
+    private string? _registerEmail;       // Stringa per salvare la mail del medico registrante
+    private string? _registerPassword;        // Stringa per salvare la password del medico registrante
+    private string? _loggingEmail;       // Stringa per salvare l'email del medico loggante
+    private string? _loggingPassword;       // Stringa per salvare la password del medico loggante
+    private string? _genderString; // Sesso del dottore
+    private string? _telephoneDoctor; // Telefono del dottore
+    private string? _address; // Via del dottore
+    private DateTime _birthdate;
+    private Doctor? _doctor;
+
+    private async Task HandleRegistration()
+    {
+        _doctor = new Doctor(_registerName, _registerSurname, (_genderString != "m"), _birthdate, _registerEmail, _registerPassword, _telephoneDoctor, _address);
+
+        if (!_doctor.AreValuesInvalid() || await db.CheckDoctorExistAsync(_registerEmail))
+        {
+            // Mostro l'errore
+            _errReg = true;
+            Console.WriteLine("Data not valid, error message shown");
+            return;
+        }
+
+        // Lo tolgo
+        _errReg = false;
+
+        // Eseguo la query
+        if (!(await db.RegisterDoctorQuery(_registerName, _registerSurname, _registerEmail, _registerPassword)))
+        {
+            return;
+        }
+
+        // Faccio il reset dei campi del login
+        resetTextLogin();
+
+        // Chiude il form
+        ToggleForm();
+    }
+
+    // Funzione per resettare i campi del form di registrazione
+    private void resetTextLogin()
+    {
+        _registerName = string.Empty;
+        _registerSurname = string.Empty;
+        _registerEmail = string.Empty;
+        _registerPassword = string.Empty;
+    }
+
+    // Funzione che verifica se email e password corrispondono a quelle registrate nel DB, e permette o meno l'ingresso nel resto del sito
+    private async Task TryLogin()
+    {
+        _errLogin = false;
+
+        if (!(await db.CheckDoctorExistAsync(_loggingEmail)))
+        {
+            _errLogin = true;
+            Console.WriteLine("Doctor does not exist");
+            return;
+        }
+
+        if ( !(await db.CheckDoctorCredentialsAsync(_loggingEmail, _loggingPassword)))
+        {
+            _errLogin = true;
+            Console.WriteLine("Doctor password is incorrect");
+            return;
+        }
+
+        int? medID = await db.GetDoctorIdAsync(_loggingEmail);
+
+        if (medID == null)
+        {
+            _errLogin = true;
+            Console.WriteLine("There was an error while getting the ID of the doctor");
+            return;
+        }
+
+        NavManager.NavigateTo($"/Anagrafica/{medID}");
+    }
 }
