@@ -146,7 +146,6 @@
 
 @code{
     private bool _visible;
-    private void ToggleForm() => _visible = !_visible;
 
     private DbManager db = new DbManager();     // Oggetto utilizzato globalmente nella pagina per interrogare il DB
     private bool _errReg = false;        // Bool per mostrare un errore nel form di registrazione
@@ -231,4 +230,12 @@
 
         NavManager.NavigateTo($"/Anagrafica/{medID}");
     }
+
+    private void ToggleForm()
+    {
+        _visible = !_visible;
+        _errReg = false;
+
+    }
+
 }

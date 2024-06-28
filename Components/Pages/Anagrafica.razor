@@ -285,7 +285,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="_newPatientTemp.BirthDate"/>
+                            <input class="inputForm" type="text" @bind="_newPatientTemp.BirthPlace"/>
                         </div>
                     </div>
                 </div>
@@ -380,10 +380,10 @@
                         <div class="col">
                             <div class="SmallcardInput">
                                 <div class="row">
-                                    medico
+                                    Id medico
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm" type="text"/>
+                                    <input @bind="DoctorId"  type="text" class="inputForm" readonly />
                                 </div>
                             </div>
                         </div>
