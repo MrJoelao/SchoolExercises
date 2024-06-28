@@ -566,7 +566,7 @@
         {
             while (await reader.ReadAsync())
             {
-                paziente=Patient.GetFromDbReader(reader);
+                paziente=db.GetPatientFromReader(reader);
             }
         }
         await db.CloseConnectionAsync();
