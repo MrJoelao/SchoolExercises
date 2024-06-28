@@ -233,24 +233,24 @@ public class DbManager
         }
 
         Patient patient = new Patient();
-        patient.patientID = reader.GetInt32("patientID");
-        patient.doctorID = reader.GetInt32("doctorID");
-        patient.firstName = reader.GetString("first_name");
-        patient.surname = reader.GetString("surname");
-        patient.gender = reader.GetBoolean("gender");
-        patient.telephone = reader.GetString("telephone");
-        patient.phone1 = reader.GetString("phone_1");
-        patient.phone2 = reader.GetString("phone_2");
-        patient.cf = reader.GetString("cf");
-        patient.cAsl = reader.GetString("c_asl");
-        patient.birthDate = reader.GetDateTime("birth_date");
-        patient.birthPlace = reader.GetString("birth_place");
-        patient.birthProvince = reader.GetString("birth_province");
-        patient.foreigner = reader.GetBoolean("foreigner");
-        patient.billable = reader.GetString("billable");
-        patient.completed = reader.GetBoolean("completed");
-        patient.documented = reader.GetBoolean("documented");
-        patient.locked = reader.GetBoolean("locked");
+        patient.PatientID = reader.GetInt32("patientID");
+        patient.DoctorID = reader.GetInt32("doctorID");
+        patient.FirstName = reader.GetString("first_name");
+        patient.Surname = reader.GetString("surname");
+        patient.Gender = reader.GetBoolean("gender");
+        patient.Telephone = reader.GetString("telephone");
+        patient.Phone1 = reader.GetString("phone_1");
+        patient.Phone2 = reader.GetString("phone_2");
+        patient.CF = reader.GetString("cf");
+        patient.CASL = reader.GetString("c_asl");
+        patient.BirthDate = reader.GetDateTime("birth_date");
+        patient.BirthPlace = reader.GetString("birth_place");
+        patient.BirthProvince = reader.GetString("birth_province");
+        patient.Foreigner = reader.GetBoolean("foreigner");
+        patient.Billable = reader.GetString("billable");
+        patient.Completed = reader.GetBoolean("completed");
+        patient.Documented = reader.GetBoolean("documented");
+        patient.Locked = reader.GetBoolean("locked");
 
         return patient;
     }
@@ -391,23 +391,23 @@ public class DbManager
             await using var command = new MySqlCommand(savePatientQuery, Conn);
 
             // Aggiungo i parametri alla query
-            command.Parameters.AddWithValue("@DoctorID", patient.doctorID);
-            command.Parameters.AddWithValue("@FirstName", patient.firstName);
-            command.Parameters.AddWithValue("@Surname", patient.surname);
-            command.Parameters.AddWithValue("@Gender", patient.gender);
-            command.Parameters.AddWithValue("@Telephone", patient.telephone);
-            command.Parameters.AddWithValue("@Phone1", patient.phone1);
-            command.Parameters.AddWithValue("@Phone2", patient.phone2);
-            command.Parameters.AddWithValue("@CF", patient.cf);
-            command.Parameters.AddWithValue("@CAsl", patient.cAsl);
-            command.Parameters.AddWithValue("@BirthDate", patient.birthDate.ToString("yyyy-MM-dd"));
-            command.Parameters.AddWithValue("@BirthPlace", patient.birthPlace);
-            command.Parameters.AddWithValue("@Foreigner", patient.foreigner);
-            command.Parameters.AddWithValue("@BirthProvince", patient.birthProvince);
-            command.Parameters.AddWithValue("@Billable", patient.billable);
-            command.Parameters.AddWithValue("@Completed", patient.completed);
-            command.Parameters.AddWithValue("@Documented", patient.documented);
-            command.Parameters.AddWithValue("@Locked", patient.locked);
+            command.Parameters.AddWithValue("@DoctorID", patient.DoctorID);
+            command.Parameters.AddWithValue("@FirstName", patient.FirstName);
+            command.Parameters.AddWithValue("@Surname", patient.Surname);
+            command.Parameters.AddWithValue("@Gender", patient.Gender);
+            command.Parameters.AddWithValue("@Telephone", patient.Telephone);
+            command.Parameters.AddWithValue("@Phone1", patient.Phone1);
+            command.Parameters.AddWithValue("@Phone2", patient.Phone2);
+            command.Parameters.AddWithValue("@CF", patient.CF);
+            command.Parameters.AddWithValue("@CAsl", patient.CASL);
+            command.Parameters.AddWithValue("@BirthDate", patient.BirthDate.ToString("yyyy-MM-dd"));
+            command.Parameters.AddWithValue("@BirthPlace", patient.BirthPlace);
+            command.Parameters.AddWithValue("@Foreigner", patient.Foreigner);
+            command.Parameters.AddWithValue("@BirthProvince", patient.BirthProvince);
+            command.Parameters.AddWithValue("@Billable", patient.Billable);
+            command.Parameters.AddWithValue("@Completed", patient.Completed);
+            command.Parameters.AddWithValue("@Documented", patient.Documented);
+            command.Parameters.AddWithValue("@Locked", patient.Locked);
 
             // Eseguo il comando asincrono
             await command.ExecuteNonQueryAsync();
@@ -455,22 +455,23 @@ public class DbManager
 
             // Aggiungo i parametri alla query
             command.Parameters.AddWithValue("@patientId", id);
-            command.Parameters.AddWithValue("@FirstName", patient.firstName);
-            command.Parameters.AddWithValue("@Surname", patient.surname);
-            command.Parameters.AddWithValue("@Gender", patient.gender);
-            command.Parameters.AddWithValue("@Telephone", patient.telephone);
-            command.Parameters.AddWithValue("@Phone1", patient.phone1);
-            command.Parameters.AddWithValue("@Phone2", patient.phone2);
-            command.Parameters.AddWithValue("@CF", patient.cf);
-            command.Parameters.AddWithValue("@CAsl", patient.cAsl);
-            command.Parameters.AddWithValue("@BirthDate", patient.birthDate.ToString("yyyy-MM-dd"));
-            command.Parameters.AddWithValue("@BirthPlace", patient.birthPlace);
-            command.Parameters.AddWithValue("@Foreigner", patient.foreigner);
-            command.Parameters.AddWithValue("@BirthProvince", patient.birthProvince);
-            command.Parameters.AddWithValue("@Billable", patient.billable);
-            command.Parameters.AddWithValue("@Completed", patient.completed);
-            command.Parameters.AddWithValue("@Documented", patient.documented);
-            command.Parameters.AddWithValue("@Locked", patient.locked);
+            command.Parameters.AddWithValue("@FirstName", patient.FirstName);
+            command.Parameters.AddWithValue("@Surname", patient.Surname);
+            command.Parameters.AddWithValue("@Gender", patient.Gender);
+            command.Parameters.AddWithValue("@Telephone", patient.Telephone);
+            command.Parameters.AddWithValue("@Phone1", patient.Phone1);
+            command.Parameters.AddWithValue("@Phone2", patient.Phone2);
+            command.Parameters.AddWithValue("@CF", patient.CF);
+            command.Parameters.AddWithValue("@CAsl", patient.CASL);
+            command.Parameters.AddWithValue("@BirthDate", patient.BirthDate.ToString("yyyy-MM-dd"));
+            command.Parameters.AddWithValue("@BirthPlace", patient.BirthPlace);
+            command.Parameters.AddWithValue("@Foreigner", patient.Foreigner);
+            command.Parameters.AddWithValue("@BirthProvince", patient.BirthProvince);
+            command.Parameters.AddWithValue("@Billable", patient.Billable);
+            command.Parameters.AddWithValue("@Completed", patient.Completed);
+            command.Parameters.AddWithValue("@Documented", patient.Documented);
+            command.Parameters.AddWithValue("@Locked", patient.Locked);
+
 
             // Eseguo il comando asincrono
             await command.ExecuteNonQueryAsync();
