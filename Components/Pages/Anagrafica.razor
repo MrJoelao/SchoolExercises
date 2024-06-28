@@ -157,31 +157,31 @@
                 <div id="row-@i" class="row rigo mt-1" @onclick="() => UpdateLastClicked(paziente)">
                     <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
                     <div class="col-6 col-sm-2 cella">
-                        @paziente.surname
+                        @paziente.Surname
                     </div>
                     <div class="col-6 col-sm-1 cella">
-                        @paziente.firstName
+                        @paziente.FirstName
                     </div>
                     <div class="col-6 col-sm-1 cella">
-                        @DateOnly.FromDateTime(paziente.birthDate)
+                        @DateOnly.FromDateTime(paziente.BirthDate)
                     </div>
                     <div class="col-6 col-sm-1 cella">
-                        @paziente.telephone
+                        @paziente.Telephone
                     </div>
                     <div class=" d-none d-sm-block col-4 col-sm-1 cella">
-                        @paziente.phone1
+                        @paziente.Phone1
                     </div>
                     <div class=" d-none d-sm-block col-1 cella">
-                        @paziente.phone2
+                        @paziente.Phone2
                     </div>
                     <div class=" d-none d-sm-block col-1 cella">
-                        @paziente.billable
+                        @paziente.Billable
                     </div>
                     <div class=" d-none d-sm-block col-1 cella">
-                        @(paziente.completed ? "Si" : "No")
+                        @(paziente.Completed ? "Si" : "No")
                     </div>
                     <div class="d-none d-sm-block col-1 cella">
-                        @(paziente.documented ? "Si" : "No")
+                        @(paziente.Documented ? "Si" : "No")
                     </div>
                     <div class="d-none d-sm-block col-1 cella">
                         <input type="checkbox"/>
@@ -256,7 +256,7 @@
                             Cognome*
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="_newPatientTemp.surname" maxlength="25"/>
+                            <input class="inputForm" type="text" @bind="_newPatientTemp.Surname" maxlength="25"/>
                         </div>
                     </div>
                 </div>
@@ -267,7 +267,7 @@
                             Nome*
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="_newPatientTemp.firstName" maxlength="25"/>
+                            <input class="inputForm" type="text" @bind="_newPatientTemp.FirstName" maxlength="25"/>
                         </div>
                     </div>
                 </div>
@@ -281,11 +281,11 @@
                             <div class="ps-0 col-6 justify-content-start">luogo nascita</div>
                             <div class="col-6 align-content-center">
                                 <label for="isEstero" style="font-size: 0.6rem">estero</label>
-                                <input type="checkbox" id="isEstero" @bind="_newPatientTemp.foreigner" maxlength="25"/>
+                                <input type="checkbox" id="isEstero" @bind="_newPatientTemp.Foreigner" maxlength="25"/>
                             </div>
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="_newPatientTemp.birthPlace"/>
+                            <input class="inputForm" type="text" @bind="_newPatientTemp.BirthDate"/>
                         </div>
                     </div>
                 </div>
@@ -297,7 +297,7 @@
                                     provincia
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm" type="text" @bind="_newPatientTemp.birthProvince" maxlength="25"/>
+                                    <input class="inputForm" type="text" @bind="_newPatientTemp.BirthProvince" maxlength="25"/>
                                 </div>
                             </div>
                         </div>
@@ -328,7 +328,7 @@
                                     data nascita
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm data" type="date" @bind="_newPatientTemp.birthDate" EnableMinMax="true" min="1900-01-01" max="@_today"/>
+                                    <input class="inputForm data" type="date" @bind="_newPatientTemp.BirthDate" EnableMinMax="true" min="1900-01-01" max="@_today"/>
                                 </div>
                             </div>
                         </div>
@@ -338,7 +338,7 @@
                                     codice asl
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm" type="text" @bind="_newPatientTemp.cAsl" maxlength="5"/>
+                                    <input class="inputForm" type="text" @bind="_newPatientTemp.CASL" maxlength="5"/>
                                 </div>
                             </div>
                         </div>
@@ -354,7 +354,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="_newPatientTemp.cf" maxlength="16"/>
+                            <input class="inputForm" type="text" @bind="_newPatientTemp.CF" maxlength="16"/>
                         </div>
                     </div>
                 </div>
@@ -545,10 +545,28 @@
     public async Task HandleSaveEdit()
     {
         // Converte la stringa del genere in booleano
-        _newPatientTemp.gender = _genderString != "m";
+        _newPatientTemp.Gender = _genderString != "m";
 
         // Creo un nuovo paziente con i dati inseriti
-        Patient patient = new(_newPatientTemp.firstName, _newPatientTemp.surname, _newPatientTemp.gender, "Default", "Default", "Default", _newPatientTemp.cf, _newPatientTemp.cAsl, _newPatientTemp.birthDate, _newPatientTemp.birthPlace, _newPatientTemp.foreigner, _newPatientTemp.birthProvince, "Default", false, false, (int) DoctorId!, _newPatientTemp.locked);
+        Patient patient = new Patient(
+            _newPatientTemp.FirstName,
+            _newPatientTemp.Surname,
+            _newPatientTemp.Gender,
+            "Default", // Valore predefinito per Telephone
+            "Default", // Valore predefinito per Phone1
+            "Default", // Valore predefinito per Phone2
+            _newPatientTemp.CF,
+            _newPatientTemp.CASL,
+            _newPatientTemp.BirthDate,
+            _newPatientTemp.BirthPlace,
+            _newPatientTemp.Foreigner,
+            _newPatientTemp.BirthProvince,
+            "Default", // Valore predefinito per Billable
+            false, // Valore predefinito per Completed
+            false, // Valore predefinito per Documented
+            (int)DoctorId!, // Casting e not-null assertion
+            _newPatientTemp.Locked
+        );
 
         // Controllo se gli input sono validi
         if (!patient.CheckInputs())
@@ -602,7 +620,7 @@
     /// <param name="patient">The patient data to update.</param>
     public async Task EditPatient(Patient patient)
     {
-        await _db.UpdatePatientFromId(patient, _lastPatientClicked.patientID);
+        await _db.UpdatePatientFromId(patient, _lastPatientClicked.PatientID);
     }
 
     /// <summary>
@@ -637,8 +655,8 @@
 
         _filteredPatientsList = _patientsList.Where(p =>
             searchTerms.All(term =>
-                p.firstName.Contains(term, StringComparison.OrdinalIgnoreCase) ||
-                p.surname.Contains(term, StringComparison.OrdinalIgnoreCase)
+                p.FirstName.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                p.Surname.Contains(term, StringComparison.OrdinalIgnoreCase)
             )
         ).ToList();
     }
@@ -666,7 +684,7 @@
             return;
         }
 
-        if (!await _db.DeletePatientFromId(_lastPatientClicked.patientID))
+        if (!await _db.DeletePatientFromId(_lastPatientClicked.PatientID))
         {
             return;
         }
@@ -685,7 +703,7 @@
     {
         if (patient != null)
         {
-            NavManager.NavigateTo($"/PatientProfile/{patient.patientID}");
+            NavManager.NavigateTo($"/PatientProfile/{patient.PatientID}");
         }
     }
 
@@ -763,26 +781,26 @@
     /// </summary>
     public void ClearText()
     {
-        _newPatientTemp = new Patient
+        Patient newPatientTemp = new Patient
         {
-            firstName = string.Empty,
-            surname = string.Empty,
-            gender = false,
-            telephone = string.Empty,
-            phone1 = string.Empty,
-            phone2 = string.Empty,
-            cf = string.Empty,
-            cAsl = string.Empty,
-            birthDate = DateTime.MinValue,
-            birthPlace = string.Empty,
-            birthProvince = string.Empty,
-            billable = string.Empty,
-            completed = false,
-            documented = false,
-            foreigner = false,
-            locked = false,
-            doctorID = 0,
-            patientID = 0
+            FirstName = string.Empty,
+            Surname = string.Empty,
+            Gender = false,
+            Telephone = string.Empty,
+            Phone1 = string.Empty,
+            Phone2 = string.Empty,
+            CF = string.Empty,
+            CASL = string.Empty,
+            BirthDate = DateTime.MinValue,
+            BirthPlace = string.Empty,
+            BirthProvince = string.Empty,
+            Billable = string.Empty,
+            Completed = false,
+            Documented = false,
+            Foreigner = false,
+            Locked = false,
+            DoctorID = 0,
+            PatientID = 0
         };
     }
 
