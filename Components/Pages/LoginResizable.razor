@@ -146,11 +146,10 @@
 
 @code{
     private bool _visible;
-
-    private DbManager db = new DbManager();     // Oggetto utilizzato globalmente nella pagina per interrogare il DB
     private bool _errReg = false;        // Bool per mostrare un errore nel form di registrazione
     private bool _errLogin = false;      // Bool per mostrare un errore nel login
 
+    private DbManager _db = new DbManager();     // Oggetto utilizzato globalmente nella pagina per interrogare il DB
     private string? _registerName;        // Stringa per salvare il nome del medico registrante
     private string? _registerSurname;     // Stringa per salvare il cognome del medico registrante
     private string? _registerEmail;       // Stringa per salvare la mail del medico registrante
@@ -160,14 +159,25 @@
     private string? _genderString; // Sesso del dottore
     private string? _telephoneDoctor; // Telefono del dottore
     private string? _address; // Via del dottore
-    private DateTime _birthdate;
-    private Doctor? _doctor;
+    private DateTime _birthdate; // Data del dottore
+    private Doctor? _doctor; // Istanza del dottore
 
+    /// <summary>
+    /// Handles the registration process for a new doctor.
+    /// </summary>
+    /// <remarks>
+    /// This method performs several key actions in the registration process:
+    /// - It creates a new Doctor object with the provided registration details.
+    /// - It checks if the doctor's details are valid and if the doctor already exists in the database.
+    /// - If the details are valid and the doctor does not exist, it proceeds to register the doctor in the database.
+    /// - After successful registration, it resets the login form fields and closes the registration form.
+    /// </remarks>
+    /// <returns>A Task representing the asynchronous operation of the registration process.</returns>
     private async Task HandleRegistration()
     {
-        _doctor = new Doctor(_registerName, _registerSurname, (_genderString != "m"), _birthdate, _registerEmail, _registerPassword, _telephoneDoctor, _address);
+        _doctor = new Doctor(_registerName!, _registerSurname!, (_genderString != "m"), _birthdate, _registerEmail!, _registerPassword!, _telephoneDoctor!, _address!);
 
-        if (!_doctor.AreValuesInvalid() || await db.CheckDoctorExistAsync(_registerEmail))
+        if (!_doctor.AreValuesInvalid() || await _db.CheckDoctorExistAsync(_registerEmail!))
         {
             // Mostro l'errore
             _errReg = true;
@@ -179,20 +189,23 @@
         _errReg = false;
 
         // Eseguo la query
-        if (!(await db.RegisterDoctorQuery(_doctor)))
+        if (!(await _db.RegisterDoctorQuery(_doctor)))
         {
             return;
         }
 
         // Faccio il reset dei campi del login
-        resetTextLogin();
+        ResetTextLogin();
 
         // Chiude il form
         ToggleForm();
     }
 
-    // Funzione per resettare i campi del form di registrazione
-    private void resetTextLogin()
+
+    /// <summary>
+    /// Resets the text fields related to the login form to their default values.
+    /// </summary>
+    private void ResetTextLogin()
     {
         _registerName = string.Empty;
         _registerSurname = string.Empty;
@@ -200,26 +213,37 @@
         _registerPassword = string.Empty;
     }
 
-    // Funzione che verifica se email e password corrispondono a quelle registrate nel DB, e permette o meno l'ingresso nel resto del sito
+    /// <summary>
+    /// Attempts to log in a user by verifying their email and password against the database.
+    /// </summary>
+    /// <remarks>
+    /// This method performs several checks:
+    /// - Verifies if the doctor exists in the database using their email.
+    /// - Checks if the provided password matches the one stored in the database for the given email.
+    /// - Retrieves the doctor's ID from the database if the login credentials are correct.
+    /// - Navigates to the doctor's profile page upon successful login.
+    /// If any of the checks fail, it sets an error flag and logs the specific error.
+    /// </remarks>
+    /// <returns>A Task representing the asynchronous operation of the login process.</returns>
     private async Task TryLogin()
     {
         _errLogin = false;
 
-        if (!(await db.CheckDoctorExistAsync(_loggingEmail)))
+        if (!(await _db.CheckDoctorExistAsync(_loggingEmail!)))
         {
             _errLogin = true;
             Console.WriteLine("Doctor does not exist");
             return;
         }
 
-        if ( !(await db.CheckDoctorCredentialsAsync(_loggingEmail, _loggingPassword)))
+        if (!(await _db.CheckDoctorCredentialsAsync(_loggingEmail!, _loggingPassword!)))
         {
             _errLogin = true;
             Console.WriteLine("Doctor password is incorrect");
             return;
         }
 
-        int? medID = await db.GetDoctorIdAsync(_loggingEmail);
+        int? medID = await _db.GetDoctorIdAsync(_loggingEmail!);
 
         if (medID == null)
         {
@@ -231,11 +255,16 @@
         NavManager.NavigateTo($"/Anagrafica/{medID}");
     }
 
+    /// <summary>
+    /// Toggles the visibility of the registration form.
+    /// </summary>
+    /// <remarks>
+    /// This method inverses the visibility state of the registration form and resets any registration error flags.
+    /// </remarks>
     private void ToggleForm()
     {
         _visible = !_visible;
         _errReg = false;
-
     }
 
 }
