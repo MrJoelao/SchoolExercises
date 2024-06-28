@@ -549,18 +549,22 @@ public class DbManager
     }
 
     /// <summary>
-    /// Registers a new doctor in the database.
+    /// Asynchronously registers a new doctor in the database.
     /// </summary>
-    /// <param name="name">The first name of the doctor.</param>
-    /// <param name="surname">The surname of the doctor.</param>
-    /// <param name="email">The email address of the doctor.</param>
-    /// <param name="password">The password for the doctor's account.</param>
-    /// <returns>A boolean value indicating whether the registration was successful.</returns>
-    public async Task<bool> RegisterDoctorQuery(string name, string surname, string email, string password)
+    /// <param name="doctor">The <see cref="Doctor"/> object containing the doctor's information to be registered.</param>
+    /// <returns>
+    /// A <see cref="Task{Boolean}"/> that represents the asynchronous operation, returning <c>true</c> if the doctor was successfully registered, otherwise <c>false</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method constructs a parametrized SQL query to insert the doctor's information into the database, preventing SQL injection.
+    /// It opens a connection to the database, executes the insert command, and then closes the connection.
+    /// If an exception occurs during the operation, the method catches it, logs the error, and returns <c>false</c>.
+    /// </remarks>
+    public async Task<bool> RegisterDoctorQuery(Doctor doctor)
     {
         // Query parametrizzata per evitare SQL injection
-        var registerDoctorQuery = $"INSERT INTO DOCTOR (first_name, surname, email, password) " +
-                                  $"VALUES (@name, @surname, @email, SHA2(@password, {LengthHash}))";
+        var registerDoctorQuery = $"INSERT INTO DOCTOR (first_name, surname, gender, birth_date, email, password, telephone, address) " +
+                                  $"VALUES (@name, @surname, @gender, @birthDate, @email, SHA2(@password, {LengthHash}), @telephone, @address)";
 
         try
         {
@@ -568,10 +572,14 @@ public class DbManager
             await OpenConnectionAsync();
             await using var command = new MySqlCommand(registerDoctorQuery, Conn);
             // Aggiungo i parametri alla query
-            command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@surname", surname);
-            command.Parameters.AddWithValue("@email", email);
-            command.Parameters.AddWithValue("@password", password);
+            command.Parameters.AddWithValue("@name", doctor.firstName);
+            command.Parameters.AddWithValue("@surname", doctor.surname);
+            command.Parameters.AddWithValue("@gender", doctor.gender);
+            command.Parameters.AddWithValue("@birthDate", doctor.birthDate.ToString("yyyy-MM-dd"));
+            command.Parameters.AddWithValue("@email", doctor.email);
+            command.Parameters.AddWithValue("@password", doctor.password);
+            command.Parameters.AddWithValue("@telephone", doctor.telephone);
+            command.Parameters.AddWithValue("@address", doctor.address);
 
             // Eseguo la query
             await command.ExecuteNonQueryAsync();

@@ -180,7 +180,7 @@
         _errReg = false;
 
         // Eseguo la query
-        if (!(await db.RegisterDoctorQuery(_registerName, _registerSurname, _registerEmail, _registerPassword)))
+        if (!(await db.RegisterDoctorQuery(_doctor)))
         {
             return;
         }
