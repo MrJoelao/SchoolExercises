@@ -589,6 +589,9 @@
         // Cancello l'ultimo paziente cliccato
         _lastPatientClicked = null;
 
+        // Cancello l'errore
+        _showFormError = false;
+
         // Nascondere il modulo del paziente
         TogglePatientForm();
     }
@@ -621,6 +624,7 @@
     public async Task EditPatient(Patient patient)
     {
         await _db.UpdatePatientFromId(patient, _lastPatientClicked.PatientID);
+        _editingPatient = false;
     }
 
     /// <summary>
@@ -781,7 +785,7 @@
     /// </summary>
     public void ClearText()
     {
-        Patient newPatientTemp = new Patient
+        _newPatientTemp = new Patient
         {
             FirstName = string.Empty,
             Surname = string.Empty,
