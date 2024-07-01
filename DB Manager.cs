@@ -572,14 +572,14 @@ public class DbManager
             await OpenConnectionAsync();
             await using var command = new MySqlCommand(registerDoctorQuery, Conn);
             // Aggiungo i parametri alla query
-            command.Parameters.AddWithValue("@name", doctor.firstName);
-            command.Parameters.AddWithValue("@surname", doctor.surname);
-            command.Parameters.AddWithValue("@gender", doctor.gender);
-            command.Parameters.AddWithValue("@birthDate", doctor.birthDate.ToString("yyyy-MM-dd"));
-            command.Parameters.AddWithValue("@email", doctor.email);
-            command.Parameters.AddWithValue("@password", doctor.password);
-            command.Parameters.AddWithValue("@telephone", doctor.telephone);
-            command.Parameters.AddWithValue("@address", doctor.address);
+            command.Parameters.AddWithValue("@name", doctor.FirstName);
+            command.Parameters.AddWithValue("@surname", doctor.Surname);
+            command.Parameters.AddWithValue("@gender", doctor.Gender);
+            command.Parameters.AddWithValue("@birthDate", doctor.BirthDate.ToString("yyyy-MM-dd"));
+            command.Parameters.AddWithValue("@email", doctor.Email);
+            command.Parameters.AddWithValue("@password", doctor.Password);
+            command.Parameters.AddWithValue("@telephone", doctor.Telephone);
+            command.Parameters.AddWithValue("@address", doctor.Address);
 
             // Eseguo la query
             await command.ExecuteNonQueryAsync();
@@ -798,14 +798,14 @@ public class DbManager
         }
 
         Doctor doctor = new Doctor();
-        doctor.doctorID = reader.GetInt32("doctorID");
-        doctor.firstName = reader.GetString("first_name");
-        doctor.surname = reader.GetString("surname");
-        doctor.gender = reader.GetBoolean("gender");
-        doctor.birthDate = reader.GetDateTime("birth_date");
-        doctor.email = reader.GetString("email");
-        doctor.telephone = reader.GetString("telephone");
-        doctor.address = reader.GetString("address");
+        doctor.DoctorId = reader.GetInt32("doctorID");
+        doctor.FirstName = reader.GetString("first_name");
+        doctor.Surname = reader.GetString("surname");
+        doctor.Gender = reader.GetBoolean("gender");
+        doctor.BirthDate = reader.GetDateTime("birth_date");
+        doctor.Email = reader.GetString("email");
+        doctor.Telephone = reader.GetString("telephone");
+        doctor.Address = reader.GetString("address");
 
         return doctor;
     }
@@ -901,17 +901,17 @@ public class DbManager
 
             // Aggiungo i parametri alla query
             command.Parameters.AddWithValue("@DoctorID", id);
-            command.Parameters.AddWithValue("@FirstName", doctor.firstName);
-            command.Parameters.AddWithValue("@Surname", doctor.surname);
-            command.Parameters.AddWithValue("@Gender", doctor.gender);
-            command.Parameters.AddWithValue("@Telephone", doctor.telephone);
-            command.Parameters.AddWithValue("@BirthDate", doctor.birthDate.ToString("yyyy-MM-dd"));
-            command.Parameters.AddWithValue("@Email", doctor.email);
-            command.Parameters.AddWithValue("@Address", doctor.address);
+            command.Parameters.AddWithValue("@FirstName", doctor.FirstName);
+            command.Parameters.AddWithValue("@Surname", doctor.Surname);
+            command.Parameters.AddWithValue("@Gender", doctor.Gender);
+            command.Parameters.AddWithValue("@Telephone", doctor.Telephone);
+            command.Parameters.AddWithValue("@BirthDate", doctor.BirthDate.ToString("yyyy-MM-dd"));
+            command.Parameters.AddWithValue("@Email", doctor.Email);
+            command.Parameters.AddWithValue("@Address", doctor.Address);
 
             if (passwordChanged)
             {
-                command.Parameters.AddWithValue("@Password", doctor.password);
+                command.Parameters.AddWithValue("@Password", doctor.Password);
             }
 
             // Eseguo il comando asincrono

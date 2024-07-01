@@ -2,7 +2,6 @@
 @inject IJSRuntime Js
 <PageTitle>Doctors</PageTitle>
 @rendermode InteractiveServer
-@inject NavigationManager NavManager
 
 <div class="container-fluid mt-5 mt-sm-0">
     <!--top bar-->
@@ -28,7 +27,7 @@
                 </button>
             </div>
 
-            <div class="col-4 col-sm-1 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+            <div class="col-4 col-sm-2 col-md-3 p-0 px-md-1 pl-sm-0 pr-sm-1">
                 <input class="inputRicerca" id="txtRicerca" placeholder="Ricerca" @bind-value="_searchValue" @oninput="SearchDoctor"/>
             </div>
 
@@ -80,16 +79,19 @@
             <div class="col-6 col-sm-2 cella">
                 nome
             </div>
-            <div class="col-6 col-sm-2 cella">
+            <div class="col-6 col-sm-1 cella">
                 nascita
+            </div>
+            <div class="col-6 col-sm-1 cella">
+                genere
             </div>
             <div class="col-6 col-sm-2 cella">
                 email
             </div>
-            <div class=" col-6 col-sm-2 cella">
+            <div class=" col-6 col-sm-1 cella">
                 telefono
             </div>
-            <div class=" d-none d-sm-block col-1 cella">
+            <div class=" d-none d-sm-block col-2 cella">
                 Domicilio
             </div>
         </div>
@@ -102,25 +104,28 @@
                 <div id="row-@i" class="row rigo mt-1" @onclick="() => UpdateLastClicked(doctor)">
                     <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
                     <div class="col-6 col-sm-1 cella">
-                        @doctor.doctorID
+                        @doctor.DoctorId
                     </div>
                     <div class="col-6 col-sm-2 cella">
-                        @doctor.surname
+                        @doctor.Surname
                     </div>
                     <div class="col-6 col-sm-2 cella">
-                        @doctor.firstName
+                        @doctor.FirstName
                     </div>
-                    <div class="col-6 col-sm-2 cella">
-                        @DateOnly.FromDateTime(doctor.birthDate)
+                    <div class="col-6 col-sm-1 cella">
+                        @DateOnly.FromDateTime(doctor.BirthDate)
+                    </div>
+                    <div class="col-6 col-sm-1 cella">
+                        @(_genderString = doctor.Gender? "Femmina" : "Maschio")
                     </div>
                     <div class=" col-6 col-sm-2 cella">
-                        @doctor.email
+                        @doctor.Email
                     </div>
-                    <div class=" col-6 col-sm-2 cella">
-                        @doctor.telephone
+                    <div class=" col-6 col-sm-1 cella">
+                        @doctor.Telephone
                     </div>
-                    <div class=" d-none d-sm-block col-1 cella">
-                        @doctor.address
+                    <div class=" d-none d-sm-block col-2 cella">
+                        @doctor.Address
                     </div>
                 </div>
                 i++;
@@ -169,7 +174,7 @@
                             Cognome*
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="_newDoctorTemp.surname" maxlength="25"/>
+                            <input class="inputForm" type="text" @bind="_newDoctorTemp.Surname" maxlength="25"/>
                         </div>
                     </div>
                 </div>
@@ -180,7 +185,7 @@
                             Nome*
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="_newDoctorTemp.firstName" maxlength="25"/>
+                            <input class="inputForm" type="text" @bind="_newDoctorTemp.FirstName" maxlength="25"/>
                         </div>
                     </div>
                 </div>
@@ -194,7 +199,7 @@
                             Luogo di nascita
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="_newDoctorTemp.address"/>
+                            <input class="inputForm" type="text" @bind="_newDoctorTemp.Address"/>
                         </div>
                     </div>
                 </div>
@@ -204,7 +209,7 @@
                             Telefono
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="text" @bind="_newDoctorTemp.telephone" maxlength="25"/>
+                            <input class="inputForm" type="text" @bind="_newDoctorTemp.Telephone" maxlength="25"/>
                         </div>
                     </div>
                 </div>
@@ -216,7 +221,7 @@
                                     email
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm" type="text" @bind="_newDoctorTemp.email" maxlength="25"/>
+                                    <input class="inputForm" type="text" @bind="_newDoctorTemp.Email" maxlength="25"/>
                                 </div>
                             </div>
                         </div>
@@ -231,7 +236,7 @@
                             }
                         </div>
                         <div class="row">
-                            <input class="inputForm" type="password" @bind="_newDoctorTemp.password"/>
+                            <input class="inputForm" type="password" @bind="_newDoctorTemp.Password"/>
                         </div>
                         <div class="col">
                             <div class="SmallcardInput">
@@ -260,7 +265,7 @@
                                     data nascita
                                 </div>
                                 <div class="row">
-                                    <input class="inputForm data" type="date" @bind="_newDoctorTemp.birthDate" EnableMinMax="true" min="1900-01-01" max="@_today"/>
+                                    <input class="inputForm data" type="date" @bind="_newDoctorTemp.BirthDate" EnableMinMax="true" min="1900-01-01" max="@_today"/>
                                 </div>
                             </div>
                         </div>
@@ -352,18 +357,18 @@
     public async Task HandleSaveEdit()
     {
         // Converte la stringa del genere in booleano
-        _newDoctorTemp.gender = _genderString != "m";
+        _newDoctorTemp.Gender = _genderString != "m";
 
         // Creo un nuovo paziente con i dati inseriti
         Doctor doctor = new Doctor(
-            _newDoctorTemp.firstName,
-            _newDoctorTemp.surname,
-            _newDoctorTemp.gender,
-            _newDoctorTemp.birthDate,
-            _newDoctorTemp.email,
-            _newDoctorTemp.password,
-            _newDoctorTemp.telephone,
-            _newDoctorTemp.address
+            _newDoctorTemp.FirstName,
+            _newDoctorTemp.Surname,
+            _newDoctorTemp.Gender,
+            _newDoctorTemp.BirthDate,
+            _newDoctorTemp.Email,
+            _newDoctorTemp.Password,
+            _newDoctorTemp.Telephone,
+            _newDoctorTemp.Address
         );
 
         // Controllo se gli input sono validi
@@ -377,7 +382,7 @@
         if (_editingDoctor)
         {
             Console.WriteLine("Modifica del dottore...");
-            await _db.UpdateDoctorFromId(doctor, _lastDoctorClicked.doctorID, _editDoctorPassword);
+            await _db.UpdateDoctorFromId(doctor, _lastDoctorClicked.DoctorId, _editDoctorPassword);
             _editingDoctor = false;
         }
         else
@@ -451,8 +456,8 @@
 
         _filteredDoctorList = _doctorsList.Where(p =>
             searchTerms.All(term =>
-                p.firstName.Contains(term, StringComparison.OrdinalIgnoreCase) ||
-                p.surname.Contains(term, StringComparison.OrdinalIgnoreCase)
+                p.FirstName.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                p.Surname.Contains(term, StringComparison.OrdinalIgnoreCase)
             )
         ).ToList();
     }
@@ -480,7 +485,7 @@
             return;
         }
 
-        if (!await _db.DeleteDoctorFromId(_lastDoctorClicked.doctorID))
+        if (!await _db.DeleteDoctorFromId(_lastDoctorClicked.DoctorId))
         {
             return;
         }
@@ -557,14 +562,14 @@
     {
         _newDoctorTemp = new Doctor
         {
-            firstName = string.Empty,
-            surname = string.Empty,
-            gender = false,
-            telephone = string.Empty,
-            birthDate = DateTime.MinValue,
-            address = string.Empty,
-            email = string.Empty,
-            password = string.Empty
+            FirstName = string.Empty,
+            Surname = string.Empty,
+            Gender = false,
+            Telephone = string.Empty,
+            BirthDate = DateTime.MinValue,
+            Address = string.Empty,
+            Email = string.Empty,
+            Password = string.Empty
         };
     }
 
