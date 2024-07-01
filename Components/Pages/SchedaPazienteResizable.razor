@@ -1,8 +1,8 @@
 @page "/SchedaPazienteR"
+@using Microsoft.AspNetCore.Mvc
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 @inject IWebHostEnvironment env
-
 <!--barra dei pulsanti-->
 <div class="row buttonContainer">
     <button class="utilButton">...</button>
@@ -37,246 +37,721 @@
 <!--corpo centrale della pagina-->
 <div class="row body">
 
-    <!--informazioni paziente-->
-    <div class="d-none d-md-block col-md-5 col-lg-3 d-flex flex-column justify-content-center align-items-center">
-        <div class="patientInfo justify-content-center pt-3">
+<!--informazioni paziente-->
+<div class="col-12 d-block col-md-5 col-lg-3 d-flex flex-column justify-content-center align-items-center">
+    <div class="patientInfo justify-content-center pt-3">
 
-            <!--immagine paziente-->
-            <div class="row d-flex justify-content-center">
-                <div class="patientImg" style="background: url(@_ImgPatient) no-repeat center; background-size: cover">
+        <!--immagine paziente-->
+        <div class="row d-flex justify-content-center">
+            <div class="patientImg" style="background: url(@_ImgPatient) no-repeat center; background-size: cover">
 
+            </div>
+        </div>
+
+        <!--nome e cognome paziente-->
+        <div class="content-paziente mt-4">
+            <p class="m-0 text-uppercase">@nomePaziente @cognomePaziente</p>
+        </div>
+
+        <!--info cartella-->
+        <p class="titoloSezione mt-4">info cartella</p>
+        <div class="content-paziente mt-1 row">
+
+            <!--sezione descrizione valore-->
+            <div class="col-6">
+                <div class="row">
+                    N
+                </div>
+                <div class="row">
+                    età paziente
+                </div>
+            </div>
+            <div class="col-6 text-end">
+                <div class="row justify-content-end">
+                    @numCartella
+                </div>
+                <div class="row justify-content-end">
+                    @etaPaziente
+                </div>
+            </div>
+        </div>
+
+        <!--info oas-->
+        <p class="titoloSezione mt-4">info oas</p>
+        <div class="content-paziente mt-1 row">
+
+            <!--sezione descrizione valore-->
+            <div class="col-6">
+                <div class="row">
+                    rischio
+                </div>
+                <div class="row">
+                    esame
+                </div>
+                <div class="row">
+                    visita
+                </div>
+                <div class="row">
+                    mad
+                </div>
+                <div class="row">
+                    trattamento
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row justify-content-end">
+                    @rischioPaziente
+                </div>
+                <div class="row justify-content-end">
+                    @esamePaziente
+                </div>
+                <div class="row justify-content-end">
+                    @visitaPaziente
+                </div>
+                <div class="row justify-content-end">
+                    @mad
+                </div>
+                <div class="row justify-content-end">
+                    @trattamento
+                </div>
+            </div>
+        </div>
+
+        <!--info cliniche-->
+        <p class="titoloSezione mt-4">info cliniche</p>
+        <div class="content-paziente mt-1 row">
+
+            <!--sezione descrizione valore-->
+            <div class="col-6">
+                <div class="row">
+                    amnesi
+                </div>
+                <div class="row">
+                    prima visita
+                </div>
+                <div class="row">
+                    parodonto
+                </div>
+                <div class="row">
+                    specialista
+                </div>
+                <div class="row">
+                    prescrizioni
+                </div>
+                <div class="row">
+                    p.trattamento
+                </div>
+                <div class="row">
+                    incontri
+                </div>
+                <div class="row">
+                    referti
+                </div>
+                <div class="row">
+                    presentazioni
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row justify-content-end">
+                    @amnesi
+                </div>
+                <div class="row justify-content-end">
+                    @primaVisita
+                </div>
+                <div class="row justify-content-end">
+                    @parodonto
+                </div>
+                <div class="row justify-content-end">
+                    @specialista
+                </div>
+                <div class="row justify-content-end">
+                    @prescrizioni
+                </div>
+                <div class="row justify-content-end">
+                    @pTrattamento
+                </div>
+                <div class="row justify-content-end">
+                    @incontri
+                </div>
+                <div class="row justify-content-end">
+                    @referti
+                </div>
+                <div class="row justify-content-end">
+                    @presentazioni
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--corpo centrale-->
+<div class="d-none d-md-block col-12 col-md-7 col-xl-8">
+<!--prima sezione-->
+<div class="row section flex-nowrap overflow-auto">
+    <div class="col">
+        <p class="testo">piano di cura</p>
+    </div>
+    <div class="col">
+        <select class="inputForm">
+            <option value="p">prova</option>
+        </select>
+    </div>
+
+    <!-- sezione tasti rapidi -->
+    <div class="col d-none d-sm-flex flex-nowrap align-items-center">
+        <button class="toolButtons me-1 add"></button>
+        <button class="toolButtons me-1 edit"></button>
+        <button class="toolButtons me-1 lock"></button>
+        <button class="toolButtons me-1 notify"></button>
+        <button class="toolButtons me-1 bin"></button>
+        <button class="toolButtons me-1 save"></button>
+        <button class="toolButtons me-1 stamp"></button>
+        <button class="toolButtons me-1 pin"></button>
+    </div>
+
+    <!-- checkboxes -->
+    <div class="col d-flex flex-nowrap align-items-center min-width-15rem">
+        <div class="me-1">
+            <label class="checkbox-container">
+                <input type="checkbox" class="checkBox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="testo">
+            Non iniziato
+        </div>
+    </div>
+
+    <div class="col d-flex flex-nowrap align-items-center">
+        <div class="me-1">
+            <label class="checkbox-container">
+                <input type="checkbox" class="checkBox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="testo">
+            Terminato
+        </div>
+    </div>
+
+    <div class="col d-flex flex-nowrap align-items-center">
+        <div class="me-1">
+            <label class="checkbox-container">
+                <input type="checkbox" class="checkBox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="testo">
+            Interrotto
+        </div>
+    </div>
+
+    <div class="col d-flex flex-nowrap align-items-center">
+        <div class="me-1">
+            <label class="checkbox-container">
+                <input type="checkbox" class="checkBox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="testo">
+            Documentato
+        </div>
+    </div>
+
+</div>
+<!--seconda sezione-->
+<div class="row section flex-nowrap overflow-auto mt-3">
+
+    <div class="sez">
+        <!--diagnosi-->
+        <div class="row mt-1">
+            <!--parte del testo-->
+            <div class="col-4">
+                diagnosi
+            </div>
+
+            <!--parte dell'inserimento-->
+            <div class="col-8">
+                <input type="text" class="inputForm removeWidthLimitation">
+            </div>
+        </div>
+
+        <!--diagnosi-->
+        <div class="row mt-1">
+            <!--parte del testo-->
+            <div class="col-4">
+
+            </div>
+
+            <!--parte dell'inserimento-->
+            <div class="col-8">
+                <input type="text" class="inputForm removeWidthLimitation">
+            </div>
+        </div>
+
+        <!--note mediche-->
+        <div class="row mt-1">
+            <!--parte del testo-->
+            <div class="col-4">
+                note
+            </div>
+
+            <!--parte dell'inserimento-->
+            <div class="col-8">
+                <input type="text" class="inputForm removeWidthLimitation">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="d-none d-md-flex sez">
+        <div class="esameContainer">
+
+        </div>
+    </div>
+
+    <!--scacchiera tasti (meglio non toccare)-->
+    <div class="d-none d-md-flex sez">
+        <div class="scacchiera">
+            <div></div>
+            <div>INI</div>
+            <div>INIT</div>
+            <div>FIN</div>
+            <div>DIS</div>
+            <div>FOTO</div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
             </div>
 
-            <!--nome e cognome paziente-->
-            <div class="content-paziente mt-4">
-                <p class="m-0 text-uppercase">@nomePaziente @cognomePaziente</p>
-            </div>
-
-            <!--info cartella-->
-            <p class="titoloSezione mt-4">info cartella</p>
-            <div class="content-paziente mt-1 row">
-
-                <!--sezione descrizione valore-->
-                <div class="col-6">
-                    <div class="row">
-                        N
-                    </div>
-                    <div class="row">
-                        età paziente
-                    </div>
-                </div>
-                <div class="col-6 text-end">
-                    <div class="row justify-content-end">
-                        @numCartella
-                    </div>
-                    <div class="row justify-content-end">
-                        @etaPaziente
-                    </div>
+            <div>IMP</div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
             </div>
-
-            <!--info oas-->
-            <p class="titoloSezione mt-4">info oas</p>
-            <div class="content-paziente mt-1 row">
-
-                <!--sezione descrizione valore-->
-                <div class="col-6">
-                    <div class="row">
-                        rischio
-                    </div>
-                    <div class="row">
-                        esame
-                    </div>
-                    <div class="row">
-                        visita
-                    </div>
-                    <div class="row">
-                        mad
-                    </div>
-                    <div class="row">
-                        trattamento
-                    </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
-                <div class="col-6">
-                    <div class="row justify-content-end">
-                        @rischioPaziente
-                    </div>
-                    <div class="row justify-content-end">
-                        @esamePaziente
-                    </div>
-                    <div class="row justify-content-end">
-                        @visitaPaziente
-                    </div>
-                    <div class="row justify-content-end">
-                        @mad
-                    </div>
-                    <div class="row justify-content-end">
-                        @trattamento
-                    </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
             </div>
 
-            <!--info cliniche-->
-            <p class="titoloSezione mt-4">info cliniche</p>
-            <div class="content-paziente mt-1 row">
-
-                <!--sezione descrizione valore-->
-                <div class="col-6">
-                    <div class="row">
-                        amnesi
-                    </div>
-                    <div class="row">
-                        prima visita
-                    </div>
-                    <div class="row">
-                        parodonto
-                    </div>
-                    <div class="row">
-                        specialista
-                    </div>
-                    <div class="row">
-                        prescrizioni
-                    </div>
-                    <div class="row">
-                        p.trattamento
-                    </div>
-                    <div class="row">
-                        incontri
-                    </div>
-                    <div class="row">
-                        referti
-                    </div>
-                    <div class="row">
-                        presentazioni
-                    </div>
+            <div>TELE</div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
-                <div class="col-6">
-                    <div class="row justify-content-end">
-                        @amnesi
-                    </div>
-                    <div class="row justify-content-end">
-                        @primaVisita
-                    </div>
-                    <div class="row justify-content-end">
-                        @parodonto
-                    </div>
-                    <div class="row justify-content-end">
-                        @specialista
-                    </div>
-                    <div class="row justify-content-end">
-                        @prescrizioni
-                    </div>
-                    <div class="row justify-content-end">
-                        @pTrattamento
-                    </div>
-                    <div class="row justify-content-end">
-                        @incontri
-                    </div>
-                    <div class="row justify-content-end">
-                        @referti
-                    </div>
-                    <div class="row justify-content-end">
-                        @presentazioni
-                    </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div>OPT</div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col d-flex flex-nowrap align-items-center">
+                <div class="me-1">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="checkBox">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!--corpo centrale-->
-    <div class="col-12 col-md-7 col-xl-8">
-        <div class="row section flex-nowrap overflow-auto">
-            <div class="col">
-                <p class="testo">piano di cura</p>
-            </div>
-            <div class="col">
-                <select class="inputForm">
-                    <option value="p">prova</option>
-                </select>
-            </div>
-
-            <!-- sezione tasti rapidi -->
-            <div class="col d-none d-sm-flex flex-nowrap align-items-center">
-                <button class="toolButtons me-1 add"></button>
-                <button class="toolButtons me-1 edit"></button>
-                <button class="toolButtons me-1 lock"></button>
-                <button class="toolButtons me-1 notify"></button>
-                <button class="toolButtons me-1 bin"></button>
-                <button class="toolButtons me-1 save"></button>
-                <button class="toolButtons me-1 stamp"></button>
-                <button class="toolButtons me-1 pin"></button>
-            </div>
-
-            <!-- checkboxes -->
-            <div class="col d-flex flex-nowrap align-items-center">
-                <div class="me-1">
-                    <label class="checkbox-container">
-                        <input type="checkbox" class="checkBox">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="testo">
-                    Non iniziato
-                </div>
-            </div>
-
-            <div class="col d-flex flex-nowrap align-items-center">
-                <div class="me-1">
-                    <label class="checkbox-container">
-                        <input type="checkbox" class="checkBox">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="testo">
-                    Terminato
-                </div>
-            </div>
-
-            <div class="col d-flex flex-nowrap align-items-center">
-                <div class="me-1">
-                    <label class="checkbox-container">
-                        <input type="checkbox" class="checkBox">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="testo">
-                    Interrotto
-                </div>
-            </div>
-
-            <div class="col d-flex flex-nowrap align-items-center">
-                <div class="me-1">
-                    <label class="checkbox-container">
-                        <input type="checkbox" class="checkBox">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="testo">
-                    Documentato
-                </div>
-            </div>
-
-        </div>
+    <!--ultima sezione (durata $$)-->
+    <div class="sez">
 
     </div>
 </div>
+
+<!--terza sezione-->
+<div class="row fill-page mt-2 section flex-nowrap overflow-auto">
+
+</div>
+</div>
+</div>
+
+<!---popUP-->
+@if (_isVisible)
+{
+    <div class="oscuramento">
+        <!-- Form carica foto -->
+        <div class="formAggiunta">
+            <!-- Prima linea -->
+            <div class="infoForm">
+                <div class="inline elemento">DATA<input class="inputFormData" type="date"/></div>
+                <div class="inline elemento">
+                    TIPO SERIE
+                    <select type="select" class="inputFormSelezione" placeholder=" ">
+                        <option value="p">Prova</option>
+                    </select>
+                </div>
+                <div class="inline elemento">NOTE<input class="inputForm" type="text"/></div>
+            </div>
+            <!-- Seconda linea -->
+            <div class="inline seconda">
+                <button class="fileButton" @onclick="OpenFilePicker"> </button>
+                <InputFile style="display: none" @ref="inputFile" OnChange="StoreTempFiles" multiple="true" accept=".png"/>
+
+                <div class="inline radioContainer">
+                    RISOLUZIONE
+                    <label for="1280">1280 X 800</label>
+                    <input type="radio" id="1280" name="risoluzione" value="1280">
+                    <label for="1024">1024 X 768</label>
+                    <input type="radio" id="1024" name="risoluzione" value="1024">
+                    <label for="800">800 X 600</label>
+                    <input type="radio" id="800" name="risoluzione" value="800">
+                </div>
+                <div class="inline radioContainer">
+                    RIDIMENSIONA
+                    <label for="si">SÌ</label>
+                    <input type="radio" id="si" name="ridimensiona" value="si">
+                    <label for="no">NO</label>
+                    <input type="radio" id="no" name="ridimensiona" value="no">
+                </div>
+            </div>
+
+            <!-- Linea centrale -->
+            <div class="seconda">
+                <!-- Barra a sinistra(anteprima delle immagini caricate) -->
+                <div class="inline previews" id="divAnteprima">
+
+                </div>
+
+                <!-- Quadrante di scelta a destra -->
+                <div class="inline assegnazioni" id="zonaAssegnazione">
+                    <!-- Elenco dei quadratini -->
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Occl_Superiore" data-value="0" onclick="divClick('Occl_Superiore')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Occl. Superiore</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Occl_DX" data-value="1" onclick="divClick('Occl_DX')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Occl. DX</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Occl_Frontale" data-value="2" onclick="divClick('Occl_Frontale')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Occl. Frontale</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Occl_SX" data-value="3" onclick="divClick('Occl_SX')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Occl. SX</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Occl_Inferiore" data-value="4" onclick="divClick('Occl_Inferiore')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Occl. Inferiore</p>
+                    </div><br/>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Laterale" data-value="5" onclick="divClick('Laterale')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Laterale</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Frontale" data-value="6" onclick="divClick('Frontale')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Frontale</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="Frontale_Sorriso" data-value="7" onclick="divClick('Frontale_Sorriso')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">Frontale Sorriso</p>
+                    </div><br/>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="RX_Panoramica" data-value="8" onclick="divClick('RX_Panoramica')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">RX Panoramica</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="RX_Laterale" data-value="9" onclick="divClick('RX_Laterale')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">RX Laterale</p>
+                    </div>
+                    <div class="inline imgUpload">
+                        <div class="inline imgButton" id="RX_Frontale_PA" data-value="10" onclick="divClick('RX_Frontale_PA')">
+                            <img src="" alt=""/><br/>
+                        </div>
+                        <p class="descImg">RX Frontale PA</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Linea tasti invia e annulla -->
+            <div class="utilsButtonsCOntainer">
+                <button class="annulla" @onclick="ToggleForm">Annulla</button>
+                <button class="salva" @onclick="SaveImages">Invia</button>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    var imgIdCounter = 1; // Initialize the counter
+    var lastImg=null; //inizializzo l'ultima immagine cliccata
+    
+    //funzione che carica l'immagine di preview
+    function appendImageToDiv(divId, dataUrl) 
+    {
+        var div = document.getElementById(divId);
+        var img = document.createElement('img');
+        /*proprietà immagine*/
+        img.src = dataUrl;
+        img.width = 150;
+        img.height = 150;
+        img.id = 'img' + imgIdCounter;
+        img.onclick = function() { refreshLastImg(this.id); }; //aggiungo un onclick affinche posso saprere quale sia l'ultima immagine cliccata
+        /*appendo l'immagine e incremento il contatore*/
+        div.appendChild(img);
+        imgIdCounter++;
+    }
+    
+    //funzione che aggiorna l'ultima immagine cliccata
+    function refreshLastImg(id)
+    {
+        lastImg = id;
+    }
+    
+    /*funzione che prende l'ultima immagine selezionata e la imposta come selezionata nel div cliccato*/
+    function divClick(divId)
+    {
+        var div = document.getElementById(divId);
+        var img = document.getElementById(lastImg);
+        img.style="width:110px;height:110px;border-radius:10px;";
+        div.appendChild(img);
+    }
+
+    async function collectImagesFromDiv(divId) {
+        const div = document.getElementById(divId);
+        const imgElements = div.getElementsByTagName('img');
+        const images = [];
+
+        for (const imgElement of imgElements) {
+            const parentDiv = imgElement.parentElement;
+            const parentDivId = parentDiv.id;
+            const imgSrc = imgElement.src;
+
+            // Create a new image object with the new name and data URL
+            images.push({ name: `${parentDivId}.png`, src: imgSrc });
+        }
+
+        return images;
+    }
+
+    window.getImagesFromDivs = function() {
+        var divs = document.querySelectorAll('#zonaAssegnazione .imgButton');
+        var images = [];
+        divs.forEach(function(div) {
+            var img = div.querySelector('img');
+            if (img && img.src) {
+                images.push(img.src);
+            }
+        });
+        return images;
+    }
+    
+    
+</script>
 
 @code {
     private bool _isVisible = false; //variabile che cambia la visibilità del form
     private string _ImgPatient = "./assets/test/test.jpg"; //<- DA SOSTITUIRE CON UN FILE EFFETTIVO    
 
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+
+
     //---------dati paziente------------
     private string nomePaziente = "Marco", cognomePaziente = "rocciA";
 
     private string numCartella = "1", etaPaziente = "32a", rischioPaziente = "1", esamePaziente = "/", visitaPaziente = "/", mad = "0", trattamento = "1";
-    
+
     private string amnesi = "0", primaVisita = "0", parodonto = "0", specialista = "0", prescrizioni = "0", pTrattamento = "0", incontri = "0", referti = "0", presentazioni = "0";
+
     //funzzione che si occupa di cambiare la visibilità del form visibile -> non visibile e vic.v.
     private void ToggleForm()
     {
         _isVisible = !_isVisible;
     }
+
+    private async Task OpenFilePicker() => await JSRuntime.InvokeVoidAsync("HTMLElement.prototype.click.call", inputFile!.Element);
+
+    //funzione che apre il file picker e salva all'interno di una variabile i file selezionati
+
+    private InputFile? inputFile;
+    private IReadOnlyList<IBrowserFile> tempFiles;
+
+    private async Task StoreTempFiles(InputFileChangeEventArgs e)
+    {
+        tempFiles = e.GetMultipleFiles(11); //salvo i file in una lista
+
+        foreach (var file in tempFiles)
+        {
+            //leggo i file con un array di byte
+            var format = "image/png";
+            //setto la dimensione massima dell'immagine
+            var resizedImageFile = await file.RequestImageFileAsync(format, 100, 100);
+            var buffer = new byte[resizedImageFile.Size];
+            await resizedImageFile.OpenReadStream().ReadAsync(buffer);
+
+            // converto i byte in un url per caricare l'immagine
+            var base64Image = Convert.ToBase64String(buffer);
+            var dataUrl = $"data:{format};base64,{base64Image}";
+
+            // chiamo una funzione js per caricare le immagini all'interno di un div
+            await JSRuntime.InvokeVoidAsync("appendImageToDiv", "divAnteprima", dataUrl);
+        }
+    }
+
+    private async Task SaveImages()
+{
+    // Call the JavaScript function to get the images
+    var images = await JSRuntime.InvokeAsync<string[]>("getImagesFromDivs");
+
+    // Get the path to the directory where you want to save the images
+    var imagesDirectoryPath = Path.Combine(env.WebRootPath, "Images");
+
+    // Ensure the directory exists
+    Directory.CreateDirectory(imagesDirectoryPath);
+
+    // Save the images to the directory
+    for (int i = 0; i < images.Length; i++)
+    {
+        var image = images[i];
+
+        // The image is in the form of a data URL, so we need to extract the base64 part
+        var base64Index = image.LastIndexOf("base64,");
+        if (base64Index < 0)
+        {
+            // The data URL is not correctly formatted
+            Console.Write("omg url non formattata");
+            continue;
+        }
+        var base64Data = image.Substring(base64Index + "base64,".Length);
+        try
+        {
+            var bytes = Convert.FromBase64String(base64Data);
+
+            // Save the image
+            await File.WriteAllBytesAsync(Path.Combine(imagesDirectoryPath, $"image{i}.png"), bytes);
+        }
+        catch (FormatException)
+        {
+            // The base64 part is not correctly formatted
+            Console.Write("omg non formattata");
+        }
+    }
+}
 
 }
