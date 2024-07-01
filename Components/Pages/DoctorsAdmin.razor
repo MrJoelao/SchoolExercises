@@ -97,7 +97,7 @@
         </div>
         <!-- body della tabella-->
         <div class>
-            <!-- foreach per generare una riga per ogni paziente -->
+            <!-- foreach per generare una riga per ogni dottore -->
             @{ int i = 0; }
             @foreach (var doctor in _filteredDoctorList)
             {
@@ -312,7 +312,7 @@
         })
     }
 
-    // Funzione per mostrare all'utente il paziente selezionato manipolando la classe css 'rigoSelected'
+    // Funzione per mostrare all'utente il dottore selezionato manipolando la classe css 'rigoSelected'
     function setClicked(){
         document.querySelectorAll('.row.rigo').forEach(row => {
             row.classList.remove('rigoSelected')
@@ -337,8 +337,8 @@
 
     private readonly DbManager _db = new(); // Oggetto per la gestione del database
 
-    private Doctor _newDoctorTemp = new(); // Paziente temporaneo per la creazione di un nuovo dottore
-    private Doctor? _lastDoctorClicked; // Paziente selezionato
+    private Doctor _newDoctorTemp = new(); // Dottore temporaneo per la creazione di un nuovo dottore
+    private Doctor? _lastDoctorClicked; // Dottore selezionato
     private List<Doctor> _doctorsList = new(); // Elenco di tutti i dottori
     private List<Doctor> _filteredDoctorList = new(); // Elenco filtrato dei dottori
 
@@ -359,7 +359,7 @@
         // Converte la stringa del genere in booleano
         _newDoctorTemp.Gender = _genderString != "m";
 
-        // Creo un nuovo paziente con i dati inseriti
+        // Creo un nuovo dottore con i dati inseriti
         Doctor doctor = new Doctor(
             _newDoctorTemp.FirstName,
             _newDoctorTemp.Surname,
@@ -391,13 +391,13 @@
             await SaveDoctor(doctor);
         }
 
-        // Cancello l'ultimo paziente cliccato
+        // Cancello l'ultimo dottore cliccato
         _lastDoctorClicked = null;
 
         // Cancello l'errore
         _showFormError = false;
 
-        // Nascondere il modulo del paziente
+        // Nascondere il modulo del dottore
         ToggleDoctorForm();
     }
 
