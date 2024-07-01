@@ -1,11 +1,12 @@
 ﻿using MySqlConnector;
 using System;
 
-/// <summary>
-/// Represents a patient in the Delta_Dent system.
-/// </summary>
+
 namespace Delta_Dent
 {
+    /// <summary>
+    /// Represents a patient in the Delta_Dent system.
+    /// </summary>
     public class Patient
     {
         public string FirstName { get; set; }
@@ -40,13 +41,14 @@ namespace Delta_Dent
         /// <param name="cAsl">Patient's ASL code.</param>
         /// <param name="birthDate">Patient's date of birth.</param>
         /// <param name="birthPlace">Patient's place of birth.</param>
-        /// <param name="foreigner">Indicates if the patient is a foreigner.</param>
         /// <param name="birthProvince">Patient's birth province.</param>
         /// <param name="billable">Indicates if the patient is billable.</param>
         /// <param name="completed">Indicates if the patient's record is completed.</param>
         /// <param name="documented">Indicates if the patient's record is documented.</param>
-        /// <param name="doctorID">ID of the doctor assigned to the patient.</param>
+        /// <param name="foreigner">Indicates if the patient is a foreigner.</param>
         /// <param name="locked">Indicates if the patient's record is locked.</param>
+        /// <param name="doctorID">ID of the doctor assigned to the patient.</param>
+        /// <param name="PatientID">ID of the patient in the database.</param>
         public Patient(string firstName, string surname, bool gender, string telephone, string phone1, string phone2,
             string cf, string cAsl, DateTime birthDate, string birthPlace, bool foreigner, string birthProvince, string billable,
             bool completed, bool documented, int doctorID, bool locked)
