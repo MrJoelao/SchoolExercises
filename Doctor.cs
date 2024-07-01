@@ -10,6 +10,7 @@ public class Doctor
     public string password { get; set; }
     public string telephone { get; set; }
     public string address { get; set; }
+    public int doctorID { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Doctor"/> class with specified details.
@@ -22,6 +23,7 @@ public class Doctor
     /// <param name="password">The password for the doctor's account.</param>
     /// <param name="telephone">The telephone number of the doctor.</param>
     /// <param name="address">The address of the doctor.</param>
+    /// <param name="doctorID">The address of the doctor.</param>
     public Doctor(string firstName, string surname, bool gender, DateTime birthDate, string email, string password,
             string telephone, string address)
     {
@@ -39,22 +41,34 @@ public class Doctor
 
     }
 
-// Metodo per verificare i valori
-    public bool AreValuesInvalid()
+    /// <summary>
+    /// Checks the validity of the doctor's input fields. 
+    /// If the password change flag is true, it also checks the password.
+    /// </summary>
+    /// <param name="flagCheckPassword">Indicates if the password should be checked.</param>
+    /// <returns>Returns true if all inputs are valid, otherwise false.</returns>
+    public bool CheckInputs(bool flagCheckPassword)
     {
+        // Verifica campi obbligatori
         if (string.IsNullOrEmpty(firstName) ||
             string.IsNullOrEmpty(surname) ||
             string.IsNullOrEmpty(email) ||
-            string.IsNullOrEmpty(password) ||
             string.IsNullOrEmpty(telephone) ||
             string.IsNullOrEmpty(address) ||
             birthDate < DateTime.MinValue ||
             birthDate > DateTime.MaxValue ||
-            gender != true && gender != false)
+            (gender != true && gender != false))
         {
-            return false; // Restituisce true se uno dei campi non è valido
+            return false; // Restituisce false se uno dei campi obbligatori non è valido
         }
 
-        return true; // Restituisce false se tutti i campi sono validi
+        // Verifica la password solo se il flag è true
+        if (flagCheckPassword && string.IsNullOrEmpty(password))
+        {
+            return false; // Restituisce false se il flag è true e la password è vuota
+        }
+
+        return true; // Restituisce true se tutti i campi sono validi
     }
+
 }
