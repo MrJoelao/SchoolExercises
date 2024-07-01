@@ -1,0 +1,577 @@
+@page "/Doctors"
+@inject IJSRuntime Js
+<PageTitle>Doctors</PageTitle>
+@rendermode InteractiveServer
+@inject NavigationManager NavManager
+
+<div class="container-fluid mt-5 mt-sm-0">
+    <!--top bar-->
+    <div class="container-fluid">
+        <!--buttons-->
+        <div class="row toolbar">
+            <!-- suddivisione in 2-2-2-1-3-1-1 della barra-->
+            <div class="col-2 col-sm-2 col-md-2 ps-1 pe-0  px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool aggiungi" @onclick="OpenAddDoctor" id="btnAggiungi" data-toggle="modal" data-target="#exampleModalCenter">
+                    
+                </button>
+            </div>
+
+            <div class="col-2 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool modifica" id="btnModifica" @onclick="OpenModifyDoctor">
+                    
+                </button>
+            </div>
+
+            <div class="col-2 col-sm-2 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <button class="btnTool elimina" id="btnElimina" @onclick="DeleteFromDb">
+                    
+                </button>
+            </div>
+
+            <div class="col-4 col-sm-1 col-md-2 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <input class="inputRicerca" id="txtRicerca" placeholder="Ricerca" @bind-value="_searchValue" @oninput="SearchDoctor"/>
+            </div>
+
+            <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <div class="col sideNum">
+                    N
+                </div>
+                <div class="col">
+                    <div class="inNum col">@_filteredDoctorList.Count</div>
+                </div>
+            </div>
+            <!-- Input per selezionare le pagine -->
+            <div class="d-none d-sm-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <div class="col sideNum">
+                    P
+                </div>
+                <div class="col">
+                    <input class="inNum" id="inputPagina" type="text" placeholder="@_currentPage" @bind="_currentPage" @oninput="RefreshDoctors" />
+                </div>
+            </div>
+            <!-- Input per navigare tra le pagine -->
+            <div class="col-2 d-flex col-sm-1 p-0 px-md-1 pl-sm-0 pr-sm-1">
+                <div class="col">
+                    <button class="navsx sxArrow" @onclick="DecrementPage">
+                        
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="nav dxArrow" @onclick="IncrementPage">
+
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- corpo centrale della pagina -->
+
+    <div class="container-fluid corpo mt-1 px-5">
+        <!-- heading della tabella -->
+        <div class="row heading">
+            <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
+            <div class="col-6 col-sm-1 cella">
+                id
+            </div>
+            <div class="col-6 col-sm-2 cella">
+                cognome
+            </div>
+            <div class="col-6 col-sm-2 cella">
+                nome
+            </div>
+            <div class="col-6 col-sm-2 cella">
+                nascita
+            </div>
+            <div class="col-6 col-sm-2 cella">
+                email
+            </div>
+            <div class=" col-6 col-sm-2 cella">
+                telefono
+            </div>
+            <div class=" d-none d-sm-block col-1 cella">
+                Domicilio
+            </div>
+        </div>
+        <!-- body della tabella-->
+        <div class>
+            <!-- foreach per generare una riga per ogni paziente -->
+            @{ int i = 0; }
+            @foreach (var doctor in _filteredDoctorList)
+            {
+                <div id="row-@i" class="row rigo mt-1" @onclick="() => UpdateLastClicked(doctor)">
+                    <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
+                    <div class="col-6 col-sm-1 cella">
+                        @doctor.doctorID
+                    </div>
+                    <div class="col-6 col-sm-2 cella">
+                        @doctor.surname
+                    </div>
+                    <div class="col-6 col-sm-2 cella">
+                        @doctor.firstName
+                    </div>
+                    <div class="col-6 col-sm-2 cella">
+                        @DateOnly.FromDateTime(doctor.birthDate)
+                    </div>
+                    <div class=" col-6 col-sm-2 cella">
+                        @doctor.email
+                    </div>
+                    <div class=" col-6 col-sm-2 cella">
+                        @doctor.telephone
+                    </div>
+                    <div class=" d-none d-sm-block col-1 cella">
+                        @doctor.address
+                    </div>
+                </div>
+                i++;
+            }
+            @if (_dbError) // Div per informare l'utente dell'errore nel DB
+            {
+                <div class="row rigo mt-1">
+                    <div class="col-12 cella">
+                        <svg fill="none" height="25" viewBox="0 0 24 24" width="25" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill="#393a37"></path>
+                        </svg>
+                        Si è verificato un errore nella lettura del database
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@if (_visible)
+{
+    <!--div utilizzato per oscurare la pagina mentre il pop up viene aperto-->
+    <div class="oscuramento justify-content-center">
+    <!--contenitore popup-->
+    <div class="containerForm popUp px-4">
+    <!--parte superiore-->
+    <div class="row">
+        <!--barra pulsanti-->
+        <div class="col-1">
+            <button class="exit" @onclick="ToggleDoctorForm">
+                X
+            </button>
+        </div>
+    </div>
+    <!--corpo centrale-->
+    <div class="row mt-1 mt-sm-2">
+    <!--parte inserimento dati-->
+    <div class="formbody col-8 col-sm-10">
+        <div class="row">
+            <div class="row">
+                <!--prima riga-->
+                <div class="col-12 col-sm-6">
+                    <div class="cardInput">
+                        <div class="row">
+                            Cognome*
+                        </div>
+                        <div class="row">
+                            <input class="inputForm" type="text" @bind="_newDoctorTemp.surname" maxlength="25"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="cardInput">
+                        <div class="row">
+                            Nome*
+                        </div>
+                        <div class="row">
+                            <input class="inputForm" type="text" @bind="_newDoctorTemp.firstName" maxlength="25"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--seconda riga-->
+            <div class="row mt-1">
+                <div class="col-12 col-sm-6">
+                    <div class="cardInput">
+                        <div class="row">
+                            Luogo di nascita
+                        </div>
+                        <div class="row">
+                            <input class="inputForm" type="text" @bind="_newDoctorTemp.address"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="cardInput">
+                        <div class="row">
+                            Telefono
+                        </div>
+                        <div class="row">
+                            <input class="inputForm" type="text" @bind="_newDoctorTemp.telephone" maxlength="25"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="row">
+                        <div class="col">
+                            <div class="SmallcardInput">
+                                <div class="row">
+                                    email
+                                </div>
+                                <div class="row">
+                                    <input class="inputForm" type="text" @bind="_newDoctorTemp.email" maxlength="25"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="ps-0 col-6 justify-content-start">Password</div>
+                            @if (_editingDoctor)
+                            {
+                                <div class="col-6 align-content-center">
+                                    <label for="isEstero" style="font-size: 0.6rem">Modifica Password</label>
+                                    <input type="checkbox" id="isEstero" @bind="_editDoctorPassword"/>
+                                </div>
+                            }
+                        </div>
+                        <div class="row">
+                            <input class="inputForm" type="password" @bind="_newDoctorTemp.password"/>
+                        </div>
+                        <div class="col">
+                            <div class="SmallcardInput">
+                                <div class="row">
+                                    sesso
+                                </div>
+                                <div class="row">
+                                    <select type="select" class="inputForm" @bind="_genderString">
+                                        <option value="m">Maschio</option>
+                                        <option value="f">Femmina</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--terza riga-->
+            <div class="row mt-1">
+                <div class="col-12 col-sm-6">
+                    <div class="row">
+                        <div class="col">
+                            <div class="SmallcardInput">
+                                <div class="row">
+                                    data nascita
+                                </div>
+                                <div class="row">
+                                    <input class="inputForm data" type="date" @bind="_newDoctorTemp.birthDate" EnableMinMax="true" min="1900-01-01" max="@_today"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--parte tasti pc-->
+    <div class="col-4 col-sm-2 SezPulsanti">
+        <div class="row mt-1">
+            <button class="formButton" @onclick="HandleSaveEdit">
+                salva
+            </button>
+        </div>
+        <div class="row mt-1">
+            <button class="formButton" @onclick="ToggleDoctorForm">
+                annulla
+            </button>
+        </div>
+        @if (_showFormError)
+        {
+            <div>Verificare i dati immessi</div>
+        }
+    </div>
+
+    </div>
+    </div>
+    </div>
+}
+<script>
+
+    let id;
+
+    // Funzione per agganciare ad ogni riga della tabella un eventListener del click e chiamare setClicked()
+    function setEventListeners(){
+        document.querySelectorAll('.row.rigo').forEach(row => {
+            row.addEventListener('click', function () {
+                id = this.getAttribute('id')
+                setClicked()
+            })
+        })
+    }
+
+    // Funzione per mostrare all'utente il paziente selezionato manipolando la classe css 'rigoSelected'
+    function setClicked(){
+        document.querySelectorAll('.row.rigo').forEach(row => {
+            row.classList.remove('rigoSelected')
+        })
+        document.getElementById(id).classList.add('rigoSelected')
+    }
+
+    function putdelAnim(){
+        document.getElementById(id).classList.add('rigoDeleted')
+    }
+
+    function popdelAnim(){
+        document.getElementById(id).classList.remove('rigoDeleted')
+    }
+
+</script>
+
+@code {
+    private const int DoctorsDisplayedPerPage = 50; // numero di pazienti visualizzati per pagina
+
+    private string _today = DateTime.Today.ToString("yyyy-MM-dd"); // La data di oggi per impostare la data massima nel selezionatore di date
+
+    private readonly DbManager _db = new(); // Oggetto per la gestione del database
+
+    private Doctor _newDoctorTemp = new(); // Paziente temporaneo per la creazione di un nuovo dottore
+    private Doctor? _lastDoctorClicked; // Paziente selezionato
+    private List<Doctor> _doctorsList = new(); // Elenco di tutti i dottori
+    private List<Doctor> _filteredDoctorList = new(); // Elenco filtrato dei dottori
+
+    private string? _genderString; // Sesso del dottore
+    private string _searchValue = string.Empty; // Valore di ricerca
+    private bool _showFormError; // Mostra il flag di errore del modulo
+    private bool _visible; // Mostra il flag del modulo
+    private bool _dbError; // Flag di errore del database
+    private bool _editingDoctor = false; // Flag per la modifica del dottore
+    private int _currentPage = 1; // Numero di pagina corrente
+    private bool _editDoctorPassword = false;
+
+    /// <summary>
+    /// Handles saving or editing a doctor.
+    /// </summary>
+    public async Task HandleSaveEdit()
+    {
+        // Converte la stringa del genere in booleano
+        _newDoctorTemp.gender = _genderString != "m";
+
+        // Creo un nuovo paziente con i dati inseriti
+        Doctor doctor = new Doctor(
+            _newDoctorTemp.firstName,
+            _newDoctorTemp.surname,
+            _newDoctorTemp.gender,
+            _newDoctorTemp.birthDate,
+            _newDoctorTemp.email,
+            _newDoctorTemp.password,
+            _newDoctorTemp.telephone,
+            _newDoctorTemp.address
+        );
+
+        // Controllo se gli input sono validi
+        if (!doctor.CheckInputs(_editDoctorPassword))
+        {
+            _showFormError = true;
+            Console.WriteLine("Input non validi, dottore: " + doctor);
+            return;
+        }
+
+        if (_editingDoctor)
+        {
+            Console.WriteLine("Modifica del dottore...");
+            await _db.UpdateDoctorFromId(doctor, _lastDoctorClicked.doctorID, _editDoctorPassword);
+            _editingDoctor = false;
+        }
+        else
+        {
+            Console.WriteLine("Aggiunta di un dottore...");
+            await SaveDoctor(doctor);
+        }
+
+        // Cancello l'ultimo paziente cliccato
+        _lastDoctorClicked = null;
+
+        // Cancello l'errore
+        _showFormError = false;
+
+        // Nascondere il modulo del paziente
+        ToggleDoctorForm();
+    }
+
+    /// <summary>
+    /// Saves a new doctor to the database.
+    /// </summary>
+    /// <param name="newDoctor">The new doctor to save.</param>
+    public async Task SaveDoctor(Doctor newDoctor)
+    {
+        if (!await _db.RegisterDoctorQuery(newDoctor))
+        {
+            _showFormError = true;
+            return;
+        }
+
+        _doctorsList.Add(newDoctor);
+
+        // Aggiorno la lista filtrata
+        _filteredDoctorList = _doctorsList;
+
+        // Pulisco
+        ClearText();
+
+        // Aggiorno
+        await RefreshDoctors();
+    }
+
+    /// <summary>
+    /// Retrieves doctors from the database.
+    /// </summary>
+    /// <param name="doctorsDisplayed">Number of doctors to display per page.</param>
+    /// <param name="page">Page number.</param>
+    public async Task GetDoctors(int doctorsDisplayed, int page = 1)
+    {
+        _doctorsList = (await _db.GetDoctorsFromDb(doctorsDisplayed, page)) ?? new List<Doctor>();
+
+        if (_doctorsList.Count == 0)
+        {
+            _dbError = true;
+            return;
+        }
+
+        _dbError = false;
+
+        _filteredDoctorList = _doctorsList;
+    }
+
+    /// <summary>
+    /// Searches for doctors based on first name or surname.
+    /// </summary>
+    /// <param name="e">Change event containing search value.</param>
+    private void SearchDoctor(ChangeEventArgs e)
+    {
+        _searchValue = e.Value?.ToString() ?? string.Empty;
+        var searchTerms = _searchValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        _filteredDoctorList = _doctorsList.Where(p =>
+            searchTerms.All(term =>
+                p.firstName.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                p.surname.Contains(term, StringComparison.OrdinalIgnoreCase)
+            )
+        ).ToList();
+    }
+
+    /// <summary>
+    /// Refreshes the list of doctors based on current page number.
+    /// </summary>
+    public async Task RefreshDoctors()
+    {
+        if (_currentPage > 0)
+        {
+            await GetDoctors(DoctorsDisplayedPerPage, _currentPage);
+        }
+        Console.WriteLine(_currentPage);
+    }
+
+    /// <summary>
+    /// Deletes the selected doctor from the database.
+    /// </summary>
+    public async Task DeleteFromDb()
+    {
+        if (_lastDoctorClicked == null)
+        {
+            Console.WriteLine("No doctor selected");
+            return;
+        }
+
+        if (!await _db.DeleteDoctorFromId(_lastDoctorClicked.doctorID))
+        {
+            return;
+        }
+
+        _doctorsList.Remove(_lastDoctorClicked);
+        _filteredDoctorList = _doctorsList;
+
+        _lastDoctorClicked = null;
+    }
+
+    /// <summary>
+    /// Increments the current page number and updates the doctor list.
+    /// </summary>
+    public async Task IncrementPage()
+    {
+        ++_currentPage;
+        await GetDoctors(DoctorsDisplayedPerPage, _currentPage);
+    }
+
+    /// <summary>
+    /// Decrements the current page number (if greater than 1) and updates the doctor list.
+    /// </summary>
+    public async void DecrementPage()
+    {
+        if (_currentPage > 1) --_currentPage;
+        await GetDoctors(DoctorsDisplayedPerPage, _currentPage);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetDoctors(DoctorsDisplayedPerPage);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) => await Js.InvokeVoidAsync("setEventListeners");
+
+    /// <summary>
+    /// Toggles the visibility of the doctor form.
+    /// </summary>
+    private void ToggleDoctorForm()
+    {
+        _visible = !_visible;
+    }
+
+    /// <summary>
+    /// Opens the doctor form for modifying the selected doctor.
+    /// </summary>
+    public void OpenModifyDoctor()
+    {
+        if (_lastDoctorClicked == null)
+        {
+            Console.WriteLine("Doctor not selected");
+            return;
+        }
+
+        _newDoctorTemp = _lastDoctorClicked;
+        _editingDoctor = true;
+        ToggleDoctorForm();
+    }
+
+    /// <summary>
+    /// Opens the doctor form for adding a new doctor.
+    /// </summary>
+    public void OpenAddDoctor()
+    {
+        ClearText();
+        _editingDoctor = false;
+        ToggleDoctorForm();
+    }
+
+    /// <summary>
+    /// Clears all fields of the temporary doctor object.
+    /// </summary>
+    public void ClearText()
+    {
+        _newDoctorTemp = new Doctor
+        {
+            firstName = string.Empty,
+            surname = string.Empty,
+            gender = false,
+            telephone = string.Empty,
+            birthDate = DateTime.MinValue,
+            address = string.Empty,
+            email = string.Empty,
+            password = string.Empty
+        };
+    }
+
+
+    /// <summary>
+    /// Updates the last clicked doctor.
+    /// </summary>
+    /// <param name="doctor">The doctor object.</param>
+    public void UpdateLastClicked(Doctor doctor) => _lastDoctorClicked = doctor;
+}
