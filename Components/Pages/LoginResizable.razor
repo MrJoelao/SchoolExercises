@@ -177,7 +177,7 @@
     {
         _doctor = new Doctor(_registerName!, _registerSurname!, (_genderString != "m"), _birthdate, _registerEmail!, _registerPassword!, _telephoneDoctor!, _address!);
 
-        if (!_doctor.AreValuesInvalid() || await _db.CheckDoctorExistAsync(_registerEmail!))
+        if (!_doctor.CheckInputs(true) || await _db.CheckDoctorExistAsync(_registerEmail!))
         {
             // Mostro l'errore
             _errReg = true;
