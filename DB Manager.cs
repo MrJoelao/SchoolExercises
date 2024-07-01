@@ -737,5 +737,201 @@ public class DbManager
         // Se il dottore non viene trovato, ritorno null
         return null;
     }
+    
+    /// <summary>
+    /// Retrieves a list of doctors from the database.
+    /// </summary>
+    /// <param name="nDoctors">The number of doctors to retrieve.</param>
+    /// <param name="nPage">The page number for pagination.</param>
+    /// <returns>A list of doctors if found; otherwise, null.</returns>
+    public async Task<List<Doctor>?> GetDoctorsFromDb(int nDoctors, int nPage)
+    {
+        List<Doctor> doctors = new List<Doctor>();
 
+        int offset = (nPage - 1) * nDoctors;
+
+        var queryRangeDoctor = "SELECT * FROM DOCTOR LIMIT @Limit OFFSET @Offset";
+
+        try
+        {
+            await OpenConnectionAsync();
+            await using var command = new MySqlCommand(queryRangeDoctor, Conn);
+
+            command.Parameters.AddWithValue("@Limit", nDoctors);
+            command.Parameters.AddWithValue("@Offset", offset);
+
+            await using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                var doctor = GetDoctorFromReader(reader);
+                doctors.Add(doctor!);
+            }
+
+            await CloseReaderAsync(reader);
+
+            Console.WriteLine("Doctors retrieved successfully.");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("There was an error while getting the doctors from the database: " + e);
+            return null;
+        }
+        finally
+        {
+            await CloseConnectionAsync();
+        }
+
+        return doctors.Count > 0 ? doctors : null;
+    }
+
+    /// <summary>
+    /// Constructs a Doctor object from the data in a MySqlDataReader.
+    /// </summary>
+    /// <param name="reader">The MySqlDataReader containing the patient data.</param>
+    /// <returns>A Doctor object populated with the data from the reader, without the password.</returns>
+    public Doctor? GetDoctorFromReader(MySqlDataReader? reader)
+    {
+        if (reader == null)
+        {
+            return null;
+        }
+
+        Doctor doctor = new Doctor();
+        doctor.doctorID = reader.GetInt32("doctorID");
+        doctor.firstName = reader.GetString("first_name");
+        doctor.surname = reader.GetString("surname");
+        doctor.gender = reader.GetBoolean("gender");
+        doctor.birthDate = reader.GetDateTime("birth_date");
+        doctor.email = reader.GetString("email");
+        doctor.telephone = reader.GetString("telephone");
+        doctor.address = reader.GetString("address");
+
+        return doctor;
+    }
+
+    /// <summary>
+    /// Asynchronously deletes a doctor and all associated records from the database.
+    /// </summary>
+    /// <param name="doctorId">The ID of the doctor to be deleted.</param>
+    /// <returns>A <see cref="Task{Boolean}"/> representing the asynchronous operation,
+    /// which returns true if at least one record was deleted, otherwise false.</returns>
+    /// <remarks>
+    /// This method deletes the doctor record identified by <paramref name="doctorId"/>
+    /// and all related records in the PATIENT, VISIT, and IMAGES tables. It uses a transactional
+    /// approach to ensure that all deletions are completed successfully before committing the transaction.
+    /// In case of an exception, the transaction is rolled back and the method returns false.
+    /// </remarks>
+    public async Task<bool> DeleteDoctorFromId(int doctorId)
+    {
+        // Query per eliminare il paziente e le righe associate nelle tabelle VISIT, IMAGES, RECORDS
+        string queryDeletePatient = @"
+        DELETE FROM PATIENT WHERE doctorID = @doctorId;
+        DELETE FROM VISIT WHERE doctorID = @doctorId;
+        DELETE FROM IMAGES WHERE visitID IN (SELECT visitID FROM VISIT WHERE doctorID = @doctorId);
+        DELETE FROM DOCTOR WHERE doctorID = @doctorId;";
+
+        int rowsAffected;
+
+        try
+        {
+            // Apro il database in connessione asincrona
+            await OpenConnectionAsync();
+
+            // Crea il comando SQL
+            await using var command = new MySqlCommand(queryDeletePatient, Conn);
+
+            // Aggiunge il parametro per il doctorId
+            command.Parameters.AddWithValue("@doctorId", doctorId);
+
+            // Esegue il comando e ottiene il numero di righe interessate
+            rowsAffected = await command.ExecuteNonQueryAsync();
+
+            Console.WriteLine("Deletion was successful, number of rows deleted: " + rowsAffected);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error while deleting doctor: {ex.Message}");
+            return false;
+        }
+        finally
+        {
+            // Chiuso la connessione al database
+            await CloseConnectionAsync();
+        }
+
+        // Se almeno una riga è stata cancellata, ritorna true (cancellazione avvenuta con successo)
+        return rowsAffected > 0;
+
+    }
+
+    /// <summary>
+    /// Updates a doctor's information based on the provided ID.
+    /// Optionally updates the password if it has changed.
+    /// </summary>
+    /// <param name="doctor">The doctor object containing updated information.</param>
+    /// <param name="id">The ID of the doctor to update.</param>
+    /// <param name="passwordChanged">Indicates if the password has been changed.</param>
+    /// <returns>A boolean indicating whether the update was successful.</returns>
+    public async Task<bool> UpdateDoctorFromId(Doctor doctor, int id, bool passwordChanged)
+    {
+        string updateDoctorPassword = passwordChanged ? $"password = SHA2(@Password, {LengthHash})," : string.Empty;
+
+        // Query per aggiornare i dati del paziente
+        string updateDoctorQuery = $@"
+        UPDATE DOCTOR 
+        SET 
+            first_name = @FirstName, 
+            surname = @Surname, 
+            gender = @Gender, 
+            telephone = @Telephone, 
+            birth_date = @BirthDate, 
+            email = @Email, 
+            {updateDoctorPassword}
+            address = @Address 
+        WHERE doctorID = @DoctorID";
+
+        try
+        {
+            // Apro la connessione
+            await OpenConnectionAsync();
+
+            // Creo un comando MySQL per eseguire la query
+            await using var command = new MySqlCommand(updateDoctorQuery, Conn);
+
+            // Aggiungo i parametri alla query
+            command.Parameters.AddWithValue("@DoctorID", id);
+            command.Parameters.AddWithValue("@FirstName", doctor.firstName);
+            command.Parameters.AddWithValue("@Surname", doctor.surname);
+            command.Parameters.AddWithValue("@Gender", doctor.gender);
+            command.Parameters.AddWithValue("@Telephone", doctor.telephone);
+            command.Parameters.AddWithValue("@BirthDate", doctor.birthDate.ToString("yyyy-MM-dd"));
+            command.Parameters.AddWithValue("@Email", doctor.email);
+            command.Parameters.AddWithValue("@Address", doctor.address);
+
+            if (passwordChanged)
+            {
+                command.Parameters.AddWithValue("@Password", doctor.password);
+            }
+
+            // Eseguo il comando asincrono
+            await command.ExecuteNonQueryAsync();
+
+            //Debug
+            Console.WriteLine("Doctor edit successfully.");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("There was an error editing the doctor: " + e);
+            return false;
+        }
+        finally
+        {
+            // Chiuso la connessione al database
+            await CloseConnectionAsync();
+        }
+
+        return true;
+    }
+    
 }
