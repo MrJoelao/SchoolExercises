@@ -1,5 +1,6 @@
 @page "/SchedaPazienteR"
 @using Microsoft.AspNetCore.Mvc
+@using System.Net.Http;
 @rendermode InteractiveServer
 @inject IJSRuntime JS
 @inject IWebHostEnvironment env
@@ -603,19 +604,20 @@
     var lastImg=null; //inizializzo l'ultima immagine cliccata
     
     //funzione che carica l'immagine di preview
-    function appendImageToDiv(divId, dataUrl) 
+    function appendImageToDiv(divId, dataUrl)
     {
         var div = document.getElementById(divId);
         var img = document.createElement('img');
-        /*proprietà immagine*/
         img.src = dataUrl;
         img.width = 150;
         img.height = 150;
         img.id = 'img' + imgIdCounter;
-        img.onclick = function() { refreshLastImg(this.id); }; //aggiungo un onclick affinche posso saprere quale sia l'ultima immagine cliccata
-        /*appendo l'immagine e incremento il contatore*/
+        img.onclick = function() { refreshLastImg(this.id); };
         div.appendChild(img);
         imgIdCounter++;
+
+        // Return the id of the div
+        return div.id;
     }
     
     //funzione che aggiorna l'ultima immagine cliccata
@@ -633,36 +635,37 @@
         div.appendChild(img);
     }
 
-    async function collectImagesFromDiv(divId) {
-        const div = document.getElementById(divId);
-        const imgElements = div.getElementsByTagName('img');
-        const images = [];
-
-        for (const imgElement of imgElements) {
-            const parentDiv = imgElement.parentElement;
-            const parentDivId = parentDiv.id;
-            const imgSrc = imgElement.src;
-
-            // Create a new image object with the new name and data URL
-            images.push({ name: `${parentDivId}.png`, src: imgSrc });
-        }
-
-        return images;
-    }
-
-    window.getImagesFromDivs = function() {
-        var divs = document.querySelectorAll('#zonaAssegnazione .imgButton');
-        var images = [];
-        divs.forEach(function(div) {
-            var img = div.querySelector('img');
-            if (img && img.src) {
-                images.push(img.src);
+    function getDivImages(outputType) {
+        var parentDiv = document.getElementById('zonaAssegnazione');
+        var divs = parentDiv.querySelectorAll('div');
+        console.log(divs.length);
+        var divNames = [];
+        var base64Values = [];
+        console.log("inizio il ciclo per il primo filtro");
+        for (var i = 0; i < divs.length; i++) {
+            console.log(divs[i].id);
+            if(!divs[i].id){
+                console.log("skip: nome div invalido");
+                continue;
             }
-        });
-        return images;
+            var imgElements = divs[i].getElementsByTagName('img');
+            for (var j = 0; j < imgElements.length; j++) {
+                console.log(imgElements[j].src)
+                if(imgElements[j].src.includes('https')){
+                    console.log("skip: url img invalido")
+                    continue;
+                }
+                
+                divNames.push(divs[i].id);
+                base64Values.push(imgElements[j].src.split(',')[1]);
+            }
+        }
+        console.log({ divNames, base64Values });
+
+        console.log({ divNames, base64Values });
+        if (outputType===0) return divNames;
+        else return base64Values;
     }
-    
-    
 </script>
 
 @code {
@@ -691,66 +694,69 @@
 
     private InputFile? inputFile;
     private IReadOnlyList<IBrowserFile> tempFiles;
+    private List<(string divId, IBrowserFile file)> divImages = new();
 
     private async Task StoreTempFiles(InputFileChangeEventArgs e)
     {
-        tempFiles = e.GetMultipleFiles(11); //salvo i file in una lista
+        tempFiles = e.GetMultipleFiles(11); // Save the files in a list
 
         foreach (var file in tempFiles)
         {
-            //leggo i file con un array di byte
+            // Read the file as a byte array
             var format = "image/png";
-            //setto la dimensione massima dell'immagine
             var resizedImageFile = await file.RequestImageFileAsync(format, 100, 100);
             var buffer = new byte[resizedImageFile.Size];
             await resizedImageFile.OpenReadStream().ReadAsync(buffer);
 
-            // converto i byte in un url per caricare l'immagine
+            // Convert the bytes to a data URL to load the image
             var base64Image = Convert.ToBase64String(buffer);
             var dataUrl = $"data:{format};base64,{base64Image}";
 
-            // chiamo una funzione js per caricare le immagini all'interno di un div
-            await JSRuntime.InvokeVoidAsync("appendImageToDiv", "divAnteprima", dataUrl);
+            // Call a JS function to load the images into a div
+            var divId = await JSRuntime.InvokeAsync<string>("appendImageToDiv", "divAnteprima", dataUrl);
+
+            // Add the div id and file to the list
+            divImages.Add((divId, file));
         }
     }
-
+    
     private async Task SaveImages()
 {
-    // Call the JavaScript function to get the images
-    var images = await JSRuntime.InvokeAsync<string[]>("getImagesFromDivs");
-
+    Console.Write("\n\n\n\ninizio la task");
+    // Call the JavaScript function to get the div images
+    var divNames = await JSRuntime.InvokeAsync<string[]>("getDivImages", 0);
+    Console.Write("ho caricato l'array dei nomi");
+    var base64imgs = await JSRuntime.InvokeAsync<string[]>("getDivImages", 1);
+    Console.Write("ho caricato l'array dei nomi");
     // Get the path to the directory where you want to save the images
     var imagesDirectoryPath = Path.Combine(env.WebRootPath, "Images");
-
+    Console.Write("ho caricato il percorso");
     // Ensure the directory exists
     Directory.CreateDirectory(imagesDirectoryPath);
-
+    Console.Write("ho creato la cartella");
     // Save the images to the directory
-    for (int i = 0; i < images.Length; i++)
+    /*foreach (var (divId, imageUrl) in divImages)
     {
-        var image = images[i];
-
-        // The image is in the form of a data URL, so we need to extract the base64 part
-        var base64Index = image.LastIndexOf("base64,");
-        if (base64Index < 0)
-        {
-            // The data URL is not correctly formatted
-            Console.Write("omg url non formattata");
-            continue;
-        }
-        var base64Data = image.Substring(base64Index + "base64,".Length);
         try
         {
-            var bytes = Convert.FromBase64String(base64Data);
+            Console.Write("provo a convertire: "+"divId: "+divId+" imageUrl: "+imageUrl);
+            // Convert the base64 string to a byte array
+            var bytes = Convert.FromBase64String(imageUrl);
 
-            // Save the image
-            await File.WriteAllBytesAsync(Path.Combine(imagesDirectoryPath, $"image{i}.png"), bytes);
+            // Save the image with the div id as the filename
+            await File.WriteAllBytesAsync(Path.Combine(imagesDirectoryPath, $"{divId}.png"), bytes);
         }
-        catch (FormatException)
+        catch (Exception ex)
         {
-            // The base64 part is not correctly formatted
-            Console.Write("omg non formattata");
+            Console.Write($"Error downloading image: {ex.Message}");
         }
+    }*/
+    for (int i = 0; i < 11; i++)
+    {
+        Console.Write("\nprovo a converitre la prima immagine");
+        var bytes = System.Convert.FromBase64String(base64imgs[i]);
+        Console.Write("\nHO CONVERITTO LETSKGOSKIII");
+        await File.WriteAllBytesAsync(Path.Combine(imagesDirectoryPath, $"{divNames[i]}.png"), bytes);
     }
 }
 
