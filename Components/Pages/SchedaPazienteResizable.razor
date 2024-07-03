@@ -605,66 +605,87 @@
 <script>
     var imgIdCounter = 1; // Initialize the counter
     var lastImg=null; //inizializzo l'ultima immagine cliccata
-    //funzione che carica l'immagine di preview
+    
+    /*
+    * Function to append an image to a div
+    * in: divId - the id of the div where the image will be appended | dataUrl - the base64 image
+    * out: the id of the div
+    */
     function appendImageToDiv(divId, dataUrl)
     {
+        //get the div
         var div = document.getElementById(divId);
+        //create the image
         var img = document.createElement('img');
         img.src = dataUrl;
         img.width = 150;
         img.height = 150;
         img.id = 'img' + imgIdCounter;
         img.onclick = function() { refreshLastImg(this.id); };
+        //append the image to the div
         div.appendChild(img);
+        //increment the counter to make the id's unique
         imgIdCounter++;
-
         // Return the id of the div
         return div.id;
     }
     
-    //funzione che aggiorna l'ultima immagine cliccata
+    /*
+    * Funtion that updates the index of last image clicked
+    * in: id - the id of the last image clicked
+    */
     function refreshLastImg(id)
     {
         lastImg = id;
     }
     
-    /*funzione che prende l'ultima immagine selezionata e la imposta come selezionata nel div cliccato*/
+    /*
+    * Funtion that handle the click of the div (append the last image clicked to the div clicked)
+    * in: DivId - the id of the div clicked
+    */
     function divClick(divId)
     {
         var div = document.getElementById(divId);
         var img = document.getElementById(lastImg);
+        //adjust the style
         img.style="width:110px;height:110px;border-radius:10px;";
+        //append the image to the div
         div.appendChild(img);
     }
-
+    
+    /*
+    * Funtion that extract the image o each div and return them in an array
+    * in: outputType - the type of output (0 - div names | 1 - base64 images)
+    * out: the array of div names or base64 images
+    */
     function getDivImages(outputType) {
         var parentDiv = document.getElementById('zonaAssegnazione');
         var divs = parentDiv.querySelectorAll('div');
-        console.log(divs.length);
+        
         var divNames = [];
         var base64Values = [];
-        console.log("inizio il ciclo per il primo filtro");
+        
         for (var i = 0; i < divs.length; i++) {
             console.log(divs[i].id);
             if(!divs[i].id){
-                console.log("skip: nome div invalido");
+                //skip this step : invalid name
                 continue;
             }
+            //cycle the image to get a valid one
             var imgElements = divs[i].getElementsByTagName('img');
             for (var j = 0; j < imgElements.length; j++) {
                 console.log(imgElements[j].src)
                 if(imgElements[j].src.includes('https')){
-                    console.log("skip: url img invalido")
+                    //skip this step : invalid image
                     continue;
                 }
                 
+                //push the associated values in the arrays
                 divNames.push(divs[i].id);
                 base64Values.push(imgElements[j].src.split(',')[1]);
             }
         }
-        console.log({ divNames, base64Values });
-
-        console.log({ divNames, base64Values });
+        //filtering and output the arrays based on the output type
         if (outputType===0) {
             divNames = divNames.filter((element, index) => index % 2 === 0);
             return divNames;
@@ -672,16 +693,21 @@
         base64Values = base64Values.filter((element, index) => index % 2 !== 0);
         return base64Values
     }
-
+    
+    /*
+    * another function to append an image from a file
+    * in: divId - the id of the div where the image will be appended | imageUrl - the url of the image | filename - the name of the image
+    */
     function appendImage(divId, imageUrl, filename) {
         var div = document.getElementById(divId);
         var img = document.createElement('img');
+        
         img.src = imageUrl;
         img.id = filename;
+        //adding the click event to the image to call the c# funtion for switching the page
         img.onclick = function() {
             DotNet.invokeMethodAsync('Delta-Dent', 'SwitchPage', this.id, "@path")
                 .then(result => {
-                    //console.log(result)
                     if (result!=null){
                         location.href='/VisImg'
                     }
@@ -690,6 +716,10 @@
         div.appendChild(img);
     }
     
+    /*
+    * Function to reset the divs
+    * in: divAnteprimaId - the id of the div where the images are stored | zonaAssegnazioneId - the id of the div where the images are assigned
+    */
     function resetDivs(divAnteprimaId, zonaAssegnazioneId)
     {
         var divAnteprima = document.getElementById(divAnteprimaId);
