@@ -1,4 +1,4 @@
-@page "/SchedaPazienteR"
+@page "/SchedaPaziente"
 @using Microsoft.AspNetCore.Mvc
 @using System.Net.Http;
 @rendermode InteractiveServer
@@ -729,10 +729,24 @@
     private IReadOnlyList<IBrowserFile> tempFiles;
     private List<(string divId, IBrowserFile file)> divImages = new();
 
+    ///<summary>
+    /// function that stores the files selected by the user in a list and render them in a list in the html page
+    ///</summary>
+    ///<param name="e">event of the file picker</param>>
     private async Task StoreTempFiles(InputFileChangeEventArgs e)
     {
-        tempFiles = e.GetMultipleFiles(11); // Save the files in a list
-
+        //list where the files will be saved 
+        try
+        {
+            //the user might insert more files then expected and it would crash the program if not handled
+            tempFiles = e.GetMultipleFiles(11);
+        }
+        catch (Exception)
+        {
+            Console.Write("more files uploaded then expected");
+        }
+        
+        //for each file in the list it will be rendered in the html page
         foreach (var file in tempFiles)
         {
             // Read the file as a byte array
@@ -752,48 +766,47 @@
             divImages.Add((divId, file));
         }
     }
-
+    
+    ///<summary>
+    ///funtion that stores the images based on their div id in the folder Images
+    ///</summary>
     private async Task SaveImages()
     {
-        Console.Write("\n\n\n\ninizio la task");
         // Call the JavaScript function to get the div images
+        // the js funtion has 2 different outputs, the first one is the name of the divs and the second one is the base64 images so i load them like this
         var divNames = await JsRuntime.InvokeAsync<string[]>("getDivImages", 0);
-        Console.Write("ho caricato l'array dei nomi");
         string[] base64Imgs = await JsRuntime.InvokeAsync<string[]>("getDivImages", 1);
-        Console.Write("\nimmagini Lette:");
-        int s = 0;
-        foreach (var VARIABLE in base64Imgs)
-        {
-            Console.Write("\n"+s+":"+VARIABLE);
-            s++;
-        }
-        {
-            
-        }
-        Console.Write("ho caricato l'array dei nomi");
+        
         // Get the path to the directory where you want to save the images
         var imagesDirectoryPath = Path.Combine(env.WebRootPath, "Images");
-        Console.Write("ho caricato il percorso");
-        // Ensure the directory exists
+        
+        // Ensure the directory exists by creating it 
         Directory.CreateDirectory(imagesDirectoryPath);
-        Console.Write("ho creato la cartella");
-        // Save the images to the directory
+        
+        //cicle the array to save the images to the directory
         for (int i = 0; i < 11; i++)
         {
-            Console.Write("\nprovo a converitre la prima immagine: " + base64Imgs[i]);
+            //convert the base64 string back to a byte array
             var bytes = System.Convert.FromBase64String(base64Imgs[i]);
-            Console.Write("\nHO CONVERITTO LETSKGOSKIII");
             await File.WriteAllBytesAsync(Path.Combine(imagesDirectoryPath, $"{divNames[i]}.png"), bytes);
         }
-
+        
+        //call the funtion to render them in the appropriate div
         await LoadEsame();
+        //reset the form
         ResetFileUpload();
     }
-
+    
+    ///<summary>
+    ///Funtion that loads the images in the div "esame"
+    ///</summary>
     private async Task LoadEsame()
     {
+        // Get the path to the directory where the image is located
         var imagesDirectoryPath = "./Images";
         var files = Directory.GetFiles(Path.Combine(env.WebRootPath, imagesDirectoryPath));
+        
+        //for each file in the directory it will be rendered in the div "esame"
         foreach (var file in files)
         {
             var fileName = Path.GetFileName(file);
@@ -802,6 +815,9 @@
         }
     }
 
+    ///<summary>
+    ///Funtion that cleans the form after the images are saved
+    ///</summary>
     private void ResetFileUpload()
     {
         // Reset the divs
@@ -814,14 +830,20 @@
     }
 
     public static string path= "./";
+    
+    ///<summary>
+    ///override of the "OnInitialized" function to get the path of the images
+    ///</summary>
     protected override void OnInitialized()
     {
         base.OnInitialized();
         path = env.WebRootPath;
-        Console.Write("envPath" + path);
     }
     
-
+    
+    ///<summary>
+    /// *deprecated* function that switches the page to the image visualization page
+    ///</summary> 
     [JSInvokable]
     public Task SwitchPage(string id)
     {
