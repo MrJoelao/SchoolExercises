@@ -15,12 +15,10 @@ public class DbManager
     private const int LengthHash = 256;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DbManager"/> class and opens a database connection.
+    /// Initializes a new instance of the <see cref="DbManager"/> class.
     /// </summary>
-    /// <param name="connStr">Optional connection string. If null, the connection string from configuration is used.</param>
-    public DbManager(string? connStr = null)
+    public DbManager()
     {
-        OpenConnection(connStr);
     }
 
     /// <summary>
@@ -32,7 +30,7 @@ public class DbManager
         try
         {
             connStr ??= _configuration.GetConnectionString("MySqlConnection");
-            Conn = new MySqlConnection(connStr);
+            Conn = new MySqlConnection("server=localhost;port=3306;database=DeltaDentDB;user=root;password=admin;");
             Conn.Open();
             Console.WriteLine("Connection opened successfully.");
         }
@@ -51,7 +49,7 @@ public class DbManager
         try
         {
             connStr ??= _configuration.GetConnectionString("MySqlConnection");
-            Conn = new MySqlConnection(connStr);
+            Conn = new MySqlConnection("server=localhost;port=3306;database=DeltaDentDB;user=root;password=admin;");
             await Conn.OpenAsync();
             Console.WriteLine("Connection async opened successfully.");
         }
@@ -378,19 +376,19 @@ public class DbManager
     /// </summary>
     /// <param name="patient">The patient object containing the details to be saved.</param>
     /// <returns>Returns true if the patient was successfully saved, otherwise false.</returns>
-    public async Task<bool> SavePatientInDb(Patient patient)
+    public bool SavePatientInDb(Patient patient)
     {
         // Parametrized query to insert a new patient into the database
         string savePatientQuery = "INSERT INTO PATIENT (doctorID, first_name, surname, gender, telephone, cf, c_asl, birth_date, birth_place, foreigner, birth_province, billable, completed, documented, locked) " +
-                                  "VALUES (@DoctorID, @FirstName, @Surname, @Gender, @Telephone, @Phone1, @Phone2, @CF, @CAsl, @BirthDate, @BirthPlace, @Foreigner, @BirthProvince, @Billable, @Completed, @Documented, @Locked)";
+                                  "VALUES (@DoctorID, @FirstName, @Surname, @Gender, @Telephone, @CF, @CAsl, @BirthDate, @BirthPlace, @Foreigner, @BirthProvince, @Billable, @Completed, @Documented, @Locked)";
 
         try
         {
             // Apro la connessione se non è già aperta
-            await OpenConnectionAsync();
+            OpenConnection();
 
             // Creo un comando MySQL per eseguire la query
-            await using var command = new MySqlCommand(savePatientQuery, Conn);
+            using var command = new MySqlCommand(savePatientQuery, Conn);
 
             // Aggiungo i parametri alla query
             command.Parameters.AddWithValue("@DoctorID", patient.DoctorID);
@@ -410,7 +408,7 @@ public class DbManager
             command.Parameters.AddWithValue("@Locked", patient.Locked);
 
             // Eseguo il comando asincrono
-            await command.ExecuteNonQueryAsync();
+            command.ExecuteNonQuery();
 
             //Debug
             Console.WriteLine("Patient saved successfully.");
@@ -423,7 +421,7 @@ public class DbManager
         finally
         {
             // Chiuso la connessione al database
-            await CloseConnectionAsync();
+            CloseConnection();
         }
 
         return true;
