@@ -263,18 +263,17 @@
 }
 
 /*stile applicato al container degli esami*/
-.esameContainer{
+.esameContainer[b-g4vpz0jpe1] {
     border-radius: .5vw;
     border: solid 3px white;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     overflow-y: auto;
-    max-height: 100%;
-    width: 100%;
+    max-height: 26vh;
+    gap: 0;
     min-width: 15rem;
 }
-
 .esameContainer div {
     flex: 0 0 24%;
     margin: 0.5%;

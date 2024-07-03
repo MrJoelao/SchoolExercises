@@ -2,8 +2,11 @@
 @using Microsoft.AspNetCore.Mvc
 @using System.Net.Http;
 @rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+
 @inject IJSRuntime JS
 @inject IWebHostEnvironment env
+
 <!--barra dei pulsanti-->
 <div class="row buttonContainer">
     <button class="utilButton">...</button>
@@ -307,13 +310,13 @@
     </div>
 
     <div class="d-none d-md-flex sez">
-        <div class="esameContainer">
+        <div class="esameContainer gap-0" id="esame">
 
         </div>
     </div>
 
-    <!--scacchiera tasti (meglio non toccare)-->
-    <div class="d-none d-md-flex sez">
+    <!--scacchiera tasti (meglio non toccare....)-->
+    <div class="d-none d-md-flex ms-md-5 sez">
         <div class="scacchiera">
             <div></div>
             <div>INI</div>
@@ -591,7 +594,7 @@
             </div>
             <!-- Linea tasti invia e annulla -->
             <div class="utilsButtonsCOntainer">
-                <button class="annulla" @onclick="ToggleForm">Annulla</button>
+                <button class="annulla" @onclick="ResetFileUpload">Annulla</button>
                 <button class="salva" @onclick="SaveImages">Invia</button>
             </div>
         </div>
@@ -602,7 +605,6 @@
 <script>
     var imgIdCounter = 1; // Initialize the counter
     var lastImg=null; //inizializzo l'ultima immagine cliccata
-    
     //funzione che carica l'immagine di preview
     function appendImageToDiv(divId, dataUrl)
     {
@@ -663,16 +665,47 @@
         console.log({ divNames, base64Values });
 
         console.log({ divNames, base64Values });
-        if (outputType===0) return divNames;
-        else return base64Values;
+        if (outputType===0) {
+            divNames = divNames.filter((element, index) => index % 2 === 0);
+            return divNames;
+        }
+        base64Values = base64Values.filter((element, index) => index % 2 !== 0);
+        return base64Values
+    }
+
+    function appendImage(divId, imageUrl, filename) {
+        var div = document.getElementById(divId);
+        var img = document.createElement('img');
+        img.src = imageUrl;
+        img.id = filename;
+        img.onclick = function() {
+            DotNet.invokeMethodAsync('Delta-Dent', 'SwitchPage', this.id, "@path")
+                .then(result => {
+                    //console.log(result)
+                    if (result!=null){
+                        location.href='/VisImg'
+                    }
+                });
+        };
+        div.appendChild(img);
+    }
+    
+    function resetDivs(divAnteprimaId, zonaAssegnazioneId)
+    {
+        var divAnteprima = document.getElementById(divAnteprimaId);
+        var zonaAssegnazione = document.getElementById(zonaAssegnazioneId);
+
+        // Clear the divs
+        divAnteprima.innerHTML = '';
+        zonaAssegnazione.innerHTML = '';
     }
 </script>
 
-@code {
+@code{
     private bool _isVisible = false; //variabile che cambia la visibilità del form
     private string _ImgPatient = "./assets/test/test.jpg"; //<- DA SOSTITUIRE CON UN FILE EFFETTIVO    
 
-    [Inject] private IJSRuntime JSRuntime { get; set; }
+    [Inject] private IJSRuntime JsRuntime { get; set; }
 
 
     //---------dati paziente------------
@@ -688,7 +721,7 @@
         _isVisible = !_isVisible;
     }
 
-    private async Task OpenFilePicker() => await JSRuntime.InvokeVoidAsync("HTMLElement.prototype.click.call", inputFile!.Element);
+    private async Task OpenFilePicker() => await JsRuntime.InvokeVoidAsync("HTMLElement.prototype.click.call", inputFile!.Element);
 
     //funzione che apre il file picker e salva all'interno di una variabile i file selezionati
 
@@ -713,51 +746,112 @@
             var dataUrl = $"data:{format};base64,{base64Image}";
 
             // Call a JS function to load the images into a div
-            var divId = await JSRuntime.InvokeAsync<string>("appendImageToDiv", "divAnteprima", dataUrl);
+            var divId = await JsRuntime.InvokeAsync<string>("appendImageToDiv", "divAnteprima", dataUrl);
 
             // Add the div id and file to the list
             divImages.Add((divId, file));
         }
     }
-    
+
     private async Task SaveImages()
-{
-    Console.Write("\n\n\n\ninizio la task");
-    // Call the JavaScript function to get the div images
-    var divNames = await JSRuntime.InvokeAsync<string[]>("getDivImages", 0);
-    Console.Write("ho caricato l'array dei nomi");
-    var base64imgs = await JSRuntime.InvokeAsync<string[]>("getDivImages", 1);
-    Console.Write("ho caricato l'array dei nomi");
-    // Get the path to the directory where you want to save the images
-    var imagesDirectoryPath = Path.Combine(env.WebRootPath, "Images");
-    Console.Write("ho caricato il percorso");
-    // Ensure the directory exists
-    Directory.CreateDirectory(imagesDirectoryPath);
-    Console.Write("ho creato la cartella");
-    // Save the images to the directory
-    /*foreach (var (divId, imageUrl) in divImages)
     {
-        try
+        Console.Write("\n\n\n\ninizio la task");
+        // Call the JavaScript function to get the div images
+        var divNames = await JsRuntime.InvokeAsync<string[]>("getDivImages", 0);
+        Console.Write("ho caricato l'array dei nomi");
+        string[] base64Imgs = await JsRuntime.InvokeAsync<string[]>("getDivImages", 1);
+        Console.Write("\nimmagini Lette:");
+        int s = 0;
+        foreach (var VARIABLE in base64Imgs)
         {
-            Console.Write("provo a convertire: "+"divId: "+divId+" imageUrl: "+imageUrl);
-            // Convert the base64 string to a byte array
-            var bytes = Convert.FromBase64String(imageUrl);
+            Console.Write("\n"+s+":"+VARIABLE);
+            s++;
+        }
+        {
+            
+        }
+        Console.Write("ho caricato l'array dei nomi");
+        // Get the path to the directory where you want to save the images
+        var imagesDirectoryPath = Path.Combine(env.WebRootPath, "Images");
+        Console.Write("ho caricato il percorso");
+        // Ensure the directory exists
+        Directory.CreateDirectory(imagesDirectoryPath);
+        Console.Write("ho creato la cartella");
+        // Save the images to the directory
+        for (int i = 0; i < 11; i++)
+        {
+            Console.Write("\nprovo a converitre la prima immagine: " + base64Imgs[i]);
+            var bytes = System.Convert.FromBase64String(base64Imgs[i]);
+            Console.Write("\nHO CONVERITTO LETSKGOSKIII");
+            await File.WriteAllBytesAsync(Path.Combine(imagesDirectoryPath, $"{divNames[i]}.png"), bytes);
+        }
 
-            // Save the image with the div id as the filename
-            await File.WriteAllBytesAsync(Path.Combine(imagesDirectoryPath, $"{divId}.png"), bytes);
-        }
-        catch (Exception ex)
-        {
-            Console.Write($"Error downloading image: {ex.Message}");
-        }
-    }*/
-    for (int i = 0; i < 11; i++)
-    {
-        Console.Write("\nprovo a converitre la prima immagine");
-        var bytes = System.Convert.FromBase64String(base64imgs[i]);
-        Console.Write("\nHO CONVERITTO LETSKGOSKIII");
-        await File.WriteAllBytesAsync(Path.Combine(imagesDirectoryPath, $"{divNames[i]}.png"), bytes);
+        await LoadEsame();
+        ResetFileUpload();
     }
-}
 
+    private async Task LoadEsame()
+    {
+        var imagesDirectoryPath = "./Images";
+        var files = Directory.GetFiles(Path.Combine(env.WebRootPath, imagesDirectoryPath));
+        foreach (var file in files)
+        {
+            var fileName = Path.GetFileName(file);
+            var imageUrl = imagesDirectoryPath + "/" + fileName;
+            await JsRuntime.InvokeVoidAsync("appendImage", "esame", imageUrl, fileName);
+        }
+    }
+
+    private void ResetFileUpload()
+    {
+        // Reset the divs
+        JsRuntime.InvokeVoidAsync("resetDivs", "divAnteprima", "zonaAssegnazione");
+
+        // Reinitialize the variables
+        tempFiles = Array.Empty<IBrowserFile>();
+        divImages.Clear();
+        ToggleForm();
+    }
+
+    public static string path= "./";
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        path = env.WebRootPath;
+        Console.Write("envPath" + path);
+    }
+    
+
+    [JSInvokable]
+    public Task SwitchPage(string id)
+    {
+        Console.Write("\nsto entrando nello switchingg");
+        // Get the path to the directory where the image is located
+        var imagesDirectoryPath = Path.Combine(env.WebRootPath, "Images");
+
+        // Get the path to the image file
+        Console.Write("\nidImmagine:"+id);
+        var imagePath = Path.Combine(imagesDirectoryPath, id);
+        var imagePathWithoutExtension = imagePath.Substring(0, imagePath.LastIndexOf(".png"));
+        Console.Write("\npath img: " + imagePathWithoutExtension);
+        Console.Write("\npath img: " + imagePath);
+        // Check if the image file exists
+        if (File.Exists(imagePath))
+        {   
+            Console.Write("\nl'immagine esiste -> procedo");
+            // Get the path to the directory where you want to copy the image
+            var tempImagesDirectoryPath = Path.Combine(env.WebRootPath, "tempImg");
+
+            // Ensure the directory exists
+            Directory.CreateDirectory(tempImagesDirectoryPath);
+
+            // Get the path to the new image file
+            var newImagePath = Path.Combine(tempImagesDirectoryPath, "temp.png");
+
+            // Copy the image file and overwrite if the file already exists
+            File.Copy(imagePath, newImagePath, true);
+        }
+
+        return Task.CompletedTask;
+    }
 }
