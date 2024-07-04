@@ -382,9 +382,7 @@
 }
 
 
-
-/*** DA SISTEMARE **/
-
+/*style applied to the form container*/
 .infoForm{
     display:flex;
     margin-left: 0.5%;
@@ -395,6 +393,8 @@
     width: 100%;
     font-weight: bold;
 }
+
+
 .fileBar{
     margin-left: 5px;
     padding: 1rem;
@@ -483,22 +483,9 @@
     font-weight: bold;
 }
 
-/*per safari & google*/
-.buttonContainer::-webkit-scrollbar {
-    height: 5px;
-    background-color: #3D7BD9;
-    border-radius: 10rem;
-}
-
-/*per firefox*/
-.buttonContainer {
-    scrollbar-width: thin;
-    scrollbar-color: #3D7BD9 #fff;
-}
-
 .previews{
     text-align: center;
-    width:30%;
+    width:300px;
     background-color: #3D7BD9;
     border-radius: 10px;
     min-height: 30rem;
@@ -512,7 +499,6 @@
     height: 100px;
 }
 
-
 .imgUpload{
     background-color: #3D7BD9 ;
     border-radius: 10px;
@@ -520,15 +506,7 @@
     height:110px;
 }
 
-.imgUploaded{
-    width:90px;
-    height:90px;
-}
-
-.imgNotUploaded{
-    width:150px;
-    height:150px;
-}
+/*style applied to the buttons container*/
 
 .utilsButtonsCOntainer{
     background-color: #B4D1F0;
@@ -541,6 +519,7 @@
     font-size: 0.9rem;
 }
 
+/*style applied to the assegnazioni container*/
 .assegnazioni{
     padding:10px;
     gap:4px;
@@ -553,6 +532,8 @@
     max-width: 30rem;
     margin-left:3%;
 }
+
+/*style applied to the radio button container*/
 
 .radioContainer{
     margin-left: 0.5rem;
@@ -568,6 +549,7 @@
     padding-right: 0.5rem;
 }
 
+/*style appliyed to the exit button*/
 .annulla{
     width:25%;
     border:none;
@@ -582,6 +564,7 @@
     left: 0.5rem;
 }
 
+/*style applied to the save button*/
 .salva{
     margin-left: 49%;
     width:25%;

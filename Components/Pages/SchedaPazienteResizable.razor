@@ -684,7 +684,9 @@
         }
         //filtering and output the arrays based on the output type
         if (outputType===0) {
-            divNames = divNames.filter(element => element !== undefined);
+            divNames = divNames.filter((element, index, self) =>
+                element !== undefined && self.indexOf(element) === index
+            );
             return divNames;
         }
         base64Values = base64Values.filter(element => element !== undefined);
@@ -807,6 +809,7 @@
         var imagesDirectoryPath = Path.Combine(env.WebRootPath, "Images");
         
         // Ensure the directory exists by creating it 
+        Directory.Delete(imagesDirectoryPath, true);
         Directory.CreateDirectory(imagesDirectoryPath);
         Console.Write(divNames.Length);
         Console.Write(base64Imgs.Length);
@@ -819,7 +822,7 @@
         }
         
         //call the funtion to render them in the appropriate div
-        LoadEsame();
+        await LoadEsame();
         //reset the form
         ResetFileUpload();
     }
@@ -827,8 +830,9 @@
     ///<summary>
     ///Funtion that loads the images in the div "esame"
     ///</summary>
-    private void LoadEsame()
+    private async Task LoadEsame()
     {
+        Console.Write("Loading images...");
         // Get the path to the directory where the image is located
         var imagesDirectoryPath = "./Images";
         var files = Directory.GetFiles(Path.Combine(env.WebRootPath, imagesDirectoryPath));
@@ -838,8 +842,10 @@
         {
             var fileName = Path.GetFileName(file);
             var imageUrl = imagesDirectoryPath + "/" + fileName;
-            JsRuntime.InvokeVoidAsync("appendImage", "esame", imageUrl, fileName);
+            await JsRuntime.InvokeVoidAsync("appendImage", "esame", imageUrl, fileName);
         }
+
+        return;
     }
 
     ///<summary>
@@ -864,7 +870,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        path = env.WebRootPath;
+        LoadEsame();
     }
     
     
