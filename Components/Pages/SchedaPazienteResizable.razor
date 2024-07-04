@@ -601,11 +601,10 @@
     </div>
 }
 
-
 <script>
     var imgIdCounter = 1; // Initialize the counter
     var lastImg=null; //inizializzo l'ultima immagine cliccata
-    
+    var path = './wwwroot/'; //path of the images
     /*
     * Function to append an image to a div
     * in: divId - the id of the div where the image will be appended | dataUrl - the base64 image
@@ -629,7 +628,7 @@
         // Return the id of the div
         return div.id;
     }
-    
+
     /*
     * Funtion that updates the index of last image clicked
     * in: id - the id of the last image clicked
@@ -638,7 +637,7 @@
     {
         lastImg = id;
     }
-    
+
     /*
     * Funtion that handle the click of the div (append the last image clicked to the div clicked)
     * in: DivId - the id of the div clicked
@@ -648,11 +647,11 @@
         var div = document.getElementById(divId);
         var img = document.getElementById(lastImg);
         //adjust the style
-        img.style="width:110px;height:110px;border-radius:10px;";
+        img.style='width:110px;height:110px;border-radius:10px;';
         //append the image to the div
         div.appendChild(img);
     }
-    
+
     /*
     * Funtion that extract the image o each div and return them in an array
     * in: outputType - the type of output (0 - div names | 1 - base64 images)
@@ -661,12 +660,11 @@
     function getDivImages(outputType) {
         var parentDiv = document.getElementById('zonaAssegnazione');
         var divs = parentDiv.querySelectorAll('div');
-        
+
         var divNames = [];
         var base64Values = [];
-        
+
         for (var i = 0; i < divs.length; i++) {
-            console.log(divs[i].id);
             if(!divs[i].id){
                 //skip this step : invalid name
                 continue;
@@ -674,12 +672,11 @@
             //cycle the image to get a valid one
             var imgElements = divs[i].getElementsByTagName('img');
             for (var j = 0; j < imgElements.length; j++) {
-                console.log(imgElements[j].src)
                 if(imgElements[j].src.includes('https')){
                     //skip this step : invalid image
                     continue;
                 }
-                
+
                 //push the associated values in the arrays
                 divNames.push(divs[i].id);
                 base64Values.push(imgElements[j].src.split(',')[1]);
@@ -687,13 +684,13 @@
         }
         //filtering and output the arrays based on the output type
         if (outputType===0) {
-            divNames = divNames.filter((element, index) => index % 2 === 0);
+            divNames = divNames.filter(element => element !== undefined);
             return divNames;
         }
-        base64Values = base64Values.filter((element, index) => index % 2 !== 0);
+        base64Values = base64Values.filter(element => element !== undefined);
         return base64Values
     }
-    
+
     /*
     * another function to append an image from a file
     * in: divId - the id of the div where the image will be appended | imageUrl - the url of the image | filename - the name of the image
@@ -701,12 +698,12 @@
     function appendImage(divId, imageUrl, filename) {
         var div = document.getElementById(divId);
         var img = document.createElement('img');
-        
+
         img.src = imageUrl;
         img.id = filename;
         //adding the click event to the image to call the c# funtion for switching the page
         img.onclick = function() {
-            DotNet.invokeMethodAsync('Delta-Dent', 'SwitchPage', this.id, "@path")
+            DotNet.invokeMethodAsync('Delta-Dent', 'SwitchPage', this.id, path)
                 .then(result => {
                     if (result!=null){
                         location.href='/VisImg'
@@ -715,7 +712,7 @@
         };
         div.appendChild(img);
     }
-    
+
     /*
     * Function to reset the divs
     * in: divAnteprimaId - the id of the div where the images are stored | zonaAssegnazioneId - the id of the div where the images are assigned
@@ -736,8 +733,7 @@
     private string _ImgPatient = "./assets/test/test.jpg"; //<- DA SOSTITUIRE CON UN FILE EFFETTIVO    
 
     [Inject] private IJSRuntime JsRuntime { get; set; }
-
-
+    
     //---------dati paziente------------
     private string nomePaziente = "Marco", cognomePaziente = "rocciA";
 
@@ -812,9 +808,10 @@
         
         // Ensure the directory exists by creating it 
         Directory.CreateDirectory(imagesDirectoryPath);
-        
+        Console.Write(divNames.Length);
+        Console.Write(base64Imgs.Length);
         //cicle the array to save the images to the directory
-        for (int i = 0; i < 11; i++)
+        for (int i = 0; i < base64Imgs.Length; i++)
         {
             //convert the base64 string back to a byte array
             var bytes = System.Convert.FromBase64String(base64Imgs[i]);
@@ -822,7 +819,7 @@
         }
         
         //call the funtion to render them in the appropriate div
-        await LoadEsame();
+        LoadEsame();
         //reset the form
         ResetFileUpload();
     }
@@ -830,7 +827,7 @@
     ///<summary>
     ///Funtion that loads the images in the div "esame"
     ///</summary>
-    private async Task LoadEsame()
+    private void LoadEsame()
     {
         // Get the path to the directory where the image is located
         var imagesDirectoryPath = "./Images";
@@ -841,7 +838,7 @@
         {
             var fileName = Path.GetFileName(file);
             var imageUrl = imagesDirectoryPath + "/" + fileName;
-            await JsRuntime.InvokeVoidAsync("appendImage", "esame", imageUrl, fileName);
+            JsRuntime.InvokeVoidAsync("appendImage", "esame", imageUrl, fileName);
         }
     }
 
