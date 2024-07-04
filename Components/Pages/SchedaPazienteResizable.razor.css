@@ -262,7 +262,7 @@
 }
 
 /*stile applicato al container degli esami*/
-.esameContainer[b-g4vpz0jpe1] {
+.esameContainer{
     border-radius: .5vw;
     border: solid 3px white;
     display: flex;
@@ -271,12 +271,36 @@
     overflow-y: auto;
     max-height: 26vh;
     gap: 0;
-    min-width: 15rem;
+    min-width: 20vw;
 }
 .esameContainer div {
     flex: 0 0 24%;
     margin: 0.5%;
 }
+
+/*stile applicato al container delle visite*/
+.visitsBtnContainer{
+    background-color: #3D7BD9;
+    border-radius: 0.4vw;
+    min-height: 4rem;
+    max-height: 4rem;
+}
+
+.btnVisita{
+    width: 30%;
+    height: 70%;
+    background-color: #DFEFFF;
+    border-radius: 0.4vw;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: filter 0.3s;
+}
+
+.btnVisita:hover{
+    filter: brightness(0.8);
+}
+
 
 
 /*media query per rendere la pagina resizable*/
