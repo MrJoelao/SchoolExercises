@@ -469,7 +469,7 @@
 
 <!--terza sezione-->
 <div class="row fill-page mt-2 section flex-nowrap overflow-auto">
-
+    <div class="container-fluid visitsBtnContainer"></div>
 </div>
 </div>
 </div>
@@ -482,14 +482,14 @@
         <div class="formAggiunta">
             <!-- Prima linea -->
             <div class="infoForm">
-                <div class="inline elemento">DATA<input class="inputFormData" type="date"/></div>
+                <div class="inline elemento">DATA<input class="me-1 inputFormData" type="date"/></div>
                 <div class="inline elemento">
                     TIPO SERIE
-                    <select type="select" class="inputFormSelezione" placeholder=" ">
+                    <select type="select" class="me-1 inputFormSelezione" placeholder=" ">
                         <option value="p">Prova</option>
                     </select>
                 </div>
-                <div class="inline elemento">NOTE<input class="inputForm" type="text"/></div>
+                <div class="inline elemento">NOTE<input class="me-1 border-0" type="text"/></div>
             </div>
             <!-- Seconda linea -->
             <div class="inline seconda">
@@ -822,7 +822,7 @@
         }
         
         //call the funtion to render them in the appropriate div
-        await LoadEsame();
+        LoadEsame();
         //reset the form
         ResetFileUpload();
     }
@@ -830,7 +830,7 @@
     ///<summary>
     ///Funtion that loads the images in the div "esame"
     ///</summary>
-    private async Task LoadEsame()
+    private void LoadEsame()
     {
         Console.Write("Loading images...");
         // Get the path to the directory where the image is located
@@ -842,7 +842,7 @@
         {
             var fileName = Path.GetFileName(file);
             var imageUrl = imagesDirectoryPath + "/" + fileName;
-            await JsRuntime.InvokeVoidAsync("appendImage", "esame", imageUrl, fileName);
+            JsRuntime.InvokeVoidAsync("appendImage", "esame", imageUrl, fileName);
         }
 
         return;
@@ -867,11 +867,12 @@
     ///<summary>
     ///override of the "OnInitialized" function to get the path of the images
     ///</summary>
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
         LoadEsame();
     }
+    
+    
     
     
     ///<summary>
