@@ -106,9 +106,8 @@
     cursor: pointer;
 }
 
-.fill-page{
-    min-height: 44.5vh;
-    max-height: 44.5vh;
+.fill-page {
+    flex-grow: 1;
     overflow-y: auto;
 }
 
