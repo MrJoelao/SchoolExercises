@@ -11,6 +11,7 @@
     <ItemGroup>
       <None Include="wwwroot\assets\loginAssets\dottore.svg" />
       <None Remove="prova.txt" />
+      <None Include="wwwroot\uploads\.gitkeep" />
     </ItemGroup>
 
     <ItemGroup>
@@ -20,6 +21,10 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="MySqlConnector" Version="2.3.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\tempImg\" />
     </ItemGroup>
 
 </Project>

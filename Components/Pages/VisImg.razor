@@ -35,7 +35,7 @@
 <div class="mainBody">
     <div class="bigDiv">
         <div>
-            <img src="@_imgSrc"/>
+            <img src="./tempImg/temp.png"/>
         </div>
     </div>
     <!-- Menù a destra -->
@@ -107,8 +107,8 @@
     
     protected override async Task OnInitializedAsync()
     {
-        _imgSrc = Directory.GetFiles(Path.Combine(env.ContentRootPath, _directory), "*.png")[0];
-        Console.WriteLine(_imgSrc);
+        //loadImg();
     }
+
     
 }

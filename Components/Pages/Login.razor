@@ -1,106 +1,183 @@
 @page "/"
 @page "/Login"
 
-@using Bogus.DataSets
-@inject IConfiguration Configuration
 @rendermode InteractiveServer
 @inject NavigationManager NavManager
 
-<PageTitle>Login</PageTitle>
-<div class="login-page mainSection">
-    <div class="headerRow">
-        <!-- Parte sinistra della finestra -->
-        <div class="brandingGroup">
-            <img class="coverImage" src="./assets/loginAssets/sfondoBlu.png" alt="alt text"/>
-            <div class="titleContent">
-                <div class="titlesGrid">
-                    <h1 class="mainTitle">DeltaDent Web</h1>
-                    <h3 class="mainSubtitle">La tua scelta per un futuro web</h3>
+<!--sfondo-->
+<div class="bg align-items-center">
+    <!--stile per la forma del form-->
+    <div class="loginForm align-content-center">
+        <!--sezione del register-->
+        <div class="col-sm-7 fadeBlu">
+            <div class="col-12 align-content-center padd doctorImg">
+                <div class="card">
+                    <div>
+                        <h3 class="registerTitle">DeltaDent Web</h3>
+                    </div>
+                    <div>
+                        <p class="registerParagraph">La tua scelta per un futuro web</p>
+                    </div>
+                    <div>
+                        <button class="registerButton" @onclick="ToggleForm">
+                            registrati
+                        </button>
+                    </div>
                 </div>
-                <button class="registerButton" @onclick="ToggleRegistration">Registrati</button>
             </div>
-            <img class="headerIcon" src="./assets/loginAssets/dottore.svg" alt="alt text"/>
         </div>
-        <!-- Parte destra della finestra -->
-        <div class="loginGroup">
-            <div class="backgroundRectangle"></div>
-            <div class="loginContent">
-                <div class="welcomeHeader">
-                    <h1 class="heroTitle">Ciao!</h1>
-                    <h3 class="welcomeSubtitle">Benvenuto</h3>
+        <!--sezione del login-->
+        <div class="col-12 col-sm-5  loginSide align-content-center">
+            <div class="card text-center align-content-center">
+                <div>
+                    <h3 class="registerTitle" style="color: #2D2D2D">
+                        Ciao!
+                    </h3>
                 </div>
-                <div class="emailBox">
-                    <input type="email" @bind="_loggingEmail" class="BoxRow imageEmail" maxlength="100"/>
+                <!--sottotitolo-->
+                <div>
+                    <p class="registerParagraph" style="color: #2D2D2D">benvenuto</p>
                 </div>
-                <div class="passwordBox">
-                    <input type="password" @bind="_loggingPassword" class="BoxRow imagePassword" maxlength="100"/>
+                <!--form mail-->
+                <div>
+                    <input @bind="_loggingEmail" class="inputLogin mail" type="text" placeholder="Mail"/>
                 </div>
-                <button class="loginButton" @onclick="TryLogin">Login</button>
-                <h5 class="forgotPassword">Password dimenticata</h5>
+                <!--form password-->
+                <div>
+                    <input @bind="_loggingPassword" class="inputLogin password" type="password" placeholder="Password"/>
+                </div>
+                <!--pulsante login-->
+                <div>
+                    <button @onclick="TryLogin" class="loginbtn">Login</button>
+                </div>
+                <!--pulsante registrati -->
+                <div class="registerMob pt-1">
+                    <p class="registerParagraph" style="color: #2D2D2D">oppure</p>
+                    <button class="registerButtonMob" @onclick="ToggleForm">
+                        registrati
+                    </button>
+                </div>
                 @if (_errLogin)
                 {
-                    <h5 class="errorMessage">Email e/o password errata</h5>
+                <h5 class="errorMessage">Email e/o password errata</h5>
                 }
             </div>
         </div>
     </div>
+
+    @if (_visible)
+    {
+        <div class="oscuramento">
+            <div class="registerForm text-center">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="registerTitle resize" style="color: #1a1e21">Registrazione</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">nome</p>
+                        <input @bind="_registerName" class="inputRegister" type="text" placeholder="Name"/>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">cognome</p>
+                        <input @bind="_registerSurname" class="inputRegister" type="text" placeholder="Surname"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">Sesso</p>
+                        <select @bind="_genderString" type="select" class="inputRegister">
+                            <option value="m">Maschio</option>
+                            <option value="f">Femmina</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">telefono</p>
+                        <input @bind="_telephoneDoctor" class="inputRegister" type="tel" placeholder="Telephone"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">email</p>
+                        <input @bind="_registerEmail" class="inputRegister" type="text" placeholder="Email"/>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">password</p>
+                        <input @bind="_registerPassword" class="inputRegister" type="password" placeholder="Password"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">indirizzo</p>
+                        <input @bind="_address" class="inputRegister" type="text" placeholder="Adress"/>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">Data di nascita</p>
+                        <input @bind="_birthdate" class="inputRegister" type="date" placeholder="Adress"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                    @if (_errReg)
+                    {
+                        <p class="errorMessage mt-1">
+                            Si è verificato un errore, verificare i dati immessi
+                        </p>
+                    }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="formbtn annulla" @onclick="ToggleForm">
+                            annulla
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button class="formbtn conferma" @onclick="HandleRegistration">
+                            conferma
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
-@if (_regForm)
-{
-    <form class="form" @onsubmit="HandleRegistration">
-        <p class="title">Registrazione</p>
-        <p class="message">Registrati subito per avere accesso a DeltaDent Web</p>
-        <div class="flex">
-            <label>
-                <input @bind="_registerName" placeholder="Nome" type="text" class="input" maxlength="25">
-                <span>Nome</span>
-            </label>
-            <label>
-                <input @bind="_registerSurname" placeholder="Cognome" type="text" class="input" maxlength="25">
-                <span>Cognome</span>
-            </label>
-        </div>
-        <label>
-            <input @bind="_registerEmail" placeholder="Email" type="email" class="input" maxlength="100">
-            <span>Email</span>
-        </label>
-        <label>
-            <input @bind="_registerPassword" placeholder="Password" type="password" class="input" maxlength="100">
-            <span>Password</span>
-        </label>
-        <label>
-            <input @bind="_registerConfirmPassword" placeholder="Conferma Password" type="password" class="input" maxlength="100">
-            <span>Conferma password</span>
-        </label>
-        @if (_errReg)
-        {
-            <div class="message">Si è verificato un errore, verificare i dati immessi</div>
-        }
-        <button class="submit" type="submit">Submit</button>
-    </form>
-}
-
-@code {
-    private DbManager db = new DbManager();     // Oggetto utilizzato globalmente nella pagina per interrogare il DB
-    private bool _regForm = false;       // Bool per mostrare il form di registrazione
+@code{
+    private bool _visible;
     private bool _errReg = false;        // Bool per mostrare un errore nel form di registrazione
     private bool _errLogin = false;      // Bool per mostrare un errore nel login
 
-    private string _registerName { get; set; }        // Stringa per salvare il nome del medico registrante
-    private string _registerSurname { get; set; }     // Stringa per salvare il cognome del medico registrante
-    private string _registerEmail { get; set; }       // Stringa per salvare la mail del medico registrante
-    private string _registerPassword { get; set; }        // Stringa per salvare la password del medico registrante
-    private string _registerConfirmPassword { get; set; }        // Stringa per verificare il corretto inserimento dellap pssword
-    private string _loggingEmail { get; set; }       // Stringa per salvare l'email del medico loggante
-    private string _loggingPassword { get; set; }       // Stringa per salvare la password del medico loggante
+    private DbManager _db = new DbManager();     // Oggetto utilizzato globalmente nella pagina per interrogare il DB
+    private string? _registerName;        // Stringa per salvare il nome del medico registrante
+    private string? _registerSurname;     // Stringa per salvare il cognome del medico registrante
+    private string? _registerEmail;       // Stringa per salvare la mail del medico registrante
+    private string? _registerPassword;        // Stringa per salvare la password del medico registrante
+    private string? _loggingEmail;       // Stringa per salvare l'email del medico loggante
+    private string? _loggingPassword;       // Stringa per salvare la password del medico loggante
+    private string? _genderString; // Sesso del dottore
+    private string? _telephoneDoctor; // Telefono del dottore
+    private string? _address; // Via del dottore
+    private DateTime _birthdate; // Data del dottore
+    private Doctor? _doctor; // Istanza del dottore
 
-    private Doctor _doctor;
-
+    /// <summary>
+    /// Handles the registration process for a new doctor.
+    /// </summary>
+    /// <remarks>
+    /// This method performs several key actions in the registration process:
+    /// - It creates a new Doctor object with the provided registration details.
+    /// - It checks if the doctor's details are valid and if the doctor already exists in the database.
+    /// - If the details are valid and the doctor does not exist, it proceeds to register the doctor in the database.
+    /// - After successful registration, it resets the login form fields and closes the registration form.
+    /// </remarks>
+    /// <returns>A Task representing the asynchronous operation of the registration process.</returns>
     private async Task HandleRegistration()
     {
-        _doctor = new Doctor(_registerName, _registerSurname, true, new DateTime(2001, 10, 10), _registerEmail, _registerPassword, "0000000000", "default");
-        if (!_doctor.AreValuesInvalid() || _registerPassword != _registerConfirmPassword  || await db.CheckDoctorExistAsync(_registerEmail))
+        _doctor = new Doctor(_registerName!, _registerSurname!, (_genderString != "m"), _birthdate, _registerEmail!, _registerPassword!, _telephoneDoctor!, _address!);
+
+        if (!_doctor.CheckInputs(true) || await _db.CheckDoctorExistAsync(_registerEmail!))
         {
             // Mostro l'errore
             _errReg = true;
@@ -112,47 +189,61 @@
         _errReg = false;
 
         // Eseguo la query
-        if (!(await db.RegisterDoctorQuery(_registerName, _registerSurname, _registerEmail, _registerPassword)))
+        if (!(await _db.RegisterDoctorQuery(_doctor)))
         {
             return;
         }
 
         // Faccio il reset dei campi del login
-        resetTextLogin();
+        ResetTextLogin();
+
+        // Chiude il form
+        ToggleForm();
     }
 
-    // Funzione per resettare i campi del form di registrazione
-    private void resetTextLogin()
+
+    /// <summary>
+    /// Resets the text fields related to the login form to their default values.
+    /// </summary>
+    private void ResetTextLogin()
     {
         _registerName = string.Empty;
         _registerSurname = string.Empty;
         _registerEmail = string.Empty;
         _registerPassword = string.Empty;
-        _registerConfirmPassword = string.Empty;
     }
 
-    private void ToggleRegistration() => _regForm = !_regForm;
-
-    // Funzione che verifica se email e password corrispondono a quelle registrate nel DB, e permette o meno l'ingresso nel resto del sito
+    /// <summary>
+    /// Attempts to log in a user by verifying their email and password against the database.
+    /// </summary>
+    /// <remarks>
+    /// This method performs several checks:
+    /// - Verifies if the doctor exists in the database using their email.
+    /// - Checks if the provided password matches the one stored in the database for the given email.
+    /// - Retrieves the doctor's ID from the database if the login credentials are correct.
+    /// - Navigates to the doctor's profile page upon successful login.
+    /// If any of the checks fail, it sets an error flag and logs the specific error.
+    /// </remarks>
+    /// <returns>A Task representing the asynchronous operation of the login process.</returns>
     private async Task TryLogin()
     {
         _errLogin = false;
 
-        if (!(await db.CheckDoctorExistAsync(_loggingEmail)))
+        if (!(await _db.CheckDoctorExistAsync(_loggingEmail!)))
         {
             _errLogin = true;
             Console.WriteLine("Doctor does not exist");
             return;
         }
 
-        if ( !(await db.CheckDoctorCredentialsAsync(_loggingEmail, _loggingPassword)))
+        if (!(await _db.CheckDoctorCredentialsAsync(_loggingEmail!, _loggingPassword!)))
         {
             _errLogin = true;
             Console.WriteLine("Doctor password is incorrect");
             return;
         }
 
-        int? medID = await db.GetDoctorIdAsync(_loggingEmail);
+        int? medID = await _db.GetDoctorIdAsync(_loggingEmail!);
 
         if (medID == null)
         {
@@ -162,6 +253,18 @@
         }
 
         NavManager.NavigateTo($"/Anagrafica/{medID}");
+    }
+
+    /// <summary>
+    /// Toggles the visibility of the registration form.
+    /// </summary>
+    /// <remarks>
+    /// This method inverses the visibility state of the registration form and resets any registration error flags.
+    /// </remarks>
+    private void ToggleForm()
+    {
+        _visible = !_visible;
+        _errReg = false;
     }
 
 }
