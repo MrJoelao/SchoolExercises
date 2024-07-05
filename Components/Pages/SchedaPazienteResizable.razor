@@ -826,7 +826,7 @@
         }
         
         //call the funtion to render them in the appropriate div
-        LoadEsame();
+        await LoadEsame();
         //reset the form
         ResetFileUpload();
     }
@@ -834,7 +834,7 @@
     ///<summary>
     ///Funtion that loads the images in the div "esame"
     ///</summary>
-    private void LoadEsame()
+    private async Task LoadEsame()
     {
         Console.Write("Loading images...");
         // Get the path to the directory where the image is located
