@@ -40,6 +40,7 @@ public class PageSwitcher
             var tempImagesDirectoryPath = Path.Combine(path, "tempImg");
 
             // Ensure the directory exists
+            Directory.Delete(tempImagesDirectoryPath, true);
             Directory.CreateDirectory(tempImagesDirectoryPath);
 
             // Get the path to the new image file

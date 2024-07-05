@@ -106,9 +106,8 @@
     cursor: pointer;
 }
 
-.fill-page{
-    min-height: 44.5vh;
-    max-height: 44.5vh;
+.fill-page {
+    flex-grow: 1;
     overflow-y: auto;
 }
 
@@ -263,7 +262,7 @@
 }
 
 /*stile applicato al container degli esami*/
-.esameContainer[b-g4vpz0jpe1] {
+.esameContainer{
     border-radius: .5vw;
     border: solid 3px white;
     display: flex;
@@ -272,12 +271,36 @@
     overflow-y: auto;
     max-height: 26vh;
     gap: 0;
-    min-width: 15rem;
+    min-width: 20vw;
 }
 .esameContainer div {
     flex: 0 0 24%;
     margin: 0.5%;
 }
+
+/*stile applicato al container delle visite*/
+.visitsBtnContainer{
+    background-color: #3D7BD9;
+    border-radius: 0.4vw;
+    min-height: 4rem;
+    max-height: 4rem;
+}
+
+.btnVisita{
+    width: 30%;
+    height: 70%;
+    background-color: #DFEFFF;
+    border-radius: 0.4vw;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: filter 0.3s;
+}
+
+.btnVisita:hover{
+    filter: brightness(0.8);
+}
+
 
 
 /*media query per rendere la pagina resizable*/
@@ -383,9 +406,7 @@
 }
 
 
-
-/*** DA SISTEMARE **/
-
+/*style applied to the form container*/
 .infoForm{
     display:flex;
     margin-left: 0.5%;
@@ -396,6 +417,8 @@
     width: 100%;
     font-weight: bold;
 }
+
+
 .fileBar{
     margin-left: 5px;
     padding: 1rem;
@@ -484,22 +507,9 @@
     font-weight: bold;
 }
 
-/*per safari & google*/
-.buttonContainer::-webkit-scrollbar {
-    height: 5px;
-    background-color: #3D7BD9;
-    border-radius: 10rem;
-}
-
-/*per firefox*/
-.buttonContainer {
-    scrollbar-width: thin;
-    scrollbar-color: #3D7BD9 #fff;
-}
-
 .previews{
     text-align: center;
-    width:30%;
+    width:300px;
     background-color: #3D7BD9;
     border-radius: 10px;
     min-height: 30rem;
@@ -513,7 +523,6 @@
     height: 100px;
 }
 
-
 .imgUpload{
     background-color: #3D7BD9 ;
     border-radius: 10px;
@@ -521,15 +530,7 @@
     height:110px;
 }
 
-.imgUploaded{
-    width:90px;
-    height:90px;
-}
-
-.imgNotUploaded{
-    width:150px;
-    height:150px;
-}
+/*style applied to the buttons container*/
 
 .utilsButtonsCOntainer{
     background-color: #B4D1F0;
@@ -542,6 +543,7 @@
     font-size: 0.9rem;
 }
 
+/*style applied to the assegnazioni container*/
 .assegnazioni{
     padding:10px;
     gap:4px;
@@ -554,6 +556,8 @@
     max-width: 30rem;
     margin-left:3%;
 }
+
+/*style applied to the radio button container*/
 
 .radioContainer{
     margin-left: 0.5rem;
@@ -569,6 +573,7 @@
     padding-right: 0.5rem;
 }
 
+/*style appliyed to the exit button*/
 .annulla{
     width:25%;
     border:none;
@@ -583,6 +588,7 @@
     left: 0.5rem;
 }
 
+/*style applied to the save button*/
 .salva{
     margin-left: 49%;
     width:25%;

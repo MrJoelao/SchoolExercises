@@ -42,7 +42,7 @@
 <div class="row body">
 
 <!--informazioni paziente-->
-<div class="col-12 d-block col-md-5 col-lg-3 d-flex flex-column justify-content-center align-items-center">
+<div class="col-12 d-block col-md-5 col-lg-3 d-flex pt-0 flex-column align-items-center">
     <div class="patientInfo justify-content-center pt-3">
 
         <!--immagine paziente-->
@@ -190,7 +190,7 @@
 
 
 <!--corpo centrale-->
-<div class="d-none d-md-block col-12 col-md-7 col-xl-8">
+<div class="d-none d-md-flex flex-column col-md-7 col-xl-8">
 <!--prima sezione-->
 <div class="row section flex-nowrap overflow-auto">
     <div class="col">
@@ -469,7 +469,11 @@
 
 <!--terza sezione-->
 <div class="row fill-page mt-2 section flex-nowrap overflow-auto">
-
+    <div class="container-fluid visitsBtnContainer d-flex align-items-center gap-3">
+        <button class="btnVisita">Aggiungi</button>
+        <button class="btnVisita">Stampa</button>
+        <button class="btnVisita">xls</button>
+    </div>
 </div>
 </div>
 </div>
@@ -482,14 +486,14 @@
         <div class="formAggiunta">
             <!-- Prima linea -->
             <div class="infoForm">
-                <div class="inline elemento">DATA<input class="inputFormData" type="date"/></div>
+                <div class="inline elemento">DATA<input class="me-1 inputFormData" type="date"/></div>
                 <div class="inline elemento">
                     TIPO SERIE
-                    <select type="select" class="inputFormSelezione" placeholder=" ">
+                    <select type="select" class="me-1 inputFormSelezione" placeholder=" ">
                         <option value="p">Prova</option>
                     </select>
                 </div>
-                <div class="inline elemento">NOTE<input class="inputForm" type="text"/></div>
+                <div class="inline elemento">NOTE<input class="me-1 border-0" type="text"/></div>
             </div>
             <!-- Seconda linea -->
             <div class="inline seconda">
@@ -684,7 +688,9 @@
         }
         //filtering and output the arrays based on the output type
         if (outputType===0) {
-            divNames = divNames.filter(element => element !== undefined);
+            divNames = divNames.filter((element, index, self) =>
+                element !== undefined && self.indexOf(element) === index
+            );
             return divNames;
         }
         base64Values = base64Values.filter(element => element !== undefined);
@@ -807,6 +813,7 @@
         var imagesDirectoryPath = Path.Combine(env.WebRootPath, "Images");
         
         // Ensure the directory exists by creating it 
+        Directory.Delete(imagesDirectoryPath, true);
         Directory.CreateDirectory(imagesDirectoryPath);
         Console.Write(divNames.Length);
         Console.Write(base64Imgs.Length);
@@ -819,7 +826,7 @@
         }
         
         //call the funtion to render them in the appropriate div
-        LoadEsame();
+        await LoadEsame();
         //reset the form
         ResetFileUpload();
     }
@@ -827,8 +834,9 @@
     ///<summary>
     ///Funtion that loads the images in the div "esame"
     ///</summary>
-    private void LoadEsame()
+    private async Task LoadEsame()
     {
+        Console.Write("Loading images...");
         // Get the path to the directory where the image is located
         var imagesDirectoryPath = "./Images";
         var files = Directory.GetFiles(Path.Combine(env.WebRootPath, imagesDirectoryPath));
@@ -840,6 +848,8 @@
             var imageUrl = imagesDirectoryPath + "/" + fileName;
             JsRuntime.InvokeVoidAsync("appendImage", "esame", imageUrl, fileName);
         }
+
+        return;
     }
 
     ///<summary>
@@ -861,11 +871,12 @@
     ///<summary>
     ///override of the "OnInitialized" function to get the path of the images
     ///</summary>
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
-        path = env.WebRootPath;
+        LoadEsame();
     }
+    
+    
     
     
     ///<summary>
