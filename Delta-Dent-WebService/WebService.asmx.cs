@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Services;
 using Delta_Dent;
+using MySqlConnector;
 
 namespace Delta_Dent_WebService
 {
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     [System.Web.Script.Services.ScriptService]
     public class WebService : System.Web.Services.WebService
     {
+        private DbManager _dbManager = new DbManager();
 
         [WebMethod]
         public string HelloWorld()
@@ -22,82 +21,104 @@ namespace Delta_Dent_WebService
             return "Hello World";
         }
 
-        [WebMethod(MessageName = "Sum of numbers")]
+        [WebMethod]
         public int Sum(int x, int y)
         {
             return x + y;
         }
 
         [WebMethod]
-        public bool SavePatient(string firstName, string surname, bool gender, string telephone,
-            string cf, string cAsl, DateTime birthDate, string birthPlace,
-            string birthProvince, bool foreigner, string billable, bool completed, bool documented, int doctorId,
-            bool locked)
+        public bool SavePatient(Patient patient)
         {
-            DbManager db = new DbManager();
-
-            // Create a new patient with the given data
-            Patient patient = new Patient(
-                firstName,
-                surname,
-                gender,
-                telephone,
-                cf,
-                cAsl,
-                birthDate,
-                birthPlace,
-                foreigner,
-                birthProvince,
-                billable,
-                completed,
-                documented,
-                doctorId,
-                locked
-            );
-
             // Validate inputs
             if (patient.CheckInputs())
             {
                 return false;
             }
 
-            // Save patient in the database
-            if (!db.SavePatientInDb(patient))
+            return _dbManager.SavePatientInDb(patient);
+        }
+
+        [WebMethod]
+        public bool UpdatePatient(Patient patient, int patientId)
+        {
+            // Validate inputs
+            if (patient.CheckInputs())
             {
                 return false;
             }
 
-            return true;
+            return _dbManager.UpdatePatientFromId(patient, patientId).Result;
         }
 
+        [WebMethod]
+        public bool DeletePatient(int patientId)
+        {
+            return _dbManager.DeletePatientFromId(patientId).Result;
+        }
 
         [WebMethod]
-        public void SavePatientTest()
+        public Patient GetPatient(int patientId)
         {
-            // Dati di test
-            string firstName = "Example";
-            string surname = "Example";
-            bool gender = false;
-            string telephone = "Example";
-            string cf = "Example";
-            string cAsl = "123";
-            DateTime birthDate = new DateTime(1980, 1, 1);
-            string birthPlace = "Example";
-            string birthProvince = "Example";
-            bool foreigner = false;
-            string billable = "Example";
-            bool completed = true;
-            bool documented = true;
-            int doctorId = 1;
-            bool locked = false;
+            return _dbManager.GetPatientFromId(patientId).Result;
+        }
 
-            // Chiamata al metodo SavePatient
-            bool result = SavePatient(firstName, surname, gender, telephone, cf, cAsl, birthDate, birthPlace,
-                birthProvince, foreigner, billable, completed, documented, doctorId, locked);
+        [WebMethod]
+        public List<Patient> GetPatients(int doctorId, int page, int pageSize)
+        {
+            return _dbManager.GetPatientsFromDb(doctorId, pageSize, page).Result;
+        }
 
-            // Stampa il risultato del test
-            Console.WriteLine("Result: " + result);
+        [WebMethod]
+        public bool RegisterDoctor(Doctor doctor)
+        {
+            // Validate inputs
+            if (doctor.CheckInputs(false))
+            {
+                return false;
+            }
+
+            return _dbManager.RegisterDoctorQuery(doctor).Result;
+        }
+
+        [WebMethod]
+        public bool CheckDoctorExist(string email)
+        {
+            return _dbManager.CheckDoctorExistAsync(email).Result;
+        }
+
+        [WebMethod]
+        public bool CheckDoctorCredentials(string email, string password)
+        {
+            return _dbManager.CheckDoctorCredentialsAsync(email, password).Result;
+        }
+
+        [WebMethod]
+        public int GetDoctorId(string email)
+        {
+            return _dbManager.GetDoctorIdAsync(email).Result ?? -1;
+        }
+
+        [WebMethod]
+        public List<Doctor> GetDoctors(int page, int pageSize)
+        {
+            return _dbManager.GetDoctorsFromDb(pageSize, page).Result;
+        }
+
+        // Test Methods
+        [WebMethod]
+        public bool TestConnection()
+        {
+            try
+            {
+                _dbManager.OpenConnection();
+                _dbManager.CloseConnection();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
-
