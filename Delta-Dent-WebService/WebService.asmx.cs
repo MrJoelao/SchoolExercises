@@ -8,9 +8,6 @@ using Delta_Dent;
 
 namespace Delta_Dent_WebService
 {
-    /// <summary>
-    /// Summary description for WebService1
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
@@ -31,17 +28,13 @@ namespace Delta_Dent_WebService
             return x + y;
         }
 
-        /// <summary>
-        /// Asynchronously saves a patient in the database.
-        /// </summary>
-        private int SavePatient(string firstName, string surname, string genderString, string telephone,
+        [WebMethod]
+        public bool SavePatient(string firstName, string surname, bool gender, string telephone,
             string cf, string cAsl, DateTime birthDate, string birthPlace,
             string birthProvince, bool foreigner, string billable, bool completed, bool documented, int doctorId,
             bool locked)
         {
             DbManager db = new DbManager();
-
-            bool gender = genderString == "f";
 
             // Create a new patient with the given data
             Patient patient = new Patient(
@@ -62,28 +55,29 @@ namespace Delta_Dent_WebService
                 locked
             );
 
-            // // Validate inputs
-            // if (!patient.CheckInputs())
-            // {
-            //     return -1;
-            // }
+            // Validate inputs
+            if (patient.CheckInputs())
+            {
+                return false;
+            }
 
             // Save patient in the database
             if (!db.SavePatientInDb(patient))
             {
-                return -2;
+                return false;
             }
 
-            return 1;
+            return true;
         }
 
-        [WebMethod(MessageName = "Test funcion to save the patient in the db")]
+
+        [WebMethod]
         public void SavePatientTest()
         {
             // Dati di test
             string firstName = "Example";
             string surname = "Example";
-            string genderString = "m";
+            bool gender = false;
             string telephone = "Example";
             string cf = "Example";
             string cAsl = "123";
@@ -98,7 +92,7 @@ namespace Delta_Dent_WebService
             bool locked = false;
 
             // Chiamata al metodo SavePatient
-            int result = SavePatient(firstName, surname, genderString, telephone, cf, cAsl, birthDate, birthPlace,
+            bool result = SavePatient(firstName, surname, gender, telephone, cf, cAsl, birthDate, birthPlace,
                 birthProvince, foreigner, billable, completed, documented, doctorId, locked);
 
             // Stampa il risultato del test
