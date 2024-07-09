@@ -12,6 +12,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// Configure Kestrel server options
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Limits.MaxRequestBodySize = 104857600; // 100 MB
+});
+
+// Add services to the container.
+builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 104857600; // 100 MB
+});
+// Configure the HTTP request pipeline and the rest of your app...
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

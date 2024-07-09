@@ -1,9 +1,11 @@
 @page "/VisImg"
 @inject IWebHostEnvironment env
+@inject IJSRuntime JSRuntime
+
 @rendermode InteractiveServer
 <!-- Barra in alto -->
 <div class="buttonContainer">
-    <button class="defButton">...</button>
+    <button class="defButton" onclick="drawBezierCurve()">+</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
     <button class="defButton">...</button>
@@ -38,6 +40,7 @@
         <button class="button shrink" id="shrinkButton">-</button>
         <div class="wrapper">
             <div id="coloredDiv" class="ResizableDiv"></div>
+            <canvas id="bezier" class="bezierLine"></canvas>
         </div>
     </div>
     <!-- Menù a destra -->
@@ -106,20 +109,22 @@
      growButton = document.getElementById("growButton");
      shrinkButton = document.getElementById("shrinkButton");
      div = document.getElementById("coloredDiv");
+     canvas = document.getElementById("bezier");
      containerDiv = document.getElementById("containerDiv");
 
     // Initialize the width and height of the div
-    let width = 100;
-    let height = 100;
+     width = 100;
+     height = 100;
 
     // Add event listeners to the buttons
 
     growButton.addEventListener("click", function() {
-        // Increase the width and height of the div by 100px
         width += 100;
         height += 100;
 
         // Update the styles of the div
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
         div.style.width = width + "px";
         div.style.height = height + "px";
 
@@ -127,27 +132,59 @@
 
 
     shrinkButton.addEventListener("click", function() {
-        // Decrease the width and height of the div by 100px, but not below 100px
         width = Math.max(width - 100, 100);
         height = Math.max(height - 100, 100);
 
         
         // Update the styles of the div
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
         div.style.width = width + "px";
         div.style.height = height + "px";
     });
+    
+    //-------------------BEZIER CURVE-------------------
 
+    ctx = canvas.getContext('2d');
+
+    // Define the points
+    startPoint = { x: 10, y: 10 };
+    controlPoint1 = { x: 10, y: 10 };
+    controlPoint2 = { x: 50, y: 50 };
+    endPoint = { x: 50, y: 50 };
+
+    // Function to draw the Bezier curve
+    function drawBezierCurve() {
+
+        // Draw the curve
+        ctx.beginPath();
+        ctx.moveTo(startPoint.x, startPoint.y);
+        ctx.bezierCurveTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y);
+        ctx.stroke();
+
+        // Draw the control points
+        drawPoint(startPoint);
+        drawPoint(controlPoint1);
+        drawPoint(controlPoint2);
+        drawPoint(endPoint);
+    }
+
+    // Function to draw a point
+    function drawPoint(point) {
+        ctx.fillStyle = 'blue';
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        var div = document.getElementById("coloredDiv");
+        div.style.backgroundImage = "url('./tempImg/temp.png')";
+        console.log("Image loaded");
+    });
 </script>
 @code {
 
     private string _imgSrc;
     private readonly string _directory = "tempImg";
-    
-    
-    protected override async Task OnInitializedAsync()
-    {
-        //loadImg();
-    }
-
-    
 }
