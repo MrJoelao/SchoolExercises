@@ -786,10 +786,10 @@ public class DbManager
     }
 
     /// <summary>
-    /// Constructs a Doctor object from the data in a MySqlDataReader.
+    /// Extracts a Doctor object from the MySqlDataReader, ensuring no null values are assigned.
     /// </summary>
-    /// <param name="reader">The MySqlDataReader containing the patient data.</param>
-    /// <returns>A Doctor object populated with the data from the reader, without the password.</returns>
+    /// <param name="reader">MySqlDataReader containing the doctor data.</param>
+    /// <returns>Doctor object with default values assigned for any null fields.</returns>
     public Doctor? GetDoctorFromReader(MySqlDataReader? reader)
     {
         if (reader == null)
@@ -797,15 +797,17 @@ public class DbManager
             return null;
         }
 
-        Doctor doctor = new Doctor();
-        doctor.DoctorId = reader.GetInt32("doctorID");
-        doctor.FirstName = reader.GetString("first_name");
-        doctor.Surname = reader.GetString("surname");
-        doctor.Gender = reader.GetBoolean("gender");
-        doctor.BirthDate = reader.GetDateTime("birth_date");
-        doctor.Email = reader.GetString("email");
-        doctor.Telephone = reader.GetString("telephone");
-        doctor.Address = reader.GetString("address");
+        Doctor doctor = new Doctor
+        {
+            DoctorId = reader.IsDBNull(reader.GetOrdinal("doctorID")) ? -1 : reader.GetInt32("doctorID"),
+            FirstName = reader.IsDBNull(reader.GetOrdinal("first_name")) ? "N/A" : reader.GetString("first_name"),
+            Surname = reader.IsDBNull(reader.GetOrdinal("surname")) ? "N/A" : reader.GetString("surname"),
+            Gender = !reader.IsDBNull(reader.GetOrdinal("gender")) && reader.GetBoolean("gender"),
+            BirthDate = reader.IsDBNull(reader.GetOrdinal("birth_date")) ? DateTime.MinValue : reader.GetDateTime("birth_date"),
+            Email = reader.IsDBNull(reader.GetOrdinal("email")) ? "N/A" : reader.GetString("email"),
+            Telephone = reader.IsDBNull(reader.GetOrdinal("telephone")) ? "N/A" : reader.GetString("telephone"),
+            Address = reader.IsDBNull(reader.GetOrdinal("address")) ? "N/A" : reader.GetString("address")
+        };
 
         return doctor;
     }
