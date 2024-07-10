@@ -1,4 +1,5 @@
 @page "/SchedaPaziente"
+@page "/SchedaPaziente/{PatientID:int?}"
 @using Microsoft.AspNetCore.Mvc
 @using System.Net.Http;
 @rendermode InteractiveServer
@@ -736,7 +737,8 @@
 
 @code{
     private bool _isVisible = false; //variabile che cambia la visibilità del form
-    private string _ImgPatient = "./assets/test/test.jpg"; //<- DA SOSTITUIRE CON UN FILE EFFETTIVO    
+    private string _ImgPatient = "./assets/test/test.jpg"; //<- DA SOSTITUIRE CON UN FILE EFFETTIVO
+    [Parameter] public int? PatientID { get; set; }
 
     [Inject] private IJSRuntime JsRuntime { get; set; }
     

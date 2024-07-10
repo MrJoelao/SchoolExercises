@@ -11,7 +11,6 @@
     <ItemGroup>
       <None Include="wwwroot\assets\loginAssets\dottore.svg" />
       <None Remove="prova.txt" />
-      <None Include="wwwroot\uploads\.gitkeep" />
     </ItemGroup>
 
     <ItemGroup>

@@ -4,7 +4,7 @@ using Delta_Dent.Components;
 
 
 string directoryTempImg = "tempImg";
-string directoryUploads = "uploads";
+string directoryUploads = "Images";
 
 var builder = WebApplication.CreateBuilder(args);
 
