@@ -1,7 +1,8 @@
 using System.Runtime.InteropServices.ComTypes;
+using Blazored.LocalStorage;
 using Delta_Dent;
 using Delta_Dent.Components;
-
+using Microsoft.AspNetCore.Http;
 
 string directoryTempImg = "tempImg";
 string directoryUploads = "Images";
@@ -23,27 +24,17 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(optio
 {
     options.MultipartBodyLengthLimit = 104857600; // 100 MB
 });
-// Configure the HTTP request pipeline and the rest of your app...
+
+builder.Services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);
 
 var app = builder.Build();
 
 // Enable HSTS and HTTPS redirection in production
 if (!builder.Environment.IsDevelopment())
 {
-    builder.Services.AddHsts(options =>
-    {
-        options.Preload = true;
-        options.IncludeSubDomains = true;
-        options.MaxAge = TimeSpan.FromDays(120);
-    });
-
-    builder.Services.AddHttpsRedirection(options =>
-    {
-        options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
-        options.HttpsPort = 443;
-    });
+    app.UseHsts();
+    app.UseHttpsRedirection();
 }
-app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
@@ -60,7 +51,5 @@ if (!Directory.Exists(directoryUploads))
 {
     Directory.CreateDirectory(directoryUploads);
 }
-
-
 
 app.Run();

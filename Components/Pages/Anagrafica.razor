@@ -1,9 +1,11 @@
 @page "/Anagrafica"
 @page "/Anagrafica/{DoctorId:int?}"
+@using Blazored.LocalStorage
 @inject IJSRuntime Js
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
 @inject NavigationManager NavManager
+@inject ILocalStorageService LocalStorage
 
 <div class="container-fluid mt-5 mt-sm-0">
     <!--top bar-->
@@ -538,6 +540,38 @@
     private bool _dbError; // Flag di errore del database
     private bool _editingPatient = false; // Flag per la modifica del paziente
     private int _currentPage = 1; // Numero di pagina corrente
+    private string _connectionString;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (DoctorId is <= 0 or null)
+        {
+            DoctorId = 1;
+        }
+
+        await GetPatients(DoctorId, PatientsDisplayedPerPage);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        if (firstRender)
+        {
+            _connectionString = await LocalStorage.GetItemAsStringAsync("connectionString");
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                Console.WriteLine("Cookie is blank");
+            }
+            else
+            {
+                Console.WriteLine("We have a cookie with contents: " + _connectionString);
+            }
+            StateHasChanged();
+
+            await Js.InvokeVoidAsync("setEventListeners");
+        }
+    }
 
     /// <summary>
     /// Handles saving or editing a patient.
@@ -635,7 +669,7 @@
     /// <param name="page">Page number.</param>
     public async Task GetPatients(int? doctorId, int patientsDisplayed, int page = 1)
     {
-        _patientsList = (await _db.GetPatientsFromDb(doctorId, patientsDisplayed, page)) ?? new List<Patient>();
+        _patientsList = (await _db.GetPatientsFromDb(doctorId, patientsDisplayed, page, _connectionString)) ?? new List<Patient>();
 
         if (_patientsList.Count == 0)
         {
@@ -728,18 +762,6 @@
         if (_currentPage > 1) --_currentPage;
         await GetPatients(DoctorId, PatientsDisplayedPerPage, _currentPage);
     }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (DoctorId is <= 0 or null)
-        {
-            DoctorId = 1;
-        }
-
-        await GetPatients(DoctorId, PatientsDisplayedPerPage);
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender) => await Js.InvokeVoidAsync("setEventListeners");
 
     /// <summary>
     /// Populates the patient database.

@@ -261,8 +261,9 @@ public class DbManager
     /// <param name="doctorId">The ID of the doctor whose patients are to be retrieved. If null, retrieves patients for all doctors.</param>
     /// <param name="nPatient">The number of patients to retrieve.</param>
     /// <param name="nPage">The page number for pagination.</param>
+    /// <param name="connectionString">String to connect in the database</param>
     /// <returns>A list of patients if found; otherwise, null.</returns>
-    public async Task<List<Patient>?> GetPatientsFromDb(int? doctorId, int nPatient, int nPage)
+    public async Task<List<Patient>?> GetPatientsFromDb(int? doctorId, int nPatient, int nPage, string connectionString)
     {
         List<Patient> patients = new List<Patient>();
 
@@ -272,7 +273,7 @@ public class DbManager
 
         try
         {
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
             await using var command = new MySqlCommand(queryRangePatient, Conn);
 
             command.Parameters.AddWithValue("@DoctorId", doctorId);
