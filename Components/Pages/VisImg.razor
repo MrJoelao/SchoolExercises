@@ -56,7 +56,7 @@
         <!-- Date -->
         <div class="sidePage">
             <div class="dataCont">
-                <div  class="text">DATA IMMAGINE</div>
+                <div class="text">DATA IMMAGINE</div>
                 <div class="dato">GG/MM/AAAA</div>
                 <div class="text">ETÀ</div>
                 <div class="dato">23a 3m</div>
@@ -98,93 +98,161 @@
             </div>
             <!-- Questionario -->
             <div class="bigInputGrand">
-                
+
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Get the buttons and div elements
-     growButton = document.getElementById("growButton");
-     shrinkButton = document.getElementById("shrinkButton");
-     div = document.getElementById("coloredDiv");
-     canvas = document.getElementById("bezier");
-     containerDiv = document.getElementById("containerDiv");
+    function initializePage(){
+    const coloredDiv = document.getElementById("coloredDiv");
+    const growButton = document.getElementById("growButton");
+    const shrinkButton = document.getElementById("shrinkButton");
+    const canvas = document.getElementById("bezier");
+    const ctx = canvas.getContext('2d');
+    let isDragging = false;
+    let dragPointIndex = null;
 
-    // Initialize the width and height of the div
-     width = 100;
-     height = 100;
+    let width = 800; // Initial canvas size
+    let height = 800;
 
-    // Add event listeners to the buttons
+    const points = [
+        { x: 100, y: 150, isDragging: false },
+        { x: 200, y: 50, isDragging: false },
+        { x: 300, y: 150, isDragging: false },
+        { x: 400, y: 50, isDragging: false }
+    ];
 
-    growButton.addEventListener("click", function() {
-        width += 100;
-        height += 100;
+        function updateCanvasSize() {
+            canvas.width = width; // Update the actual canvas size, not just its styling
+            canvas.height = height;
+            coloredDiv.style.width = width + 'px'; // Update coloredDiv size
+            coloredDiv.style.height = height + 'px'; // Update coloredDiv size
+            drawBezier(); // Redraw the curve with the updated canvas size
+        }
 
-        // Update the styles of the div
-        canvas.style.width = width + "px";
-        canvas.style.height = height + "px";
-        div.style.width = width + "px";
-        div.style.height = height + "px";
+        growButton.addEventListener("click", function() {
+            const oldWidth = width;
+            const oldHeight = height;
+            width += 100;
+            height += 100;
+            const scaleX = width / oldWidth;
+            const scaleY = height / oldHeight;
+            points.forEach(point => {
+                point.x *= scaleX;
+                point.y *= scaleY;
+            });
+            updateCanvasSize();
+        });
 
+        shrinkButton.addEventListener("click", function() {
+            const oldWidth = width;
+            const oldHeight = height;
+            width = Math.max(width - 100, 100);
+            height = Math.max(height - 100, 100);
+            const scaleX = width / oldWidth;
+            const scaleY = height / oldHeight;
+            points.forEach(point => {
+                point.x *= scaleX;
+                point.y *= scaleY;
+            });
+            updateCanvasSize();
+        });
+
+        function drawBezier() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+            ctx.beginPath(); // Start a new path for the Bezier curve
+            ctx.moveTo(points[0].x, points[0].y); // Move to the first point
+            ctx.bezierCurveTo(points[1].x, points[1].y, points[2].x, points[2].y, points[3].x, points[3].y); // Draw the Bezier curve
+            ctx.stroke(); // Render the Bezier curve
+
+            // Draw a line connecting p0 to p1
+            ctx.beginPath(); // Start a new path for the line
+            ctx.moveTo(points[0].x, points[0].y); // Move to p0
+            ctx.lineTo(points[1].x, points[1].y); // Draw a line to p1
+            ctx.stroke(); // Render the line
+
+            // Draw a line connecting p2 to p3
+            ctx.beginPath(); // Start another new path for the line
+            ctx.moveTo(points[2].x, points[2].y); // Move to p2
+            ctx.lineTo(points[3].x, points[3].y); // Draw a line to p3
+            ctx.stroke(); // Render the line
+
+            // Drawing the control points
+            points.forEach(point => {
+                ctx.fillRect(point.x - 5, point.y - 5, 10, 10); // Draw each control point
+            });
+        }
+
+        function checkForPoint(x, y) {
+    console.log("Function checkForPoint called with x: " + x + ", y: " + y);
+    console.log("Points array length: " + points.length);
+
+    // Print the coordinates of all points
+    points.forEach((point, index) => {
+        console.log(`Point ${index}: x=${point.x}, y=${point.y}`);
     });
 
-
-    shrinkButton.addEventListener("click", function() {
-        width = Math.max(width - 100, 100);
-        height = Math.max(height - 100, 100);
-
-        
-        // Update the styles of the div
-        canvas.style.width = width + "px";
-        canvas.style.height = height + "px";
-        div.style.width = width + "px";
-        div.style.height = height + "px";
-    });
-    
-    //-------------------BEZIER CURVE-------------------
-
-    ctx = canvas.getContext('2d');
-
-    // Define the points
-    startPoint = { x: 10, y: 10 };
-    controlPoint1 = { x: 10, y: 10 };
-    controlPoint2 = { x: 50, y: 50 };
-    endPoint = { x: 50, y: 50 };
-
-    // Function to draw the Bezier curve
-    function drawBezierCurve() {
-
-        // Draw the curve
-        ctx.beginPath();
-        ctx.moveTo(startPoint.x, startPoint.y);
-        ctx.bezierCurveTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y);
-        ctx.stroke();
-
-        // Draw the control points
-        drawPoint(startPoint);
-        drawPoint(controlPoint1);
-        drawPoint(controlPoint2);
-        drawPoint(endPoint);
+    const detectionRadius = 10; // Increased detection area for better accuracy
+    for (let i = 0; i < points.length; i++) {
+        const dx = points[i].x - x;
+        const dy = points[i].y - y;
+        if (dx * dx + dy * dy < detectionRadius * detectionRadius) { // Adjusted detection area
+            console.log(`Point found at index: ${i}, x: ${points[i].x}, y: ${points[i].y}, click x: ${x}, click y: ${y}`); // Enhanced debug print
+            return i;
+        }
     }
+    console.log("No point found, click x: " + x + ", click y: " + y); // Enhanced debug print
+    return null;
+}
 
-    // Function to draw a point
-    function drawPoint(point) {
-        ctx.fillStyle = 'blue';
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
-        ctx.fill();
+        canvas.addEventListener('mousedown', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            console.log(`mousedown at x: ${x}, y: ${y}`); // Debug print
+            const pointIndex = checkForPoint(x, y);
+            if (pointIndex !== null) {
+                isDragging = true;
+                dragPointIndex = pointIndex;
+                console.log(`Dragging started at point index: ${dragPointIndex}`); // Debug print
+            }
+        });
+
+        canvas.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                console.log(`mousemove at x: ${x}, y: ${y}`); // Debug print
+                points[dragPointIndex].x = x;
+                points[dragPointIndex].y = y;
+                drawBezier();
+            }
+        });
+
+        canvas.addEventListener('mouseup', function() {
+            if (isDragging) {
+                console.log(`Mouse up. Dragging stopped.`); // Debug print
+                isDragging = false;
+                dragPointIndex = null;
+            }
+        });
     }
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        var div = document.getElementById("coloredDiv");
-        div.style.backgroundImage = "url('./tempImg/temp.png')";
-        console.log("Image loaded");
-    });
 </script>
+
 @code {
 
     private string _imgSrc;
     private readonly string _directory = "tempImg";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePage");
+        }
+    }
+
 }

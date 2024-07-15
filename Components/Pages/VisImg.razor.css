@@ -387,19 +387,15 @@
     left: 0;
     background: url("./tempImg/temp.png")no-repeat center;
     background-size: contain;
-    width: 100px;
-    height: 100px;
-    transition: all 0.5s;
+    width: 800px;
+    height: 800px;
 }
 
 .bezierLine{
     position: absolute;
     top: 0;
     left: 0;
-    width: 100px;
-    height: 100px;
     z-index: 2;
-    transition: all 0.5s;
 }
 
 .wrapper {
