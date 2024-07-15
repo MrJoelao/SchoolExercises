@@ -2,6 +2,8 @@
 @inject IJSRuntime Js
 <PageTitle>Doctors</PageTitle>
 @rendermode InteractiveServer
+@using Blazored.LocalStorage
+@inject ILocalStorageService LocalStorage
 
 <div class="container-fluid mt-5 mt-sm-0">
     <!--top bar-->
@@ -98,37 +100,50 @@
         <!-- body della tabella-->
         <div class>
             <!-- foreach per generare una riga per ogni dottore -->
-            @{ int i = 0; }
-            @foreach (var doctor in _filteredDoctorList)
+            @if (_flagConnection)
             {
-                <div id="row-@i" class="row rigo mt-1" @onclick="() => UpdateLastClicked(doctor)">
-                    <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
-                    <div class="col-6 col-sm-1 cella">
-                        @doctor.DoctorId
+                int i = 0;
+                @foreach (var doctor in _filteredDoctorList)
+                {
+                    <div id="row-@i" class="row rigo mt-1" @onclick="() => UpdateLastClicked(doctor)">
+                        <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
+                        <div class="col-6 col-sm-1 cella">
+                            @doctor.DoctorId
+                        </div>
+                        <div class="col-6 col-sm-2 cella">
+                            @doctor.Surname
+                        </div>
+                        <div class="col-6 col-sm-2 cella">
+                            @doctor.FirstName
+                        </div>
+                        <div class="col-6 col-sm-1 cella">
+                            @DateOnly.FromDateTime(doctor.BirthDate)
+                        </div>
+                        <div class="col-6 col-sm-1 cella">
+                            @(_genderString = doctor.Gender? "Femmina" : "Maschio")
+                        </div>
+                        <div class=" col-6 col-sm-2 cella">
+                            @doctor.Email
+                        </div>
+                        <div class=" col-6 col-sm-1 cella">
+                            @doctor.Telephone
+                        </div>
+                        <div class=" d-none d-sm-block col-2 cella">
+                            @doctor.Address
+                        </div>
                     </div>
-                    <div class="col-6 col-sm-2 cella">
-                        @doctor.Surname
-                    </div>
-                    <div class="col-6 col-sm-2 cella">
-                        @doctor.FirstName
-                    </div>
-                    <div class="col-6 col-sm-1 cella">
-                        @DateOnly.FromDateTime(doctor.BirthDate)
-                    </div>
-                    <div class="col-6 col-sm-1 cella">
-                        @(_genderString = doctor.Gender? "Femmina" : "Maschio")
-                    </div>
-                    <div class=" col-6 col-sm-2 cella">
-                        @doctor.Email
-                    </div>
-                    <div class=" col-6 col-sm-1 cella">
-                        @doctor.Telephone
-                    </div>
-                    <div class=" d-none d-sm-block col-2 cella">
-                        @doctor.Address
-                    </div>
+                    i++;
+                }
+            } else
+            {
+                <div class="spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </div>
-                i++;
             }
             @if (_dbError) // Div per informare l'utente dell'errore nel DB
             {
@@ -350,6 +365,34 @@
     private bool _editingDoctor = false; // Flag per la modifica del dottore
     private int _currentPage = 1; // Numero di pagina corrente
     private bool _editDoctorPassword = false;
+    private bool _flagConnection;
+    private string? _connectionString;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Js.InvokeVoidAsync("setEventListeners");
+
+
+            _flagConnection = true;
+
+            _connectionString = await LocalStorage.GetItemAsync<string>("connectionString");
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                Console.WriteLine("No connection string found in local storage.");
+            }
+            else
+            {
+                Console.WriteLine($"Connection string loaded from local storage: {_connectionString}");
+            }
+
+            await GetDoctors(DoctorsDisplayedPerPage);
+            StateHasChanged();
+        }
+    }
+
 
     /// <summary>
     /// Handles saving or editing a doctor.
@@ -382,7 +425,7 @@
         if (_editingDoctor)
         {
             Console.WriteLine("Modifica del dottore...");
-            await _db.UpdateDoctorFromId(doctor, _lastDoctorClicked.DoctorId, _editDoctorPassword);
+            await _db.UpdateDoctorFromId(doctor, _lastDoctorClicked.DoctorId, _editDoctorPassword, _connectionString);
             _editingDoctor = false;
         }
         else
@@ -407,7 +450,7 @@
     /// <param name="newDoctor">The new doctor to save.</param>
     public async Task SaveDoctor(Doctor newDoctor)
     {
-        if (!await _db.RegisterDoctorQuery(newDoctor))
+        if (!await _db.RegisterDoctorQuery(newDoctor, _connectionString))
         {
             _showFormError = true;
             return;
@@ -432,7 +475,7 @@
     /// <param name="page">Page number.</param>
     public async Task GetDoctors(int doctorsDisplayed, int page = 1)
     {
-        _doctorsList = (await _db.GetDoctorsFromDb(doctorsDisplayed, page)) ?? new List<Doctor>();
+        _doctorsList = (await _db.GetDoctorsFromDb(doctorsDisplayed, page, _connectionString)) ?? new List<Doctor>();
 
         if (_doctorsList.Count == 0)
         {
@@ -485,7 +528,7 @@
             return;
         }
 
-        if (!await _db.DeleteDoctorFromId(_lastDoctorClicked.DoctorId))
+        if (!await _db.DeleteDoctorFromId(_lastDoctorClicked.DoctorId, _connectionString))
         {
             return;
         }
@@ -516,10 +559,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await GetDoctors(DoctorsDisplayedPerPage);
+        _flagConnection = false;
     }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender) => await Js.InvokeVoidAsync("setEventListeners");
 
     /// <summary>
     /// Toggles the visibility of the doctor form.
