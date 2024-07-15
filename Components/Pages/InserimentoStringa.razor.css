@@ -1,0 +1,93 @@
+/*stile applicato per dare uno stile allo sfondo della pagina*/
+.bg{
+    background: url("./assets/loginAssets/sfondo.svg") no-repeat left;
+    background-color: #BADEFD;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    display: flex;
+}
+
+.p{
+    font-size: 0.5vw;
+}
+
+.titlo{
+    font: 800 2.5rem/1.47 "Mplus 1p", Helvetica, Arial, serif;
+    color: #2e2e2e;
+    font-size: 2.5vw;
+}
+
+.loginForm{
+    display: flex;
+    border-radius: 0.4vw;
+    margin: auto;
+    width: 60%;
+    font-size: 1vw;
+    aspect-ratio: 1/0.6;
+    background-color: white;
+}
+
+.confirmBtn{
+    background-color: #0d6efd;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem;
+    transition: all .5s;
+}
+
+.checkBtn{
+    background-color: #2b8518;
+}
+.errorMessage{
+    color: #ff4f39;
+    font-weight: bold;
+    font-size: 1vw;
+}
+
+.confirmBtn:hover{
+    filter: brightness(0.8);
+}
+
+
+.sottotitolo{
+    color: #000000;
+    font-weight: bold;
+    font-size: 1vw;
+}
+@media (max-width: 1025px) {
+    .loginForm {
+        width: 75%;
+        aspect-ratio: 1/0.9;
+    }
+}
+
+@media (max-width: 768px) {
+    .loginForm {
+        width: 80%;
+        aspect-ratio: 1/0.8;
+    }
+    
+    .p{
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 592px) {
+    .loginForm {
+        width: 80%;
+        aspect-ratio: 1/1.3;
+        border-radius: 2rem;
+    }
+    
+    .p{
+        font-size: 3rem;
+    }
+}

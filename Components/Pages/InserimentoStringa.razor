@@ -4,12 +4,72 @@
 @inject ILocalStorageService LocalStorage
 @rendermode InteractiveServer
 
+<!--
+                nome database
+                username
+                password
+-->
+<div class="bg align-items-center">
+    <!--stile per la forma del form-->
+    <div class="loginForm text-center p-3 pt-5  d-flex flex-column">
 
-<h3>inserimento Stringa</h3>
-<p>Inserisci la stringa cliente</p>
-<input type="text" @bind="_connectionString"/>
-<button @onclick="WriteCookie">Inserisci</button>
+        <h1 class="titlo">inserimento Stringa</h1>
+        <p class="sottotitolo"> inserisci le informazioni del tuo database</p>
+        <div class="col-12 d-flex flex-column text-start">
+            <div class="row p-2 d-flex flex-row align-content-center">
+                <span class="col-6 d-inline-block d-inline-flex flex-column">
+                    <label for="server" class="form-label">Server</label>
+                    <input type="text" class="form-control" id="server" placeholder="Server">
+                </span>
+                <span class="col-6 d-inline-block d-inline-flex flex-column">
+                    <label for="porta" class="form-label">Porta</label>
+                    <input type="text" class="form-control" id="porta" placeholder="porta">
+                </span>
+            </div>
 
+            <div class="row p-2 d-flex flex-row align-content-center">
+                <span class="col-6 d-inline-block d-inline-flex flex-column">
+                    <label for="username" class="form-label">Nome utente</label>
+                    <input type="text" class="form-control" id="username" placeholder="utente">
+                </span>
+                <span class="col-6 d-inline-block d-inline-flex flex-column">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="text" class="form-control" id="password" placeholder="Password1234">
+                </span>
+            </div>
+
+            <div class="row p-2 d-flex flex-row align-content-center">
+                <span class="col-12 d-inline-block d-inline-flex flex-column">
+                    <label for="dbName" class="form-label">Nome database</label>
+                    <input type="text" class="form-control" id="dbName" placeholder="MyDatabase">
+                </span>
+            </div>
+
+            <div class="row p-2 d-flex flex-row align-content-center">
+                <span class="col-12 d-inline-block d-inline-flex flex-column">
+                    <label for="fullString" class="form-label">Stringa completa</label>
+                    <input type="text" id="fullString" class="form-control" @bind="_connectionString"/>
+                </span>
+            </div>
+
+            <div class="row p-2 d-flex flex-row align-content-center">
+                <span class="col-12 d-inline-block d-inline-flex flex-column text-center">
+                    <p class="errorMessage">Verifica la correttezza dei dati</p>
+                </span>
+            </div>
+            
+            <div class="row p-2 d-flex flex-row align-content-center">
+                <span class="col-6 d-inline-block d-inline-flex flex-column">
+                    <button class="confirmBtn" @onclick="WriteCookie">Inserisci</button>
+                </span>
+                <span class="col-6 d-inline-block d-inline-flex flex-column">
+                    <button class="confirmBtn checkBtn">Verifica connessione</button>
+                </span>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 @code {
     private string _connectionString;
