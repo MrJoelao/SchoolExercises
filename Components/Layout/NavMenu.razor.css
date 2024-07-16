@@ -74,6 +74,10 @@
     background-image: url("./assets/sidebarAssets/communityIcon.png");
 }
 
+.doctorsImg{
+    background-image: url("./assets/sidebarAssets/doctors.svg");
+}
+
 .tempIcon{
     background-image: url("./assets/sidebarAssets/tempIcon.png");
 }
