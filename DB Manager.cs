@@ -223,6 +223,29 @@ public class DbManager
     }
 
     /// <summary>
+    /// Asynchronously tests the database connection using the provided connection string.
+    /// </summary>
+    /// <param name="connectionString">The connection string to use for testing the database connection.</param>
+    /// <returns>A <see cref="Task{Boolean}"/> that represents the asynchronous operation. The task result is <c>true</c> if the connection is successfully opened, otherwise <c>false</c>.</returns>
+    public async Task<bool> TestDatabaseConnectionAsync(string connectionString)
+    {
+        try
+        {
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                await connection.OpenAsync();
+                Console.WriteLine("Database connection test successful.");
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Database connection test failed: {ex.Message}");
+            return false;
+        }
+    }
+
+    /// <summary>
     /// Constructs a Patient object from the data in a MySqlDataReader.
     /// </summary>
     /// <param name="reader">The MySqlDataReader containing the patient data.</param>
