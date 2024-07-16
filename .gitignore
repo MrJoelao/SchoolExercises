@@ -3,7 +3,7 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
-!uploads/.gitkeep
+!Images/.gitkeep
 uploads/*
 !tempImg/.gitkeep
 tempImg/*

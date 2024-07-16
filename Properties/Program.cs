@@ -1,45 +1,73 @@
-using System.Runtime.InteropServices.ComTypes;
-using Delta_Dent;
+using Blazored.LocalStorage;
 using Delta_Dent.Components;
 
-
 string directoryTempImg = "tempImg";
-string directoryUploads = "uploads";
+string directoryUploads = "Images";
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+ConfigureServices(builder.Services);
+
+// Configure Kestrel server options
+ConfigureKestrel(builder.WebHost);
+
+// Configure form options
+ConfigureFormOptions(builder.Services);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+// Configure middleware
+ConfigureMiddleware(app, builder.Environment);
 
-app.UseHttpsRedirection();
-
-app.UseStaticFiles();
-app.UseAntiforgery();
-
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
-
-if (!Directory.Exists(directoryTempImg))
-{
-    Directory.CreateDirectory(directoryTempImg);
-}
-
-if (!Directory.Exists(directoryUploads))
-{
-    Directory.CreateDirectory(directoryUploads);
-}
-
-
+EnsureDirectoriesExist(directoryTempImg, directoryUploads);
 
 app.Run();
+
+void ConfigureServices(IServiceCollection services)
+{
+    services.AddRazorComponents().AddInteractiveServerComponents();
+    services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);
+}
+
+void ConfigureKestrel(IWebHostBuilder webHostBuilder)
+{
+    webHostBuilder.ConfigureKestrel(serverOptions =>
+    {
+        serverOptions.Limits.MaxRequestBodySize = 104857600; // 100 MB
+    });
+}
+
+void ConfigureFormOptions(IServiceCollection services)
+{
+    services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(options =>
+    {
+        options.MultipartBodyLengthLimit = 104857600; // 100 MB
+    });
+}
+
+void ConfigureMiddleware(WebApplication app, IWebHostEnvironment environment)
+{
+    // Enable HSTS and HTTPS redirection in production
+    if (!environment.IsDevelopment())
+    {
+        app.UseHsts();
+        app.UseHttpsRedirection();
+    }
+
+    app.UseStaticFiles();
+    app.UseAntiforgery();
+
+    app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+}
+
+void EnsureDirectoriesExist(params string[] directories)
+{
+    foreach (var directory in directories)
+    {
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+    }
+}

@@ -11,10 +11,10 @@
     <ItemGroup>
       <None Include="wwwroot\assets\loginAssets\dottore.svg" />
       <None Remove="prova.txt" />
-      <None Include="wwwroot\uploads\.gitkeep" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
       <PackageReference Include="Bogus" Version="35.5.1" />
       <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
         <PrivateAssets>all</PrivateAssets>

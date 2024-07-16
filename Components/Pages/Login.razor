@@ -1,8 +1,9 @@
-@page "/"
 @page "/Login"
 
 @rendermode InteractiveServer
 @inject NavigationManager NavManager
+@using Blazored.LocalStorage
+@inject ILocalStorageService LocalStorage
 
 <!--sfondo-->
 <div class="bg align-items-center">
@@ -161,6 +162,26 @@
     private string? _address; // Via del dottore
     private DateTime _birthdate; // Data del dottore
     private Doctor? _doctor; // Istanza del dottore
+    private string? _connectionString;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _connectionString = await LocalStorage.GetItemAsync<string>("connectionString");
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                Console.WriteLine("No connection string found in local storage.");
+            }
+            else
+            {
+                Console.WriteLine($"Connection string loaded from local storage: {_connectionString}");
+            }
+
+            StateHasChanged();
+        }
+    }
 
     /// <summary>
     /// Handles the registration process for a new doctor.
@@ -177,7 +198,7 @@
     {
         _doctor = new Doctor(_registerName!, _registerSurname!, (_genderString != "m"), _birthdate, _registerEmail!, _registerPassword!, _telephoneDoctor!, _address!);
 
-        if (!_doctor.CheckInputs(true) || await _db.CheckDoctorExistAsync(_registerEmail!))
+        if (!_doctor.CheckInputs(true) || await _db.CheckDoctorExistAsync(_registerEmail!, _connectionString))
         {
             // Mostro l'errore
             _errReg = true;
@@ -189,7 +210,7 @@
         _errReg = false;
 
         // Eseguo la query
-        if (!(await _db.RegisterDoctorQuery(_doctor)))
+        if (!(await _db.RegisterDoctorQuery(_doctor, _connectionString)))
         {
             return;
         }
@@ -229,21 +250,21 @@
     {
         _errLogin = false;
 
-        if (!(await _db.CheckDoctorExistAsync(_loggingEmail!)))
+        if (!(await _db.CheckDoctorExistAsync(_loggingEmail!, _connectionString)))
         {
             _errLogin = true;
             Console.WriteLine("Doctor does not exist");
             return;
         }
 
-        if (!(await _db.CheckDoctorCredentialsAsync(_loggingEmail!, _loggingPassword!)))
+        if (!(await _db.CheckDoctorCredentialsAsync(_loggingEmail!, _loggingPassword!, _connectionString)))
         {
             _errLogin = true;
             Console.WriteLine("Doctor password is incorrect");
             return;
         }
 
-        int? medID = await _db.GetDoctorIdAsync(_loggingEmail!);
+        int? medID = await _db.GetDoctorIdAsync(_loggingEmail!, _connectionString);
 
         if (medID == null)
         {
@@ -266,5 +287,4 @@
         _visible = !_visible;
         _errReg = false;
     }
-
 }

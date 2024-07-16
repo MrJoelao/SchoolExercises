@@ -1,9 +1,11 @@
 @page "/Anagrafica"
 @page "/Anagrafica/{DoctorId:int?}"
+@using Blazored.LocalStorage
 @inject IJSRuntime Js
 <PageTitle>Anagrafica</PageTitle>
 @rendermode InteractiveServer
 @inject NavigationManager NavManager
+@inject ILocalStorageService LocalStorage
 
 <div class="container-fluid mt-5 mt-sm-0">
     <!--top bar-->
@@ -151,49 +153,62 @@
         <!-- body della tabella-->
         <div class>
             <!-- foreach per generare una riga per ogni paziente -->
-            @{ int i = 0; }
-            @foreach (var paziente in _filteredPatientsList)
-            {   
-                <div id="row-@i" class="row rigo mt-1" @onclick="() => UpdateLastClicked(paziente)">
-                    <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
-                    <div class="col-6 col-sm-2 cella">
-                        @paziente.Surname
+            @if (_flagConnection)
+            { int i = 0;
+                foreach (var paziente in _filteredPatientsList)
+                {
+                    <div id="row-@i" class="row rigo mt-1" @onclick="() => UpdateLastClicked(paziente)">
+                        <!-- divisione in 2-1-1-1-1-1-1-1-1-1-1-->
+                        <div class="col-6 col-sm-2 cella">
+                            @paziente.Surname
+                        </div>
+                        <div class="col-6 col-sm-1 cella">
+                            @paziente.FirstName
+                        </div>
+                        <div class="col-6 col-sm-1 cella">
+                            @DateOnly.FromDateTime(paziente.BirthDate)
+                        </div>
+                        <div class="col-6 col-sm-1 cella">
+                            @paziente.Telephone
+                        </div>
+                        <div class=" d-none d-sm-block col-4 col-sm-1 cella">
+                            @paziente.Phone1
+                        </div>
+                        <div class=" d-none d-sm-block col-1 cella">
+                            @paziente.Phone2
+                        </div>
+                        <div class=" d-none d-sm-block col-1 cella">
+                            @paziente.Billable
+                        </div>
+                        <div class=" d-none d-sm-block col-1 cella">
+                            @(paziente.Completed ? "Si" : "No")
+                        </div>
+                        <div class="d-none d-sm-block col-1 cella">
+                            @(paziente.Documented ? "Si" : "No")
+                        </div>
+                        <div class="d-none d-sm-block col-1 cella">
+                            <input type="checkbox"/>
+                        </div>
+                        <div class="d-block d-sm-none col-3">
+
+                        </div>
+                        <div class="col-6 col-sm-1 cella">
+                            <button class="openPatient" @onclick="() => NavigateToPatientPage(paziente)"></button>
+                        </div>
                     </div>
-                    <div class="col-6 col-sm-1 cella">
-                        @paziente.FirstName
-                    </div>
-                    <div class="col-6 col-sm-1 cella">
-                        @DateOnly.FromDateTime(paziente.BirthDate)
-                    </div>
-                    <div class="col-6 col-sm-1 cella">
-                        @paziente.Telephone
-                    </div>
-                    <div class=" d-none d-sm-block col-4 col-sm-1 cella">
-                        @paziente.Phone1
-                    </div>
-                    <div class=" d-none d-sm-block col-1 cella">
-                        @paziente.Phone2
-                    </div>
-                    <div class=" d-none d-sm-block col-1 cella">
-                        @paziente.Billable
-                    </div>
-                    <div class=" d-none d-sm-block col-1 cella">
-                        @(paziente.Completed ? "Si" : "No")
-                    </div>
-                    <div class="d-none d-sm-block col-1 cella">
-                        @(paziente.Documented ? "Si" : "No")
-                    </div>
-                    <div class="d-none d-sm-block col-1 cella">
-                        <input type="checkbox"/>
-                    </div>
-                    <div class="d-block d-sm-none col-3">
-                        
-                    </div>
-                    <div class="col-6 col-sm-1 cella">
-                        <button class="openPatient" @onclick="() => NavigateToPatientPage(paziente)"></button>
-                    </div>
+                    i++;
+                }
+            }
+            else
+            {
+                <div class="spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </div>
-                i++;
             }
             @if (_dbError) // Div per informare l'utente dell'errore nel DB
             {
@@ -524,7 +539,7 @@
     [Parameter] public int? DoctorId { get; set; } // ID del medico su cui basare le richieste al database
 
     private readonly DBPopulator _dbPopulator = new(); // Oggetto per il popolamento del database
-    private readonly DbManager _db = new(); // Oggetto per la gestione del database
+    private DbManager _db = new(); // Oggetto per la gestione del database
 
     private Patient _newPatientTemp = new(); // Paziente temporaneo per la creazione di nuovi pazienti
     private Patient? _lastPatientClicked; // Paziente selezionato
@@ -538,6 +553,45 @@
     private bool _dbError; // Flag di errore del database
     private bool _editingPatient = false; // Flag per la modifica del paziente
     private int _currentPage = 1; // Numero di pagina corrente
+    private string? _connectionString;
+    private bool _flagConnection = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (DoctorId is <= 0 or null)
+        {
+            DoctorId = 1;
+        }
+
+        _flagConnection = false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+
+        if (firstRender)
+        {
+            await Js.InvokeVoidAsync("setEventListeners");
+
+
+            _flagConnection = true;
+
+            _connectionString = await LocalStorage.GetItemAsync<string>("connectionString");
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                Console.WriteLine("No connection string found in local storage.");
+            }
+            else
+            {
+                Console.WriteLine($"Connection string loaded from local storage: {_connectionString}");
+            }
+
+            await GetPatients(DoctorId, PatientsDisplayedPerPage);
+            StateHasChanged();
+        }
+    }
 
     /// <summary>
     /// Handles saving or editing a patient.
@@ -602,7 +656,7 @@
     /// <param name="newPatient">The new patient to save.</param>
     public async Task SavePatient(Patient newPatient)
     {
-        if (!await _db.SavePatientInDb(newPatient))
+        if (!await _db.SavePatientInDb(newPatient, _connectionString))
         {
             _showFormError = true;
             return;
@@ -623,7 +677,7 @@
     /// <param name="patient">The patient data to update.</param>
     public async Task EditPatient(Patient patient)
     {
-        await _db.UpdatePatientFromId(patient, _lastPatientClicked.PatientID);
+        await _db.UpdatePatientFromId(patient, _lastPatientClicked.PatientID, _connectionString);
         _editingPatient = false;
     }
 
@@ -635,7 +689,14 @@
     /// <param name="page">Page number.</param>
     public async Task GetPatients(int? doctorId, int patientsDisplayed, int page = 1)
     {
-        _patientsList = (await _db.GetPatientsFromDb(doctorId, patientsDisplayed, page)) ?? new List<Patient>();
+        if (_connectionString == null)
+        {
+            Console.WriteLine("Cookie null");
+            _dbError = true;
+            return;
+        }
+
+        _patientsList = (await _db.GetPatientsFromDb(doctorId, patientsDisplayed, page, _connectionString)) ?? new List<Patient>();
 
         if (_patientsList.Count == 0)
         {
@@ -688,7 +749,7 @@
             return;
         }
 
-        if (!await _db.DeletePatientFromId(_lastPatientClicked.PatientID))
+        if (!await _db.DeletePatientFromId(_lastPatientClicked.PatientID, _connectionString))
         {
             return;
         }
@@ -707,7 +768,7 @@
     {
         if (patient != null)
         {
-            NavManager.NavigateTo($"/PatientProfile/{patient.PatientID}");
+            NavManager.NavigateTo($"/SchedaPaziente/{patient.PatientID}");
         }
     }
 
@@ -728,18 +789,6 @@
         if (_currentPage > 1) --_currentPage;
         await GetPatients(DoctorId, PatientsDisplayedPerPage, _currentPage);
     }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (DoctorId is <= 0 or null)
-        {
-            DoctorId = 1;
-        }
-
-        await GetPatients(DoctorId, PatientsDisplayedPerPage);
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender) => await Js.InvokeVoidAsync("setEventListeners");
 
     /// <summary>
     /// Populates the patient database.

@@ -1,3 +1,5 @@
+using Bogus;
+
 namespace Delta_Dent;
 using MySqlConnector;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +20,7 @@ public class DbManager
     public DbManager(string? connStr = null)
     {
         _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        OpenConnection(connStr);
+        //OpenConnection(connStr);
     }
 
     /// <summary>
@@ -221,6 +223,29 @@ public class DbManager
     }
 
     /// <summary>
+    /// Asynchronously tests the database connection using the provided connection string.
+    /// </summary>
+    /// <param name="connectionString">The connection string to use for testing the database connection.</param>
+    /// <returns>A <see cref="Task{Boolean}"/> that represents the asynchronous operation. The task result is <c>true</c> if the connection is successfully opened, otherwise <c>false</c>.</returns>
+    public async Task<bool> TestDatabaseConnectionAsync(string connectionString)
+    {
+        try
+        {
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                await connection.OpenAsync();
+                Console.WriteLine("Database connection test successful.");
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Database connection test failed: {ex.Message}");
+            return false;
+        }
+    }
+
+    /// <summary>
     /// Constructs a Patient object from the data in a MySqlDataReader.
     /// </summary>
     /// <param name="reader">The MySqlDataReader containing the patient data.</param>
@@ -261,9 +286,16 @@ public class DbManager
     /// <param name="doctorId">The ID of the doctor whose patients are to be retrieved. If null, retrieves patients for all doctors.</param>
     /// <param name="nPatient">The number of patients to retrieve.</param>
     /// <param name="nPage">The page number for pagination.</param>
+    /// <param name="connectionString">String to connect in the database</param>
     /// <returns>A list of patients if found; otherwise, null.</returns>
-    public async Task<List<Patient>?> GetPatientsFromDb(int? doctorId, int nPatient, int nPage)
+    public async Task<List<Patient>?> GetPatientsFromDb(int? doctorId, int nPatient, int nPage, string? connectionString)
     {
+        if (connectionString == null)
+        {
+            Console.WriteLine("There was an error when getting the patients, connection string null");
+            return null;
+        }
+
         List<Patient> patients = new List<Patient>();
 
         int offset = (nPage - 1) * nPatient;
@@ -272,7 +304,7 @@ public class DbManager
 
         try
         {
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
             await using var command = new MySqlCommand(queryRangePatient, Conn);
 
             command.Parameters.AddWithValue("@DoctorId", doctorId);
@@ -308,6 +340,7 @@ public class DbManager
     /// Asynchronously retrieves a patient from the database using their unique patient ID.
     /// </summary>
     /// <param name="patientId">The unique identifier for the patient to be retrieved.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>
     /// A task that represents the asynchronous operation. The task result contains the <see cref="Patient"/> object if found, otherwise null.
     /// </returns>
@@ -315,10 +348,16 @@ public class DbManager
     /// This method opens a connection to the database, executes a SQL query to find the patient by their ID, and constructs a <see cref="Patient"/> object from the returned data.
     /// If the patient is not found, or if an error occurs during the database operation, the method returns null.
     /// </remarks>
-    public async Task<Patient?> GetPatientFromId(int? patientId)
+    public async Task<Patient?> GetPatientFromId(int? patientId, string? connectionString)
     {
         if (patientId == null)
         {
+            return null;
+        }
+
+        if (connectionString == null)
+        {
+            Console.WriteLine("Save of the patient failed, connection string null");
             return null;
         }
 
@@ -331,7 +370,7 @@ public class DbManager
         try
         {
             // Open the database connection asynchronously
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
 
             // Use a MySQL command to execute the query
             await using var command = new MySqlCommand(queryGetPatientQuery, Conn);
@@ -375,9 +414,16 @@ public class DbManager
     /// Saves a new patient record to the database.
     /// </summary>
     /// <param name="patient">The patient object containing the details to be saved.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>Returns true if the patient was successfully saved, otherwise false.</returns>
-    public async Task<bool> SavePatientInDb(Patient patient)
+    public async Task<bool> SavePatientInDb(Patient patient, string? connectionString)
     {
+        if (connectionString == null)
+        {
+            Console.WriteLine("Save of the patient failed, connection string null");
+            return false;
+        }
+
         // Parametrized query to insert a new patient into the database
         string savePatientQuery = "INSERT INTO PATIENT (doctorID, first_name, surname, gender, telephone, phone_1, phone_2, cf, c_asl, birth_date, birth_place, foreigner, birth_province, billable, completed, documented, locked) " +
                                   "VALUES (@DoctorID, @FirstName, @Surname, @Gender, @Telephone, @Phone1, @Phone2, @CF, @CAsl, @BirthDate, @BirthPlace, @Foreigner, @BirthProvince, @Billable, @Completed, @Documented, @Locked)";
@@ -385,7 +431,7 @@ public class DbManager
         try
         {
             // Apro la connessione se non è già aperta
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
 
             // Creo un comando MySQL per eseguire la query
             await using var command = new MySqlCommand(savePatientQuery, Conn);
@@ -434,21 +480,29 @@ public class DbManager
     /// </summary>
     /// <param name="patient">The patient object containing the updated information.</param>
     /// <param name="id">The ID of the patient to be updated.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>A <see cref="Task{Boolean}"/> that represents the asynchronous operation. The task result is <c>true</c> if the update was successful, otherwise <c>false</c>.</returns>
     /// <remarks>
     /// This method constructs a parametrized SQL query to update the patient's information in the database, preventing SQL injection.
     /// It opens a connection to the database, executes the update command, and then closes the connection.
     /// If an exception occurs during the operation, the method catches it, logs the error, and returns <c>false</c>.
     /// </remarks>
-    public async Task<bool> UpdatePatientFromId(Patient patient, int id)
+    public async Task<bool> UpdatePatientFromId(Patient patient, int? id, string? connectionString)
     {
+        if (connectionString == null || id == null)
+        {
+            Console.WriteLine("Update patient failed, wrong param/s, connection string or patient id null");
+            return false;
+        }
+
+
         // Parametrized query to insert a new patient into the database
         string updatePatientQuery = "UPDATE PATIENT SET first_name = @FirstName, surname = @Surname, gender = @Gender, telephone = @Telephone, phone_1 = @Phone1, phone_2 = @Phone2, cf = @CF, c_asl = @CAsl, birth_date = @BirthDate, birth_place = @BirthPlace, foreigner = @Foreigner, birth_province = @BirthProvince, billable = @Billable, completed = @Completed, documented = @Documented, locked = @Locked WHERE patientID = @PatientId";
 
         try
         {
             // Apro la connessione
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
 
             // Creo un comando MySQL per eseguire la query
             await using var command = new MySqlCommand(updatePatientQuery, Conn);
@@ -497,6 +551,7 @@ public class DbManager
     /// Asynchronously deletes a patient and all associated records from the database.
     /// </summary>
     /// <param name="patientId">The ID of the patient to be deleted.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>A <see cref="Task{Boolean}"/> representing the asynchronous operation,
     /// which returns true if at least one record was deleted, otherwise false.</returns>
     /// <remarks>
@@ -505,8 +560,14 @@ public class DbManager
     /// approach to ensure that all deletions are completed successfully before committing the transaction.
     /// In case of an exception, the transaction is rolled back and the method returns false.
     /// </remarks>
-    public async Task<bool> DeletePatientFromId(int patientId)
+    public async Task<bool> DeletePatientFromId(int patientId, string? connectionString)
     {
+        if (connectionString == null)
+        {
+            Console.WriteLine("Delete failed, connection string null");
+            return false;
+        }
+
         // Query per eliminare il paziente e le righe associate nelle tabelle VISIT, IMAGES, RECORDS
         string queryDeletePatient = @"
         DELETE FROM PATIENT WHERE patientID = @PatientId;
@@ -519,7 +580,7 @@ public class DbManager
         try
         {
             // Open the database connection asynchronously
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
 
             // Crea il comando SQL
             await using var command = new MySqlCommand(queryDeletePatient, Conn);
@@ -552,6 +613,7 @@ public class DbManager
     /// Asynchronously registers a new doctor in the database.
     /// </summary>
     /// <param name="doctor">The <see cref="Doctor"/> object containing the doctor's information to be registered.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>
     /// A <see cref="Task{Boolean}"/> that represents the asynchronous operation, returning <c>true</c> if the doctor was successfully registered, otherwise <c>false</c>.
     /// </returns>
@@ -560,8 +622,14 @@ public class DbManager
     /// It opens a connection to the database, executes the insert command, and then closes the connection.
     /// If an exception occurs during the operation, the method catches it, logs the error, and returns <c>false</c>.
     /// </remarks>
-    public async Task<bool> RegisterDoctorQuery(Doctor doctor)
+    public async Task<bool> RegisterDoctorQuery(Doctor doctor, string? connectionString)
     {
+        if (connectionString == null)
+        {
+            Console.WriteLine("Register of the doctor failed, connection string null");
+            return false;
+        }
+
         // Query parametrizzata per evitare SQL injection
         var registerDoctorQuery = $"INSERT INTO DOCTOR (first_name, surname, gender, birth_date, email, password, telephone, address) " +
                                   $"VALUES (@name, @surname, @gender, @birthDate, @email, SHA2(@password, {LengthHash}), @telephone, @address)";
@@ -569,7 +637,7 @@ public class DbManager
         try
         {
             // Apro la connessione al database
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
             await using var command = new MySqlCommand(registerDoctorQuery, Conn);
             // Aggiungo i parametri alla query
             command.Parameters.AddWithValue("@name", doctor.FirstName);
@@ -604,16 +672,23 @@ public class DbManager
     /// Checks if a doctor with the specified email already exists in the database.
     /// </summary>
     /// <param name="email">The email address of the doctor to check for existence.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>A boolean value indicating whether the doctor exists (true) or not (false).</returns>
-    public async Task<bool> CheckDoctorExistAsync(string email)
+    public async Task<bool> CheckDoctorExistAsync(string email, string? connectionString)
     {
+        if (connectionString == null)
+        {
+            Console.WriteLine("Check of the doctor failed, connection string null");
+            return false;
+        }
+
         // Query parametrizzata per evitare SQL injection
         var checkExistQuery = "SELECT email FROM DOCTOR WHERE email=@Email";
 
         try
         {
             // Apro la connessione al database
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
 
             // Creo il comando con la query e la connessione
             await using var command = new MySqlCommand(checkExistQuery, Conn);
@@ -642,22 +717,29 @@ public class DbManager
 
         return false;
     }
-    
+
     /// <summary>
     /// Checks if the provided email and password match a doctor's credentials in the database.
     /// </summary>
     /// <param name="email">The email address of the doctor.</param>
     /// <param name="password">The password of the doctor.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>A boolean value indicating whether the credentials are correct (true) or not (false).</returns>
-    public async Task<bool> CheckDoctorCredentialsAsync(string email, string password)
+    public async Task<bool> CheckDoctorCredentialsAsync(string email, string password, string? connectionString)
     {
+        if (connectionString == null)
+        {
+            Console.WriteLine("Check of the doctor failed, connection string null");
+            return false;
+        }
+
         // Query parametrizzata per evitare SQL injection
         var query = "SELECT COUNT(*) FROM DOCTOR WHERE email = @Email AND password = SHA2(@Password, @LengthHash)";
 
         try
         {
             // Apro la connessione al database
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
 
             // Creo il comando con la query e la connessione
             await using var command = new MySqlCommand(query, Conn);
@@ -693,16 +775,23 @@ public class DbManager
     /// Retrieves the doctor ID associated with the provided email address from the database.
     /// </summary>
     /// <param name="email">The email address of the doctor to retrieve the ID for.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>The doctor ID if found, otherwise null.</returns>
-    public async Task<int?> GetDoctorIdAsync(string email)
+    public async Task<int?> GetDoctorIdAsync(string email, string? connectionString)
     {
+        if (connectionString == null)
+        {
+            Console.WriteLine("Check of the doctor failed, connection string null");
+            return null;
+        }
+
         // Query parametrizzata per evitare SQL injection
         string query = "SELECT doctorID FROM DOCTOR WHERE email = @Email";
 
         try
         {
             // Apro la connessione al database
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
 
             // Creo il comando con la query e la connessione
             await using var command = new MySqlCommand(query, Conn);
@@ -743,9 +832,16 @@ public class DbManager
     /// </summary>
     /// <param name="nDoctors">The number of doctors to retrieve.</param>
     /// <param name="nPage">The page number for pagination.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>A list of doctors if found; otherwise, null.</returns>
-    public async Task<List<Doctor>?> GetDoctorsFromDb(int nDoctors, int nPage)
+    public async Task<List<Doctor>?> GetDoctorsFromDb(int nDoctors, int nPage, string? connectionString)
     {
+        if (connectionString == null)
+        {
+            Console.WriteLine("There was an error while getting the doctors from the db, connection string null");
+            return null;
+        }
+
         List<Doctor> doctors = new List<Doctor>();
 
         int offset = (nPage - 1) * nDoctors;
@@ -754,7 +850,7 @@ public class DbManager
 
         try
         {
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
             await using var command = new MySqlCommand(queryRangeDoctor, Conn);
 
             command.Parameters.AddWithValue("@Limit", nDoctors);
@@ -786,10 +882,10 @@ public class DbManager
     }
 
     /// <summary>
-    /// Constructs a Doctor object from the data in a MySqlDataReader.
+    /// Extracts a Doctor object from the MySqlDataReader, ensuring no null values are assigned.
     /// </summary>
-    /// <param name="reader">The MySqlDataReader containing the patient data.</param>
-    /// <returns>A Doctor object populated with the data from the reader, without the password.</returns>
+    /// <param name="reader">MySqlDataReader containing the doctor data.</param>
+    /// <returns>Doctor object with default values assigned for any null fields.</returns>
     public Doctor? GetDoctorFromReader(MySqlDataReader? reader)
     {
         if (reader == null)
@@ -797,15 +893,17 @@ public class DbManager
             return null;
         }
 
-        Doctor doctor = new Doctor();
-        doctor.DoctorId = reader.GetInt32("doctorID");
-        doctor.FirstName = reader.GetString("first_name");
-        doctor.Surname = reader.GetString("surname");
-        doctor.Gender = reader.GetBoolean("gender");
-        doctor.BirthDate = reader.GetDateTime("birth_date");
-        doctor.Email = reader.GetString("email");
-        doctor.Telephone = reader.GetString("telephone");
-        doctor.Address = reader.GetString("address");
+        Doctor doctor = new Doctor
+        {
+            DoctorId = reader.IsDBNull(reader.GetOrdinal("doctorID")) ? -1 : reader.GetInt32("doctorID"),
+            FirstName = reader.IsDBNull(reader.GetOrdinal("first_name")) ? "N/A" : reader.GetString("first_name"),
+            Surname = reader.IsDBNull(reader.GetOrdinal("surname")) ? "N/A" : reader.GetString("surname"),
+            Gender = !reader.IsDBNull(reader.GetOrdinal("gender")) && reader.GetBoolean("gender"),
+            BirthDate = reader.IsDBNull(reader.GetOrdinal("birth_date")) ? DateTime.MinValue : reader.GetDateTime("birth_date"),
+            Email = reader.IsDBNull(reader.GetOrdinal("email")) ? "N/A" : reader.GetString("email"),
+            Telephone = reader.IsDBNull(reader.GetOrdinal("telephone")) ? "N/A" : reader.GetString("telephone"),
+            Address = reader.IsDBNull(reader.GetOrdinal("address")) ? "N/A" : reader.GetString("address")
+        };
 
         return doctor;
     }
@@ -814,6 +912,7 @@ public class DbManager
     /// Asynchronously deletes a doctor and all associated records from the database.
     /// </summary>
     /// <param name="doctorId">The ID of the doctor to be deleted.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>A <see cref="Task{Boolean}"/> representing the asynchronous operation,
     /// which returns true if at least one record was deleted, otherwise false.</returns>
     /// <remarks>
@@ -822,8 +921,14 @@ public class DbManager
     /// approach to ensure that all deletions are completed successfully before committing the transaction.
     /// In case of an exception, the transaction is rolled back and the method returns false.
     /// </remarks>
-    public async Task<bool> DeleteDoctorFromId(int doctorId)
+    public async Task<bool> DeleteDoctorFromId(int doctorId, string? connectionString)
     {
+        if (connectionString == null)
+        {
+            Console.WriteLine("There was an error while getting the doctor id from the db, connection string null");
+            return false;
+        }
+
         // Query per eliminare il paziente e le righe associate nelle tabelle VISIT, IMAGES, RECORDS
         string queryDeletePatient = @"
         DELETE FROM PATIENT WHERE doctorID = @doctorId;
@@ -836,7 +941,7 @@ public class DbManager
         try
         {
             // Apro il database in connessione asincrona
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
 
             // Crea il comando SQL
             await using var command = new MySqlCommand(queryDeletePatient, Conn);
@@ -872,9 +977,16 @@ public class DbManager
     /// <param name="doctor">The doctor object containing updated information.</param>
     /// <param name="id">The ID of the doctor to update.</param>
     /// <param name="passwordChanged">Indicates if the password has been changed.</param>
+    /// <param name="connectionString">Connection string</param>
     /// <returns>A boolean indicating whether the update was successful.</returns>
-    public async Task<bool> UpdateDoctorFromId(Doctor doctor, int id, bool passwordChanged)
+    public async Task<bool> UpdateDoctorFromId(Doctor doctor, int id, bool passwordChanged, string? connectionString)
     {
+        if (connectionString == null)
+        {
+            Console.WriteLine("There was an error while updating the doctor in the db, connection string null");
+            return false;
+        }
+
         string updateDoctorPassword = passwordChanged ? $"password = SHA2(@Password, {LengthHash})," : string.Empty;
 
         // Query per aggiornare i dati del paziente
@@ -894,7 +1006,7 @@ public class DbManager
         try
         {
             // Apro la connessione
-            await OpenConnectionAsync();
+            await OpenConnectionAsync(connectionString);
 
             // Creo un comando MySQL per eseguire la query
             await using var command = new MySqlCommand(updateDoctorQuery, Conn);

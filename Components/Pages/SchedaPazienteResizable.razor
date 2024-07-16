@@ -1,6 +1,5 @@
 @page "/SchedaPaziente"
-@using Microsoft.AspNetCore.Mvc
-@using System.Net.Http;
+@page "/SchedaPaziente/{PatientID:int?}"
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 
@@ -736,7 +735,8 @@
 
 @code{
     private bool _isVisible = false; //variabile che cambia la visibilità del form
-    private string _ImgPatient = "./assets/test/test.jpg"; //<- DA SOSTITUIRE CON UN FILE EFFETTIVO    
+    private string _ImgPatient = "./assets/test/test.jpg"; //<- DA SOSTITUIRE CON UN FILE EFFETTIVO
+    [Parameter] public int? PatientID { get; set; }
 
     [Inject] private IJSRuntime JsRuntime { get; set; }
     
@@ -759,6 +759,7 @@
 
     private InputFile? inputFile;
     private IReadOnlyList<IBrowserFile> tempFiles;
+    private IReadOnlyList<IBrowserFile> notResizedFiles;
     private List<(string divId, IBrowserFile file)> divImages = new();
 
     ///<summary>
@@ -772,6 +773,7 @@
         {
             //the user might insert more files then expected and it would crash the program if not handled
             tempFiles = e.GetMultipleFiles(11);
+            notResizedFiles = e.GetMultipleFiles(11);
         }
         catch (Exception)
         {
@@ -815,14 +817,31 @@
         // Ensure the directory exists by creating it 
         Directory.Delete(imagesDirectoryPath, true);
         Directory.CreateDirectory(imagesDirectoryPath);
-        Console.Write(divNames.Length);
-        Console.Write(base64Imgs.Length);
+        int k = 0;
         //cicle the array to save the images to the directory
         for (int i = 0; i < base64Imgs.Length; i++)
         {
             //convert the base64 string back to a byte array
-            var bytes = System.Convert.FromBase64String(base64Imgs[i]);
-            await File.WriteAllBytesAsync(Path.Combine(imagesDirectoryPath, $"{divNames[i]}.png"), bytes);
+            foreach (var file in tempFiles)
+            {
+                var format = "image/png";
+                var resizedImageFile = await file.RequestImageFileAsync(format, 100, 100);
+                var buffer = new byte[resizedImageFile.Size];
+                await resizedImageFile.OpenReadStream().ReadAsync(buffer);
+
+                // Convert the bytes to a data URL to load the image
+                var base64Image = Convert.ToBase64String(buffer);
+                if(base64Image == base64Imgs[i]){
+                    var path = Path.Combine(env.WebRootPath, "Images", $"{divNames[i]}.png");
+                    using var stream = notResizedFiles[k].OpenReadStream(104857600);
+                    using var fileStream = new FileStream(path, FileMode.Create);
+                    await stream.CopyToAsync(fileStream);
+                    
+                }
+
+                k++;
+            }
+            
         }
         
         //call the funtion to render them in the appropriate div
@@ -834,9 +853,9 @@
     ///<summary>
     ///Funtion that loads the images in the div "esame"
     ///</summary>
-    private async Task LoadEsame()
+    [JSInvokable]
+    private Task LoadEsame()
     {
-        Console.Write("Loading images...");
         // Get the path to the directory where the image is located
         var imagesDirectoryPath = "./Images";
         var files = Directory.GetFiles(Path.Combine(env.WebRootPath, imagesDirectoryPath));
@@ -847,9 +866,9 @@
             var fileName = Path.GetFileName(file);
             var imageUrl = imagesDirectoryPath + "/" + fileName;
             JsRuntime.InvokeVoidAsync("appendImage", "esame", imageUrl, fileName);
+            Console.Write("caricato"+fileName);
         }
-
-        return;
+        return Task.FromResult(Task.CompletedTask); 
     }
 
     ///<summary>
@@ -866,52 +885,15 @@
         ToggleForm();
     }
 
-    public static string path= "./";
-    
-    ///<summary>
-    ///override of the "OnInitialized" function to get the path of the images
-    ///</summary>
-    protected override async Task OnInitializedAsync()
+    bool executed = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        LoadEsame();
-    }
-    
-    
-    
-    
-    ///<summary>
-    /// *deprecated* function that switches the page to the image visualization page
-    ///</summary> 
-    [JSInvokable]
-    public Task SwitchPage(string id)
-    {
-        Console.Write("\nsto entrando nello switchingg");
-        // Get the path to the directory where the image is located
-        var imagesDirectoryPath = Path.Combine(env.WebRootPath, "Images");
-
-        // Get the path to the image file
-        Console.Write("\nidImmagine:"+id);
-        var imagePath = Path.Combine(imagesDirectoryPath, id);
-        var imagePathWithoutExtension = imagePath.Substring(0, imagePath.LastIndexOf(".png"));
-        Console.Write("\npath img: " + imagePathWithoutExtension);
-        Console.Write("\npath img: " + imagePath);
-        // Check if the image file exists
-        if (File.Exists(imagePath))
-        {   
-            Console.Write("\nl'immagine esiste -> procedo");
-            // Get the path to the directory where you want to copy the image
-            var tempImagesDirectoryPath = Path.Combine(env.WebRootPath, "tempImg");
-
-            // Ensure the directory exists
-            Directory.CreateDirectory(tempImagesDirectoryPath);
-
-            // Get the path to the new image file
-            var newImagePath = Path.Combine(tempImagesDirectoryPath, "temp.png");
-
-            // Copy the image file and overwrite if the file already exists
-            File.Copy(imagePath, newImagePath, true);
+        if (firstRender && !executed)
+        {
+            Console.Write("Eseguo il load delle immagini");
+            executed = true;
+            await LoadEsame();
         }
-
-        return Task.CompletedTask;
     }
 }
