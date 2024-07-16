@@ -2,6 +2,7 @@
     @page "/"
     @using Blazored.LocalStorage
     @inject ILocalStorageService LocalStorage
+    @inject NavigationManager NavManager
     @rendermode InteractiveServer
 
     <div class="bg align-items-center">
@@ -49,7 +50,14 @@
                     <span class="col-12 d-inline-block d-inline-flex flex-column text-center">
                     @if (_messageFlag)
                     {
+                        @if (i == 0)
+                        {
                             <p class="errorMessage">@_message[i]</p>
+                        }
+                        else
+                        {
+                            <p class="successMessage">@_message[i]</p>
+                        }
                     }
                     </span>
                 </div>
@@ -76,7 +84,7 @@
         private string _password = "";
         private bool _messageFlag = false;
         private string[] _message = {"Verifica la correttezza dei dati","Connessione riuscita"};
-        int i;
+        private int i;
 
         protected override void OnInitialized()
         {
@@ -124,6 +132,7 @@
             Console.WriteLine($"Writing connection string to local storage: {_connectionString}");
             LocalStorage.SetItemAsync("connectionString", _connectionString);
             Console.WriteLine("Connection string successfully written to local storage.");
+            NavManager.NavigateTo("/login");
         }
 
         private async Task TestConnection()

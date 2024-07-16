@@ -46,6 +46,13 @@
 .checkBtn{
     background-color: #2b8518;
 }
+
+.successMessage{
+    color: #2b8518;
+    font-weight: bold;
+    font-size: 1vw;
+
+}
 .errorMessage{
     color: #ff4f39;
     font-weight: bold;
