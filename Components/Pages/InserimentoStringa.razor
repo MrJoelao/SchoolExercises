@@ -1,91 +1,146 @@
-@page "/inserimentoStringa"
-@page "/"
-@using Blazored.LocalStorage
-@inject ILocalStorageService LocalStorage
-@rendermode InteractiveServer
+    @page "/inserimentoStringa"
+    @page "/"
+    @using Blazored.LocalStorage
+    @inject ILocalStorageService LocalStorage
+    @rendermode InteractiveServer
 
-<!--
-                nome database
-                username
-                password
--->
-<div class="bg align-items-center">
-    <!--stile per la forma del form-->
-    <div class="loginForm text-center p-3 pt-5  d-flex flex-column">
+    <div class="bg align-items-center">
+        <div class="loginForm text-center p-3 pt-5 d-flex flex-column">
+            <h1 class="titlo">inserimento Stringa</h1>
+            <p class="sottotitolo"> inserisci le informazioni del tuo database</p>
+            <div class="col-12 d-flex flex-column text-start">
+                <div class="row p-2 d-flex flex-row align-content-center">
+                    <span class="col-6 d-inline-block d-inline-flex flex-column">
+                        <label for="server" class="form-label">Server</label>
+                        <input type="text" class="form-control" id="server" placeholder="Server" @oninput="@(e => UpdateConnectionString(e, "server"))">
+                    </span>
+                    <span class="col-6 d-inline-block d-inline-flex flex-column">
+                        <label for="porta" class="form-label">Porta</label>
+                        <input type="number" class="form-control" id="porta" placeholder="porta" @oninput="@(e => UpdateConnectionString(e, "port"))">
+                    </span>
+                </div>
 
-        <h1 class="titlo">inserimento Stringa</h1>
-        <p class="sottotitolo"> inserisci le informazioni del tuo database</p>
-        <div class="col-12 d-flex flex-column text-start">
-            <div class="row p-2 d-flex flex-row align-content-center">
-                <span class="col-6 d-inline-block d-inline-flex flex-column">
-                    <label for="server" class="form-label">Server</label>
-                    <input type="text" class="form-control" id="server" placeholder="Server">
-                </span>
-                <span class="col-6 d-inline-block d-inline-flex flex-column">
-                    <label for="porta" class="form-label">Porta</label>
-                    <input type="text" class="form-control" id="porta" placeholder="porta">
-                </span>
-            </div>
+                <div class="row p-2 d-flex flex-row align-content-center">
+                    <span class="col-6 d-inline-block d-inline-flex flex-column">
+                        <label for="username" class="form-label">Nome utente</label>
+                        <input type="text" class="form-control" id="username" placeholder="utente" @oninput="@(e => UpdateConnectionString(e, "user"))">
+                    </span>
+                    <span class="col-6 d-inline-block d-inline-flex flex-column">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" class="form-control" id="password" placeholder="Password1234" @oninput="@(e => UpdateConnectionString(e, "password"))">
+                    </span>
+                </div>
 
-            <div class="row p-2 d-flex flex-row align-content-center">
-                <span class="col-6 d-inline-block d-inline-flex flex-column">
-                    <label for="username" class="form-label">Nome utente</label>
-                    <input type="text" class="form-control" id="username" placeholder="utente">
-                </span>
-                <span class="col-6 d-inline-block d-inline-flex flex-column">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="text" class="form-control" id="password" placeholder="Password1234">
-                </span>
-            </div>
+                <div class="row p-2 d-flex flex-row align-content-center">
+                    <span class="col-12 d-inline-block d-inline-flex flex-column">
+                        <label for="dbName" class="form-label">Nome database</label>
+                        <input type="text" class="form-control" id="dbName" placeholder="MyDatabase" @oninput="@(e => UpdateConnectionString(e, "database"))">
+                    </span>
+                </div>
 
-            <div class="row p-2 d-flex flex-row align-content-center">
-                <span class="col-12 d-inline-block d-inline-flex flex-column">
-                    <label for="dbName" class="form-label">Nome database</label>
-                    <input type="text" class="form-control" id="dbName" placeholder="MyDatabase">
-                </span>
-            </div>
+                <div class="row p-2 d-flex flex-row align-content-center">
+                    <span class="col-12 d-inline-block d-inline-flex flex-column">
+                        <label for="fullString" class="form-label">Stringa completa</label>
+                        <input type="text" id="fullString" class="form-control" @bind="_connectionBuilder" />
+                    </span>
+                </div>
 
-            <div class="row p-2 d-flex flex-row align-content-center">
-                <span class="col-12 d-inline-block d-inline-flex flex-column">
-                    <label for="fullString" class="form-label">Stringa completa</label>
-                    <input type="text" id="fullString" class="form-control" @bind="_connectionString"/>
-                </span>
-            </div>
+                <div class="row p-2 d-flex flex-row align-content-center">
+                    <span class="col-12 d-inline-block d-inline-flex flex-column text-center">
+                    @if (_messageFlag)
+                    {
+                            <p class="errorMessage">@_message[i]</p>
+                    }
+                    </span>
+                </div>
 
-            <div class="row p-2 d-flex flex-row align-content-center">
-                <span class="col-12 d-inline-block d-inline-flex flex-column text-center">
-                    <p class="errorMessage">Verifica la correttezza dei dati</p>
-                </span>
-            </div>
-            
-            <div class="row p-2 d-flex flex-row align-content-center">
-                <span class="col-6 d-inline-block d-inline-flex flex-column">
-                    <button class="confirmBtn" @onclick="WriteCookie">Inserisci</button>
-                </span>
-                <span class="col-6 d-inline-block d-inline-flex flex-column">
-                    <button class="confirmBtn checkBtn">Verifica connessione</button>
-                </span>
+                <div class="row p-2 d-flex flex-row align-content-center">
+                    <span class="col-6 d-inline-block d-inline-flex flex-column">
+                        <button class="confirmBtn" @onclick="WriteCookie">Inserisci</button>
+                    </span>
+                    <span class="col-6 d-inline-block d-inline-flex flex-column">
+                        <button class="confirmBtn checkBtn" @onclick="TestConnection">Verifica connessione</button>
+                    </span>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
 
-@code {
-    private string _connectionString;
+    @code {
+        private string _connectionString = "";
+        private string _connectionBuilder = "";
+        private string _server = "";
+        private int _port;
+        private string _database = "";
+        private string _user = "";
+        private string _password = "";
+        private bool _messageFlag = false;
+        private string[] _message = {"Verifica la correttezza dei dati","Connessione riuscita"};
+        int i;
 
-    public void WriteCookie()
-    {
-        Console.WriteLine("Attempting to write to local storage...");
-
-        if (string.IsNullOrEmpty(_connectionString))
+        protected override void OnInitialized()
         {
-            Console.WriteLine("Connection string empty");
-            return;
+            UpdateConnectionString(null, null);
         }
 
-        Console.WriteLine($"Writing connection string to local storage: {_connectionString}");
-        LocalStorage.SetItemAsync("connectionString", _connectionString);
-        Console.WriteLine("Connection string successfully written to local storage.");
+        private void UpdateConnectionString(ChangeEventArgs e, string fieldName)
+        {
+            if (fieldName == "server")
+            {
+                _server = e.Value.ToString();
+            }
+            else if (fieldName == "port")
+            {
+                _port = int.Parse(e.Value.ToString());
+            }
+            else if (fieldName == "database")
+            {
+                _database = e.Value.ToString();
+            }
+            else if (fieldName == "user")
+            {
+                _user = e.Value.ToString();
+            }
+            else if (fieldName == "password")
+            {
+                _password = e.Value.ToString();
+            }
+
+            _connectionBuilder = $"server={_server};port={_port};database={_database};user={_user};password={_password};";
+        }
+
+        private void WriteCookie()
+        {
+            _connectionString = _connectionBuilder;
+
+            Console.WriteLine("Attempting to write to local storage...");
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                Console.WriteLine("Connection string empty");
+                return;
+            }
+
+            Console.WriteLine($"Writing connection string to local storage: {_connectionString}");
+            LocalStorage.SetItemAsync("connectionString", _connectionString);
+            Console.WriteLine("Connection string successfully written to local storage.");
+        }
+
+        private async Task TestConnection()
+        {
+            Console.WriteLine(_connectionBuilder);
+            var dbManager = new DbManager();
+            var result = await dbManager.TestDatabaseConnectionAsync(_connectionBuilder);
+            if (result)
+            {
+                _messageFlag = true;
+                i = 1;
+
+            }
+            else
+            {
+                _messageFlag = true;
+                i = 0;
+            }
+        }
     }
-}
