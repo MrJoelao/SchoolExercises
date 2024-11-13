@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ripasso sugli Elenchi</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f5f5f5;
+                line-height: 1.6;
+            }
+            h1 {
+                color: #2c3e50;
+                text-align: center;
+                padding: 20px;
+                background-color: #ecf0f1;
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                margin-bottom: 30px;
+            }
+            h2 {
+                color: #34495e;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+                margin-top: 30px;
+            }
+            ol, ul {
+                background-color: white;
+                padding: 20px 40px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                margin: 15px 0;
+            }
+            li {
+                margin: 10px 0;
+                color: #333;
+                padding: 5px 0;
+            }
+            li:hover {
+                color: #3498db;
+                transform: translateX(10px);
+                transition: all 0.3s ease;
+            }
+            /* Stile per elenchi annidati */
+            ul ul {
+                background-color: #f8f9fa;
+                margin: 10px 0;
+                border-left: 3px solid #3498db;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Ripasso sugli Elenchi</h1>
+        
+        <h2>Elenchi Ordinati</h2>
+        <p>Gli elenchi ordinati sono utilizzati quando l'ordine degli elementi è importante:</p>
+        <ol>
+            <li>Analisi dei requisiti</li>
+            <li>Progettazione</li>
+            <li>Sviluppo</li>
+            <li>Testing</li>
+            <li>Deployment</li>
+        </ol>
+
+        <h2>Elenchi Non Ordinati</h2>
+        <p>Gli elenchi non ordinati sono perfetti per elementi senza un ordine specifico:</p>
+        <ul>
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JavaScript</li>
+            <li>Python</li>
+            <li>Java</li>
+        </ul>
+
+        <h2>Elenchi Annidati</h2>
+        <p>Gli elenchi possono essere annidati per creare strutture gerarchiche:</p>
+        <ul>
+            <li>
+                Frontend Development
+                <ul>
+                    <li>HTML5 e semantica</li>
+                    <li>CSS3 e frameworks</li>
+                    <li>JavaScript e librerie</li>
+                </ul>
+            </li>
+            <li>
+                Backend Development
+                <ul>
+                    <li>Node.js</li>
+                    <li>Database SQL e NoSQL</li>
+                    <li>API REST</li>
+                </ul>
+            </li>
+            <li>
+                DevOps
+                <ul>
+                    <li>Docker</li>
+                    <li>Kubernetes</li>
+                    <li>CI/CD</li>
+                </ul>
+            </li>
+        </ul>
+    </body>
+</html>

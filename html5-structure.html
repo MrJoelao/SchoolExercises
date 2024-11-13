@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elementi HTML5</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* imposta la famiglia di caratteri */
+            margin: 0; /* rimuove i margini esterni */
+            padding: 20px; /* imposta il padding interno */
+            line-height: 1.6; /* imposta l'altezza della riga */
+            background-color: #121212; /* tema scuro per il body */
+            color: #e0e0e0; /* colore chiaro per il testo */
+        }
+
+        header {
+            background-color: #1e3c72; /* blu scuro per l'header */
+            padding: 20px;
+            margin-bottom: 20px;
+            resize: both;
+            overflow: auto;
+            color: white; /* colore chiaro per il testo dell'header */
+        }
+
+        nav {
+            background-color: #2a5298; /* blu scuro per il nav */
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        main {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            resize: vertical;
+            overflow: auto;
+            min-height: 200px;
+            background-color: #1e1e1e; /* grigio scuro per il main */
+        }
+
+        article {
+            background-color: #333333; /* grigio scuro per gli articoli */
+            padding: 15px;
+            margin-bottom: 30px;
+            resize: both;
+            overflow: auto;
+            min-width: 200px;
+            min-height: 100px;
+            color: #e0e0e0; /* colore chiaro per il testo degli articoli */
+        }
+
+        aside {
+            flex: 0 0 250px;
+            background-color: #2a2a2a; /* grigio scuro per l'aside */
+            padding: 15px;
+            order: 2;
+            resize: horizontal;
+            overflow: auto;
+            min-width: 150px;
+            color: #e0e0e0; /* colore chiaro per il testo dell'aside */
+        }
+
+        section {
+            background-color: #1e1e1e; /* grigio scuro per le sezioni */
+            padding: 10px;
+            margin: 10px 0;
+            color: #e0e0e0; /* colore chiaro per il testo delle sezioni */
+        }
+
+        .articolo {
+            flex: 1;
+            resize: horizontal;
+            overflow: auto;
+            background-color: #2a2a2a; /* grigio scuro per il div articolo */
+            color: #e0e0e0; /* colore chiaro per il testo del div articolo */
+        }
+
+        footer {
+            background-color: #1e3c72; /* blu scuro per il footer */
+            color: white; /* colore chiaro per il testo del footer */
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            resize: vertical;
+            overflow: auto;
+            min-height: 50px;
+        }
+
+        h1, h2, h3 {
+            color: #90caf9; /* colore chiaro per i titoli */
+        }
+
+        a {
+            color: #90caf9; /* colore chiaro per i link */
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #ffffff; /* colore bianco per i link al passaggio del mouse */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Questo è un header</h1>
+        <nav>
+            <ul>
+                <li><a href="#Indice1">link di navigazione</a></li>
+                <li><a href="#Indice2">link di navigazione</a></li>
+                <li><a href="#Indice3">link di navigazione</a></li>
+                <li><a href="#Indice4">link di navigazione</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="articolo">
+            <section>
+                <article>
+                    <h2>Article titolo</h2>
+                    <p>Article</p>
+                    <section>
+                        <h3>Section titolo</h3>
+                        <article>
+                            <p>Article</p>
+                            <footer>
+                                <p>Footer</p>
+                            </footer>
+                        </article>
+                    </section>
+                </article>
+
+                <article>
+                    <h2>Article titolo</h2>
+                    <p>Article</p>
+                </article>
+            </section>
+        </div>
+
+        <aside>
+            <section>
+                <h3>Sidebar titolo</h3>
+                <ul>
+                    <li><a href="#">link della sidebar</a></li>
+                    <li><a href="#">link della sidebar</a></li>
+                </ul>
+            </section>
+            <section>
+                <h3>Sidebar titolo</h3>
+                <ul>
+                    <li><a href="#link1">link di categoria</a></li>
+                    <li><a href="#link2">link di categoria</a></li>
+                    <li><a href="#link3">link di categoria</a></li>
+                </ul>
+            </section>
+        </aside>
+    </main>
+
+    <footer>
+        <p>footer</p>
+    </footer>
+</body>
+</html>

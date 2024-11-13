@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Novità di HTML5</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                max-width: 75rem;
+                margin: 0 auto;
+                padding: 1.25rem;
+                background-color: #121212;
+                color: #e0e0e0;
+                line-height: 1.6;
+            }
+            header {
+                text-align: center;
+                padding: 2.5rem;
+                background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+                color: white;
+                border-radius: 0.625rem;
+                margin-bottom: 1.875rem;
+                box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+            }
+            nav {
+                background-color: #1e1e1e;
+                padding: 1.25rem;
+                border-radius: 0.625rem;
+                box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+                margin-bottom: 1.875rem;
+            }
+            nav ul {
+                display: flex;
+                justify-content: space-around;
+                list-style: none;
+                padding: 0;
+            }
+            nav a {
+                color: #90caf9;
+                text-decoration: none;
+                font-weight: bold;
+                padding: 0.625rem 2.5rem;
+                border-radius: 0.3125rem;
+                transition: all 0.3s ease;
+            }
+            nav a:hover {
+                color: #9fd1fa;
+            }
+            section {
+                background-color: #1e1e1e;
+                padding: 1.875rem;
+                border-radius: 0.625rem;
+                margin-bottom: 1.875rem;
+                box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+            }
+            h2 {
+                color: #90caf9;
+                border-bottom: 0.125rem solid #2a5298;
+                padding-bottom: 0.625rem;
+            }
+            h3 {
+                color: #90caf9;
+            }
+            code {
+                background-color: #333333;
+                padding: 0.125rem 0.375rem;
+                border-radius: 0.25rem;
+                color: #e83e8c;
+            }
+            pre {
+                background-color: #333333;
+                padding: 0.9375rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+            }
+            ul {
+                list-style-type: none;
+                padding-left: 1.25rem;
+            }
+            li {
+                margin: 0.625rem 0;
+                padding: 0.625rem;
+                background-color: #333333;
+                border-radius: 0.3125rem;
+                transition: transform 0.2s;
+                box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+            }
+            li:hover {
+                transform: translateX(0.625rem);
+            }
+            input {
+                padding: 0.3125rem;
+                margin: 0.3125rem;
+                border-radius: 0.25rem;
+                border: 0.0625rem solid #555555;
+                box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+                background-color: #1e1e1e;
+                color: #e0e0e0;
+            }
+            canvas {
+                background-color: #1e1e1e;
+                border-radius: 0.5rem;
+                box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+            }
+            footer {
+                text-align: center;
+                padding: 1.25rem;
+                background-color: #1e3c72;
+                color: white;
+                border-radius: 0.625rem;
+                margin-top: 1.875rem;
+                box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+            }
+            button {
+                padding: 0.625rem 1.25rem;
+                border: none;
+                border-radius: 0.3125rem;
+                background-color: #2a5298;
+                color: white;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            button:hover {
+                background-color: #1e3c72;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Le Novità di HTML5</h1>
+            <!-- Intestazione principale della pagina -->
+            <p>Scopri le funzionalità più innovative del linguaggio di markup più utilizzato al mondo</p>
+        </header>
+
+        <nav>
+            <h2>Indice dei Contenuti</h2>
+            <!-- Menu di navigazione -->
+            <ul>
+                <li><a href="#elementi">Nuovi Elementi Semantici</a></li>
+                <li><a href="#multimedia">Elementi Multimediali</a></li>
+                <li><a href="#form">Nuovi Input Forms</a></li>
+                <li><a href="#grafica">Grafica e Animazioni</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="elementi">
+                <h2>Nuovi Elementi Semantici</h2>
+                <!-- Sezione sugli elementi semantici -->
+                <p>HTML5 ha introdotto nuovi elementi semantici per una struttura più chiara e significativa del documento:</p>
+                <ul>
+                    <li><code>&lt;header&gt;</code> - Per intestazioni e introduzioni</li>
+                    <li><code>&lt;nav&gt;</code> - Per menu di navigazione e link importanti</li>
+                    <li><code>&lt;main&gt;</code> - Per il contenuto principale della pagina</li>
+                    <li><code>&lt;section&gt;</code> - Per raggruppare contenuti correlati</li>
+                    <li><code>&lt;article&gt;</code> - Per contenuti indipendenti e autonomi</li>
+                    <li><code>&lt;aside&gt;</code> - Per contenuti correlati ma secondari</li>
+                    <li><code>&lt;footer&gt;</code> - Per informazioni di chiusura e contatti</li>
+                </ul>
+                <h2>Struttura</h2>
+                <p>La struttura di un documento HTML5 è fondamentale per una corretta organizzazione e semantica del contenuto. Per maggiori dettagli, visita la pagina dedicata:</p>
+                <a href="html5-structure.html" target="_blank">
+                    <button>Vai alla Struttura di HTML5</button>
+                </a>
+            </section>
+
+            <section id="multimedia">
+                <h2>Elementi Multimediali</h2>
+                <!-- Sezione sugli elementi multimediali -->
+                <article>
+                    <h3>Audio</h3>
+                    <p>HTML5 supporta nativamente la riproduzione audio senza plugin:</p>
+                    <pre><code>&lt;audio controls&gt;
+    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+    &lt;source src="audio.ogg" type="audio/ogg"&gt;
+    Il tuo browser non supporta l'elemento audio.
+&lt;/audio&gt;</code></pre>
+                </article>
+
+                <article>
+                    <h3>Video</h3>
+                    <p>Riproduzione video integrata con controlli personalizzabili:</p>
+                    <pre><code>&lt;video width="320" height="240" controls&gt;
+    &lt;source src="video.mp4" type="video/mp4"&gt;
+    &lt;source src="video.webm" type="video/webm"&gt;
+    Il tuo browser non supporta l'elemento video.
+&lt;/video&gt;</code></pre>
+                </article>
+            </section>
+
+            <section id="form">
+                <h2>Nuovi Input Forms</h2>
+                <!-- Sezione sui nuovi tipi di input -->
+                <p>HTML5 ha introdotto numerosi nuovi tipi di input per migliorare l'esperienza utente:</p>
+                <ul>
+                    <li>Data: <input type="date"> <code>type="date"</code></li>
+                    <li>Ora: <input type="time"> <code>type="time"</code></li>
+                    <li>Email: <input type="email" placeholder="esempio@dominio.com"> <code>type="email"</code></li>
+                    <li>URL: <input type="url" placeholder="https://esempio.com"> <code>type="url"</code></li>
+                    <li>Numero: <input type="number" min="0" max="100"> <code>type="number"</code></li>
+                    <li>Range: <input type="range" min="0" max="100"> <code>type="range"</code></li>
+                    <li>Colore: <input type="color"> <code>type="color"</code></li>
+                </ul>
+            </section>
+
+            <section id="grafica">
+                <h2>Grafica e Animazioni</h2>
+                <!-- Sezione sulla grafica -->
+                <article>
+                    <h3>Canvas</h3>
+                    <p>Area di disegno interattiva per grafica 2D:</p>
+                    <canvas id="myCanvas" width="600" height="400" style="border:1px solid #000000;"></canvas>
+                    <p><i>Muovi il mouse sul canvas per disegnare! 🎨</i></p>
+                    
+                    <script>
+                        const canvas = document.getElementById('myCanvas');
+                        const ctx = canvas.getContext('2d');
+                        let isDrawing = false;
+                        
+                        ctx.strokeStyle = '#2a5298';
+                        ctx.lineWidth = 3;
+                        ctx.lineCap = 'round';
+                        ctx.lineJoin = 'round';
+
+                        canvas.addEventListener('mousedown', startDrawing);
+                        canvas.addEventListener('mousemove', draw);
+                        canvas.addEventListener('mouseup', stopDrawing);
+                        canvas.addEventListener('mouseout', stopDrawing);
+
+                        function startDrawing(e) {
+                            isDrawing = true;
+                            draw(e);
+                        }
+
+                        function draw(e) {
+                            if (!isDrawing) return;
+                            
+                            const rect = canvas.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            
+                            ctx.lineTo(x, y);
+                            ctx.stroke();
+                            ctx.beginPath();
+                            ctx.moveTo(x, y);
+                        }
+
+                        function stopDrawing() {
+                            isDrawing = false;
+                            ctx.beginPath();
+                        }
+                    </script>
+                </article>
+
+                <article>
+                    <h3>SVG</h3>
+                    <p>Grafica vettoriale scalabile per immagini di alta qualità:</p>
+                    <svg width="200" height="200" style="background-color: #333333; border-radius: 8px; padding: 20px;">
+                        <circle cx="100" cy="100" r="80" stroke="#2a5298" stroke-width="4" fill="#1e3c72" opacity="0.7">
+                            <animate attributeName="r" values="80;90;80" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="100" cy="100" r="40" stroke="#2a5298" stroke-width="4" fill="white"/>
+                    </svg>
+                    <pre><code>&lt;svg width="200" height="200"&gt;
+    &lt;circle cx="100" cy="100" r="80" stroke="#2a5298" stroke-width="4" fill="#1e3c72"/&gt;
+&lt;/svg&gt;</code></pre>
+                </article>
+            </section>
+        </main>
+    </body>
+</html>
