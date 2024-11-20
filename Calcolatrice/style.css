@@ -1,0 +1,65 @@
+h1 {
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    text-align: right;
+    height: 3rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #00000017;   
+    
+}
+
+.container {
+    max-width: 25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10rem auto;
+    padding: 1rem;
+    background-color: #00000017;
+    border-radius: 0.5rem;
+}
+
+body {
+    background-color: #00000002;
+}
+
+button {
+    width: 22%;
+    height: 3.5rem;
+    margin: 0.2rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #00000017;
+}
+
+.operator {
+    background-color: #0066ff73;
+}
+
+.clear {
+    background-color: #ff000073;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+}
+
+button:hover {
+    background-color: #00000033;
+}
+
+.operator:hover {
+    background-color: #0066ff99;
+}
+
+.clear:hover {
+    background-color: #ff000099;
+}
