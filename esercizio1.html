@@ -4,112 +4,61 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Ripasso Formattazione Logica</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                max-width: 800px;
-                margin: 0 auto;
-                padding: 20px;
-                background-color: #f5f5f5;
-            }
-            h1 {
-                color: #2c3e50;
-                text-align: center;
-                padding: 20px;
-                background-color: #ecf0f1;
-                border-radius: 10px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            }
-            p {
-                line-height: 1.6;
-                color: #333;
-            }
-            ul {
-                list-style-type: none;
-                padding: 0;
-            }
-            li {
-                background-color: white;
-                margin: 10px 0;
-                padding: 15px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                transition: transform 0.2s;
-            }
-            li:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
-            strong { color: #e74c3c; }
-            em { color: #3498db; }
-            code { 
-                background-color: #f8f9fa;
-                padding: 2px 6px;
-                border-radius: 4px;
-                color: #e83e8c;
-            }
-            mark {
-                background-color: #ffd700;
-                padding: 2px 4px;
-            }
-            kbd {
-                background-color: #333;
-                color: white;
-                padding: 2px 6px;
-                border-radius: 3px;
-            }
-            var { color: #2ecc71; }
-            samp { color: #9b59b6; }
-        </style>
+        <link rel="stylesheet" href="unified-style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h1>Ripasso Formattazione Logica</h1>
-        <p>
-            La formattazione logica in HTML è utilizzata per dare significato al
-            testo. Ogni elemento ha uno scopo specifico e aiuta a strutturare 
-            semanticamente il contenuto. Ecco alcuni esempi comuni:
-        </p>
-        <ul>
-            <li>
-                <strong>Strong</strong>: per enfatizzare fortemente il testo. 
-                Esempio: <strong>Attenzione!</strong>
-            </li>
-            <li>
-                <em>Emphasis</em>: per enfatizzare leggermente il testo.
-                Esempio: Questo è <em>davvero importante</em>.
-            </li>
-            <li>
-                <abbr title="HyperText Markup Language">HTML</abbr>: per
-                abbreviazioni. Passa il mouse sopra per vedere il significato completo.
-            </li>
-            <li>
-                <cite>Citation</cite>: per citazioni di titoli di opere.
-                Esempio: <cite>La Divina Commedia</cite> di Dante Alighieri.
-            </li>
-            <li>
-                <code>Code</code>: per blocchi di codice.
-                Esempio: <code>console.log("Hello World!");</code>
-            </li>
-            <li>
-                <dfn>Definizione</dfn>: per definizioni di termini.
-                Esempio: <dfn>HTML</dfn> è il linguaggio di markup per la creazione di pagine web.
-            </li>
-            <li>
-                <kbd>Input da tastiera</kbd>: per input da tastiera.
-                Esempio: Premi <kbd>Ctrl</kbd> + <kbd>C</kbd> per copiare.
-            </li>
-            <li>
-                <mark>Highlight</mark>: per evidenziare il testo.
-                Esempio: Questa è una <mark>parte importante</mark> del testo.
-            </li>
-            <li>
-                <samp>Output di un programma</samp>: per output di programmi.
-                Esempio: <samp>Error 404: Page not found</samp>
-            </li>
-            <li>
-                <var>Variabile</var>: per variabili matematiche o di programmazione.
-                Esempio: L'equazione è <var>y</var> = <var>mx</var> + <var>b</var>
-            </li>
-        </ul>
+        <div class="container">
+            <h1>Ripasso Formattazione Logica</h1>
+            <p>
+                La formattazione logica in HTML è utilizzata per dare significato al
+                testo. Ogni elemento ha uno scopo specifico e aiuta a strutturare 
+                semanticamente il contenuto. Ecco alcuni esempi comuni:
+            </p>
+            <div class="card">
+                <ul>
+                    <li>
+                        <strong>Strong</strong>: per enfatizzare fortemente il testo. 
+                        Esempio: <strong>Attenzione!</strong>
+                    </li>
+                    <li>
+                        <em>Emphasis</em>: per enfatizzare leggermente il testo.
+                        Esempio: Questo è <em>davvero importante</em>.
+                    </li>
+                    <li>
+                        <abbr title="HyperText Markup Language">HTML</abbr>: per
+                        abbreviazioni. Passa il mouse sopra per vedere il significato completo.
+                    </li>
+                    <li>
+                        <cite>Citation</cite>: per citazioni di titoli di opere.
+                        Esempio: <cite>La Divina Commedia</cite> di Dante Alighieri.
+                    </li>
+                    <li>
+                        <code>Code</code>: per blocchi di codice.
+                        Esempio: <code>console.log("Hello World!");</code>
+                    </li>
+                    <li>
+                        <dfn>Definizione</dfn>: per definizioni di termini.
+                        Esempio: <dfn>HTML</dfn> è il linguaggio di markup per la creazione di pagine web.
+                    </li>
+                    <li>
+                        <kbd>Input da tastiera</kbd>: per input da tastiera.
+                        Esempio: Premi <kbd>Ctrl</kbd> + <kbd>C</kbd> per copiare.
+                    </li>
+                    <li>
+                        <mark>Highlight</mark>: per evidenziare il testo.
+                        Esempio: Questa è una <mark>parte importante</mark> del testo.
+                    </li>
+                    <li>
+                        <samp>Output di un programma</samp>: per output di programmi.
+                        Esempio: <samp>Error 404: Page not found</samp>
+                    </li>
+                    <li>
+                        <var>Variabile</var>: per variabili matematiche o di programmazione.
+                        Esempio: L'equazione è <var>y</var> = <var>mx</var> + <var>b</var>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </body>
 </html>

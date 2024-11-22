@@ -4,138 +4,56 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Ripasso sui Link</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                max-width: 800px;
-                margin: 0 auto;
-                padding: 20px;
-                background-color: #f5f5f5;
-                line-height: 1.6;
-            }
-            h1 {
-                color: #2c3e50;
-                text-align: center;
-                padding: 20px;
-                background-color: #ecf0f1;
-                border-radius: 10px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                margin-bottom: 30px;
-            }
-            h2 {
-                color: #34495e;
-                border-bottom: 2px solid #3498db;
-                padding-bottom: 10px;
-                margin-top: 30px;
-            }
-            p {
-                color: #333;
-                background-color: white;
-                padding: 15px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                margin: 15px 0;
-            }
-            a {
-                display: inline-block;
-                padding: 10px 20px;
-                background-color: #3498db;
-                color: white;
-                text-decoration: none;
-                border-radius: 5px;
-                margin: 5px;
-                transition: all 0.3s ease;
-            }
-            a:hover {
-                background-color: #2980b9;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
-            .link-section {
-                background-color: white;
-                padding: 20px;
-                border-radius: 8px;
-                margin: 20px 0;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            }
-        </style>
+        <link rel="stylesheet" href="unified-style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h1>Ripasso sui Link</h1>
-        <p>
-            I link sono uno degli elementi fondamentali del web. Permettono di
-            navigare da una pagina all'altra o di accedere a risorse esterne.
-            Vediamo i diversi tipi di link e il loro utilizzo.
-        </p>
-
-        <div class="link-section">
-            <h2>Link Semplici</h2>
-            <p>Un link di base che porta a un sito web esterno:</p>
-            <a href="https://www.example.com">Visita Example.com</a>
-        </div>
-
-        <div class="link-section">
-            <h2>Link con Attributi</h2>
-            <p>Un link che si apre in una nuova scheda del browser:</p>
-            <a href="https://www.example.com" target="_blank" rel="noopener noreferrer">
-                Visita Example.com in una nuova scheda
-            </a>
-        </div>
-
-        <div class="link-section">
-            <h2>Link Interni</h2>
-            <p>Link che puntano a sezioni specifiche della stessa pagina:</p>
-            <a href="#sezione1">Vai alla Sezione 1</a>
-            <a href="#top">Torna in cima</a>
-        </div>
-
-        <div class="link-section">
-            <h2>Link Esterni Popolari</h2>
-            <p>Collegamenti a risorse web comuni:</p>
-            <a href="https://www.wikipedia.org">Wikipedia</a>
-            <a href="https://www.google.com">Google</a>
-            <a href="https://www.github.com">GitHub</a>
-        </div>
-
-        <div class="link-section">
-            <h2>Link per Contatti</h2>
-            <p>Link per comunicare direttamente:</p>
-            <a href="mailto:esempio@example.com">
-                <i>✉</i> Invia una Email
-            </a>
-            <a href="tel:+391234567890">
-                <i>📞</i> Chiama +39 123 456 7890
-            </a>
-        </div>
-
-        <div class="link-section">
-            <h2>Link a Documenti</h2>
-            <p>Collegamenti a vari tipi di documenti:</p>
-            <a href="https://www.example.com/documento.pdf">
-                <i>📄</i> Scarica PDF
-            </a>
-            <a href="https://www.example.com/documento.docx">
-                <i>📝</i> Scarica Word
-            </a>
-        </div>
-
-        <div class="link-section">
-            <h2>Link Multimediali</h2>
-            <p>Collegamenti a contenuti multimediali:</p>
-            <a href="https://www.example.com/video.mp4">
-                <i>🎥</i> Guarda Video
-            </a>
-            <a href="https://www.example.com/audio.mp3">
-                <i>🎵</i> Ascolta Audio
-            </a>
-        </div>
-
-        <div class="link-section" id="sezione1">
-            <h2>Sezione 1</h2>
+        <div class="container">
+            <h1>Ripasso sui Link</h1>
             <p>
-                Questa è la sezione 1 della pagina, raggiungibile tramite il link interno.
-                È un esempio di come i link interni possano aiutare nella navigazione di pagine lunghe.
+                I link sono uno degli elementi fondamentali del web. Permettono di
+                navigare da una pagina all'altra o di accedere a risorse esterne.
             </p>
+
+            <div class="card">
+                <h2>Link Semplici</h2>
+                <p>Un link di base che porta a un sito web esterno:</p>
+                <a href="https://www.example.com" class="button">Visita Example.com</a>
+            </div>
+
+            <div class="card">
+                <h2>Link con Attributi</h2>
+                <p>Un link che si apre in una nuova scheda del browser:</p>
+                <a href="https://www.example.com" target="_blank" rel="noopener noreferrer" class="button">
+                    Visita Example.com in una nuova scheda
+                </a>
+            </div>
+
+            <div class="card">
+                <h2>Link Interni</h2>
+                <p>Link che puntano a sezioni specifiche della stessa pagina:</p>
+                <a href="#sezione1" class="button">Vai alla Sezione 1</a>
+                <a href="#top" class="button">Torna in cima</a>
+            </div>
+
+            <div class="card">
+                <h2>Link per Contatti</h2>
+                <p>Link per comunicare direttamente:</p>
+                <a href="mailto:esempio@example.com" class="button">
+                    ✉ Invia una Email
+                </a>
+                <a href="tel:+391234567890" class="button">
+                    📞 Chiama +39 123 456 7890
+                </a>
+            </div>
+
+            <div class="card" id="sezione1">
+                <h2>Sezione 1</h2>
+                <p>
+                    Questa è la sezione 1 della pagina, raggiungibile tramite il link interno.
+                    È un esempio di come i link interni possano aiutare nella navigazione di pagine lunghe.
+                </p>
+            </div>
         </div>
     </body>
 </html>
