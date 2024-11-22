@@ -1,227 +1,482 @@
 :root {
-    /* Light theme variables */
-    --light-background: #ffffff;
-    --light-surface: #f8f9fa;
-    --light-primary: #1a73e8;
-    --light-secondary: #202124;
-    --light-text: #202124;
-    --light-text-secondary: #5f6368;
-    --light-border: #dadce0;
-    --light-hover: #f1f3f4;
-    --light-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    /* Gruvbox Dark Colors */
+    --gruvbox-bg0: #282828;
+    --gruvbox-bg1: #3c3836;
+    --gruvbox-bg2: #504945;
+    --gruvbox-fg: #ebdbb2;
+    --gruvbox-red: #fb4934;
+    --gruvbox-green: #b8bb26;
+    --gruvbox-yellow: #fabd2f;
+    --gruvbox-orange: #fe8019;
+    --gruvbox-blue: #83a598;
+    --gruvbox-purple: #d3869b;
+    --gruvbox-aqua: #8ec07c;
+    --gruvbox-gray: #928374;
 
-    /* Dark theme variables */
-    --dark-background: #202124;
-    --dark-surface: #292a2d;
-    --dark-primary: #8ab4f8;
-    --dark-secondary: #e8eaed;
-    --dark-text: #e8eaed;
-    --dark-text-secondary: #9aa0a6;
-    --dark-border: #3c4043;
-    --dark-hover: #35363a;
-    --dark-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    /* Gruvbox Light Colors */
+    --gruvbox-light-bg0: #fbf1c7;
+    --gruvbox-light-bg1: #ebdbb2;
+    --gruvbox-light-bg2: #d5c4a1;
+    --gruvbox-light-fg: #3c3836;
+    --gruvbox-light-red: #cc241d;
+    --gruvbox-light-green: #98971a;
+    --gruvbox-light-yellow: #d79921;
+    --gruvbox-light-orange: #d65d0e;
+    --gruvbox-light-blue: #458588;
+    --gruvbox-light-purple: #b16286;
+    --gruvbox-light-aqua: #689d6a;
+    --gruvbox-light-gray: #7c6f64;
+    
+    /* Semantic Colors - Default Dark Theme */
+    --primary: var(--gruvbox-orange);
+    --secondary: var(--gruvbox-aqua);
+    --success: var(--gruvbox-green);
+    --danger: var(--gruvbox-red);
+    --warning: var(--gruvbox-yellow);
+    --info: var(--gruvbox-blue);
+    --background: var(--gruvbox-bg0);
+    --background-alt: var(--gruvbox-bg1);
+    --background-hover: var(--gruvbox-bg2);
+    --foreground: var(--gruvbox-fg);
 }
 
-/* Base styles */
+/* Light Theme Override */
+.light-theme {
+    --primary: var(--gruvbox-light-orange);
+    --secondary: var(--gruvbox-light-aqua);
+    --success: var(--gruvbox-light-green);
+    --danger: var(--gruvbox-light-red);
+    --warning: var(--gruvbox-light-yellow);
+    --info: var(--gruvbox-light-blue);
+    --background: var(--gruvbox-light-bg0);
+    --background-alt: var(--gruvbox-light-bg1);
+    --background-hover: var(--gruvbox-light-bg2);
+    --foreground: var(--gruvbox-light-fg);
+}
+
+/* Base Elements */
 body {
-    font-family: 'Roboto', sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Google Sans', 'Roboto', sans-serif;
     line-height: 1.6;
     margin: 0;
-    padding: 0;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-/* Light theme (default) */
-body {
-    background-color: var(--light-background);
-    color: var(--light-text);
-}
-
-/* Container */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+    padding: 1rem;
 }
 
 /* Typography */
-h1 {
-    font-size: 2.5rem;
-    font-weight: 400;
-    color: var(--light-primary);
-    margin-bottom: 1.5rem;
-}
-
-h2 {
-    font-size: 2rem;
-    font-weight: 400;
-    color: var(--light-secondary);
-    margin: 2rem 0 1rem;
-}
-
-h3 {
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: var(--light-secondary);
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary);
+    font-weight: 500;
+    margin: 1rem 0;
 }
 
 p {
-    color: var(--light-text-secondary);
     margin-bottom: 1rem;
+    color: var(--foreground);
 }
 
-/* Cards */
-.card {
-    background-color: var(--light-surface);
-    border-radius: 8px;
-    padding: 1.5rem;
+/* Links */
+a {
+    color: var(--info);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
+/* Buttons */
+button, .button {
+    background-color: var(--background-alt);
+    color: var(--foreground);
+    border: 1px solid var(--background-hover);
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+button:hover, .button:hover {
+    background-color: var(--background-hover);
+    border-color: var(--primary);
+}
+
+/* Button Variants */
+.button-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--background);
+}
+
+.button-secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: var(--background);
+}
+
+/* Forms */
+input, select, textarea {
+    background-color: var(--background-alt);
+    border: 1px solid var(--background-hover);
+    color: var(--foreground);
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(254, 128, 25, 0.2);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin: 1rem 0;
-    box-shadow: var(--light-shadow);
-    transition: box-shadow 0.3s, transform 0.3s;
 }
 
-.card:hover {
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transform: translateY(-2px);
+th, td {
+    padding: 0.75rem;
+    border: 1px solid var(--background-hover);
+}
+
+th {
+    background-color: var(--background-alt);
+    color: var(--primary);
+}
+
+tr:nth-child(even) {
+    background-color: var(--background-alt);
 }
 
 /* Lists */
 ul, ol {
     padding-left: 1.5rem;
+    margin: 1rem 0;
 }
 
 li {
     margin: 0.5rem 0;
-    color: var(--light-text-secondary);
+    color: var(--foreground);
 }
 
-/* Links */
-a {
-    color: var(--light-primary);
-    text-decoration: none;
-    transition: color 0.3s;
+/* Cards */
+.card {
+    background-color: var(--background-alt);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: 1px solid var(--background-hover);
 }
 
-a:hover {
-    color: #1557b0;
+/* Alerts */
+.alert {
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
 }
 
-/* Code blocks */
+.alert-success {
+    background-color: rgba(184, 187, 38, 0.2);
+    border: 1px solid var(--success);
+    color: var(--success);
+}
+
+.alert-danger {
+    background-color: rgba(251, 73, 52, 0.2);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+}
+
+/* Code */
 code {
-    background-color: var(--light-surface);
+    background-color: var(--background-alt);
+    color: var(--secondary);
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
     font-family: 'Roboto Mono', monospace;
-    font-size: 0.9em;
-    color: #e83e8c;
 }
 
 pre {
-    background-color: var(--light-surface);
+    background-color: var(--background-alt);
     padding: 1rem;
     border-radius: 8px;
     overflow-x: auto;
-    box-shadow: var(--light-shadow);
+    border: 1px solid var(--background-hover);
 }
 
-/* Buttons */
-.button {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    background-color: var(--light-primary);
-    color: white;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.button:hover {
-    background-color: #1557b0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-/* Dark theme */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: var(--dark-background);
-        color: var(--dark-text);
-    }
-
-    h1 {
-        color: var(--dark-primary);
-    }
-
-    h2, h3 {
-        color: var(--dark-secondary);
-    }
-
-    p {
-        color: var(--dark-text-secondary);
-    }
-
-    .card {
-        background-color: var(--dark-surface);
-        box-shadow: var(--dark-shadow);
-    }
-
-    code {
-        background-color: var(--dark-surface);
-        color: #ff8a8a;
-    }
-
-    pre {
-        background-color: var(--dark-surface);
-        box-shadow: var(--dark-shadow);
-    }
-
-    a {
-        color: var(--dark-primary);
-    }
-
-    a:hover {
-        color: #aecbfa;
-    }
-
-    li {
-        color: var(--dark-text-secondary);
-    }
-}
-
-/* Theme toggle button */
-.theme-toggle {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
+/* Navigation */
+nav {
+    background-color: var(--background-alt);
     padding: 1rem;
-    border-radius: 50%;
-    background-color: var(--light-primary);
-    color: white;
-    border: none;
-    cursor: pointer;
-    box-shadow: var(--light-shadow);
-    transition: background-color 0.3s, transform 0.3s;
 }
 
-.theme-toggle:hover {
-    transform: scale(1.1);
+nav a {
+    color: var(--foreground);
+    margin: 0 1rem;
 }
 
-/* Responsive design */
+nav a:hover {
+    color: var(--primary);
+}
+
+/* Progress Bar */
+progress {
+    width: 100%;
+    height: 0.5rem;
+    border-radius: 4px;
+    background-color: var(--background-alt);
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--background-alt);
+    border-radius: 4px;
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--primary);
+    border-radius: 4px;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    background-color: var(--background-hover);
+}
+
+/* Tooltips */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--background-hover);
+    color: var(--foreground);
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+[data-tooltip]:hover:after {
+    opacity: 1;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-alt);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--background-hover);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gray);
+}
+
+/* Utilities */
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--secondary); }
+.text-success { color: var(--success); }
+.text-danger { color: var(--danger); }
+.text-warning { color: var(--warning); }
+.text-info { color: var(--info); }
+
+.bg-primary { background-color: var(--primary); }
+.bg-secondary { background-color: var(--secondary); }
+.bg-success { background-color: var(--success); }
+.bg-danger { background-color: var(--danger); }
+.bg-warning { background-color: var(--warning); }
+.bg-info { background-color: var(--info); }
+
+/* Container e Layout */
+.container {
+    max-width: min(1200px, 90vw);
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+/* Responsive Typography */
+html {
+    font-size: 16px;
+}
+
+@media (max-width: 1200px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 992px) {
+    html {
+        font-size: 14px;
+    }
+    .container {
+        padding: 1.5rem;
+    }
+}
+
 @media (max-width: 768px) {
+    html {
+        font-size: 13px;
+    }
     .container {
         padding: 1rem;
+        max-width: 95vw;
     }
+}
 
-    h1 {
-        font-size: 2rem;
+@media (max-width: 480px) {
+    html {
+        font-size: 12px;
     }
+    .container {
+        padding: 0.8rem;
+        max-width: 98vw;
+    }
+}
 
-    h2 {
-        font-size: 1.5rem;
-    }
+/* Responsive Cards */
+.card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
 
-    h3 {
-        font-size: 1.25rem;
+/* Responsive Tables */
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
     }
+}
+
+/* Responsive Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    width: 100%;
+}
+
+/* Responsive Images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive Forms */
+input, select, textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Responsive Buttons */
+button, .button {
+    padding: clamp(0.5rem, 2vw, 1rem) clamp(1rem, 3vw, 2rem);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+/* Responsive Navigation */
+@media (max-width: 768px) {
+    nav {
+        padding: 0.8rem;
+    }
+    
+    nav a {
+        margin: 0 0.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Flex Container per layout responsive */
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.flex-item {
+    flex: 1 1 300px;
+    min-width: 0;
+}
+
+/* Utility classes per spacing responsive */
+.m-responsive {
+    margin: clamp(0.5rem, 2vw, 2rem);
+}
+
+.p-responsive {
+    padding: clamp(0.5rem, 2vw, 2rem);
+}
+
+/* Responsive Typography Sizes */
+h1 { font-size: clamp(1.5rem, 5vw, 2.5rem); }
+h2 { font-size: clamp(1.25rem, 4vw, 2rem); }
+h3 { font-size: clamp(1.1rem, 3vw, 1.75rem); }
+p { font-size: clamp(0.875rem, 2vw, 1rem); }
+
+/* Responsive Modal/Dialog */
+.modal {
+    width: min(90vw, 500px);
+    margin: auto;
+}
+
+/* Responsive Sidebar */
+.sidebar {
+    width: min(300px, 80vw);
+}
+
+/* Utility per nascondere elementi su mobile */
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none;
+    }
+}
+
+/* Utility per nascondere elementi su desktop */
+@media (min-width: 769px) {
+    .hide-desktop {
+        display: none;
+    }
+}
+
+/* Per contenuti che necessitano di padding specifico */
+.content-section {
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Per sezioni che necessitano di essere centrate */
+.centered-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
 } 
