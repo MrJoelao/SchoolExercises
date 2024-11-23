@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Esercizi</title>
+    <link rel="stylesheet" href="/unified-style.css">
+    <link rel="stylesheet" href="/Dashboard/Dashboard.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-content">
+            <div class="logo">
+                <span class="material-icons">code</span>
+                <span>Esercizi Coding</span>
+            </div>
+            <div class="nav-controls">
+                <button id="themeToggle" class="theme-toggle" aria-label="Cambia tema">
+                    <span class="material-icons">dark_mode</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="search-bar">
+            <div class="search-input-container">
+                <span class="material-icons">search</span>
+                <input type="text" id="searchExercises" placeholder="Cerca esercizi...">
+                <button id="addExerciseBtn" class="add-button" title="Aggiungi esercizio">
+                    <span class="material-icons">add</span>
+                </button>
+            </div>
+            
+            <div class="status-filters">
+                <button class="filter-btn active" data-status="all">
+                    <span class="material-icons">dashboard</span>
+                    Tutti
+                </button>
+                <button class="filter-btn" data-status="todo">
+                    <span class="material-icons">assignment</span>
+                    Da Fare
+                </button>
+                <button class="filter-btn" data-status="in-progress">
+                    <span class="material-icons">trending_up</span>
+                    In Corso
+                </button>
+                <button class="filter-btn" data-status="completed">
+                    <span class="material-icons">task_alt</span>
+                    Completati
+                </button>
+            </div>
+        </div>
+
+        <section class="exercise-grid">
+            <!-- Gli esercizi verranno inseriti dinamicamente via JavaScript -->
+        </section>
+    </main>
+
+    <!-- Modal per aggiungere esercizi -->
+    <div id="addExerciseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <span class="material-icons">add_task</span>
+                    Nuovo Esercizio
+                </h2>
+                <button class="close-modal">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <form id="exerciseForm">
+                <div class="form-tabs">
+                    <button type="button" class="tab-btn active" data-tab="basic">
+                        <span class="material-icons">description</span>
+                        Info Base
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="details">
+                        <span class="material-icons">settings</span>
+                        Dettagli
+                    </button>
+                </div>
+                
+                <div class="tab-content active" data-tab="basic">
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <span class="material-icons">edit</span>
+                            Informazioni Principali
+                        </h3>
+                        <div class="form-group">
+                            <label class="required" for="exerciseTitle">Titolo</label>
+                            <input type="text" id="exerciseTitle" required placeholder="Es: Calcolatrice JavaScript">
+                            <div class="helper-text">Inserisci un titolo descrittivo per l'esercizio</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="required" for="exerciseDescription">Descrizione</label>
+                            <textarea id="exerciseDescription" required 
+                                    placeholder="Descrivi brevemente l'esercizio e i suoi obiettivi"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="required" for="exercisePath">Percorso File</label>
+                            <input type="text" id="exercisePath" required 
+                                   placeholder="Es: Esercizi/Calcolatrice/index.html">
+                            <div class="helper-text">Percorso relativo al file principale dell'esercizio</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" data-tab="details">
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <span class="material-icons">label</span>
+                            Categorizzazione
+                        </h3>
+                        <div class="form-group">
+                            <label for="exerciseTags">Tags</label>
+                            <input type="text" id="exerciseTags" 
+                                   placeholder="Es: JavaScript, DOM, Eventi">
+                            <div class="helper-text">Separa i tag con una virgola</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="required" for="exerciseDifficulty">Difficoltà</label>
+                            <select id="exerciseDifficulty" required>
+                                <option value="">Seleziona difficoltà</option>
+                                <option value="Principiante">Principiante</option>
+                                <option value="Intermedio">Intermedio</option>
+                                <option value="Avanzato">Avanzato</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <span class="material-icons">schedule</span>
+                            Pianificazione
+                        </h3>
+                        <div class="form-group">
+                            <label class="required" for="exerciseStatus">Stato</label>
+                            <select id="exerciseStatus" required>
+                                <option value="">Seleziona stato</option>
+                                <option value="todo">Da Fare</option>
+                                <option value="in-progress">In Sviluppo</option>
+                                <option value="completed">Completato</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exerciseDeadline">Scadenza</label>
+                            <input type="date" id="exerciseDeadline">
+                            <div class="helper-text">Opzionale: imposta una data di scadenza</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="button-secondary close-modal">
+                        <span class="material-icons">close</span>
+                        Annulla
+                    </button>
+                    <button type="submit" class="button-primary">
+                        <span class="material-icons">save</span>
+                        Salva
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/Dashboard/Dashboard.js"></script>
+</body>
+</html>
+
