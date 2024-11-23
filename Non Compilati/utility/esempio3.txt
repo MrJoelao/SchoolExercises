@@ -1,0 +1,7 @@
+Questa è la prima riga del file
+Ciao
+Prova 123
+Quarta riga
+Riga 5
+Sesta riga
+Goodbye!

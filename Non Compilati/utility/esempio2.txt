@@ -1,0 +1,8 @@
+Ciao a tutti!
+1
+2.5
+4.371
+Testo
+Altro testo
+Ancora testo...
+Ultima riga del file
