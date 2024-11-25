@@ -4,17 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Esercizi</title>
-    <link rel="stylesheet" href="/unified-style.css">
-    <link rel="stylesheet" href="/Dashboard/Dashboard.css">
+    <link rel="stylesheet" href="../unified-style.css">
+    <link rel="stylesheet" href="Dashboard.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <nav class="top-nav">
         <div class="nav-content">
-            <div class="logo">
-                <span class="material-icons">code</span>
-                <span>Esercizi Coding</span>
+            <div class="logo main-logo">
+                <span class="material-icons">school</span>
+                <span>Dashboard Didattica</span>
             </div>
+            
+            <div class="logo section-logo coding-logo" style="display: none;">
+                <button class="back-nav-button" onclick="showSection('subject-selection')">
+                    <span class="material-icons">arrow_back</span>
+                </button>
+                <span class="material-icons">code</span>
+                <span>Informatica</span>
+            </div>
+            
+            <div class="logo section-logo italian-logo" style="display: none;">
+                <button class="back-nav-button" onclick="showSection('subject-selection')">
+                    <span class="material-icons">arrow_back</span>
+                </button>
+                <span class="material-icons">menu_book</span>
+                <span>Italiano</span>
+            </div>
+            
             <div class="nav-controls">
                 <button id="themeToggle" class="theme-toggle" aria-label="Cambia tema">
                     <span class="material-icons">dark_mode</span>
@@ -24,37 +41,84 @@
     </nav>
 
     <main class="container">
-        <div class="search-bar">
-            <div class="search-input-container">
-                <span class="material-icons">search</span>
-                <input type="text" id="searchExercises" placeholder="Cerca esercizi...">
-                <button id="addExerciseBtn" class="add-button" title="Aggiungi esercizio">
-                    <span class="material-icons">add</span>
-                </button>
+        <!-- Sezione principale visibile solo nella home -->
+        <section id="subject-selection" class="subject-grid">
+            <div class="subject-card" onclick="showSection('coding-exercises')">
+                <div class="subject-icon">
+                    <span class="material-icons">code</span>
+                </div>
+                <h2>Informatica</h2>
+                <p>Esercizi di programmazione e coding</p>
             </div>
             
-            <div class="status-filters">
-                <button class="filter-btn active" data-status="all">
-                    <span class="material-icons">dashboard</span>
-                    Tutti
-                </button>
-                <button class="filter-btn" data-status="todo">
-                    <span class="material-icons">assignment</span>
-                    Da Fare
-                </button>
-                <button class="filter-btn" data-status="in-progress">
-                    <span class="material-icons">trending_up</span>
-                    In Corso
-                </button>
-                <button class="filter-btn" data-status="completed">
-                    <span class="material-icons">task_alt</span>
-                    Completati
-                </button>
+            <div class="subject-card" onclick="showSection('italian-exercises')">
+                <div class="subject-icon">
+                    <span class="material-icons">menu_book</span>
+                </div>
+                <h2>Italiano</h2>
+                <p>Esercizi di grammatica e letteratura</p>
             </div>
-        </div>
+        </section>
 
-        <section class="exercise-grid">
-            <!-- Gli esercizi verranno inseriti dinamicamente via JavaScript -->
+        <!-- Sezione esercizi di coding (inizialmente nascosta) -->
+        <section id="coding-exercises" class="exercise-section" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="showSection('subject-selection')">
+                    <span class="material-icons">arrow_back</span>
+                    Torna alla Dashboard
+                </button>
+                <h1>Esercizi di Informatica</h1>
+            </div>
+
+            <div class="search-bar">
+                <div class="search-input-container">
+                    <span class="material-icons">search</span>
+                    <input type="text" id="searchExercises" placeholder="Cerca esercizi...">
+                    <button id="addExerciseBtn" class="add-button" title="Aggiungi esercizio">
+                        <span class="material-icons">add</span>
+                    </button>
+                </div>
+                
+                <div class="status-filters">
+                    <button class="filter-btn active" data-status="all">
+                        <span class="material-icons">dashboard</span>
+                        Tutti
+                    </button>
+                    <button class="filter-btn" data-status="todo">
+                        <span class="material-icons">assignment</span>
+                        Da Fare
+                    </button>
+                    <button class="filter-btn" data-status="in-progress">
+                        <span class="material-icons">trending_up</span>
+                        In Corso
+                    </button>
+                    <button class="filter-btn" data-status="completed">
+                        <span class="material-icons">task_alt</span>
+                        Completati
+                    </button>
+                </div>
+            </div>
+
+            <section class="exercise-grid">
+                <!-- Gli esercizi verranno inseriti dinamicamente via JavaScript -->
+            </section>
+        </section>
+
+        <!-- Sezione esercizi di italiano (inizialmente nascosta) -->
+        <section id="italian-exercises" class="exercise-section" style="display: none;">
+            <div class="section-header">
+                <button class="back-button" onclick="showSection('subject-selection')">
+                    <span class="material-icons">arrow_back</span>
+                    Torna alla Dashboard
+                </button>
+                <h1>Esercizi di Italiano</h1>
+            </div>
+            
+            <div class="coming-soon">
+                <span class="material-icons">hourglass_empty</span>
+                <h2>Contenuti in arrivo</h2>
+                <p>Questa sezione è in fase di sviluppo</p>
+            </div>
         </section>
     </main>
 

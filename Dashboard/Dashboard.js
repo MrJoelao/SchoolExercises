@@ -742,10 +742,37 @@ class ExerciseManager {
     }
 }
 
+function showSection(sectionId) {
+    // Nascondi tutte le sezioni
+    document.querySelectorAll('.subject-grid, .exercise-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Nascondi tutti i loghi
+    document.querySelector('.main-logo').style.display = 'none';
+    document.querySelectorAll('.section-logo').forEach(logo => {
+        logo.style.display = 'none';
+    });
+    
+    // Mostra la sezione richiesta
+    document.getElementById(sectionId).style.display = 
+        sectionId === 'subject-selection' ? 'grid' : 'block';
+    
+    // Mostra il logo appropriato
+    if (sectionId === 'subject-selection') {
+        document.querySelector('.main-logo').style.display = 'flex';
+    } else if (sectionId === 'coding-exercises') {
+        document.querySelector('.coding-logo').style.display = 'flex';
+    } else if (sectionId === 'italian-exercises') {
+        document.querySelector('.italian-logo').style.display = 'flex';
+    }
+}
+
 // Modifica l'inizializzazione per rendere exerciseManager globale
 let exerciseManager; // Dichiarazione globale
 
 document.addEventListener('DOMContentLoaded', () => {
+    showSection('subject-selection'); // Mostra la home all'avvio
     new ThemeManager();
-    exerciseManager = new ExerciseManager(); // Assegnazione all'istanza globale
+    exerciseManager = new ExerciseManager();
 });

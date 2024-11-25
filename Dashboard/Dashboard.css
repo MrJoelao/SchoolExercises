@@ -1733,3 +1733,149 @@ body {
 .exercise-card .action-btn {
     cursor: pointer;
 }
+
+/* Grid per la selezione delle materie */
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.subject-card {
+    background: var(--background-alt);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.subject-card:hover {
+    transform: translateY(-5px);
+    background: var(--background-hover);
+}
+
+.subject-icon {
+    background: var(--background);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.subject-icon .material-icons {
+    font-size: 2.5rem;
+    color: var(--primary);
+}
+
+.subject-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+}
+
+.subject-card p {
+    color: var(--foreground);
+    opacity: 0.8;
+}
+
+/* Header delle sezioni */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background: var(--background);
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--background-alt);
+    color: var(--foreground);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-button:hover {
+    background: var(--background-hover);
+}
+
+.section-header h1 {
+    font-size: 1.5rem;
+    color: var(--foreground);
+}
+
+/* Coming Soon section */
+.coming-soon {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--foreground);
+}
+
+.coming-soon .material-icons {
+    font-size: 4rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.coming-soon h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.coming-soon p {
+    opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .subject-grid {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .section-header {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Stili per la navigazione */
+.back-nav-button {
+    background: none;
+    border: none;
+    color: var(--foreground);
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.back-nav-button:hover {
+    background: var(--background-hover);
+}
+
+.section-logo {
+    display: flex;
+    align-items: center;
+}
+
+/* Rimuovi questi stili dalla section-header dato che non servono più */
+.section-header {
+    display: none;
+}
