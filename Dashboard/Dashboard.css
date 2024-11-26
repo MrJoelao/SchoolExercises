@@ -74,11 +74,7 @@
 /* Container per input di ricerca migliorato */
 .search-input-container {
     position: relative;
-    width: 100%;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex: 1;
 }
 
 /* Input di ricerca ridisegnato */
@@ -1226,7 +1222,7 @@
 /* Stile per il modal di conferma eliminazione */
 .delete-confirm-modal {
     background: var(--background);
-    padding: 1.5rem;
+    padding: 2rem;
     border-radius: var(--radius-lg);
     text-align: center;
     max-width: 400px;
@@ -1238,11 +1234,36 @@
     margin-bottom: 1rem;
 }
 
+.delete-confirm-modal h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+}
+
+.delete-confirm-modal p {
+    color: var(--foreground);
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+}
+
 .delete-confirm-modal .actions {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-top: 1.5rem;
+}
+
+.delete-confirm-modal .cancel-btn,
+.delete-confirm-modal .confirm-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .delete-confirm-modal .cancel-btn {
@@ -1250,20 +1271,22 @@
     color: var(--foreground);
 }
 
+.delete-confirm-modal .cancel-btn:hover {
+    background: var(--background-hover);
+}
+
 .delete-confirm-modal .confirm-btn {
     background: var(--danger);
-    color: var(--background);
+    color: white;
 }
 
 .delete-confirm-modal .confirm-btn:hover {
-    background: var(--danger);
     filter: brightness(0.9);
 }
 
-.delete-confirm-modal .actions button {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    border-radius: var(--radius-sm);
+/* Animazione per il modal di conferma */
+.modal.closing .delete-confirm-modal {
+    animation: modalExit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @media (max-width: 480px) {
@@ -1878,4 +1901,199 @@ body {
 /* Rimuovi questi stili dalla section-header dato che non servono più */
 .section-header {
     display: none;
+}
+
+/* Aggiungi questi stili per la sezione libri */
+.books-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.books-header {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.book-card {
+    background: var(--background-alt);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-4px);
+}
+
+.book-cover {
+    background: var(--background);
+    height: 200px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.book-cover .material-icons {
+    font-size: 4rem;
+    color: var(--primary);
+}
+
+.book-info {
+    flex: 1;
+}
+
+.book-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+}
+
+.book-author {
+    display: none;
+}
+
+.book-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0;
+}
+
+.book-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    padding-top: 1rem;
+    border-top: 1px solid var(--background);
+}
+
+/* Stili per il pulsante di ricerca libri */
+#searchBooks {
+    flex: 1;
+    height: 52px;
+    padding: 0 1.2rem 0 3.2rem;
+    border: none;
+    border-radius: 16px;
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--foreground);
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+#searchBooks::placeholder {
+    color: var(--foreground);
+    opacity: 0.7;
+}
+
+#searchBooks:focus {
+    outline: none;
+    background: rgba(var(--primary-rgb), 0.15);
+    border-color: var(--primary);
+}
+
+/* Modifica anche il contenitore della search box per migliorare l'icona */
+.search-input-container {
+    position: relative;
+    flex: 1;
+}
+
+.search-input-container .material-icons {
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+    opacity: 0.8;
+    font-size: 1.3rem;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.search-input-container:focus-within .material-icons {
+    opacity: 1;
+}
+
+/* Aggiungi questi stili per le categorie dei libri */
+.tag.category {
+    display: none;
+}
+
+/* Stili per il form dei libri */
+#bookForm .form-section {
+    background: var(--background-alt);
+    border-radius: 24px;
+    padding: 1.8rem;
+    margin-bottom: 1.2rem;
+}
+
+/* Animazione per le card dei libri */
+.book-card {
+    animation: slideInFromBottom 0.3s ease-out;
+}
+
+.book-card.removing {
+    animation: slideOutToTop 0.3s ease-out forwards;
+}
+
+/* Aggiungi questi stili per il gruppo di input file */
+.file-input-group {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.file-input-group input[type="text"] {
+    flex: 1;
+    background: var(--background);
+    cursor: default;
+}
+
+.file-input-group .button-secondary {
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--background);
+    color: var(--foreground);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.file-input-group .button-secondary:hover {
+    background: var(--background-hover);
+}
+
+/* Stile per il nome del file nella card */
+.book-path {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--foreground);
+    opacity: 0.7;
+}
+
+.file-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.file-name::before {
+    content: 'description';
+    font-family: 'Material Icons';
+    font-size: 1.1rem;
 }

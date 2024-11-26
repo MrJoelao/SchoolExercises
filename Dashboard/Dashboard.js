@@ -742,6 +742,247 @@ class ExerciseManager {
     }
 }
 
+// Aggiungi questa classe dopo ExerciseManager
+class BookManager {
+    constructor() {
+        this.books = JSON.parse(localStorage.getItem('books')) || [];
+        this.booksGrid = document.querySelector('.books-grid');
+        this.searchInput = document.getElementById('searchBooks');
+        this.addBookBtn = document.getElementById('addBookBtn');
+        this.modal = document.getElementById('addBookModal');
+        this.form = document.getElementById('bookForm');
+        this.currentEditId = null;
+        
+        this.setupEventListeners();
+        this.renderBooks();
+        this.setupFileSelection();
+    }
+
+    setupEventListeners() {
+        // Ricerca
+        this.searchInput.addEventListener('input', () => this.handleSearch());
+        
+        // Modal
+        this.addBookBtn.addEventListener('click', () => this.openModal());
+        this.modal.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', () => this.closeModal());
+        });
+        
+        // Form
+        this.form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleSubmit();
+        });
+        
+        // Chiudi modal se si clicca fuori
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) this.closeModal();
+        });
+    }
+
+    handleSearch() {
+        const searchTerm = this.searchInput.value.toLowerCase();
+        const filteredBooks = this.books.filter(book => 
+            book.title.toLowerCase().includes(searchTerm) ||
+            book.author.toLowerCase().includes(searchTerm) ||
+            book.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+        );
+        this.renderBooks(filteredBooks);
+    }
+
+    openModal() {
+        this.form.reset();
+        this.currentEditId = null;
+        this.modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    closeModal() {
+        this.modal.classList.add('closing');
+        setTimeout(() => {
+            this.modal.classList.remove('active', 'closing');
+            document.body.style.overflow = '';
+            this.form.reset();
+            this.currentEditId = null;
+        }, 300);
+    }
+
+    handleSubmit() {
+        const bookData = {
+            title: document.getElementById('bookTitle').value,
+            path: document.getElementById('bookPath').value,
+            originalName: document.getElementById('bookPath').dataset.originalName || '',
+            tags: document.getElementById('bookTags').value.split(',').map(tag => tag.trim()).filter(tag => tag),
+        };
+
+        if (this.currentEditId) {
+            const index = this.books.findIndex(book => book.id === this.currentEditId);
+            if (index !== -1) {
+                this.books[index] = {
+                    ...this.books[index],
+                    ...bookData,
+                    dateModified: new Date().toISOString()
+                };
+                this.showNotification('Libro aggiornato con successo!');
+            }
+        } else {
+            const newBook = {
+                id: Date.now(),
+                ...bookData,
+                dateAdded: new Date().toISOString()
+            };
+            this.books.push(newBook);
+            this.showNotification('Libro aggiunto con successo!');
+        }
+
+        this.saveBooks();
+        this.renderBooks();
+        this.closeModal();
+    }
+
+    renderBooks(booksToShow = this.books) {
+        const currentCards = document.querySelectorAll('.book-card');
+        currentCards.forEach(card => {
+            card.style.animation = 'cardRemove 0.3s ease-out forwards';
+        });
+
+        setTimeout(() => {
+            this.booksGrid.innerHTML = booksToShow.map(book => {
+                // Assicurati che il percorso usi LIbri invece di Libri
+                const path = book.path.replace('/Libri/', '/LIbri/');
+                return `
+                    <div class="book-card" data-id="${book.id}">
+                        <div class="book-cover">
+                            <span class="material-icons">book</span>
+                        </div>
+                        <div class="book-info">
+                            <h3>${book.title}</h3>
+                            <div class="book-tags">
+                                ${book.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                            <div class="book-path">
+                                <span class="file-name">${book.originalName || path.split('/').pop()}</span>
+                            </div>
+                        </div>
+                        <div class="book-actions">
+                            <a href="${path}" class="action-btn primary" title="Apri PDF" target="_blank">
+                                <span class="material-icons">visibility</span>
+                            </a>
+                            <button class="action-btn" onclick="bookManager.editBook(${book.id})" title="Modifica">
+                                <span class="material-icons">edit</span>
+                            </button>
+                            <button class="action-btn" onclick="bookManager.deleteBook(${book.id})" title="Elimina">
+                                <span class="material-icons">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }, currentCards.length ? 300 : 0);
+    }
+
+    editBook(id) {
+        const book = this.books.find(b => b.id === id);
+        if (!book) return;
+
+        this.currentEditId = id;
+        document.getElementById('bookTitle').value = book.title;
+        document.getElementById('bookPath').value = book.path;
+        document.getElementById('bookTags').value = book.tags.join(', ');
+
+        this.modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    deleteBook(id) {
+        const modal = document.createElement('div');
+        modal.className = 'modal active';
+        modal.innerHTML = `
+            <div class="modal-content delete-confirm-modal">
+                <span class="material-icons icon-warning">warning</span>
+                <h2>Conferma Eliminazione</h2>
+                <p>Sei sicuro di voler eliminare questo libro?</p>
+                <div class="actions">
+                    <button class="button-secondary cancel-btn" onclick="bookManager.closeDeleteModal(this)">
+                        <span class="material-icons">close</span>
+                        No
+                    </button>
+                    <button class="button-primary confirm-btn" onclick="bookManager.confirmDelete(${id}, this)">
+                        <span class="material-icons">delete</span>
+                        Sì, elimina
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+    }
+
+    closeDeleteModal(buttonElement) {
+        const modal = buttonElement.closest('.modal');
+        modal.classList.add('closing');
+        setTimeout(() => modal.remove(), 300);
+    }
+
+    confirmDelete(id, buttonElement) {
+        const card = document.querySelector(`[data-id="${id}"]`);
+        card.classList.add('removing');
+        
+        // Prima rimuovi il modal di conferma
+        const confirmModal = buttonElement.closest('.modal');
+        if (confirmModal) {
+            confirmModal.classList.add('closing');
+            setTimeout(() => confirmModal.remove(), 300);
+        }
+
+        // Poi procedi con l'eliminazione dopo l'animazione
+        setTimeout(() => {
+            this.books = this.books.filter(book => book.id !== id);
+            this.saveBooks();
+            this.renderBooks();
+            this.showNotification('Libro eliminato con successo');
+        }, 300);
+    }
+
+    saveBooks() {
+        localStorage.setItem('books', JSON.stringify(this.books));
+    }
+
+    showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+
+    setupFileSelection() {
+        const selectFileBtn = document.getElementById('selectFileBtn');
+        const bookPathInput = document.getElementById('bookPath');
+        const fileInput = document.getElementById('bookFileInput');
+
+        selectFileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                // Usa LIbri invece di Libri nel percorso
+                const fileName = file.name;
+                const fullPath = `/Dashboard/LIbri/${fileName}`;
+                
+                bookPathInput.value = fullPath;
+                bookPathInput.dataset.originalName = fileName;
+            }
+        });
+    }
+}
+
 function showSection(sectionId) {
     // Nascondi tutte le sezioni
     document.querySelectorAll('.subject-grid, .exercise-section').forEach(section => {
@@ -763,16 +1004,18 @@ function showSection(sectionId) {
         document.querySelector('.main-logo').style.display = 'flex';
     } else if (sectionId === 'coding-exercises') {
         document.querySelector('.coding-logo').style.display = 'flex';
-    } else if (sectionId === 'italian-exercises') {
-        document.querySelector('.italian-logo').style.display = 'flex';
+    } else if (sectionId === 'books-section') {
+        document.querySelector('.books-logo').style.display = 'flex';
     }
 }
 
 // Modifica l'inizializzazione per rendere exerciseManager globale
 let exerciseManager; // Dichiarazione globale
+let bookManager;
 
 document.addEventListener('DOMContentLoaded', () => {
     showSection('subject-selection'); // Mostra la home all'avvio
     new ThemeManager();
     exerciseManager = new ExerciseManager();
+    bookManager = new BookManager();
 });

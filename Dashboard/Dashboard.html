@@ -13,7 +13,7 @@
         <div class="nav-content">
             <div class="logo main-logo">
                 <span class="material-icons">school</span>
-                <span>Dashboard Didattica</span>
+                <span>Dashboard</span>
             </div>
             
             <div class="logo section-logo coding-logo" style="display: none;">
@@ -24,12 +24,12 @@
                 <span>Informatica</span>
             </div>
             
-            <div class="logo section-logo italian-logo" style="display: none;">
+            <div class="logo section-logo books-logo" style="display: none;">
                 <button class="back-nav-button" onclick="showSection('subject-selection')">
                     <span class="material-icons">arrow_back</span>
                 </button>
                 <span class="material-icons">menu_book</span>
-                <span>Italiano</span>
+                <span>Libreria</span>
             </div>
             
             <div class="nav-controls">
@@ -51,12 +51,12 @@
                 <p>Esercizi di programmazione e coding</p>
             </div>
             
-            <div class="subject-card" onclick="showSection('italian-exercises')">
+            <div class="subject-card" onclick="showSection('books-section')">
                 <div class="subject-icon">
                     <span class="material-icons">menu_book</span>
                 </div>
-                <h2>Italiano</h2>
-                <p>Esercizi di grammatica e letteratura</p>
+                <h2>Libri</h2>
+                <p>Accedi alla tua libreria digitale</p>
             </div>
         </section>
 
@@ -104,20 +104,45 @@
             </section>
         </section>
 
-        <!-- Sezione esercizi di italiano (inizialmente nascosta) -->
-        <section id="italian-exercises" class="exercise-section" style="display: none;">
-            <div class="section-header">
-                <button class="back-button" onclick="showSection('subject-selection')">
-                    <span class="material-icons">arrow_back</span>
-                    Torna alla Dashboard
-                </button>
-                <h1>Esercizi di Italiano</h1>
-            </div>
-            
-            <div class="coming-soon">
-                <span class="material-icons">hourglass_empty</span>
-                <h2>Contenuti in arrivo</h2>
-                <p>Questa sezione è in fase di sviluppo</p>
+        <!-- Sezione esercizi di libri (inizialmente nascosta) -->
+        <section id="books-section" class="exercise-section" style="display: none;">
+            <div class="books-container">
+                <div class="books-header">
+                    <div class="search-input-container">
+                        <span class="material-icons">search</span>
+                        <input type="text" id="searchBooks" placeholder="Cerca libri...">
+                    </div>
+                    <button id="addBookBtn" class="add-button" title="Aggiungi libro">
+                        <span class="material-icons">add</span>
+                    </button>
+                </div>
+                
+                <div class="books-grid">
+                    <!-- Example of a book card -->
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <span class="material-icons">book</span>
+                        </div>
+                        <div class="book-info">
+                            <h3>Nome del Libro</h3>
+                            <p class="book-author">Autore del Libro</p>
+                            <div class="book-tags">
+                                <span class="tag">Categoria</span>
+                            </div>
+                        </div>
+                        <div class="book-actions">
+                            <a href="/path/to/pdf" class="action-btn primary" title="Apri PDF">
+                                <span class="material-icons">visibility</span>
+                            </a>
+                            <button class="action-btn" title="Modifica">
+                                <span class="material-icons">edit</span>
+                            </button>
+                            <button class="action-btn" title="Elimina">
+                                <span class="material-icons">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -216,6 +241,56 @@
                     </div>
                 </div>
 
+                <div class="form-actions">
+                    <button type="button" class="button-secondary close-modal">
+                        <span class="material-icons">close</span>
+                        Annulla
+                    </button>
+                    <button type="submit" class="button-primary">
+                        <span class="material-icons">save</span>
+                        Salva
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modifica il modal dei libri -->
+    <div id="addBookModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <span class="material-icons">add_book</span>
+                    Nuovo Libro
+                </h2>
+                <button class="close-modal">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <form id="bookForm">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="required" for="bookTitle">Titolo</label>
+                        <input type="text" id="bookTitle" required placeholder="Inserisci il titolo del libro">
+                    </div>
+                    <div class="form-group">
+                        <label class="required" for="bookPath">File PDF</label>
+                        <div class="file-input-group">
+                            <input type="text" id="bookPath" required readonly placeholder="Seleziona un file PDF">
+                            <button id="selectFileBtn" class="button-secondary">
+                                <span class="material-icons">attach_file</span>
+                                Sfoglia
+                            </button>
+                        </div>
+                        <input type="file" id="bookFileInput" accept=".pdf" style="display: none">
+                        <div class="helper-text">Seleziona il file PDF del libro</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookTags">Tags</label>
+                        <input type="text" id="bookTags" placeholder="Es: programmazione, java, tutorial">
+                        <div class="helper-text">Separa i tag con una virgola</div>
+                    </div>
+                </div>
                 <div class="form-actions">
                     <button type="button" class="button-secondary close-modal">
                         <span class="material-icons">close</span>
