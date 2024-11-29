@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio</title>
+    <!-- <link rel="stylesheet" href="../../unified-style.css"> -->
+    <link rel="stylesheet" href="GuessNumber.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Guess the number</h1>
+            <p>L'utente cerca di indovinare il numero generato dalla pagina. Personalizzare con i CSS la pagina.</p>
+        </header>
+        
+        <main>
+            <div class="game-container">
+                <input type="number" id="guessInput" placeholder="Inserisci un numero (1-100)">
+                <button id="guessButton" onclick="showResult()">Indovina</button>
+                <p id="counter">Tentativi: 0</p>
+                <p id="result"></p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Joel Stephan</p>
+        </footer>
+    </div>
+</body>
+</html>
