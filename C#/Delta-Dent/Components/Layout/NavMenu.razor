@@ -1,0 +1,147 @@
+@using System.Net
+@using System
+@using System.IO
+<input type="checkbox" title="Navigation menu" class="navbar-toggler"/>
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+        @if (buttons[0])
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Anagrafica" Match="NavLinkMatch.All">
+                    <span class="bi anagraficaIcon" aria-hidden="true"></span> 
+                </NavLink>
+            </div>
+        }
+        @if (buttons[1])
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Preventivi">
+                    <span class="bi preventiviIcon" aria-hidden="true"></span> 
+                </NavLink>
+            </div>
+        }
+        @if (buttons[2])
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Contabilità">
+                    <span class="bi contabilitàIcon" aria-hidden="true"></span>
+                </NavLink>
+            </div>
+        }
+        @if (buttons[3])
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Agenda" Match="NavLinkMatch.All">
+                    <span class="bi agendaIcon" aria-hidden="true"></span>
+                </NavLink>
+            </div>
+        }
+        @if (buttons[4])
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Magazzino">
+                    <span class="bi magazzinoIcon" aria-hidden="true"></span> 
+                </NavLink>
+            </div>
+        }
+        @if (buttons[5])
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Consulenze">
+                    <span class="bi consulenzeIcon" aria-hidden="true"></span> 
+                </NavLink>
+            </div>
+        }
+        @if (buttons[6])
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Statistiche" Match="NavLinkMatch.All">
+                    <span class="bi statisticheIcon" aria-hidden="true"></span> 
+                </NavLink>
+            </div>
+        }
+        @if (buttons[7])
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Messaggi">
+                    <span class="bi messaggiIcon" aria-hidden="true"></span>
+                </NavLink>
+            </div>
+        }
+        @if (buttons[8])
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Community">
+                    <span class="bi communityIcon" aria-hidden="true"></span>  &emsp;
+                </NavLink>
+            </div>
+        }
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Login">
+                <span class="bi tempIcon" aria-hidden="true"></span> 
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="SchedaPaziente">
+                <span class="bi tempIcon" aria-hidden="true"></span>
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="VisImg">
+                <span class="bi tempIcon" aria-hidden="true"></span>
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Doctors">
+                <span class="bi doctorsImg" aria-hidden="true"></span>
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code
+{
+    private bool[] buttons = new bool[9];
+    private string path = "./buttons.txt";
+
+    protected override async Task OnInitializedAsync()
+    {
+        EnsureFileExists(path);
+        string content = ReadFileContent(path);
+        buttons = ParseButtons(content);
+    }
+
+    public void EnsureFileExists(string path)
+    {
+        if (!File.Exists(path))
+        {
+            // Crea il file e popola tutti i valori a true
+            string content = new string('1', 9);
+            File.WriteAllText(path, content);
+        }
+    }
+
+    public string ReadFileContent(string path)
+    {
+        try
+        {
+            return File.ReadAllText(path);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Errore durante la lettura del file: " + e.Message);
+            return new string('1', 9); // In caso di errore, restituisce una stringa con tutti i valori a true
+        }
+    }
+
+    public bool[] ParseButtons(string content)
+    {
+        bool[] buttons = new bool[9];
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i] = content[i] == '1';
+        }
+        return buttons;
+    }
+}

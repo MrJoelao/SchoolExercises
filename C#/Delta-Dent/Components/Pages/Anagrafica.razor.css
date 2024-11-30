@@ -1,0 +1,594 @@
+/*
+--COLORI USATI OCMUNEMENTE--
+
+#3D7BD9 -> blu scuro
+#72B7FF -> blu medio         
+#DFEFFF -> blu chiaro
+
+ */
+
+.spinner {
+    width: 8.8rem;
+    height: 8.8rem;
+    --clr: rgb(61, 123, 217);
+    --clr-alpha: rgb(127, 175, 225,.1);
+    animation: spinner 1.6s infinite ease;
+    transform-style: preserve-3d;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spinner > div {
+    background-color: var(--clr-alpha);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    border: 3.5px solid var(--clr);
+}
+
+.spinner div:nth-of-type(1) {
+    transform: translateZ(-4.4rem) rotateY(180deg);
+}
+
+.spinner div:nth-of-type(2) {
+    transform: rotateY(-270deg) translateX(50%);
+    transform-origin: top right;
+}
+
+.spinner div:nth-of-type(3) {
+    transform: rotateY(270deg) translateX(-50%);
+    transform-origin: center left;
+}
+
+.spinner div:nth-of-type(4) {
+    transform: rotateX(90deg) translateY(-50%);
+    transform-origin: top center;
+}
+
+.spinner div:nth-of-type(5) {
+    transform: rotateX(-90deg) translateY(50%);
+    transform-origin: bottom center;
+}
+
+.spinner div:nth-of-type(6) {
+    transform: translateZ(4.4rem);
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+    }
+
+    50% {
+        transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+    }
+
+    100% {
+        transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+    }
+}
+
+
+/*stile applicato alla parte superiore della barra utente*/
+.pages{
+    background: #3D7BD9;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding-top: 1rem;
+}
+
+/*stile generico pulsanti scheda*/
+.scheda{
+    height: 100%;
+    width:90%;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
+    border:none;
+    text-transform: uppercase;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+/*stile hover (lo sfondo diviene leggermente scuro*/
+.scheda:hover{
+    filter: brightness(0.8);
+}
+
+/*stile applicato alla scheda selezionata*/
+.selectedPage{
+    background-color: #72B7FF ;
+    color: white;
+}
+/*stile applicato alla scheda non selezionata*/
+.unselectedPage{
+    background-color: #DFEFFF;
+    color: black;
+}
+
+/*stile toolbar*/
+.toolbar{
+    background-color: #72B7FF;
+    border-bottom-right-radius: 0.6rem;
+    border-bottom-left-radius: 0.6rem;
+    padding: 0.3rem;
+}
+
+/*stile pulsanti toolbar*/
+.btnTool{
+    height: 100%;
+    width:100%;
+    padding: 0.5rem;
+    border-radius: 0.5vw;
+    border:none;
+    font-size: 1vw;
+    font-weight: bold;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+    background-color: #3D7BD9;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+/*stile hover (lo sfondo diviene leggermente scuro)*/
+.btnTool:hover{
+    filter: brightness(0.8);
+}
+
+/*stile pulsanti toolbar*/
+.inputRicerca{
+    background: url("./assets/lente.svg") no-repeat right;
+    height: 100%;
+    width:100%;
+    padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+    border-radius: 0.5vw;
+    border:none;
+    font-size: 1vw;
+    text-transform: uppercase;
+    color: black;
+    background-color: white;
+}
+
+/*stile applicato al div a lato degli spinner*/
+.sideNum{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    background-color: #3D7BD9;
+    border-top-left-radius: .4rem;
+    border-bottom-left-radius: .4rem;
+    color: white;
+    font-weight: bold;
+}
+/*stile spinner*/
+.inNum{
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    background-color: white;
+    border-top-right-radius: .4rem;
+    border-bottom-right-radius: .4rem;
+}
+
+/*stile per il body effettivo della pagica contenente la tabella*/
+.centro{
+    height: 85vh;
+    background-color: #7FAFE1;
+    border-radius: 0.5rem;
+}
+
+.corpo{
+    background-color: #7FAFE1;
+    padding:1rem;
+    border-radius: 5px;
+    height: 85vh;
+    overflow-x: auto;
+}
+
+/*heading della tabella*/
+.heading{
+    background-color: #3D7BD9;
+    padding: 1rem;
+    border-radius: .4rem;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/*row tabella*/
+.rigo {
+    background-color: white;
+    padding: 1rem;
+    border-radius: .4rem;
+    color: black;
+    text-transform: uppercase;
+}
+
+
+.rigoSelected {
+    background-color: #ddecff;
+    outline: none;
+    transform-style: preserve-3d ;
+    transition: 0.3s;
+    transform: perspective(200px) translateZ(2px);
+}
+
+/*rigo selezionato rimosso*/
+.rigoDeleted {
+    background-color: #ddecff;
+    outline: none;
+    animation: delete 0.5s linear forwards;
+    scale: 0;
+}
+
+
+@keyframes delete {
+    0% {
+        background-color: white;
+    }
+
+    25% {
+        background-color: #f3f7ff;
+        scale:0.9;
+    }
+
+    50% {
+        background-color: #deedff;
+        scale: 0.7;
+    }
+
+    75% {
+        background-color: #dbecff;
+        scale: 0.5;
+    }
+
+    100% {
+        background-color: #ddecff;
+        scale: 0.3;
+    }
+}
+/*stile singola cella*/
+.cella{
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lock{
+    background: url("./assets/lockIco.svg") no-repeat center;
+    background-size: contain;
+}
+
+/*stile per oscurare la pagina quando il pop up è aperto*/
+.oscuramento{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.17);
+    width: 110%;
+    height: 100%;
+    top: 0;
+    left: -10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10%;
+}
+
+/*stile per il container del pop up*/
+.popUp{
+    margin-left: 10%;
+    background-color: white;
+    border-radius: 0.7rem;
+    padding: 1rem;
+}
+
+/*stile barra superiore form aggiunta*/
+.barra{
+    padding:0.5rem;
+    background-color: #3D7BD9;
+    border-radius: 0.3rem;
+}
+
+/*bottone uscita form*/
+.exit{
+    background-color: #E34848;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+    border-radius: 100%;
+    border: none;
+    color: white;
+    font-weight: bold;
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.exit:hover{
+    filter: brightness(0.80);
+}
+
+
+/*sile generico pulsanti form*/
+.btnForm{
+    font-weight: bold;
+    border:none;
+    border-radius: .4rem;
+    padding: .4rem;
+    width: 100%;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+.btnForm:hover{
+    filter: brightness(0.80);
+}
+
+.containerForm{
+    max-height: 90vh;
+    max-width: 100vw;
+    overflow: auto;
+    width:60%;
+}
+
+/*stile applicato ai pulsanti dentro al form laterale*/
+.formButton{
+    width:100%;
+    height:auto;
+    padding:0.5rem;
+    border:none;
+    border-radius: 10px;
+    background-color: #3D7BD9;
+    color: white;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+.formButton:hover{
+    filter: brightness(0.80);
+}
+
+/*stile sez laterale form*/
+.SezPulsanti{
+    background-color: #B4D1F0;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+}
+
+/* stile aggiuntivo al formbutton per assegnare l'immagine di sfondo*/
+.importIcon{
+    background: url("./assets/importIcon.svg") no-repeat top center;
+    background-color: #3D7BD9;
+    border-radius: 10px;
+    height: 10vh;
+    min-height: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 0.3rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-bottom: 0.3rem;
+}
+
+/*container dato form*/
+.cardInput{
+    width: 95%;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/*container dato form piccolo*/
+.SmallcardInput{
+    width: 90%;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/*stile applicato ad ogni input del form*/
+.inputForm{
+    width:100%;
+    height: 100%;
+    border:none;
+    padding: 0.5rem;
+    border-radius: 3px;
+}
+
+.inputForm::placeholder{
+    color: gray;
+}
+
+/*stile aggiuntivo form input per la data*/
+.data{
+    padding: 0.3rem;
+}
+
+/*stile aggiuntivo form input per la textarea*/
+.textarea{
+    resize: none;
+    width: 99%;
+}
+
+.formbody{
+    padding: 1rem 0 1rem 2rem;
+    background-color: #B4D1F0;
+    border-radius: 10px;
+    width: 81%;
+    margin-right: 2%;
+}
+
+.bottomForm{
+    background-color: #B4D1F0;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.openPatient{
+    background: url("./assets/personaIco.svg")no-repeat center;
+    background-color: #3D7BD9;
+    background-size: 28% auto;
+    border-radius: 0.7vw;
+    border: none;
+    width: 95%;
+    height: 100%;
+    transition: background-color 0.3s ease, filter 0.3s ease;
+    min-height: 2.5rem;
+}
+
+.formButton:hover{
+    filter: brightness(0.80);
+}
+
+/*stili pulsanti <- ->*/
+.nav{
+    width: 90%;
+    height: 100%;
+    border: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    background: #3d7bd9 url("assets/anagrafica/dx.svg") no-repeat center;
+    background-size: 35%;
+    border-top-right-radius: .4rem;
+    border-bottom-right-radius: .4rem;
+    transition: filter 0.3s;
+}
+
+.nav:hover{
+    filter: brightness(0.80);
+}
+
+.navsx{
+    width: 90%;
+    height: 100%;
+    border: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    background: #3d7bd9 url("assets/anagrafica/sx.svg") no-repeat center;
+    background-size: 35%;
+    border-top-left-radius: .4rem;
+    border-bottom-left-radius: .4rem;
+    transition: filter 0.3s;
+}
+
+.navsx:hover{
+    filter: brightness(0.80);
+}
+
+.aggiungi::before {
+    content: 'AGGIUNGI';
+}
+
+.modifica::before {
+    content: 'MODIFICA';
+}
+
+.elimina::before {
+    content: 'ELIMINA';
+}
+
+
+/*media query custom per migliorare l'esperienza utente mobile*/
+@media (max-width: 1251px) {
+    .containerForm{
+        width: 80%;
+    }
+
+}
+
+@media (max-width: 768px){
+    .btnTool{
+        font-size: .7rem;
+        border-radius: .5rem;
+    }
+
+    .formbody{
+        width: 64%;
+    }
+    .containerForm{
+        width: 100%;
+    }
+
+    .importIcon{
+        background-position: center;
+        font-size: 0;
+    }
+    .popUp{
+        margin-left: 0;
+    }
+
+    .scheda{
+        font-size: .7rem;
+        border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
+    }
+
+    .inputRicerca{
+        background: none;
+        font-size: .7rem;
+        border-radius: .5rem;
+        background-color: white;
+        padding-right: .5rem;
+    }
+
+    .centro{
+        height: 75vh;
+    }
+
+    .exit{
+        height: 80%;
+    }
+
+    .corpo{
+        height:80vh;
+    }
+}
+
+@media (max-width: 576px) {
+    .aggiungi{
+        height: 100%;
+        background:  #3D7BD9 url("./assets/anagrafica/add.svg") no-repeat;
+        background-position:center;
+        background-size: 20%;
+    }
+    .modifica{
+        height: 100%;
+        background:  #3D7BD9 url("./assets/anagrafica/edit.svg") no-repeat;
+        background-position:center;
+        background-size: 20%;
+    }
+    .elimina{
+        height: 100%;
+        background:  #3D7BD9 url("./assets/anagrafica/del.svg") no-repeat;
+        background-position:center;
+        background-size: 15%;
+    }
+
+    .aggiungi::before{
+        content: '';
+    }
+    .modifica::before{
+        content: '';
+    }
+    .elimina::before{
+        content: '';
+    }
+}

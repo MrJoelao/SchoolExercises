@@ -1,0 +1,79 @@
+CREATE DATABASE DeltaDentDB;
+USE DeltaDentDB;
+
+-- Creazione della tabella DOCTOR
+CREATE TABLE DOCTOR
+(
+    doctorID   INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(25),
+    surname    VARCHAR(25),
+    gender     BOOLEAN,
+    birth_date DATE,
+    email      VARCHAR(100),
+    password   char(64),
+    telephone  VARCHAR(13),
+    address    VARCHAR(50)
+);
+
+-- Creazione della tabella PATIENT
+CREATE TABLE PATIENT
+(
+    patientID      INT AUTO_INCREMENT PRIMARY KEY,
+    FOREIGN KEY (doctorID) REFERENCES DOCTOR (doctorID),
+    doctorID       INT,
+    first_name     VARCHAR(25),
+    surname        VARCHAR(25),
+    gender         BOOLEAN,
+    telephone  VARCHAR(13),
+    phone_1    VARCHAR(13),
+    phone_2    VARCHAR(13),
+    cf             VARCHAR(16),
+    c_asl          VARCHAR(5),
+    birth_date     DATE,
+    birth_place    VARCHAR(25),
+    birth_province VARCHAR(25),
+    foreigner      BOOLEAN,
+    billable       VARCHAR(25),
+    completed      BOOLEAN,
+    documented     BOOLEAN,
+    locked         BOOLEAN
+);
+
+-- Creazione della tabella VISIT
+CREATE TABLE VISIT
+(
+    visitID           INT AUTO_INCREMENT PRIMARY KEY,
+    FOREIGN KEY (patientID) REFERENCES PATIENT (patientID),
+    FOREIGN KEY (doctorID) REFERENCES DOCTOR (doctorID),
+    FOREIGN KEY (creator) REFERENCES DOCTOR (doctorID),
+    patientID         INT,
+    doctorID          INT,
+    date              DATE,
+    diagnosis         TEXT,
+    performed_therapy TEXT,
+    prescribed_therapy TEXT,
+    creator           INT,
+    last_modified     DATETIME,
+    hygiene           VARCHAR(25),
+    revenue           DOUBLE,
+    advance           DOUBLE
+);
+
+-- Creazione della tabella IMAGES
+CREATE TABLE IMAGES
+(
+    PRIMARY KEY (visitID, type),
+    FOREIGN KEY (visitID) REFERENCES VISIT (visitID),
+    visitID INT,
+    type    VARCHAR(50)
+);
+
+-- Creazione della tabella RECORDS
+CREATE TABLE RECORDS
+(
+    recordID  INT AUTO_INCREMENT PRIMARY KEY,
+    patientID INT,
+    FOREIGN KEY (patientID) REFERENCES PATIENT (patientID)
+);
+
+INSERT INTO DOCTOR (first_name, surname, gender, birth_date, email, password, telephone, phone_1, phone_2, address) VALUES ('defaultName', 'defaultSurname', 1, '2000-01-01', 'default@default.com', SHA2('default', 256), '0000000000', 'defaultAddress');

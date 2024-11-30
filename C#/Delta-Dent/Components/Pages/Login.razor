@@ -1,0 +1,290 @@
+@page "/Login"
+
+@rendermode InteractiveServer
+@inject NavigationManager NavManager
+@using Blazored.LocalStorage
+@inject ILocalStorageService LocalStorage
+
+<!--sfondo-->
+<div class="bg align-items-center">
+    <!--stile per la forma del form-->
+    <div class="loginForm align-content-center">
+        <!--sezione del register-->
+        <div class="col-sm-7 fadeBlu">
+            <div class="col-12 align-content-center padd doctorImg">
+                <div class="card">
+                    <div>
+                        <h3 class="registerTitle">DeltaDent Web</h3>
+                    </div>
+                    <div>
+                        <p class="registerParagraph">La tua scelta per un futuro web</p>
+                    </div>
+                    <div>
+                        <button class="registerButton" @onclick="ToggleForm">
+                            registrati
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--sezione del login-->
+        <div class="col-12 col-sm-5  loginSide align-content-center">
+            <div class="card text-center align-content-center">
+                <div>
+                    <h3 class="registerTitle" style="color: #2D2D2D">
+                        Ciao!
+                    </h3>
+                </div>
+                <!--sottotitolo-->
+                <div>
+                    <p class="registerParagraph" style="color: #2D2D2D">benvenuto</p>
+                </div>
+                <!--form mail-->
+                <div>
+                    <input @bind="_loggingEmail" class="inputLogin mail" type="text" placeholder="Mail"/>
+                </div>
+                <!--form password-->
+                <div>
+                    <input @bind="_loggingPassword" class="inputLogin password" type="password" placeholder="Password"/>
+                </div>
+                <!--pulsante login-->
+                <div>
+                    <button @onclick="TryLogin" class="loginbtn">Login</button>
+                </div>
+                <!--pulsante registrati -->
+                <div class="registerMob pt-1">
+                    <p class="registerParagraph" style="color: #2D2D2D">oppure</p>
+                    <button class="registerButtonMob" @onclick="ToggleForm">
+                        registrati
+                    </button>
+                </div>
+                @if (_errLogin)
+                {
+                <h5 class="errorMessage">Email e/o password errata</h5>
+                }
+            </div>
+        </div>
+    </div>
+
+    @if (_visible)
+    {
+        <div class="oscuramento">
+            <div class="registerForm text-center">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="registerTitle resize" style="color: #1a1e21">Registrazione</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">nome</p>
+                        <input @bind="_registerName" class="inputRegister" type="text" placeholder="Name"/>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">cognome</p>
+                        <input @bind="_registerSurname" class="inputRegister" type="text" placeholder="Surname"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">Sesso</p>
+                        <select @bind="_genderString" type="select" class="inputRegister">
+                            <option value="m">Maschio</option>
+                            <option value="f">Femmina</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">telefono</p>
+                        <input @bind="_telephoneDoctor" class="inputRegister" type="tel" placeholder="Telephone"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">email</p>
+                        <input @bind="_registerEmail" class="inputRegister" type="text" placeholder="Email"/>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">password</p>
+                        <input @bind="_registerPassword" class="inputRegister" type="password" placeholder="Password"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="LoginParagraph">indirizzo</p>
+                        <input @bind="_address" class="inputRegister" type="text" placeholder="Adress"/>
+                    </div>
+                    <div class="col">
+                        <p class="LoginParagraph">Data di nascita</p>
+                        <input @bind="_birthdate" class="inputRegister" type="date" placeholder="Adress"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                    @if (_errReg)
+                    {
+                        <p class="errorMessage mt-1">
+                            Si è verificato un errore, verificare i dati immessi
+                        </p>
+                    }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="formbtn annulla" @onclick="ToggleForm">
+                            annulla
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button class="formbtn conferma" @onclick="HandleRegistration">
+                            conferma
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code{
+    private bool _visible;
+    private bool _errReg = false;        // Bool per mostrare un errore nel form di registrazione
+    private bool _errLogin = false;      // Bool per mostrare un errore nel login
+
+    private DbManager _db = new DbManager();     // Oggetto utilizzato globalmente nella pagina per interrogare il DB
+    private string? _registerName;        // Stringa per salvare il nome del medico registrante
+    private string? _registerSurname;     // Stringa per salvare il cognome del medico registrante
+    private string? _registerEmail;       // Stringa per salvare la mail del medico registrante
+    private string? _registerPassword;        // Stringa per salvare la password del medico registrante
+    private string? _loggingEmail;       // Stringa per salvare l'email del medico loggante
+    private string? _loggingPassword;       // Stringa per salvare la password del medico loggante
+    private string? _genderString; // Sesso del dottore
+    private string? _telephoneDoctor; // Telefono del dottore
+    private string? _address; // Via del dottore
+    private DateTime _birthdate; // Data del dottore
+    private Doctor? _doctor; // Istanza del dottore
+    private string? _connectionString;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _connectionString = await LocalStorage.GetItemAsync<string>("connectionString");
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                Console.WriteLine("No connection string found in local storage.");
+            }
+            else
+            {
+                Console.WriteLine($"Connection string loaded from local storage: {_connectionString}");
+            }
+
+            StateHasChanged();
+        }
+    }
+
+    /// <summary>
+    /// Handles the registration process for a new doctor.
+    /// </summary>
+    /// <remarks>
+    /// This method performs several key actions in the registration process:
+    /// - It creates a new Doctor object with the provided registration details.
+    /// - It checks if the doctor's details are valid and if the doctor already exists in the database.
+    /// - If the details are valid and the doctor does not exist, it proceeds to register the doctor in the database.
+    /// - After successful registration, it resets the login form fields and closes the registration form.
+    /// </remarks>
+    /// <returns>A Task representing the asynchronous operation of the registration process.</returns>
+    private async Task HandleRegistration()
+    {
+        _doctor = new Doctor(_registerName!, _registerSurname!, (_genderString != "m"), _birthdate, _registerEmail!, _registerPassword!, _telephoneDoctor!, _address!);
+
+        if (!_doctor.CheckInputs(true) || await _db.CheckDoctorExistAsync(_registerEmail!, _connectionString))
+        {
+            // Mostro l'errore
+            _errReg = true;
+            Console.WriteLine("Data not valid, error message shown");
+            return;
+        }
+
+        // Lo tolgo
+        _errReg = false;
+
+        // Eseguo la query
+        if (!(await _db.RegisterDoctorQuery(_doctor, _connectionString)))
+        {
+            return;
+        }
+
+        // Faccio il reset dei campi del login
+        ResetTextLogin();
+
+        // Chiude il form
+        ToggleForm();
+    }
+
+
+    /// <summary>
+    /// Resets the text fields related to the login form to their default values.
+    /// </summary>
+    private void ResetTextLogin()
+    {
+        _registerName = string.Empty;
+        _registerSurname = string.Empty;
+        _registerEmail = string.Empty;
+        _registerPassword = string.Empty;
+    }
+
+    /// <summary>
+    /// Attempts to log in a user by verifying their email and password against the database.
+    /// </summary>
+    /// <remarks>
+    /// This method performs several checks:
+    /// - Verifies if the doctor exists in the database using their email.
+    /// - Checks if the provided password matches the one stored in the database for the given email.
+    /// - Retrieves the doctor's ID from the database if the login credentials are correct.
+    /// - Navigates to the doctor's profile page upon successful login.
+    /// If any of the checks fail, it sets an error flag and logs the specific error.
+    /// </remarks>
+    /// <returns>A Task representing the asynchronous operation of the login process.</returns>
+    private async Task TryLogin()
+    {
+        _errLogin = false;
+
+        if (!(await _db.CheckDoctorExistAsync(_loggingEmail!, _connectionString)))
+        {
+            _errLogin = true;
+            Console.WriteLine("Doctor does not exist");
+            return;
+        }
+
+        if (!(await _db.CheckDoctorCredentialsAsync(_loggingEmail!, _loggingPassword!, _connectionString)))
+        {
+            _errLogin = true;
+            Console.WriteLine("Doctor password is incorrect");
+            return;
+        }
+
+        int? medID = await _db.GetDoctorIdAsync(_loggingEmail!, _connectionString);
+
+        if (medID == null)
+        {
+            _errLogin = true;
+            Console.WriteLine("There was an error while getting the ID of the doctor");
+            return;
+        }
+
+        NavManager.NavigateTo($"/Anagrafica/{medID}");
+    }
+
+    /// <summary>
+    /// Toggles the visibility of the registration form.
+    /// </summary>
+    /// <remarks>
+    /// This method inverses the visibility state of the registration form and resets any registration error flags.
+    /// </remarks>
+    private void ToggleForm()
+    {
+        _visible = !_visible;
+        _errReg = false;
+    }
+}
