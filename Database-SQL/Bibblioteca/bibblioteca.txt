@@ -1,0 +1,13 @@
+Eseguire le seguenti interrogazioni:
+
+    Seleziona tutti gli utenti
+    Seleziona tutti gli libri
+    Seleziona tutti gli prestiti
+    Trova tutti i libri prestati da un utente specifico (es. IdUtente = 1)
+    Conta il numero di libri prestati
+    Trova gli utenti che hanno preso in prestito libri
+    Trova i libri che non sono mai stati prestati
+    Trova il numero di prestiti per ogni utente
+    Trova i libri prestati più di una volta
+    Trova gli utenti che non hanno mai preso in prestito libri
+
