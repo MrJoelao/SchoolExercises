@@ -1,0 +1,10 @@
+Product0 1 example_description 5.50 43
+Product1 2 example_description 3.50 98
+Product2 3 example_description 7.00 50
+Product3 4 example_description 2.99 75
+Product4 5 example_description 12.75 30
+Product5 6 example_description 6.25 60
+Product6 7 example_description 8.99 25
+Product7 8 example_description 4.50 80
+Product8 9 example_description 10.00 40
+Product9 0 example_description 3.00 70
