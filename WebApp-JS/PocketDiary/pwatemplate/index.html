@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>pocket diary</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="app.js" type="text/javascript"></script>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+    <img src="resources/bg.png" alt="Background image" class="sfondo">
+    <div class="welcome slide hidden" id="start"><!--welcome-->
+        <div class="login">
+            <img src="resources/boyWaving.jpg" alt="boy waving his hand" class="imgWelcome">
+            <h1>Welcome to your<br><b class="poketD">pocket diary</b></h1>
+            <hr class="separatoreLogin">
+            <br>
+            <h2>How should we call you?</h2>
+            <input type="text" class="nome" id="input_nome">
+            <h3 class="hidden" id="nomeNonDisponibile">name not available</h3>
+            <button onclick="welcome(), toSlide('themes')" class="continue bGreen">continue</button>
+        </div>
+    </div>
+    <div class="hidden themeSelection slide" id="themes"><!--themeSelection-->
+        <div class="selection">
+            <h1>Select your <b class="blue">th</b><b class="green">e</b><b class="yellow">me</b></h1><br>
+            <hr class="separatoreTemi">
+            <br>
+            <div class="opzioni">
+                <button class="bottScelta" id="blueB" onclick="theme_choose('bBlueB')"><img src="resources/blue.webp"
+                        alt="" class="scelta" id="blueI"></button>
+                <button class="bottScelta selected_m" id="greenB" onclick="theme_choose('bGreenB')"><img
+                        src="resources/green.webp" alt="" class="scelta selected" id="greenI"></button>
+                <button class="bottScelta" id="yellowB" onclick="theme_choose('bYellowB')"><img
+                        src="resources/yellow.webp" alt="" class="scelta" id="yellowI"></button>
+            </div>
+            <br>
+            <p class="tip">You will still be able to change it later</p>
+            <button onclick="renderHomePage(), toSlide('home')" class="continue bGreen">continue</button>
+        </div>
+    </div>
+
+
+    <div class="mainApp mainAppNotVisible" id="mainApp" ><!--mainApp-->
+        <div class="appContainer mainAppNotVisible" id="appContainer">
+
+            <div class="hidden" id="scuro">
+                <button class="sfondouscita" onclick="closeSideBar()"></button>
+                <!-- AGGIUNTO PER FAR DIVENTARE TUTTO SCURO ECCETTO LA BARRA APERTA, SCONSIGLIO DI MODIFICARE QUELLO DEI POPUP CON QUESTO, sostituire "hidden" con "scuro"-->
+            </div>
+
+            <div class="barraLaterale bGreen " id="barraChiusa">
+                <!--SOSTITUIRE BARRALATERALE CON "aperta" PER VEDERE LA BARRA APERTA-->
+                <div class="iconeRidotte" id="iconeRid"> <!--METTERE QUESTO A "hidden" QUANDO APERTA-->
+                    <button class="rapido" onclick="toSlide('home')"><img src="resources/school.svg" alt="" class="imgRapido"></button>
+                    <button class="rapido" onclick="toSlide('subjects');"><img src="resources/clock.svg" alt="" class="imgRapido"></button>
+                    <button class="rapido" onclick="handleCalendarButtonClick()"><img src="resources/calendar.svg" alt=""
+                            class="imgRapido"></button>
+                    <button class="rapido" onclick="toSlide('marks')"><img src="resources/test.svg" alt="" class="imgRapido"></button>
+                    <!--<button class="rapido , settings" onclick=""><img src="resources/settings.svg" alt=""
+                            class="imgRapido"></button>-->
+                </div>
+
+                <div class="barraContenuto  , hidden" id="barraAperta">
+                    <h2 class="white">My pocket diary</h2>
+                    <button class="elemntoBarra" onclick="toSlide('home')"><img src="resources/school.svg" alt="" class="imgRapido"><b
+                            class="white">Home</b> </button><br>
+                    <hr class="separaOpzioni">
+                    <button class="elemntoBarra" onclick="toSlide('subjects')"> <img src="resources/clock.svg" alt=""
+                            class="imgRapido">
+                        <b class="white">Schedule</b>
+                    </button><br>
+                    <hr class="separaOpzioni">
+                    <button class="elemntoBarra" onclick="handleCalendarButtonClick()"><img src="resources/calendar.svg"
+                            alt="" class="imgRapido">
+                        <b class="white">Calendar</b></button><br>
+                    <hr class="separaOpzioni">
+                    <button class="elemntoBarra" onclick="toSlide('marks')"><img src="resources/test.svg" alt=""
+                            class="imgRapido"> <b class="white">Marks</b></button><br>
+                    <hr class="separaOpzioni">
+                    <!--<button class="elemntoBarra , settingsContenuto" onclick=""><img src="resources/settings.svg" alt=""
+                            class="imgRapido"> <b class="white">Settings</b></button><br>-->
+                </div>
+            </div>
+            <div class="homepage slide" id="home">
+                <div class="blackScreen hidden" id="blackscreen">
+                    <div class="hidden popUPadd" id="createEvent">
+                        <div class="inLabel bGreen" id="eventName">Insert note name</div>
+                        <input type="text" class="setName" id="inputName">
+                        <div class="inLabel bGreen">Date</div><input type="date" class="setData" id="inputDate">
+                        <div class="inLabel bGreen" id="Description">Description</div>
+                        <input type="text" class="setDesc" id="inputDesc">
+                        <button class="defButton bGreen" onclick="cancelEvent()">Cancel</button>
+                        <button class="defButton bGreen" onclick="confirmEvent()">Confirm</button>
+                    </div>
+                    <div class="hidden popUPmod" id="modifyEvent">
+                        <div class="inLabel bGreen" id="eventNameM">Insert event name</div>
+                        <input type="text" class="setName" id="inputNameM">
+                        <div class="inLabel bGreen">Date</div><input type="date" class="setData" id="inputDateM">
+                        <div class="inLabel bGreen" id="Description">Description</div>
+                        <input type="text" class="setDesc" id="inputDescM">
+                        <button class="defButton bGreen" onclick="cancelModifyEvent()">Cancel</button>
+                        <button class="defButton bGreen" onclick="deleteEvent()">Delete</button>
+                        <button class="defButton bGreen" onclick="modifyEvent()">Confirm</button>
+                    </div>
+                    <div class="hidden popUPdesc" id="eventView">
+                        <div class="descContainer bGreen" id="eventDesc">
+
+                        </div>
+                        <button class="defButton bGreen" onclick="cancelEvent()">close</button>
+                    </div>
+                </div>
+                <h1 class="welcomingMessage">Welcome <b class="" id="displayUsername">{username}</b></h1>
+                <div class="azioniRapideMobile">
+                    <button class="rapidoMob , bGreen" onclick="toSlide('subjects')"><img src="resources/clock.svg" alt=""
+                            class="imgRapido">
+                        <b class="white">Schedule</b>
+                    </button><br>
+                    <button class="rapidoMob , bGreen" onclick="handleCalendarButtonClick()"><img src="resources/calendar.svg" alt=""
+                            class="imgRapido"> Calendar</button>
+                    <button class="rapidoMob , bGreen" onclick="toSlide('marks')"><img src="resources/test.svg" alt=""
+                            class="imgRapido">
+                        Grades</button>
+                </div>
+
+                <button onclick="openEventCreation()" class="addEvent bGreen">➕</button>
+
+                <div class="upcomingEvents bGreen" id="upcomingEvents">
+                    <div class="placeHolderEvents" id="voidList"> <!-- AGGIUNTA CLASSE-->
+                        <img src="resources/notingToDo.svg" alt="" class="motivationalImg bGreen"><br>
+                        <p class="white">Seems like you have nothing left to do, enjoy a break!</p>
+                    </div>
+                </div>
+                <div class="utilsDesktop">
+                    <div class="calendario bGreen" id="calendario"><!---->
+
+                    </div>
+                    <div class="motivational bGreen">
+                        <img src="resources/books.svg" alt="" class="books bGreen">
+                    </div>
+                </div>
+            </div>
+            <!-- subjects-->
+            <div id="subjects" class="slide hidden subjects">
+                <h1 class="welcomingMessage">Schedule</h1>
+                <div id="week" class="week-container">
+                    <!-- I giorni e gli slot degli orari saranno generati qui -->
+                </div>
+            </div>           
+
+            <div class="hidden marks slide" id="marks">
+                <div class="container bGreen" id="formContainer" style="display:none;">
+                    <div class="whiteSace">
+                        <div class="inLabelVoto bGreen">Adding a mark
+                        </div>
+                        <br>
+                        <div class="form-group inLabelVoto bGreen">
+                            <label for="inputMateria">Subject:</label>
+                        </div>
+                        
+                        <input type="text" id="inputMateria" placeholder="Insert subject">
+                        <div class="form-group inLabelVoto bGreen">
+                            <label for="inputData">Date:</label>
+                        </div>
+                        
+                        <input class="setData" type="date" id="inputData" placeholder="Insert dare(YYYY-MM-DD)">
+                        <div class="form-group inLabelVoto bGreen">
+                            <label for="inputVoto">Mark:</label>
+                        </div>
+                        
+                        <input type="text" id="inputVoto" placeholder="Insert mark">
+                        <br>
+                        <button class="bGreen bottoneVoto" id="inserisciButton">add</button>
+                        <button class="bGreen bottoneVoto" id="inserisciButton bGreen" onclick="nascondiAggiunta('marks')">cancel</button>
+                    </div>
+                </div>
+
+                <button class="aggvoto bGreen" id="iniziaButton">Add mark</button>
+                <br>
+                <div class="container bGreen" id="previousVotesContainer">
+
+                    <p>Preavious marks:</p>
+                    <div id="votiInseritiContainer">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden slide" id="calendarDiv">
+                <div class="calendar-container">
+                    <h2>Events</h2>
+                    <div class="event-list" id="eventList">
+                        <h3>Events list:</h3>
+                        <ul id="eventsUl"></ul>
+                    </div>
+                    <div class="navigation">
+                        <button onclick="goToToday()" class="buttonCal bGreen">Go to today</button>
+                        <button onclick="prevMonth()"class="buttonCal bGreen">Preavious month</button>
+                        <button onclick="nextMonth()"class="buttonCal bGreen">Next month</button>
+                        <!-- Aggiungi il pulsante per mostrare il form per aggiungere un evento -->
+                        <button onclick="showAddEventForm()"class="buttonCal bGreen">Add event</button>
+                        <button onclick="showEvents()"class="buttonCal bGreen">Show events</button>
+                    </div>
+                    <div class="container2 bGreen" id="addEventForm" style="display: none;">
+                        <div class="whiteSace">
+                            <div class="inLabelVoto bGreen">
+                                Insert date
+                            </div>
+                            <input  class="setData" type="date" id="eventDateCalendar">
+                            <div class="inLabelVoto bGreen">
+                                Insert time
+                            </div>
+                            <input  class="setData" type="time" id="eventTimeCalendar">
+                            <div class="inLabelVoto bGreen">
+                                Insert topic
+                            </div>
+                            <input type="text" id="eventNameCalendar" placeholder="Event name">
+                            <input type="color" id="eventColorCalendar">
+                            <button class="bottoneVoto bGreen" onclick="addEvent()">Add event</button>
+                            <button class="bottoneVoto bGreen" id="cancelAddEventCalendar" onclick="nascondiAggiuntaCalendario()">cancel</button>
+                        </div>
+                        
+                    </div>
+                    <div class="calendar" id="calendar"></div>
+
+                    
+                </div>
+
+                
+                <div class="container2 bGreen" id="editEventForm" style="display: none;">
+                    <div class="inLabelVoto bGreen">
+                        Change the date
+                    </div>
+                    <input  class="setData" type="date" id="editEventDate">
+                    <div class="inLabelVoto bGreen">
+                        Change the time
+                    </div>
+                    <input  class="setData" type="time" id="editEventTime">
+                    <div class="inLabelVoto bGreen">
+                        Change the topic
+                    </div>
+                    <input type="text" id="editEventName" placeholder="Event name">
+                    <input type="color" id="editEventColor">
+                    <button class="bGreen" id="saveEditEventButton">Save changes</button>
+                    <button class="bGreen" id="cancelEditEventButton">Cancel changes</button>
+                </div>
+
+
+                
+            </div>
+
+            <div class="pulsanteBarra">
+                <button class="apri , bGreen" onclick="openSideBar()">
+                    <img src="resources/sideBar.svg" alt="">
+                </button>
+            </div>
+
+            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth'
+                    });
+                    calendar.render();
+                });
+            </script>
+            <script type="text/javascript">
+                loadFromStorage();
+            </script>
+            <script type="text/javascript">
+                set_theme();
+            </script>
+            <script type="text/javascript">
+                regenerateEventList();
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>
