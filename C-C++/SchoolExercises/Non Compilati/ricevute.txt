@@ -1,0 +1,8 @@
+Prodotto acquistato:
+Nome: prodotto0
+Codice: 123456890123
+Descrizione: esempio_descrizione
+Prezzo unitario: 5.50
+Quantita' acquistata: 4
+Totale: 22.00
+-------------------------
