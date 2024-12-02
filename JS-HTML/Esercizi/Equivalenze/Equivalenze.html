@@ -1,0 +1,172 @@
+<!-- 
+Crea una pagina html, con all'interno codice javascript per calcolare le equivalenze (g,l,m,byte).
+
+Inserendo un numero e scegliendo l'unità di misura di partenza e di arrivo, la pagina deve calcolare il valore finale.
+
+Progetta la pagina in modo che sia anche gradevole alla vista (con css).
+
+Consegna il codice dell'esercizio per calcolare le equivalenze.
+-->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equivalenze</title>
+    <script src="Equivalenze.js"></script>
+    <link rel="stylesheet" href="Equivalenze.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">Equivalenze</h1>
+            <p class="page-description">Inserendo un numero e scegliendo l'unità di misura di partenza e di arrivo, la pagina deve calcolare il valore finale.</p>
+        </header>
+
+        <main class="main-content">
+            <div class="converter">
+                <h2 class="converter__title">Conversione Lunghezza</h2>
+                <div class="converter__input-group">
+                    <input type="number" 
+                           id="inputValue" 
+                           class="converter__number-input" 
+                           placeholder="Inserisci un valore">
+                    
+                    <select id="fromUnit" class="converter__select">
+                        <option value="" disabled selected>Unità di partenza</option>
+                        <optgroup label="Lunghezza">
+                            <option value="km">Kilometri (km)</option>
+                            <option value="m">Metri (m)</option>
+                            <option value="cm">Centimetri (cm)</option>
+                            <option value="mm">Millimetri (mm)</option>
+                        </optgroup>
+                    </select>
+
+                    <span class="converter__separator">in</span>
+
+                    <select id="toUnit" class="converter__select">
+                        <option value="" disabled selected>Unità di arrivo</option>
+                        <optgroup label="Lunghezza">
+                            <option value="km">Kilometri (km)</option>
+                            <option value="m">Metri (m)</option>
+                            <option value="cm">Centimetri (cm)</option>
+                            <option value="mm">Millimetri (mm)</option>
+                        </optgroup>
+                    </select>
+
+                    <button id="convertBtn" class="converter__button" onclick="convertLength()">Converti</button>
+                </div>
+
+                <div id="result" class="converter__result"></div>
+            </div>
+
+            <div class="converter">
+                <h2 class="converter__title">Conversione Peso</h2>
+                <div class="converter__input-group">
+                    <input type="number" 
+                           id="inputValueWeight" 
+                           class="converter__number-input" 
+                           placeholder="Inserisci un valore">
+                    
+                    <select id="fromUnitWeight" class="converter__select">
+                        <option value="" disabled selected>Unità di partenza</option>
+                        <optgroup label="Peso">
+                            <option value="kg">Kilogrammi (kg)</option>
+                            <option value="g">Grammi (g)</option>
+                            <option value="mg">Milligrammi (mg)</option>
+                        </optgroup>
+                    </select>
+
+                    <span class="converter__separator">in</span>
+
+                    <select id="toUnitWeight" class="converter__select">
+                        <option value="" disabled selected>Unità di arrivo</option>
+                        <optgroup label="Peso">
+                            <option value="kg">Kilogrammi (kg)</option>
+                            <option value="g">Grammi (g)</option>
+                            <option value="mg">Milligrammi (mg)</option>
+                        </optgroup>
+                    </select>
+
+                    <button id="convertBtnWeight" class="converter__button" onclick="convertWeight()">Converti</button>
+                </div>
+
+                <div id="resultWeight" class="converter__result"></div>
+            </div>
+
+            <div class="converter">
+                <h2 class="converter__title">Conversione Volume</h2>
+                <div class="converter__input-group">
+                    <input type="number" 
+                           id="inputValueVolume" 
+                           class="converter__number-input" 
+                           placeholder="Inserisci un valore">
+                    
+                    <select id="fromUnitVolume" class="converter__select">
+                        <option value="" disabled selected>Unità di partenza</option>
+                        <optgroup label="Volume">
+                            <option value="l">Litri (l)</option>
+                            <option value="ml">Millilitri (ml)</option>
+                        </optgroup>
+                    </select>
+
+                    <span class="converter__separator">in</span>
+
+                    <select id="toUnitVolume" class="converter__select">
+                        <option value="" disabled selected>Unità di arrivo</option>
+                        <optgroup label="Volume">
+                            <option value="l">Litri (l)</option>
+                            <option value="ml">Millilitri (ml)</option>
+                        </optgroup>
+                    </select>
+
+                    <button id="convertBtnVolume" class="converter__button" onclick="convertVolume()">Converti</button>
+                </div>
+
+                <div id="resultVolume" class="converter__result"></div>
+            </div>
+
+            <div class="converter">
+                <h2 class="converter__title">Conversione Dati</h2>
+                <div class="converter__input-group">
+                    <input type="number" 
+                           id="inputValueData" 
+                           class="converter__number-input" 
+                           placeholder="Inserisci un valore">
+                    
+                    <select id="fromUnitData" class="converter__select">
+                        <option value="" disabled selected>Unità di partenza</option>
+                        <optgroup label="Dati">
+                            <option value="gb">Gigabyte (GB)</option>
+                            <option value="mb">Megabyte (MB)</option>
+                            <option value="kb">Kilobyte (KB)</option>
+                            <option value="b">Byte (B)</option>
+                        </optgroup>
+                    </select>
+
+                    <span class="converter__separator">in</span>
+
+                    <select id="toUnitData" class="converter__select">
+                        <option value="" disabled selected>Unità di arrivo</option>
+                        <optgroup label="Dati">
+                            <option value="gb">Gigabyte (GB)</option>
+                            <option value="mb">Megabyte (MB)</option>
+                            <option value="kb">Kilobyte (KB)</option>
+                            <option value="b">Byte (B)</option>
+                        </optgroup>
+                    </select>
+
+                    <button id="convertBtnData" class="converter__button" onclick="convertData()">Converti</button>
+                </div>
+
+                <div id="resultData" class="converter__result"></div>
+            </div>
+        </main>
+
+        <footer class="page-footer">
+            <p class="copyright">&copy; 2024 Joel Stephan</p>
+        </footer>
+    </div>
+</body>
+</html>

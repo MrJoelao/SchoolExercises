@@ -1,0 +1,65 @@
+/* Stili di base */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 1.25rem;
+    text-align: center;
+}
+
+/* Container principale */
+.container {
+    max-width: 50rem;
+    margin: 0 auto;
+}
+
+/* Area di gioco */
+.area-gioco {
+    margin: 1.25rem 0;
+}
+
+/* Stile pulsanti */
+.pulsanti {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-bottom: 1.88rem;
+}
+
+.pulsanti button {
+    padding: 0.94rem 1.88rem;
+    border: none;
+    border-radius: 0.63rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+/* Stile punteggio */
+.punteggio {
+    margin: 1.25rem auto;
+    max-width: 18.75rem;
+}
+
+.punteggio button {
+    border: none;
+    border-radius: 0.63rem;
+    padding: 0.31rem 0.63rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+/* Popup */
+.popUp {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(201, 198, 198);
+    padding: 1.25rem;
+    border-radius: 0.63rem;
+}
+
+.popUp i {
+    font-size: 3rem;
+    margin-bottom: 0.63rem;
+}

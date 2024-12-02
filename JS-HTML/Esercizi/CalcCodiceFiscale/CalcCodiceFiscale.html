@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio</title>
+    <link rel="stylesheet" href="../unified-style.css">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet"> -->
+    <link rel="stylesheet" href="CalcCodiceFiscale.css">
+    <script src="CalcCodiceFiscale.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calcolo Codice Fiscale</h1>
+            <p>Inserisci i dati richiesti per calcolare il codice fiscale</p>
+        </header>
+
+        <main>
+            <form id="codiceFiscaleForm">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" name="cognome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dataNascita">Data di Nascita:</label>
+                    <input type="date" id="dataNascita" name="dataNascita" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sesso">Sesso:</label>
+                    <select id="sesso" name="sesso" required>
+                        <option value="M">Maschio</option>
+                        <option value="F">Femmina</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="luogoNascita">Luogo di Nascita:</label>
+                    <input type="text" id="luogoNascita" name="luogoNascita" required>
+                </div>
+
+                <button type="submit">Calcola Codice Fiscale</button>
+            </form>
+
+            <div id="risultato" class="risultato">
+                <h2>Il tuo codice fiscale è:</h2>
+                <p id="codiceFiscale"></p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Joel Stephan</p>
+        </footer>
+    </div>
+</body>
+</html>

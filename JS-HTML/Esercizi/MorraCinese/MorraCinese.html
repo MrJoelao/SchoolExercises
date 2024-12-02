@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morra Cinese</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="MorraCinese.css">
+    <script src="MorraCinese.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Morra Cinese</h1>
+
+        <!-- Pulsanti gioco -->
+        <div class="pulsanti">
+            <button onclick="gioca(1)">Sasso</button>
+            <button onclick="gioca(2)">Carta</button>
+            <button onclick="gioca(3)">Forbice</button>
+        </div>
+
+        <!-- Punteggio -->
+        <div class="punteggio">
+            <p id="vittorie">Vittorie: 0</p>
+            <p id="sconfitte">Sconfitte: 0</p>
+            <p id="pareggi">Pareggi: 0</p>
+            <button onclick="azzeraPunteggio()" class="azzera">Azzera</button>
+        </div>
+
+        <!-- Popup -->
+        <div id="vittoria" class="popUp">
+            <h2>Hai vinto!</h2>
+            <p id="scelta-computer-vittoria"></p>
+        </div>
+
+        <div id="sconfitta" class="popUp">
+            <h2>Hai perso!</h2>
+            <p id="scelta-computer-sconfitta"></p>
+        </div>
+
+        <div id="pareggio" class="popUp">
+            <h2>Pareggio!</h2>
+            <p id="scelta-computer-pareggio"></p>
+        </div>
+    </div>
+</body>
+</html>

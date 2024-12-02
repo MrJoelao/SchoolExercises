@@ -1,0 +1,7 @@
+# Ignora solo il contenuto della cartella Libri
+Dashboard/Libri/*
+
+# Ma non ignorare questi file/cartelle specifici
+!.gitignore
+!README.md
+ 

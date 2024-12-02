@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Guida Completa HTML5</title>
+        <link rel="stylesheet" href="unified-style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Guida Completa HTML5</h1>
+                <p>Una guida completa alle funzionalità e alle caratteristiche di HTML5</p>
+            </header>
+
+            <nav class="card">
+                <h2>Indice dei Contenuti</h2>
+                <ul>
+                    <li><a href="#elementi-semantici">Elementi Semantici</a></li>
+                    <li><a href="#formattazione-logica">Formattazione Logica</a></li>
+                    <li><a href="#formattazione-fisica">Formattazione Fisica</a></li>
+                    <li><a href="#elenchi">Elenchi</a></li>
+                    <li><a href="#link">Link</a></li>
+                    <li><a href="#multimedia">Elementi Multimediali</a></li>
+                    <li><a href="#form">Form e Input</a></li>
+                    <li><a href="#grafica">Grafica e Animazioni</a></li>
+                </ul>
+            </nav>
+
+            <section id="elementi-semantici" class="card">
+                <h2>Elementi Semantici</h2>
+                <p>HTML5 ha introdotto nuovi elementi semantici per una struttura più chiara:</p>
+                <ul>
+                    <li><code>&lt;header&gt;</code> - Per intestazioni e introduzioni</li>
+                    <li><code>&lt;nav&gt;</code> - Per menu di navigazione</li>
+                    <li><code>&lt;main&gt;</code> - Per il contenuto principale</li>
+                    <li><code>&lt;section&gt;</code> - Per raggruppare contenuti correlati</li>
+                    <li><code>&lt;article&gt;</code> - Per contenuti indipendenti</li>
+                    <li><code>&lt;aside&gt;</code> - Per contenuti correlati ma secondari</li>
+                    <li><code>&lt;footer&gt;</code> - Per informazioni di chiusura</li>
+                </ul>
+            </section>
+
+            <section id="formattazione-logica" class="card">
+                <h2>Formattazione Logica</h2>
+                <ul>
+                    <li><strong>Strong</strong>: per enfatizzare fortemente il testo</li>
+                    <li><em>Emphasis</em>: per enfatizzare leggermente il testo</li>
+                    <li><abbr title="HyperText Markup Language">HTML</abbr>: per abbreviazioni</li>
+                    <li><cite>Citation</cite>: per citazioni di opere</li>
+                    <li><code>Code</code>: per blocchi di codice</li>
+                    <li><dfn>Definizione</dfn>: per definizioni di termini</li>
+                    <li><kbd>Input da tastiera</kbd>: per comandi da tastiera</li>
+                    <li><mark>Highlight</mark>: per evidenziare il testo</li>
+                </ul>
+            </section>
+
+            <section id="formattazione-fisica" class="card">
+                <h2>Formattazione Fisica</h2>
+                <ul>
+                    <li><b>Grassetto</b> con &lt;b&gt;</li>
+                    <li><i>Corsivo</i> con &lt;i&gt;</li>
+                    <li><u>Sottolineato</u> con &lt;u&gt;</li>
+                    <li><s>Barrato</s> con &lt;s&gt;</li>
+                    <li>Pedice: H<sub>2</sub>O</li>
+                    <li>Apice: E=mc<sup>2</sup></li>
+                    <li><small>Testo piccolo</small> con &lt;small&gt;</li>
+                </ul>
+            </section>
+
+            <section id="elenchi" class="card">
+                <h2>Elenchi</h2>
+                
+                <h3>Elenco Ordinato</h3>
+                <ol>
+                    <li>Primo elemento</li>
+                    <li>Secondo elemento</li>
+                    <li>Terzo elemento</li>
+                </ol>
+
+                <h3>Elenco Non Ordinato</h3>
+                <ul>
+                    <li>HTML5</li>
+                    <li>CSS3</li>
+                    <li>JavaScript</li>
+                </ul>
+
+                <h3>Elenco Annidato</h3>
+                <ul>
+                    <li>Frontend Development
+                        <ul>
+                            <li>HTML5</li>
+                            <li>CSS3</li>
+                            <li>JavaScript</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="multimedia" class="card">
+                <h2>Elementi Multimediali</h2>
+                
+                <h3>Audio</h3>
+                <pre><code>&lt;audio controls&gt;
+    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+    &lt;source src="audio.ogg" type="audio/ogg"&gt;
+    Il tuo browser non supporta l'elemento audio.
+&lt;/audio&gt;</code></pre>
+
+                <h3>Video</h3>
+                <pre><code>&lt;video width="320" height="240" controls&gt;
+    &lt;source src="video.mp4" type="video/mp4"&gt;
+    &lt;source src="video.webm" type="video/webm"&gt;
+    Il tuo browser non supporta l'elemento video.
+&lt;/video&gt;</code></pre>
+            </section>
+
+            <section id="form" class="card">
+                <h2>Form e Input</h2>
+                <p>HTML5 ha introdotto numerosi nuovi tipi di input:</p>
+                <ul>
+                    <li>Data: <input type="date"></li>
+                    <li>Ora: <input type="time"></li>
+                    <li>Email: <input type="email" placeholder="esempio@dominio.com"></li>
+                    <li>URL: <input type="url" placeholder="https://esempio.com"></li>
+                    <li>Numero: <input type="number" min="0" max="100"></li>
+                    <li>Range: <input type="range" min="0" max="100"></li>
+                    <li>Colore: <input type="color"></li>
+                </ul>
+            </section>
+
+            <section id="grafica" class="card">
+                <h2>Grafica e Animazioni</h2>
+                
+                <h3>Canvas</h3>
+                <canvas id="myCanvas" width="600" height="400"></canvas>
+                <p><i>Muovi il mouse sul canvas per disegnare! 🎨</i></p>
+
+                <h3>SVG</h3>
+                <svg width="200" height="200">
+                    <circle cx="100" cy="100" r="80" stroke="#2a5298" stroke-width="4" fill="#1e3c72" opacity="0.7">
+                        <animate attributeName="r" values="80;90;80" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="100" cy="100" r="40" stroke="#2a5298" stroke-width="4" fill="white"/>
+                </svg>
+            </section>
+        </div>
+
+        <script>
+            // Canvas drawing code
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+            
+            ctx.strokeStyle = '#2a5298';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            function startDrawing(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            }
+
+            function stopDrawing() {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+        </script>
+    </body>
+</html> 
