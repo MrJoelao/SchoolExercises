@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Meta tag essenziali per la corretta visualizzazione -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio</title>
+
+    <!-- Collegamento ai fogli di stile -->
+    <link rel="stylesheet" href="cronometro.css">
+    <!-- Google Fonts: Roboto per il testo generale e Roboto Mono per il display numerico -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <!-- Supporto per il tema chiaro/scuro -->
+    <meta name="color-scheme" content="light dark">
+</head>
+<body>
+    <!-- Container principale che centra il contenuto -->
+    <div class="container">
+        <!-- Header con titolo e descrizione -->
+        <header>
+            <h1>Cronometro</h1>
+            <p>Crea un cronometro che permetta di iniziare, fermare e riavviare il cronometro.</p>
+        </header>
+
+        <main>
+            <!-- Contenitore del cronometro con display e controlli -->
+            <div class="stopwatch-container">
+                <!-- Display del tempo in formato MM:SS:MS -->
+                <div class="time-display">
+                    <span id="minutes">00</span>:
+                    <span id="seconds">00</span>:
+                    <span id="milliseconds">00</span>
+                </div>
+                
+                <!-- Pulsanti per il controllo del cronometro -->
+                <div class="controls">
+                    <button id="startBtn" class="control-btn">Start</button>
+                    <button id="stopBtn" class="control-btn">Stop</button>
+                    <button id="resetBtn" class="control-btn">Reset</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer con copyright -->
+        <footer>
+            <p>&copy; 2024 Joel Stephan</p>
+        </footer>
+    </div>
+
+    <!-- Collegamento allo script JavaScript -->
+    <script src="cronometro.js"></script>
+</body>
+</html>
