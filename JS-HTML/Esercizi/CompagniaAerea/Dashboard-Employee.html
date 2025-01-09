@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - Joel Airlines</title>
+    <link rel="stylesheet" href="compagniaAerea.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Navigation Sidebar -->
+        <nav class="dashboard-nav">
+            <div class="nav-header">
+                <div class="logo-small">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <h2>Joel Airlines</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" onclick="showDashboardSection('overview')">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="nav-link" onclick="showDashboardSection('flights')">
+                    <i class="fas fa-plane-departure"></i>
+                    <span>Gestione Voli</span>
+                </a>
+                <a href="#" class="nav-link" onclick="showDashboardSection('passengers')">
+                    <i class="fas fa-users"></i>
+                    <span>Passeggeri</span>
+                </a>
+                <a href="#" class="nav-link" onclick="showDashboardSection('gates')">
+                    <i class="fas fa-door-open"></i>
+                    <span>Gate Assignment</span>
+                </a>
+            </div>
+            <div class="nav-footer">
+                <div class="employee-info">
+                    <div class="employee-avatar">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="employee-details">
+                        <p class="employee-name">Giuseppe Verdi</p>
+                        <p class="employee-role">Agente di Volo</p>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Overview Section -->
+            <section class="dashboard-section active" id="overview">
+                <div class="section-header">
+                    <div class="header-title">
+                        <h1>Dashboard Operativa</h1>
+                        <p class="date">
+                            <i class="far fa-clock"></i>
+                            <span id="currentDateTime"></span>
+                        </p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cerca volo, gate o passeggero...">
+                        </div>
+                        <button class="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon flights">
+                            <i class="fas fa-plane-departure"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Voli Attivi</h3>
+                            <p class="stat-number">24</p>
+                            <p class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                +3 rispetto a ieri
+                            </p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bookings">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Passeggeri Oggi</h3>
+                            <p class="stat-number">1,250</p>
+                            <p class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                98% occupazione
+                            </p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon crew">
+                            <i class="fas fa-door-open"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Gate Attivi</h3>
+                            <p class="stat-number">12/15</p>
+                            <p class="stat-trend neutral">
+                                <i class="fas fa-minus"></i>
+                                3 in manutenzione
+                            </p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon revenue">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Ritardi</h3>
+                            <p class="stat-number">2</p>
+                            <p class="stat-trend negative">
+                                <i class="fas fa-arrow-up"></i>
+                                +1 ultima ora
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real-time Flight Schedule -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>Prossimi Decolli</h3>
+                            <button class="view-all-btn">Vedi Tutti</button>
+                        </div>
+                        <div class="schedule-list">
+                            <div class="schedule-item">
+                                <div class="flight-info">
+                                    <div class="flight-route">
+                                        <span>FCO</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                        <span>LHR</span>
+                                    </div>
+                                    <div class="flight-time">
+                                        <span>10:30</span>
+                                        <span class="duration">2h 45m</span>
+                                        <span>Gate A12</span>
+                                    </div>
+                                </div>
+                                <span class="flight-status on-time">In Orario</span>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="flight-info">
+                                    <div class="flight-route">
+                                        <span>FCO</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                        <span>CDG</span>
+                                    </div>
+                                    <div class="flight-time">
+                                        <span>11:15</span>
+                                        <span class="duration">2h 10m</span>
+                                        <span>Gate B5</span>
+                                    </div>
+                                </div>
+                                <span class="flight-status delayed">Ritardo 15m</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gate Status -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>Stato Gate</h3>
+                            <button class="view-all-btn">Gestisci</button>
+                        </div>
+                        <div class="gate-grid">
+                            <div class="gate-item active">
+                                <h4>Gate A12</h4>
+                                <p>JA101 - LHR</p>
+                                <span class="status on-time">Imbarco</span>
+                            </div>
+                            <div class="gate-item active">
+                                <h4>Gate B5</h4>
+                                <p>JA205 - CDG</p>
+                                <span class="status delayed">In Ritardo</span>
+                            </div>
+                            <div class="gate-item">
+                                <h4>Gate C3</h4>
+                                <p>Disponibile</p>
+                                <span class="status available">Libero</span>
+                            </div>
+                            <div class="gate-item maintenance">
+                                <h4>Gate D1</h4>
+                                <p>Manutenzione</p>
+                                <span class="status maintenance">Chiuso</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Flights Management Section -->
+            <section class="dashboard-section" id="flights">
+                <div class="section-header">
+                    <div class="header-title">
+                        <h1>Gestione Voli</h1>
+                        <p class="subtitle">Gestisci e monitora tutti i voli in tempo reale</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-file-export"></i>
+                            Esporta
+                        </button>
+                        <button class="primary-button">
+                            <i class="fas fa-plus"></i>
+                            Nuovo Volo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flight-management-container" style="height: calc(100vh - 200px); display: flex; flex-direction: column;">
+                    <!-- Compact Search and Filters -->
+                    <div class="compact-filters" style="flex-shrink: 0;">
+                        <div class="filters-row">
+                            <div class="search-bar">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Cerca volo, destinazione o gate...">
+                            </div>
+                            <div class="quick-filters">
+                                <select>
+                                    <option>Stato</option>
+                                    <option>In Partenza</option>
+                                    <option>In Arrivo</option>
+                                    <option>Ritardi</option>
+                                </select>
+                                <input type="date">
+                                <select>
+                                    <option>Gate</option>
+                                    <option>Terminal A</option>
+                                    <option>Terminal B</option>
+                                    <option>Terminal C</option>
+                                </select>
+                                <button class="filter-btn">
+                                    <i class="fas fa-filter"></i>
+                                    Filtri
+                                </button>
+                            </div>
+                        </div>
+                        <div class="active-filters">
+                            <div class="filter-tags">
+                                <span class="filter-tag">
+                                    In Partenza
+                                    <i class="fas fa-times"></i>
+                                </span>
+                                <span class="filter-tag">
+                                    Oggi
+                                    <i class="fas fa-times"></i>
+                                </span>
+                            </div>
+                            <button class="clear-filters">
+                                <i class="fas fa-times-circle"></i>
+                                Rimuovi Filtri
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Scrollable Flight Cards Container -->
+                    <div style="flex-grow: 1; overflow-y: auto; padding: 1rem 0;">
+                        <div class="flight-cards-grid">
+                            <div class="flight-card">
+                                <div class="flight-card-header">
+                                    <div class="flight-number">JA101</div>
+                                    <span class="status on-time">In Orario</span>
+                                </div>
+                                <div class="flight-route">
+                                    <div class="route-point">
+                                        <span class="city">Roma</span>
+                                        <span class="code">FCO</span>
+                                        <span class="time">10:30</span>
+                                    </div>
+                                    <div class="route-line">
+                                        <i class="fas fa-plane"></i>
+                                    </div>
+                                    <div class="route-point">
+                                        <span class="city">Londra</span>
+                                        <span class="code">LHR</span>
+                                        <span class="time">12:45</span>
+                                    </div>
+                                </div>
+                                <div class="flight-info">
+                                    <div class="info-item">
+                                        <i class="fas fa-door-open"></i>
+                                        <span>Gate A12</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-users"></i>
+                                        <span>180/185</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>2h 15m</span>
+                                    </div>
+                                </div>
+                                <div class="flight-actions">
+                                    <button class="icon-btn" title="Modifica">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="icon-btn" title="Annunci">
+                                        <i class="fas fa-bullhorn"></i>
+                                    </button>
+                                    <button class="icon-btn" title="Dettagli">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                    <button class="icon-btn warning" title="Cancella">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="flight-card">
+                                <div class="flight-card-header">
+                                    <div class="flight-number">JA205</div>
+                                    <span class="status delayed">Ritardo</span>
+                                </div>
+                                <div class="flight-route">
+                                    <div class="route-point">
+                                        <span class="city">Roma</span>
+                                        <span class="code">FCO</span>
+                                        <span class="time">11:15</span>
+                                    </div>
+                                    <div class="route-line">
+                                        <i class="fas fa-plane"></i>
+                                    </div>
+                                    <div class="route-point">
+                                        <span class="city">Parigi</span>
+                                        <span class="code">CDG</span>
+                                        <span class="time">13:25</span>
+                                    </div>
+                                </div>
+                                <div class="flight-info">
+                                    <div class="info-item">
+                                        <i class="fas fa-door-open"></i>
+                                        <span>Gate B5</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-users"></i>
+                                        <span>145/150</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>2h 10m</span>
+                                    </div>
+                                </div>
+                                <div class="flight-actions">
+                                    <button class="icon-btn" title="Modifica">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="icon-btn" title="Annunci">
+                                        <i class="fas fa-bullhorn"></i>
+                                    </button>
+                                    <button class="icon-btn" title="Dettagli">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                    <button class="icon-btn warning" title="Cancella">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fixed Pagination -->
+                    <div class="pagination" style="flex-shrink: 0; margin: 1rem 0;">
+                        <button class="page-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <span class="page-dots">...</span>
+                        <button class="page-btn">12</button>
+                        <button class="page-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Passengers Section -->
+            <section class="dashboard-section" id="passengers">
+                <div class="section-header">
+                    <h1>Gestione Passeggeri</h1>
+                </div>
+
+                <div class="filters">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Cerca passeggero...">
+                    </div>
+                    <div class="filter-group">
+                        <select>
+                            <option>Tutti i Voli</option>
+                            <option>Check-in</option>
+                            <option>Imbarco</option>
+                            <option>Assistenza Speciale</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="passengers-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Volo</th>
+                                <th>Posto</th>
+                                <th>Check-in</th>
+                                <th>Bagaglio</th>
+                                <th>Note</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mario Bianchi</td>
+                                <td>JA101</td>
+                                <td>12A</td>
+                                <td><span class="status confirmed">Completato</span></td>
+                                <td>1 + Cabin</td>
+                                <td>Assistenza Speciale</td>
+                                <td>
+                                    <button class="icon-btn"><i class="fas fa-user-edit"></i></button>
+                                    <button class="icon-btn"><i class="fas fa-print"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Gate Assignment Section -->
+            <section class="dashboard-section" id="gates">
+                <div class="section-header">
+                    <h1>Assegnazione Gate</h1>
+                </div>
+
+                <div class="gate-management">
+                    <div class="gate-status-grid">
+                        <!-- Gate cards will be dynamically populated -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alerts Section -->
+            <section class="dashboard-section" id="alerts">
+                <div class="section-header">
+                    <h1>Centro Notifiche</h1>
+                </div>
+
+                <div class="alerts-container">
+                    <div class="alert-item high">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="alert-content">
+                            <h4>Ritardo Volo JA205</h4>
+                            <p>Ritardo di 15 minuti causa condizioni meteo</p>
+                            <span class="alert-time">10 minuti fa</span>
+                        </div>
+                        <button class="icon-btn"><i class="fas fa-check"></i></button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="compagniaAerea.js"></script>
+</body>
+</html>

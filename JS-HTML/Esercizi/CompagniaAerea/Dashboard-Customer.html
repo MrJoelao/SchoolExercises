@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - Joel Airlines</title>
+    <link rel="stylesheet" href="compagniaAerea.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Customer Dashboard -->
+    <div class="dashboard-container">
+        <nav class="dashboard-nav">
+            <div class="nav-header">
+                <div class="logo-small">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <h2>Joel Airlines</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" onclick="showDashboardSection('overview')">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link" onclick="showDashboardSection('book')">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Prenota Volo</span>
+                </a>
+                <a href="#" class="nav-link" onclick="showDashboardSection('myflights')">
+                    <i class="fas fa-plane"></i>
+                    <span>I Miei Voli</span>
+                </a>
+            </div>
+            <div class="nav-footer">
+                <div class="employee-info">
+                    <div class="employee-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="employee-details">
+                        <p class="employee-name">Mario Rossi</p>
+                        <p class="employee-role">Cliente</p>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <main class="dashboard-main">
+            <!-- Overview Section -->
+            <section class="dashboard-section active" id="overview">
+                <div class="section-header">
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon flights">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Voli Prenotati</h3>
+                            <p class="stat-number">3</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bookings">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Punti Fedeltà</h3>
+                            <p class="stat-number">1250</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="showDashboardSection('book')">
+                        <i class="fas fa-plus"></i>
+                        Prenota Nuovo Volo
+                    </button>
+                    <button class="action-btn" onclick="showDashboardSection('myflights')">
+                        <i class="fas fa-list"></i>
+                        Vedi I Miei Voli
+                    </button>
+                </div>
+            </section>
+
+            <!-- Book Flight Section -->
+            <section class="dashboard-section" id="book">
+                <div class="section-header">
+                    <h1>Prenota Volo</h1>
+                </div>
+
+                <div class="booking-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Da</label>
+                            <select class="input-field">
+                                <option>Seleziona aeroporto</option>
+                                <option>Roma (FCO)</option>
+                                <option>Milano (MXP)</option>
+                                <option>Napoli (NAP)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>A</label>
+                            <select class="input-field">
+                                <option>Seleziona aeroporto</option>
+                                <option>Londra (LHR)</option>
+                                <option>Parigi (CDG)</option>
+                                <option>Madrid (MAD)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data Partenza</label>
+                            <input type="date" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label>Data Ritorno</label>
+                            <input type="date" class="input-field">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Passeggeri</label>
+                            <input type="number" min="1" value="1" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label>Classe</label>
+                            <select class="input-field">
+                                <option>Economy</option>
+                                <option>Business</option>
+                                <option>First Class</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="primary-button">
+                        <i class="fas fa-search"></i>
+                        Cerca Voli
+                    </button>
+                </div>
+            </section>
+
+            <!-- My Flights Section -->
+            <section class="dashboard-section" id="myflights">
+                <div class="section-header">
+                    <h1>I Miei Voli</h1>
+                </div>
+
+                <div class="filters">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Cerca volo...">
+                    </div>
+                    <div class="filter-group">
+                        <select>
+                            <option>Tutti i Voli</option>
+                            <option>Futuri</option>
+                            <option>Passati</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flights-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Numero Volo</th>
+                                <th>Da</th>
+                                <th>A</th>
+                                <th>Data</th>
+                                <th>Stato</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>JA101</td>
+                                <td>Roma (FCO)</td>
+                                <td>Londra (LHR)</td>
+                                <td>2024-01-25</td>
+                                <td><span class="status confirmed">Confermato</span></td>
+                                <td>
+                                    <button class="icon-btn"><i class="fas fa-print"></i></button>
+                                    <button class="icon-btn"><i class="fas fa-exchange-alt"></i></button>
+                                    <button class="icon-btn"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>JA205</td>
+                                <td>Milano (MXP)</td>
+                                <td>Madrid (MAD)</td>
+                                <td>2024-02-10</td>
+                                <td><span class="status pending">In Attesa</span></td>
+                                <td>
+                                    <button class="icon-btn"><i class="fas fa-print"></i></button>
+                                    <button class="icon-btn"><i class="fas fa-exchange-alt"></i></button>
+                                    <button class="icon-btn"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="compagniaAerea.js"></script>
+</body>
+</html>
