@@ -1,64 +1,58 @@
 #!/bin/bash
 
-# Definizione dei colori e simboli
-COLOR_GREEN="\\e[1;32m"
-COLOR_RED="\\e[1;31m"
-COLOR_YELLOW="\\e[1;33m" 
-COLOR_CYAN="\\e[1;36m"
-COLOR_RESET="\\e[0m"
+# Color and symbol constants
+readonly C_BLUE="\\e[1;36m"
+readonly C_GREEN="\\e[1;32m"
+readonly C_YELLOW="\\e[1;33m"
+readonly C_RED="\\e[1;31m"
+readonly C_RESET="\\e[0m"
 
-SYMBOL_SUCCESS="✓"
-SYMBOL_ERROR="✘"
-SYMBOL_WARNING="⚠"
-SYMBOL_ARROW="➜"
-SYMBOL_QUESTION="??"
+readonly ARROW="${C_BLUE}➜${C_RESET}"
+readonly CHECK="${C_GREEN}✓${C_RESET}"
+readonly WARN="${C_YELLOW}⚠${C_RESET}"
+readonly ERROR="${C_RED}✘${C_RESET}"
+readonly QUESTION="${C_YELLOW}??${C_RESET}"
+readonly PROMPT="${C_BLUE}⟫${C_RESET}"
 
-# Simboli colorati preformattati
-CHECKMARK="${COLOR_GREEN}${SYMBOL_SUCCESS}${COLOR_RESET}"
-CROSS="${COLOR_RED}${SYMBOL_ERROR}${COLOR_RESET}"
-WARNING="${COLOR_YELLOW}${SYMBOL_WARNING}${COLOR_RESET}"
-ARROW="${COLOR_CYAN}${SYMBOL_ARROW}${COLOR_RESET}"
-QUESTION="${COLOR_YELLOW}${SYMBOL_QUESTION}${COLOR_RESET}"
-PROMPT="${COLOR_CYAN}⟫${COLOR_RESET}"
+# Additional flags for non-interactive mode
+STASH_ON_CONFLICT=false
+USE_CURRENT_REPO=false
 
-# Funzione helper per formattare un simbolo con un colore specifico
-format_symbol() {
-    local color=$1
-    local symbol=$2
-    echo "${color}${symbol}${COLOR_RESET}"
-}
-
-# Funzione per stampare messaggi colorati
-print_colored() {
-    local color=$1
-    local symbol=$2
-    local message=$3
-    echo -e "${color}${symbol}${COLOR_RESET} ${message}"
-}
-
-# Funzione per stampare messaggi di successo
+# Helper functions for common operations
 print_success() {
-    print_colored "$COLOR_GREEN" "$SYMBOL_SUCCESS" "$1"
+    echo -e "${CHECK} $1"
 }
 
-# Funzione per stampare errori
 print_error() {
-    print_colored "$COLOR_RED" "$SYMBOL_ERROR" "$1"
+    echo -e "${ERROR} $1"
 }
 
-# Funzione per stampare warning
 print_warning() {
-    print_colored "$COLOR_YELLOW" "$SYMBOL_WARNING" "$1"
+    echo -e "${WARN} $1"
 }
 
-# Funzione per stampare info
 print_info() {
-    print_colored "$COLOR_CYAN" "$SYMBOL_ARROW" "$1"
+    echo -e "${ARROW} $1"
 }
 
-# Funzione per stampare domande
-print_question() {
-    print_colored "$COLOR_YELLOW" "$SYMBOL_QUESTION" "$1"
+print_prompt() {
+    echo -e "${PROMPT} $1"
+}
+
+ask_question() {
+    read -p "$(echo -e "${QUESTION} $1: ")" response
+    echo "$response"
+}
+
+# Function to print colored boxes
+print_box() {
+    local text="$1"
+    local width=60
+    local padding=$(( (width - ${#text}) / 2 ))
+    
+    echo -e "${C_BLUE}┌$( printf '─%.0s' $(seq 1 $width) )┐"
+    echo -e "│$( printf ' %.0s' $(seq 1 $padding) )$text$( printf ' %.0s' $(seq 1 $((width - ${#text} - padding))) )│"
+    echo -e "└$( printf '─%.0s' $(seq 1 $width) )┘${C_RESET}"
 }
 
 # Funzione per gestire l'interruzione con Ctrl+C
@@ -94,68 +88,120 @@ BRANCH="main"
 CREATE_DIR=false
 
 # Parse command line arguments
-while getopts "yr:b:d:ch" opt; do
-    case $opt in
-        y)
+SKIP_REPO_PROMPT=false
+NON_INTERACTIVE=false
+REPO_PATH=""
+TARGET_DIR=""
+BRANCH=""
+CREATE_DIR=false
+
+# Show help
+show_help() {
+    cat << EOF
+$(print_box "Git Subtree Manager")
+
+A utility script that simplifies adding Git repositories as subtrees.
+
+USAGE
+    Interactive Mode:
+        $0
+    
+    Non-Interactive Mode:
+        $0 -n [-p /path/to/repo] [-d target/dir] [-b branch] [-c] [-s]
+
+OPTIONS
+    -n, --non-interactive    Run script without user interaction
+    -p, --path PATH         Path to repository to add as subtree
+                           (if not provided, uses current repository)
+    -d, --dir DIR          Destination directory for subtree
+    -b, --branch BRANCH    Branch to use (default: main)
+    -c, --create-dir       Create destination directory if it doesn't exist
+    -s, --stash           Automatically stash changes when conflicts occur
+    -h, --help            Show this help message
+
+EXAMPLE
+    Add a repository as subtree in a specific directory with auto-stash:
+        $0 -n -p ~/projects/myrepo -d libs/mylib -b develop -s -c
+
+NOTE: If -p is not provided, the script will use the current repository.
+      If you're not in a git repository and -p is not provided, the script will exit with an error.
+EOF
+    exit 1
+}
+
+# Parse both short and long options
+TEMP=$(getopt -o 'nyp:d:b:chs' --long 'non-interactive,yes,path:,dir:,branch:,create-dir,help,stash,use-current' -n "$0" -- "$@")
+
+if [ $? -ne 0 ]; then
+    echo -e "${ERROR} Error: Invalid options"
+    show_help
+fi
+
+eval set -- "$TEMP"
+unset TEMP
+
+while true; do
+    case "$1" in
+        '-n'|'--non-interactive')
+            NON_INTERACTIVE=true
+            shift
+            continue
+            ;;
+        '-y'|'--yes')
             SKIP_REPO_PROMPT=true
+            shift
+            continue
             ;;
-        r)
-            REPO_PATH="$OPTARG"
+        '-p'|'--path')
+            REPO_PATH="$2"
+            shift 2
+            continue
             ;;
-        b)
-            BRANCH="$OPTARG"
+        '-d'|'--dir')
+            TARGET_DIR="$2"
+            shift 2
+            continue
             ;;
-        d)
-            TARGET_DIR="$OPTARG"
+        '-b'|'--branch')
+            BRANCH="$2"
+            shift 2
+            continue
             ;;
-        c)
+        '-c'|'--create-dir')
             CREATE_DIR=true
+            shift
+            continue
             ;;
-        h)
+        '-h'|'--help')
             show_help
             ;;
-        \?)
-            echo -e "${CROSS} Invalid option: -$OPTARG"
-            show_help
+        '-s'|'--stash')
+            STASH_ON_CONFLICT=true
+            shift
+            continue
             ;;
-        :)
-            echo -e "${CROSS} Option -$OPTARG requires an argument."
-            show_help
+        '--use-current')
+            USE_CURRENT_REPO=true
+            shift
+            continue
+            ;;
+        '--')
+            shift
+            break
+            ;;
+        *)
+            echo -e "${ERROR} Error: Internal error!"
+            exit 1
             ;;
     esac
 done
 
-# Dopo il parsing degli argomenti, aggiungi:
-
-# Se sono stati forniti gli argomenti necessari, esegui in modalità non interattiva
-if [ -n "$REPO_PATH" ]; then
-    if [ ! -d "$REPO_PATH/.git" ]; then
-        echo -e "${CROSS} $REPO_PATH is not a valid git repository"
-        exit 1
+# Validate non-interactive mode requirements
+if [ "$NON_INTERACTIVE" = true ]; then
+    if [ -z "$REPO_PATH" ]; then
+        echo -e "${ERROR} Error: Non-interactive mode requires -p/--path REPO_PATH"
+        show_help
     fi
-
-    repo_name=$(basename "$REPO_PATH")
-    repo_url="file://$REPO_PATH"
-
-    print_box "OPERATIONS SUMMARY"
-    echo -e "${ARROW} Repository: ${repo_name}"
-    echo -e "${ARROW} Branch: ${BRANCH}"
-    echo -e "${ARROW} Target Directory: ${TARGET_DIR}"
-    if [ "$CREATE_DIR" = true ]; then
-        echo -e "${ARROW} Will create directory if needed"
-    fi
-
-    if [ "$SKIP_REPO_PROMPT" = false ]; then
-        read -r -p "$(echo -e "${QUESTION} Do you want to proceed? (y/n): ")" confirm
-        if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
-            echo -e "${CROSS} Operation cancelled."
-            exit 1
-        fi
-    fi
-
-    add_subtree "$repo_name" "$repo_url" "$TARGET_DIR" "$BRANCH" "$CREATE_DIR"
-    echo -e "\\n${CHECKMARK} Operation completed successfully!"
-    exit 0
 fi
 
 # Check if dependencies are installed
@@ -165,17 +211,6 @@ for cmd in fzf; do
         exit 1
     fi
 done
-
-# Function to print colored boxes
-print_box() {
-    local text="$1"
-    local width=60
-    local padding=$(( (width - ${#text}) / 2 ))
-    
-    echo -e "\\e[1;36m┌$( printf '─%.0s' $(seq 1 $width) )┐"
-    echo -e "│$( printf ' %.0s' $(seq 1 $padding) )$text$( printf ' %.0s' $(seq 1 $((width - ${#text} - padding))) )│"
-    echo -e "└$( printf '─%.0s' $(seq 1 $width) )┘\\e[0m"
-}
 
 # Show current repository information
 current_repo_path=$(git rev-parse --show-toplevel 2>/dev/null)
@@ -187,59 +222,76 @@ current_email=$(git config user.email 2>/dev/null)
 
 if [ -n "$current_repo_name" ]; then
     print_box "CURRENT REPOSITORY"
-    print_info "Repository Name: $current_repo_name"
-    print_info "Local Path: $current_repo_path"
-    print_info "Current Branch: $current_branch"
-    print_info "Latest Commit: $current_commit"
-    print_info "Git User: $current_author ($current_email)"
+    echo -e "${ARROW} Repository Name: ${C_GREEN}$current_repo_name${C_RESET}"
+    echo -e "${ARROW} Local Path: ${C_GREEN}$current_repo_path${C_RESET}"
+    echo -e "${ARROW} Current Branch: ${C_GREEN}$current_branch${C_RESET}"
+    echo -e "${ARROW} Latest Commit: ${C_GREEN}$current_commit${C_RESET}"
+    echo -e "${ARROW} Git User: ${C_GREEN}$current_author ($current_email)${C_RESET}"
     
     # Mostra lo stato delle modifiche
     if [[ $(git status --porcelain) ]]; then
-        print_warning "Status: Repository has uncommitted changes"
+        echo -e "${ARROW} Status: ${C_YELLOW}Repository has uncommitted changes${C_RESET}"
     else
-        print_success "Status: Working tree clean"
+        echo -e "${ARROW} Status: ${C_GREEN}Working tree clean${C_RESET}"
     fi
     
     # Mostra informazioni sui remote
-    echo -e "\\e[1;32m➜ Remote URLs:\\e[0m"
+    echo -e "${ARROW} Remote URLs:"
     git remote -v | awk '!seen[$0]++' | sed 's/^/  /'
     
     # Mostra numero di branch
     branch_count=$(git branch | wc -l)
-    echo -e "\\e[1;32m➜ Branches:\\e[0m $branch_count total"
+    echo -e "${ARROW} Branches: ${C_GREEN}$branch_count total${C_RESET}"
     
     # Mostra ultimi 3 commit
-    echo -e "\\e[1;32m➜ Recent Commits:\\e[0m"
+    echo -e "${ARROW} Recent Commits:"
     git log -3 --pretty=format:"  %C(yellow)%h%Creset - %s %C(cyan)(%cr)%Creset" --abbrev-commit
     echo -e "\\n"
     
-    if [ "$SKIP_REPO_PROMPT" = true ]; then
-        echo -e "\\e[1;32m➜\\e[0m Using current repository (auto-selected)\\n"
-        use_current="y"
+    # Se è stato fornito un REPO_PATH, usa quello
+    if [ -n "$REPO_PATH" ]; then
+        use_current="n"
     else
-        read -p "$(echo -e "${QUESTION} Do you want to work on this repository? (y/n): ")" use_current
+        # Se non è stato fornito un REPO_PATH, usa la repository corrente
+        echo -e "${ARROW} Using current repository (auto-selected)\\n"
+        use_current="y"
     fi
 
     if [[ "$use_current" =~ ^[Yy]$ ]]; then
         cd "$current_repo_path" || exit
     fi
 else
-    echo -e "\\e[1;31m✘ You are not in a git repository.\\e[0m"
+    echo -e "${ERROR} You are not in a git repository."
+    # Se non siamo in una repository, richiedi REPO_PATH
+    if [ -z "$REPO_PATH" ]; then
+        echo -e "${ERROR} No repository path provided and not in a git repository."
+        exit 1
+    fi
     use_current="n"
 fi
 
 if [[ ! "$use_current" =~ ^[Yy]$ ]]; then
-    print_box "REPOSITORY SELECTION"
-    echo "Select a repository to work on:"
-    target_repo=$(find ~ -name ".git" -type d -prune 2>/dev/null | sed 's/\/.git$//' | \
-                 fzf --prompt="$(echo -e "${PROMPT} Select destination repository: ")" \
-                     --border=rounded \
-                     --margin=5% \
-                     --padding=5%)
-    
-    if [ -z "$target_repo" ]; then
-        echo -e "\\e[1;31m✘ No repository selected. Exiting.\\e[0m"
-        exit 1
+    # Se è stato fornito un REPO_PATH, usalo
+    if [ -n "$REPO_PATH" ]; then
+        if [ ! -d "$REPO_PATH" ]; then
+            echo -e "${ERROR} Repository path does not exist: $REPO_PATH"
+            exit 1
+        fi
+        target_repo="$REPO_PATH"
+    else
+        # Altrimenti usa la selezione interattiva
+        print_box "REPOSITORY SELECTION"
+        echo "${PROMPT} Select a repository to work on:"
+        target_repo=$(find ~ -name ".git" -type d -prune 2>/dev/null | sed 's/\/.git$//' | \
+                     fzf --prompt="${PROMPT} Select destination repository: " \
+                         --border=rounded \
+                         --margin=5% \
+                         --padding=5%)
+        
+        if [ -z "$target_repo" ]; then
+            echo -e "${ERROR} No repository selected. Exiting."
+            exit 1
+        fi
     fi
     
     cd "$target_repo" || exit
@@ -258,12 +310,12 @@ perform_subtree_add() {
             return 1
         fi
     elif [[ "$create_dir" =~ ^[Yy]$ ]]; then
-        echo -e "\\e[1;36m➜\\e[0m Creating directory $target_dir..."
+        echo -e "${ARROW} Creating directory $target_dir..."
         if ! mkdir -p "$target_dir"; then
-            echo -e "\\e[1;31m✘ Failed to create directory\\e[0m"
+            echo -e "${ERROR} Failed to create directory"
             return 1
         fi
-        echo -e "\\e[1;32m✓\\e[0m Directory created\\n"
+        echo -e "${CHECK} Directory created\\n"
         if ! git subtree add --prefix="$target_dir/$repo_name" "$repo_name" "$branch"; then
             return 1
         fi
@@ -286,8 +338,8 @@ add_subtree() {
     local attempt=1
 
     print_box "ADDING SUBTREE IN PROGRESS"
-    echo -e "${ARROW} Adding repository ${repo_name} [branch: ${branch}]"
-    echo -e "${ARROW} Destination folder: ${target_dir}\\n"
+    print_info "Adding repository ${C_YELLOW}$repo_name${C_RESET} [branch: ${C_YELLOW}$branch${C_RESET}]"
+    print_info "Destination folder: ${C_YELLOW}$target_dir${C_RESET}\\n"
 
     # Spinner for the process
     spin() {
@@ -296,7 +348,7 @@ add_subtree() {
         local spinstr='⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
         while [ "$(ps a | awk '{print $1}' | grep "$pid")" ]; do
             local temp=${spinstr#?}
-            printf " ${COLOR_CYAN}%c${COLOR_RESET}  " "$spinstr"
+            printf " ${C_BLUE}%c${C_RESET}  " "$spinstr"
             local spinstr=$temp${spinstr%"$temp"}
             sleep $delay
             printf "\\b\\b\\b\\b"
@@ -305,70 +357,81 @@ add_subtree() {
     }
 
     # Add remote repository with error handling
-    echo -e "${ARROW} Adding remote..."
+    print_info "Adding remote..."
     if ! git remote add "$repo_name" "$repo_url" 2>/dev/null; then
         if git remote get-url "$repo_name" >/dev/null 2>&1; then
-            echo -e "${WARNING} Remote already exists, updating URL..."
+            print_warning "Remote already exists, updating URL..."
             git remote set-url "$repo_name" "$repo_url"
         else
-            echo -e "${CROSS} Failed to add remote"
+            print_error "Failed to add remote"
             return 1
         fi
     fi
-    echo -e "${CHECKMARK} Remote added/updated"
+    print_success "Remote added/updated\\n"
 
     # Fetch remote repository with error handling
-    echo -e "${ARROW} Fetching..."
+    print_info "Fetching..."
     if ! git fetch "$repo_name" 2>/dev/null; then
-        echo -e "${CROSS} Failed to fetch remote repository"
+        print_error "Failed to fetch remote repository"
         git remote remove "$repo_name" 2>/dev/null
         return 1
     fi
-    echo -e "${CHECKMARK} Fetch completed"
+    print_success "Fetch completed\\n"
 
     # Add subtree with multiple attempts
     while [ $attempt -le $max_attempts ]; do
-        echo -e "${ARROW} Adding subtree (attempt $attempt of $max_attempts)..."
+        print_info "Adding subtree (attempt $attempt of $max_attempts)..."
         
         if perform_subtree_add "$repo_name" "$repo_url" "$target_dir" "$branch" "$create_dir"; then
-            echo -e "${CHECKMARK} Subtree added successfully"
+            print_success "Subtree added successfully\\n"
             
             # Remove the remote after successful operation
-            echo -e "${ARROW} Cleaning up remote..."
+            print_info "Cleaning up remote..."
             if git remote remove "$repo_name" 2>/dev/null; then
-                echo -e "${CHECKMARK} Remote removed"
+                print_success "Remote removed\\n"
             else
-                echo -e "${WARNING} Could not remove remote"
+                print_warning "Could not remove remote\\n"
             fi
             
             print_box "OPERATION COMPLETED"
-            echo -e "${CHECKMARK} Repository ${repo_name} successfully added!"
+            print_success "Repository ${C_YELLOW}$repo_name${C_RESET} successfully added!"
             return 0
         else
             if [[ $(git status --porcelain) ]]; then
-                echo -e "${WARNING} Uncommitted changes detected"
-                read -p "$(echo -e "${QUESTION} Do you want to stash changes and retry? (y/n): ")" stash_changes
-                
-                if [[ "$stash_changes" =~ ^[Yy]$ ]]; then
-                    echo -e "${ARROW} Stashing changes..."
-                    git stash save "Temporary stash for subtree operation"
+                print_warning "Uncommitted changes detected"
+                if [ "$NON_INTERACTIVE" = true ]; then
+                    if [ "$STASH_ON_CONFLICT" = true ]; then
+                        print_info "Automatically stashing changes..."
+                        git stash save "Temporary stash for subtree operation"
+                        # ... resto del codice per lo stash
+                    else
+                        print_error "Working tree has modifications. Cannot add."
+                        return 1
+                    fi
+                else
+                    read -p "$(echo -e "${PROMPT} Do you want to stash changes and retry? (y/n): ")" stash_changes
                     
-                    if perform_subtree_add "$repo_name" "$repo_url" "$target_dir" "$branch" "$create_dir"; then
-                        echo -e "${CHECKMARK} Subtree added successfully"
-                        echo -e "${ARROW} Restoring stashed changes..."
-                        git stash pop
+                    if [[ "$stash_changes" =~ ^[Yy]$ ]]; then
+                        print_info "Stashing changes..."
+                        git stash save "Temporary stash for subtree operation"
                         
-                        # Remove the remote after successful operation
-                        echo -e "${ARROW} Cleaning up remote..."
-                        if git remote remove "$repo_name" 2>/dev/null; then
-                            echo -e "${CHECKMARK} Remote removed"
-                        else
-                            echo -e "${WARNING} Could not remove remote"
+                        if perform_subtree_add "$repo_name" "$repo_url" "$target_dir" "$branch" "$create_dir"; then
+                            print_success "Subtree added successfully"
+                            print_info "Restoring stashed changes..."
+                            git stash pop
+                            
+                            # Remove the remote after successful operation
+                            print_info "Cleaning up remote..."
+                            if git remote remove "$repo_name" 2>/dev/null; then
+                                print_success "Remote removed\\n"
+                            else
+                                print_warning "Could not remove remote\\n"
+                            fi
+                            
+                            print_box "OPERATION COMPLETED"
+                            print_success "Repository ${C_YELLOW}$repo_name${C_RESET} successfully added!"
+                            return 0
                         fi
-                        
-                        print_box "OPERATION COMPLETED"
-                        echo -e "${CHECKMARK} Repository ${repo_name} successfully added!"
-                        return 0
                     fi
                 fi
             fi
@@ -376,27 +439,53 @@ add_subtree() {
         
         ((attempt++))
         if [ $attempt -le $max_attempts ]; then
-            echo -e "${WARNING} Retrying..."
+            print_warning "Retrying...\\n"
         fi
     done
 
     # Remove remote if all attempts failed
-    echo -e "${ARROW} Cleaning up remote after failure..."
+    print_info "Cleaning up remote after failure..."
     git remote remove "$repo_name" 2>/dev/null
-    echo -e "${CROSS} Failed to add subtree after $max_attempts attempts"
+    print_error "Failed to add subtree after $max_attempts attempts"
     return 1
 }
 
-# Loop to add multiple repositories
+# Modify the main logic to handle non-interactive mode first
+if [ "$NON_INTERACTIVE" = true ]; then
+    if [ -z "$TARGET_DIR" ]; then
+        TARGET_DIR="."
+    fi
+    
+    if [ ! -d "$REPO_PATH" ]; then
+        echo -e "${ERROR} Error: Repository path does not exist: $REPO_PATH"
+        exit 1
+    fi
+    
+    repo_name=$(basename "$REPO_PATH")
+    repo_url="file://$REPO_PATH"
+    branch=${BRANCH:-main}
+    
+    print_box "OPERATIONS SUMMARY"
+    echo -e "${ARROW} Directory: ${C_GREEN}$TARGET_DIR${C_RESET}"
+    echo -e "${ARROW} Repository: ${C_GREEN}$repo_name${C_RESET}"
+    echo -e "${ARROW} URL: ${C_GREEN}$repo_url${C_RESET}"
+    echo -e "${ARROW} Branch: ${C_GREEN}$branch${C_RESET}"
+    
+    add_subtree "$repo_name" "$repo_url" "$TARGET_DIR" "$branch" "$CREATE_DIR"
+    echo -e "\\n${ARROW} Operation completed!"
+    exit 0
+fi
+
+# Interactive mode loop (il resto del codice esistente)
 while true; do
     print_box "FOLDER CONFIGURATION"
-    read -p "$(echo -e "${QUESTION} Do you want to use a folder? (y/n): ")" use_folder
+    read -p "$(echo -e "${PROMPT} Do you want to use a folder? (y/n): ")" use_folder
     
     if [[ "$use_folder" =~ ^[Yy]$ ]]; then
-        read -p "$(echo -e "${QUESTION} Do you want to create a new folder? (y/n): ")" create_dir
+        read -p "$(echo -e "${PROMPT} Do you want to create a new folder? (y/n): ")" create_dir
         
         if [[ "$create_dir" =~ ^[Yy]$ ]]; then
-            read -p "$(echo -e "${QUESTION} Enter the new folder name: ")" new_dir
+            read -p "$(echo -e "${PROMPT} Enter the new folder name: ")" new_dir
             target_dir="$new_dir"
         else
             # Function to list folders in current path
@@ -409,7 +498,7 @@ while true; do
             current_dir="."
             while true; do
                 target_dir=$(list_dirs "$current_dir" | \
-                    fzf --prompt="$(echo -e "${PROMPT} Select folder ($current_dir): ")" \
+                    fzf --prompt="${PROMPT} Select folder ($current_dir): " \
                         --header="Use → to enter folder, ← to go back, Enter to select" \
                         --preview="tree '$current_dir/{}' -L 2 -C" \
                         --preview-window=right:50% \
@@ -421,7 +510,7 @@ while true; do
                         --bind="enter:accept")
 
                 if [ -z "$target_dir" ] && [ ! -f /tmp/fzf_dir ]; then
-                    echo -e "${CROSS} No folder selected. Exiting."
+                    echo -e "${ERROR} No folder selected. Exiting."
                     rm -f /tmp/fzf_dir
                     break
                 fi
@@ -442,9 +531,9 @@ while true; do
     fi
 
     print_box "REPOSITORY SELECTION"
-    echo "Select local repository:"
+    echo "${PROMPT} Select local repository:"
     repo_path=$(find ~ -name ".git" -type d -prune 2>/dev/null | sed 's/\/.git$//' | \
-               fzf --prompt="$(echo -e "${PROMPT} Select repository: ")" \
+               fzf --prompt="${PROMPT} Select repository: " \
                    --preview="tree {} -L 2 -C" \
                    --preview-window=right:50% \
                    --border=rounded \
@@ -452,7 +541,7 @@ while true; do
                    --padding=5%)
     
     if [ -z "$repo_path" ]; then
-        echo -e "${CROSS} No repository selected. Exiting."
+        echo -e "${ERROR} No repository selected. Exiting."
         break
     fi
 
@@ -464,9 +553,9 @@ while true; do
     repo_url="file://$repo_path"
 
     print_box "SELECTED REPOSITORY"
-    echo -e "${ARROW} Name: ${repo_name}"
-    echo -e "${ARROW} Path: ${repo_path}"
-    echo -e "${ARROW} URL: ${repo_url}"
+    echo -e "${ARROW} Name: ${C_GREEN}$repo_name${C_RESET}"
+    echo -e "${ARROW} Path: ${C_GREEN}$repo_path${C_RESET}"
+    echo -e "${ARROW} URL: ${C_GREEN}$repo_url${C_RESET}"
 
     # Salva il percorso della repository corrente
     current_repo_path=$(pwd)
@@ -476,13 +565,14 @@ while true; do
     
     # Controlla le modifiche non committate nella repository selezionata
     if [[ $(git status --porcelain) ]]; then
-        echo -e "${WARNING} WARNING: There are uncommitted changes in the selected repository."
-        read -p "$(echo -e "${QUESTION} Do you want to proceed anyway? (y/n): ")" proceed_anyway
+        echo -e "${WARN} WARNING: There are uncommitted changes in the selected repository."
+        read -p "$(echo -e "${PROMPT} Do you want to proceed anyway? (y/n): ")" proceed_anyway
         if [[ ! "$proceed_anyway" =~ ^[Yy]$ ]]; then
-            echo -e "${CROSS} Operation cancelled. Commit or stash your changes before proceeding."
+            echo -e "${ERROR} Operation cancelled. Commit or stash your changes before proceeding."
             cd "$current_repo_path" || exit
             continue
         fi
+        echo -e "${ARROW} Proceeding with uncommitted changes..."
         echo -e "${ARROW} Proceeding with uncommitted changes..."
     fi
     
@@ -493,7 +583,7 @@ while true; do
     show_commits() {
         local branch=$1
         git log --format="%C(yellow)%h%C(reset) - %C(cyan)%ar%C(reset) - %s" "$branch" | \
-        fzf --prompt="$(echo -e "${PROMPT} Commits for branch $branch (← to go back): ")" \
+        fzf --prompt="${PROMPT} Commits for branch $branch (← to go back): " \
             --header-first \
             --header="=== Commit History ===\\n" \
             --layout=reverse \
@@ -514,7 +604,7 @@ while true; do
         cd "$repo_path" || exit
 
         branch=$(git branch --format='%(refname:short)' | \
-                fzf --prompt="$(echo -e "${PROMPT} Select branch: ")" \
+                fzf --prompt="${PROMPT} Select branch: " \
                     --header-first \
                     --header="=== Available Branches ===\\n(q to exit)" \
                     --layout=reverse \
@@ -528,7 +618,7 @@ while true; do
         cd "$current_path" || exit
 
         if [ -z "$branch" ] && [ $? -ne 130 ]; then
-            echo -e "${CROSS} Branch selection cancelled."
+            echo -e "${ERROR} Branch selection cancelled."
             exit 1
         fi
 
@@ -541,16 +631,16 @@ while true; do
 
     print_box "OPERATIONS SUMMARY"
     if [ "$target_dir" = "." ]; then
-        echo -e "${ARROW} Directory: No folder (adding directly)"
+        echo -e "${ARROW} Directory: ${C_GREEN}No folder (adding directly)${C_RESET}"
     else
-        echo -e "${ARROW} Directory: ${target_dir}"
+        echo -e "${ARROW} Directory: ${C_GREEN}$target_dir${C_RESET}"
         if [[ "$create_dir" =~ ^[Yy]$ ]]; then
-            echo -e "${ARROW} Directory Action: Create new directory"
+            echo -e "${ARROW} Directory Action: ${C_GREEN}Create new directory${C_RESET}"
         fi
     fi
-    echo -e "${ARROW} Repository: ${repo_name}"
-    echo -e "${ARROW} URL: ${repo_url}"
-    echo -e "${ARROW} Branch: ${branch}"
+    echo -e "${ARROW} Repository: ${C_GREEN}$repo_name${C_RESET}"
+    echo -e "${ARROW} URL: ${C_GREEN}$repo_url${C_RESET}"
+    echo -e "${ARROW} Branch: ${C_GREEN}$branch${C_RESET}"
     echo -e "\\n${ARROW}Commands that will be executed:"
     if [ "$target_dir" = "." ]; then
         echo -e "  1. git remote add ${repo_name} ${repo_url}"
@@ -567,14 +657,14 @@ while true; do
         echo -e "  3. git subtree add --prefix=${target_dir}/${repo_name} ${repo_name} ${branch}"
     fi
     
-    read -r -p "$(echo -e "\\n${QUESTION} Do you want to proceed with these operations? (y/n): ")" confirm
+    read -r -p "$(echo -e "${PROMPT} Do you want to proceed with these operations? (y/n): ")" confirm
     if [[ "$confirm" =~ ^[Yy]$ ]]; then
         add_subtree "$repo_name" "$repo_url" "$target_dir" "$branch" "$create_dir"
     else
-        echo -e "${CROSS} Operation cancelled."
+        echo -e "${ERROR} Operation cancelled."
         continue
     fi
 
 done
 
-echo -e "\\n${CHECKMARK} All operations completed successfully!"
+echo -e "\\n${ARROW} All operations completed successfully!"
