@@ -1,8 +1,3 @@
-<?php
-// Imposta un cookie di esempio
-setcookie("test_cookie", "valore_del_cookie", time() + 3600); // Cookie valido per 1 ora
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +15,11 @@ setcookie("test_cookie", "valore_del_cookie", time() + 3600); // Cookie valido p
     ?>
 
     <p>
+        <!-- Imposta un cookie di esempio -->
+        <a href="<?php echo $_SERVER['PHP_SELF']; ?>?set=true">Imposta Cookie</a>
+    </p>
+
+    <p>
         <!-- Link per eliminare il cookie -->
         <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=true">Elimina Cookie</a>
     </p>
@@ -29,6 +29,9 @@ setcookie("test_cookie", "valore_del_cookie", time() + 3600); // Cookie valido p
     if(isset($_GET['delete'])) {
         setcookie("test_cookie", "", time() - 3600);
         echo "<script>window.location.href = '" . $_SERVER['PHP_SELF'] . "';</script>";
+    }
+    if(isset($_GET['set'])) {
+        setcookie("provaCookie", "prova", time() + 3600);
     }
     ?>
 </body>
