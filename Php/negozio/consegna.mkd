@@ -1,0 +1,59 @@
+# Sistema di Gestione Database con PHP e MySQL
+
+## Parte 1: Creazione del Database e delle Tabelle
+
+### 1. Creazione del Database
+- Creare un nuovo database chiamato `negozio`.
+- Creare tre tabelle: `utenti`, `prodotti`, e `ordini`.
+- Popolare il database.
+
+### 2. Struttura delle Tabelle
+
+#### Utenti
+- `id` (INT, PRIMARY KEY, AUTO_INCREMENT)
+- `nome` (VARCHAR(50))
+- `email` (VARCHAR(100))
+
+#### Prodotti
+- `id` (INT, PRIMARY KEY, AUTO_INCREMENT)
+- `nome` (VARCHAR(100))
+- `prezzo` (DECIMAL(10,2))
+
+#### Ordini
+- `id` (INT, PRIMARY KEY, AUTO_INCREMENT)
+- `id_utente` (INT, FOREIGN KEY riferita a `utenti.id`)
+- `id_prodotto` (INT, FOREIGN KEY riferita a `prodotti.id`)
+- `data_ordine` (DATE)
+
+## Parte 2: Connessione al Database con PHP
+
+### 1. Creare un File PHP per la Connessione
+
+## Parte 3: Inserimento e Visualizzazione dei Dati
+
+### 1. Inserimento dei Dati
+- Creare un form HTML che invii i dati a un file PHP per l'inserimento di nuovi utenti e prodotti.
+- Utilizzare la funzione `mysqli_query()` per eseguire le query di inserimento.
+
+### 2. Visualizzazione dei Dati
+- Creare una pagina PHP che esegua una query `SELECT` per visualizzare tutti gli utenti e i prodotti.
+- Utilizzare un ciclo `while` per stampare i dati in una tabella HTML.
+
+## Parte 4: Ordini
+
+### 1. Creare un Form per gli Ordini
+- Creare un form che permetta di selezionare un utente e un prodotto per creare un nuovo ordine.
+
+### 2. Inserimento degli Ordini
+- Utilizzare la funzione `mysqli_query()` per inserire gli ordini nella tabella `ordini`.
+
+### 3. Cancellazione di un Ordine
+- Creare un link o un pulsante per ogni ordine che, al click, esegua una query `DELETE` per cancellare l'ordine selezionato.
+
+## Parte 5: Inserimento di un Nuovo Utente
+
+### 1. Form per Nuovo Utente
+- Creare un form HTML che invii i dati a un file PHP per l'inserimento di un nuovo utente.
+
+### 2. Inserimento Utente
+- Utilizzare la funzione `mysqli_query()` per eseguire la query di inserimento dell'utente.
